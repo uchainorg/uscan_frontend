@@ -1,24 +1,27 @@
-<script setup>
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
-<template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3 + Vite" />
-  <div>
-    <el-button>按钮</el-button>
+<template lang="">
+  <div class="container">
+    <scan-header title="Ankr Chain Scan"></scan-header>
+    <br />
+    <scan-block></scan-block>
+    <scan-transaction></scan-transaction>
   </div>
 </template>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<script>
+import ScanHeader from "./components/ScanHeader/ScanHeader.vue";
+import ScanBlock from "./components/ScanBlock/ScanBlock.vue";
+import ScanTransaction from "./components/ScanTransaction/ScanTransaction.vue";
+export default {
+  name: "ankr chain scan",
+  components: {
+    ScanHeader,
+    ScanBlock,
+    ScanTransaction,
+  },
+};
+</script>
+<style lang="less" scoped>
+.container {
+  margin: auto;
+  max-width: 1400px;
 }
 </style>
