@@ -15,6 +15,7 @@
 </template>
 <script>
 import { mockGetBlockList } from "../../js/block.js";
+
 export default {
   name: "ScanBlock",
   data() {
