@@ -2,8 +2,10 @@
   <div class="container">
     <scan-header title="Ankr Chain Scan"></scan-header>
     <br />
-    <scan-block></scan-block>
-    <scan-transaction></scan-transaction>
+    <div class="container-display">
+      <scan-block></scan-block>
+      <scan-transaction></scan-transaction>
+    </div>
   </div>
 </template>
 <script>
@@ -23,5 +25,9 @@ export default {
 .container {
   margin: auto;
   max-width: 1400px;
+}
+.container-display {
+  display: flex;
+  justify-content: center;
 }
 </style>

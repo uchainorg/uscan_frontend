@@ -41,21 +41,20 @@ export default {
 </script>
 <style lang="less" scoped>
 .header-container {
-  margin: auto;
+  //   margin: auto;
+  //   margin-top: 80px;
+  //   width: 100%;
+  //   height: 120px;
+  display: flex;
   margin-top: 80px;
-  width: 100%;
-  height: 120px;
+  justify-content: center;
 }
 
 .header-title-container {
-  float: left;
-  margin-left: 30%;
+  width: 30%;
 }
 
 .header-input-container {
-  float: left;
-  width: 40%;
-  margin-left: 30%;
-  margin-top: 1%;
+  width: 30%;
 }
 </style>

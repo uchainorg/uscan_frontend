@@ -1,6 +1,6 @@
 <template lang="">
   <div class="block-container">
-    <el-table :data="tableData" style="width: 100%">
+    <el-table :data="tableData" style="width: 90%">
       <el-table-column prop="blockNumber" label="Latest Blocks" width="180" />
       <el-table-column prop="txInfo" width="180" />
       <el-table-column>
@@ -35,10 +35,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .block-container {
-  margin-top: 1%;
-  width: 45%;
-  margin-left: 3%;
-  float: left;
+  flex-basis: 40%;
 }
 .last-column {
   text-align: right;

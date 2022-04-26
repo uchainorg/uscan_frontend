@@ -1,6 +1,6 @@
 <template lang="">
   <div class="block-container">
-    <el-table :data="tableData" style="width: 100%">
+    <el-table :data="tableData" style="width: 90%">
       <el-table-column
         prop="transactionHash"
         label="Latest Transactions"
@@ -50,9 +50,6 @@ export default {
 </script>
 <style lang="less" scoped>
 .block-container {
-  margin-top: 1%;
-  width: 45%;
-  margin-right: 3%;
-  float: right;
+  width: 40%;
 }
 </style>
