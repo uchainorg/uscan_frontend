@@ -1,16 +1,26 @@
 <template lang="">
   <div class="block-container">
-    <el-table :data="tableData" style="width: 90%">
-      <el-table-column
-        prop="transactionHash"
-        label="Latest Transactions"
-        width="180"
-      />
-      <el-table-column prop="fromAndToAddress" width="180" />
+    <el-table :data="tableData" style="width: 95%">
+      <el-table-column label="Latest Transactions" width="180">
+        <template v-slot:default="scope">
+          <div class="table-column-row">
+            <div>{{ scope.row.transactionHash }}</div>
+            <div>{{ scope.row.diffTime }}</div>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column width="250">
+        <template v-slot:default="scope">
+          <div class="table-column-row">
+            <div>From {{ scope.row.from }}</div>
+            <div>To {{ scope.row.to }}</div>
+          </div>
+        </template>
+      </el-table-column>
       <el-table-column>
         <template v-slot:default="scope">
           <div style="text-align: right">
-            {{ scope.row.amount }}
+            {{ scope.row.transactionAmount }} Eth
           </div>
         </template>
       </el-table-column>
@@ -18,38 +28,25 @@
   </div>
 </template>
 <script>
+import { mockGetTransactionList, mockUpdateBlock } from "../../js/block.js";
+
 export default {
   name: "ScanTransaction",
   data() {
     return {
-      tableData: [
-        {
-          transactionHash: "0xe17122e...",
-          fromAndToAddress: "0xe17122e...",
-          amount: "1.2 Eth",
-        },
-        {
-          transactionHash: "0xe17122e...",
-          fromAndToAddress: "0xe17122e...",
-          amount: "1.2 Eth",
-        },
-        {
-          transactionHash: "0xe17122e...",
-          fromAndToAddress: "0xe17122e...",
-          amount: "1.2 Eth",
-        },
-        {
-          transactionHash: "0xe17122e...",
-          fromAndToAddress: "0xe17122e...",
-          amount: "1.2 Eth",
-        },
-      ],
+      tableData: [],
     };
+  },
+  created() {
+    this.loadTransactionList();
+  },
+  methods: {
+    loadTransactionList() {
+      this.tableData = mockGetTransactionList();
+    },
   },
 };
 </script>
 <style lang="less" scoped>
-.block-container {
-  width: 40%;
-}
+@import "../../css/style.css";
 </style>

@@ -1,43 +1,61 @@
 <template lang="">
   <div class="block-container">
-    <el-table :data="tableData" style="width: 90%">
-      <el-table-column prop="blockNumber" label="Latest Blocks" width="180" />
-      <el-table-column prop="txInfo" width="180" />
+    <el-table :data="tableData" style="width: 95%">
+      <el-table-column label="Latest Blocks" width="180">
+        <template v-slot:default="scope">
+          <div class="table-column-row">
+            <router-link to="/block">{{ scope.row.blockNumber }}</router-link>
+            <div>{{ scope.row.diffTime }}</div>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column width="180">
+        <template v-slot:default="scope">
+          <div class="table-column-row">
+            <div>Miner {{ scope.row.miner }}</div>
+            <div>{{ scope.row.txCount }} txns</div>
+          </div>
+        </template>
+      </el-table-column>
       <el-table-column>
         <template v-slot:default="scope">
-          <div style="text-align: right">
-            {{ scope.row.blockReward }}
-          </div>
+          <div style="text-align: right">{{ scope.row.blockReward }} Eth</div>
         </template>
       </el-table-column>
     </el-table>
   </div>
 </template>
 <script>
-import { mockGetBlockList } from "../../js/block.js";
+import { mockGetBlockList, mockUpdateBlock } from "../../js/block.js";
 
 export default {
   name: "ScanBlock",
   data() {
     return {
       tableData: [],
+      updateBlockWorker: "",
     };
   },
   created() {
     this.loadBlockList();
   },
+  mounted() {
+    this.updateBlock();
+    this.updateBlockWorker = setInterval(this.updateBlock, 3000);
+  },
+  beforeDestroy() {
+    clearInterval(this.updateBlockWorker);
+  },
   methods: {
     loadBlockList() {
       this.tableData = mockGetBlockList();
+    },
+    updateBlock() {
+      mockUpdateBlock(this.tableData);
     },
   },
 };
 </script>
 <style lang="less" scoped>
-.block-container {
-  flex-basis: 40%;
-}
-.last-column {
-  text-align: right;
-}
+@import "../../css/style.css";
 </style>

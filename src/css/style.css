@@ -1,0 +1,11 @@
+.block-container {
+  width: 50%;
+}
+.last-column {
+  text-align: right;
+}
+
+.table-column-row {
+  display: flex;
+  flex-direction: column;
+}

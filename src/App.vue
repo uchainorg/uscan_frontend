@@ -2,22 +2,18 @@
   <div class="container">
     <scan-header title="Ankr Chain Scan"></scan-header>
     <br />
-    <div class="container-display">
-      <scan-block></scan-block>
-      <scan-transaction></scan-transaction>
-    </div>
+    <scan-home></scan-home>
   </div>
 </template>
 <script>
 import ScanHeader from "./components/ScanHeader/ScanHeader.vue";
-import ScanBlock from "./components/ScanBlock/ScanBlock.vue";
-import ScanTransaction from "./components/ScanTransaction/ScanTransaction.vue";
+import ScanHome from "./components/ScanHome/ScanHome.vue";
+
 export default {
   name: "ankr chain scan",
   components: {
     ScanHeader,
-    ScanBlock,
-    ScanTransaction,
+    ScanHome,
   },
 };
 </script>
@@ -25,9 +21,5 @@ export default {
 .container {
   margin: auto;
   max-width: 1400px;
-}
-.container-display {
-  display: flex;
-  justify-content: center;
 }
 </style>
