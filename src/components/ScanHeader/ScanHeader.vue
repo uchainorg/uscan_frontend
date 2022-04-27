@@ -11,7 +11,7 @@
       >
       </el-input>
     </div>
-    <el-link type="primary">首页</el-link>
+    <el-link type="primary" @click="moveToHome">首页</el-link>
   </div>
 </template>
 <script>
@@ -35,6 +35,11 @@ export default {
   watch: {
     search_data(newVal) {
       console.log(newVal);
+    },
+  },
+  methods: {
+    moveToHome() {
+      this.$router.push("/");
     },
   },
 };

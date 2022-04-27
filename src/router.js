@@ -6,7 +6,7 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes: [
     { path: "/", component: ScanHome },
-    { path: "/block", component: BlockInfo },
+    { path: "/block/:number", component: BlockInfo, props: true },
   ],
 });
 

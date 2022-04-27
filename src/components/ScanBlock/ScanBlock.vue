@@ -4,7 +4,9 @@
       <el-table-column label="Latest Blocks" width="180">
         <template v-slot:default="scope">
           <div class="table-column-row">
-            {{ scope.row.blockNumber }}
+            <router-link :to="'/block/' + scope.row.blockNumber">{{
+              scope.row.blockNumber
+            }}</router-link>
             <div>{{ scope.row.diffTime }}</div>
           </div>
         </template>
