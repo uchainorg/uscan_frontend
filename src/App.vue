@@ -2,7 +2,8 @@
   <div class="container">
     <scan-header title="Ankr Chain Scan"></scan-header>
     <br />
-    <scan-home></scan-home>
+    <!-- <scan-home></scan-home> -->
+    <router-view></router-view>
   </div>
 </template>
 <script>

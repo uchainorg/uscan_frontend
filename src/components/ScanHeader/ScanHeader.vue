@@ -3,7 +3,6 @@
     <div class="header-title-container" :style="{ fontSize: fsize + 'px' }">
       {{ title }}
     </div>
-    <br />
     <div class="header-input-container">
       <el-input
         style="width: 80%"
@@ -12,6 +11,7 @@
       >
       </el-input>
     </div>
+    <el-link type="primary">首页</el-link>
   </div>
 </template>
 <script>
