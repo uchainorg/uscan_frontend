@@ -40,8 +40,8 @@ export default {
   },
   mounted() {
     // this.updateBlock();
-    // this.updateBlockWorker = setInterval(this.updateBlock, 3000);
-    console.log(this.foo);
+    this.updateBlockWorker = setInterval(this.updateBlock, 3000);
+    // console.log(this.foo);
   },
   beforeDestroy() {
     clearInterval(this.updateBlockWorker);
