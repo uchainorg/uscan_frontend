@@ -51,7 +51,7 @@ export default {
   //   width: 100%;
   //   height: 120px;
   display: flex;
-  margin-top: 80px;
+  margin-top: 50px;
   justify-content: center;
 }
 
