@@ -4,14 +4,9 @@
       {{ title }}
     </div>
     <div class="header-input-container">
-      <el-input
-        style="width: 80%"
-        v-model.trim="search_data"
-        placeholder="请输入搜索的关键字"
-      >
-      </el-input>
+      <el-link style="align-self: flex-start; margin-bottom: 4%" type="primary" @click="moveToHome">Home</el-link>
+      <el-input style="width: 100%" v-model.trim="search_data" placeholder="Search by Address / Txhash / Block / Token / Ens"> </el-input>
     </div>
-    <el-link type="primary" @click="moveToHome">首页</el-link>
   </div>
 </template>
 <script>
@@ -24,7 +19,7 @@ export default {
     },
     fsize: {
       type: Number,
-      default: 25,
+      default: 30,
     },
   },
   data() {
@@ -57,9 +52,13 @@ export default {
 
 .header-title-container {
   width: 30%;
+  font-family: "Gill Sans", Times, serif;
+  margin-top: 2%;
 }
 
 .header-input-container {
   width: 30%;
+  display: flex;
+  flex-direction: column;
 }
 </style>

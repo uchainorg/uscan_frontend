@@ -19,16 +19,14 @@
       </el-table-column>
       <el-table-column>
         <template v-slot:default="scope">
-          <div style="text-align: right">
-            {{ scope.row.transactionAmount }} Eth
-          </div>
+          <div style="text-align: right">{{ scope.row.transactionAmount }} Eth</div>
         </template>
       </el-table-column>
     </el-table>
   </div>
 </template>
 <script>
-import { mockGetTransactionList, mockUpdateBlock } from "../../js/block.js";
+import { mockGetTransactionList } from "../../js/block.js";
 
 export default {
   name: "ScanTransaction",

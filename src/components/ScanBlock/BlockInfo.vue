@@ -4,40 +4,34 @@
     <p style="display: inline; margin-left: 1%">#{{ number }}</p>
     <el-tabs v-model="activeName" @tab-click="handleClick" style="">
       <el-tab-pane label="Overview" name="first">
-        <component :is="componentName" :data="blockOverviewData"></component>
+        <block-overview :data="blockOverviewData"></block-overview>
       </el-tab-pane>
       <el-tab-pane label="Comments" name="second">
-        <component :is="componentName" :data="blockCommentsData"></component>
+        <block-comments :data="blockCommentsData"></block-comments>
       </el-tab-pane>
     </el-tabs>
   </div>
 </template>
 <script>
 import BlockOverview from "./BlockOverview.vue";
-import BlockComment from "./BlockComments.vue";
+import BlockComments from "./BlockComments.vue";
 export default {
   name: "BlockInfo",
   props: ["number"],
   components: {
     BlockOverview,
-    BlockComment,
+    BlockComments,
   },
   data() {
     return {
       activeName: "first",
-      componentName: "BlockOverview",
       blockOverviewData: { blockNumber: 1000 },
       blockCommentsData: { blockNumber: 2000 },
     };
   },
   methods: {
     handleClick(tab) {
-      if (tab.index == 1) {
-        this.componentName = "BlockComment";
-      } else {
-        this.componentName = "BlockOverview";
-      }
-      console.log(this.componentName);
+      console.log(tab);
     },
   },
 };

@@ -1,6 +1,6 @@
 <template lang="">
   <div class="container">
-    <scan-header title="Ankr Chain Scan"></scan-header>
+    <scan-header title="Coq Chain Scan"></scan-header>
     <br />
     <router-view></router-view>
   </div>
