@@ -26,8 +26,7 @@
   </div>
 </template>
 <script>
-import { mockGetBlockList, mockUpdateBlock } from "../../js/block.js";
-
+import { mockGetBlockList, mockUpdateBlock } from "../../js/blockMock.js";
 export default {
   name: "ScanBlock",
   data() {
@@ -40,8 +39,9 @@ export default {
     this.loadBlockList();
   },
   mounted() {
-    this.updateBlock();
-    this.updateBlockWorker = setInterval(this.updateBlock, 3000);
+    // this.updateBlock();
+    // this.updateBlockWorker = setInterval(this.updateBlock, 3000);
+    console.log(this.foo);
   },
   beforeDestroy() {
     clearInterval(this.updateBlockWorker);

@@ -26,7 +26,7 @@
   </div>
 </template>
 <script>
-import { mockGetTransactionList } from "../../js/block.js";
+import { mockGetTransactionList } from "../../js/blockMock.js";
 
 export default {
   name: "ScanTransaction",
