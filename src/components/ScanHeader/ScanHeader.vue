@@ -41,10 +41,6 @@ export default {
 </script>
 <style lang="less" scoped>
 .header-container {
-  //   margin: auto;
-  //   margin-top: 80px;
-  //   width: 100%;
-  //   height: 120px;
   display: flex;
   margin-top: 50px;
   justify-content: center;

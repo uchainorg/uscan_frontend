@@ -3,11 +3,12 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "dev": "vite --mode dev",
+    "build": "vite build --mode prod",
+    "stage": "vite build --mode stage"
   },
   "dependencies": {
+    "axios": "^0.27.2",
     "element-plus": "^2.1.10",
     "vue": "^3.2.25",
     "vue-router": "^4.0.14"

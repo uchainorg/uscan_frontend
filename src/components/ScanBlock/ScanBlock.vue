@@ -41,7 +41,7 @@ export default {
   mounted() {
     // this.updateBlock();
     this.updateBlockWorker = setInterval(this.updateBlock, 3000);
-    // console.log(this.foo);
+    this.getLastBlock();
   },
   beforeDestroy() {
     clearInterval(this.updateBlockWorker);
@@ -52,6 +52,10 @@ export default {
     },
     updateBlock() {
       mockUpdateBlock(this.tableData);
+    },
+    async getLastBlock() {
+      const { data: res } = await this.$http.post("/api", { jsonrpc: "2.0", method: "eth_blockNumber", params: [], id: 1 });
+      console.log(res);
     },
   },
 };
