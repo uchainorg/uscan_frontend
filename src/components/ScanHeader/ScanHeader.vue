@@ -5,6 +5,7 @@
     </div>
     <div class="header-input-container">
       <el-link style="align-self: flex-start; margin-bottom: 4%" type="primary" @click="moveToHome">Home</el-link>
+      <div style="align-self: flex-start; margin-bottom: 4%">Last Block Number : {{ lastBlockNumber }}</div>
       <el-input style="width: 100%" v-model.trim="search_data" placeholder="Search by Address / Txhash / Block / Token / Ens"> </el-input>
     </div>
   </div>
@@ -19,12 +20,14 @@ export default {
     },
     fsize: {
       type: Number,
-      default: 30,
+      default: 35,
     },
   },
   data() {
     return {
       search_data: "",
+      lastBlockNumber: 0,
+      updateBlockWorker: "",
     };
   },
   watch: {
@@ -32,9 +35,22 @@ export default {
       console.log(newVal);
     },
   },
+  created() {
+    this.getLastBlock();
+  },
+  mounted() {
+    this.updateBlockWorker = setInterval(this.getLastBlock, 1000);
+  },
+  beforeDestroy() {
+    clearInterval(this.updateBlockWorker);
+  },
   methods: {
     moveToHome() {
       this.$router.push("/");
+    },
+    async getLastBlock() {
+      const { data: res } = await this.$http.post("/api", { jsonrpc: "2.0", method: "eth_blockNumber", params: [], id: 1 });
+      this.lastBlockNumber = parseInt(res.result);
     },
   },
 };

@@ -10,8 +10,6 @@ const app = createApp(App);
 
 app.config.globalProperties.$http = axios;
 
-console.log(import.meta.env.MODE);
-
 app.use(router);
 
 app.mount("#app");

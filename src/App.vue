@@ -7,7 +7,7 @@
 </template>
 <script>
 export default {
-  name: "ankr chain scan",
+  name: "chain-scan",
 };
 </script>
 <style lang="less" scoped>

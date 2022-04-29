@@ -26,36 +26,20 @@
   </div>
 </template>
 <script>
-import { mockGetBlockList, mockUpdateBlock } from "../../js/blockMock.js";
+import { mockGetBlockList } from "../../js/blockMock.js";
 export default {
   name: "ScanBlock",
   data() {
     return {
       tableData: [],
-      updateBlockWorker: "",
     };
   },
   created() {
     this.loadBlockList();
   },
-  mounted() {
-    // this.updateBlock();
-    this.updateBlockWorker = setInterval(this.updateBlock, 3000);
-    this.getLastBlock();
-  },
-  beforeDestroy() {
-    clearInterval(this.updateBlockWorker);
-  },
   methods: {
     loadBlockList() {
       this.tableData = mockGetBlockList();
-    },
-    updateBlock() {
-      mockUpdateBlock(this.tableData);
-    },
-    async getLastBlock() {
-      const { data: res } = await this.$http.post("/api", { jsonrpc: "2.0", method: "eth_blockNumber", params: [], id: 1 });
-      console.log(res);
     },
   },
 };

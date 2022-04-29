@@ -8,17 +8,6 @@ import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 export default defineConfig(({ mode }) => {
   if (mode === "dev") {
     return {
-      // dev 独有配置
-      server: {
-        proxy: {
-          "/api": {
-            target: "https://testnet.ankr.com",
-            changeOrigin: true,
-            secure: false,
-            rewrite: (path) => path.replace(/^\/api/, ""),
-          },
-        },
-      },
       plugins: [
         vue(),
         AutoImport({
@@ -28,6 +17,16 @@ export default defineConfig(({ mode }) => {
           resolvers: [ElementPlusResolver()],
         }),
       ],
+      server: {
+        proxy: {
+          "^/api": {
+            target: "https://testnet.ankr.com",
+            changeOrigin: true,
+            secure: false,
+            rewrite: (path) => path.replace(/^\/api/, ""),
+          },
+        },
+      },
     };
   } else {
     // command === 'build'
