@@ -26,7 +26,7 @@
   </div>
 </template>
 <script>
-import { mockGetBlockList } from "../../js/blockMock.js";
+import { mockGetBlockList } from "../../js/mock.js";
 export default {
   name: "ScanBlock",
   data() {
