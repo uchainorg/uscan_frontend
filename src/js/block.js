@@ -3,4 +3,7 @@ export async function getLastBlockNum(http) {
   return parseInt(res.result);
 }
 
-// export async function getBlockList(http, lastBlockNum) {}
+// export async function getBlockList(http, lastBlockNum) {
+//   let resList = [];
+//   for (let i = 10; i > 0; i--) {}
+// }
