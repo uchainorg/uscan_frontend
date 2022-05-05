@@ -11,6 +11,7 @@
   </div>
 </template>
 <script>
+import { getLastBlockNum } from "../../js/block.js";
 export default {
   name: "ScanHeader",
   props: {
@@ -49,8 +50,8 @@ export default {
       this.$router.push("/");
     },
     async getLastBlock() {
-      const { data: res } = await this.$http.post("", { jsonrpc: "2.0", method: "eth_blockNumber", params: [], id: 1 });
-      this.lastBlockNumber = parseInt(res.result);
+      this.$store.state.lastBlockNum = await getLastBlockNum(this.$http);
+      this.lastBlockNumber = this.$store.state.lastBlockNum;
     },
   },
 };

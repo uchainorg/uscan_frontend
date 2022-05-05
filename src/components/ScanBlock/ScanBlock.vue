@@ -1,5 +1,6 @@
 <template lang="">
   <div class="block-container">
+    <button type="submit" @click="checkLastNum">Test</button>
     <el-table :data="tableData" style="width: 95%">
       <el-table-column label="Latest Blocks" width="180">
         <template v-slot:default="scope">
@@ -40,6 +41,9 @@ export default {
   methods: {
     loadBlockList() {
       this.tableData = mockGetBlockList();
+    },
+    checkLastNum() {
+      console.log("last");
     },
   },
 };
