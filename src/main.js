@@ -9,7 +9,7 @@ axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
 
 const app = createApp(App);
 
-app.config.globalProperties.$http = axios;
+app.config.globalProperties.$rpc_http = axios;
 
 app.use(router);
 

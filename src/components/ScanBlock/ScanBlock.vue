@@ -12,14 +12,22 @@
       <el-table-column width="300">
         <template v-slot:default="scope">
           <div class="table-column-row">
-            <div>Miner {{ scope.row.miner }}</div>
-            <div>{{ scope.row.txCount }} txns</div>
+            <div>
+              Miner <router-link :to="'/'">{{ scope.row.miner }}</router-link>
+            </div>
+            <el-tooltip class="box-item" effect="dark" content="Transactions in this block" placement="right">
+              <div style="width: 45px">
+                <router-link :to="'/'">{{ scope.row.txCount }} txns</router-link>
+              </div>
+            </el-tooltip>
           </div>
         </template>
       </el-table-column>
       <el-table-column>
         <template v-slot:default="scope">
-          <div style="text-align: right">{{ scope.row.gasUsed }} Eth</div>
+          <el-tooltip class="box-item" effect="dark" content="gasUsed" placement="right">
+            <div style="text-align: right">{{ scope.row.gasUsed }} Eth</div>
+          </el-tooltip>
         </template>
       </el-table-column>
     </el-table>
@@ -39,10 +47,8 @@ export default {
   },
   methods: {
     async getBlockListRes() {
-      let res = await getBlockList(this.$http);
+      let res = await getBlockList(this.$rpc_http);
       this.$store.state.lastBlockNum = res[0];
-      console.log("res[0]", res[0]);
-      console.log("res[1]", res[1]);
       this.tableData = res[1];
     },
   },
