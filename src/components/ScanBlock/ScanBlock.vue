@@ -9,7 +9,7 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column width="180">
+      <el-table-column width="300">
         <template v-slot:default="scope">
           <div class="table-column-row">
             <div>Miner {{ scope.row.miner }}</div>
@@ -19,14 +19,14 @@
       </el-table-column>
       <el-table-column>
         <template v-slot:default="scope">
-          <div style="text-align: right">{{ scope.row.blockReward }} Eth</div>
+          <div style="text-align: right">{{ scope.row.gasUsed }} Eth</div>
         </template>
       </el-table-column>
     </el-table>
   </div>
 </template>
 <script>
-import { mockGetBlockList } from "../../js/mock.js";
+import { getBlockList } from "../../js/block.js";
 export default {
   name: "ScanBlock",
   data() {
@@ -35,11 +35,15 @@ export default {
     };
   },
   created() {
-    this.loadBlockList();
+    this.getBlockListRes();
   },
   methods: {
-    loadBlockList() {
-      this.tableData = mockGetBlockList();
+    async getBlockListRes() {
+      let res = await getBlockList(this.$http);
+      this.$store.state.lastBlockNum = res[0];
+      console.log("res[0]", res[0]);
+      console.log("res[1]", res[1]);
+      this.tableData = res[1];
     },
   },
 };

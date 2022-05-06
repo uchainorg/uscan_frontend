@@ -5,13 +5,11 @@
     </div>
     <div class="header-input-container">
       <el-link style="align-self: flex-start; margin-bottom: 4%" type="primary" @click="moveToHome">Home</el-link>
-      <button style="align-self: flex-start; margin-bottom: 4%" type="submit" @click="checkLastNum">Test</button>
       <el-input style="width: 100%" v-model.trim="search_data" placeholder="Search by Address / Txhash / Block / Token / Ens"> </el-input>
     </div>
   </div>
 </template>
 <script>
-import { getLastBlockNum } from "../../js/block.js";
 export default {
   name: "ScanHeader",
   props: {
@@ -28,7 +26,6 @@ export default {
     return {
       search_data: "",
       lastBlockNumber: 0,
-      // updateBlockWorker: "",
     };
   },
   watch: {
@@ -36,25 +33,9 @@ export default {
       console.log(newVal);
     },
   },
-  created() {
-    this.getLastBlock();
-  },
-  // mounted() {
-  //   this.updateBlockWorker = setInterval(this.getLastBlock, 1000);
-  // },
-  beforeDestroy() {
-    clearInterval(this.updateBlockWorker);
-  },
   methods: {
     moveToHome() {
       this.$router.push("/");
-    },
-    async getLastBlock() {
-      this.$store.state.lastBlockNum = await getLastBlockNum(this.$http);
-      this.lastBlockNumber = this.$store.state.lastBlockNum;
-    },
-    checkLastNum() {
-      console.log(this.$store.state.lastBlockNum);
     },
   },
 };
