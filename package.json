@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite --mode dev",
+    "dev_eth": "vite --mode dev_eth",
     "build": "vite build --mode prod",
     "stage": "vite build --mode stage"
   },

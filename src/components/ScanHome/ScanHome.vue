@@ -5,13 +5,18 @@
   </div>
 </template>
 <script>
-import ScanBlock from "../ScanBlock/ScanBlock.vue";
-import ScanTransaction from "../ScanTransaction/ScanTransaction.vue";
+import { getBlockList } from "../../js/block.js";
 export default {
   name: "ScanHome",
-  components: {
-    ScanBlock,
-    ScanTransaction,
+  created() {
+    this.getBlockListRes();
+  },
+  methods: {
+    async getBlockListRes() {
+      let res = await getBlockList(this.$rpc_http);
+      this.$store.state.lastBlockNum = res[0];
+      this.$store.state.HomeBlockInfoList = res[1];
+    },
   },
 };
 </script>

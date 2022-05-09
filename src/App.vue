@@ -1,8 +1,8 @@
 <template lang="">
   <div class="container">
     <scan-header title="Coq Chain Scan"></scan-header>
-    <br />
     <router-view></router-view>
+    <scan-tail></scan-tail>
   </div>
 </template>
 <script>

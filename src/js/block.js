@@ -34,6 +34,7 @@ async function getBlockListByRpc(http, lastBlockNum) {
 
 export async function getBlockList(http) {
   let lastBlockNum = await getLastBlockNum(http);
-  let res = await getBlockListByRpc(http, lastBlockNum);
-  return [lastBlockNum, res];
+  let blockRes = await getBlockListByRpc(http, lastBlockNum);
+  let transactionRes = [];
+  return [lastBlockNum, blockRes, transactionRes];
 }

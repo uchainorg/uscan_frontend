@@ -1,6 +1,6 @@
 <template lang="">
   <div class="block-container">
-    <el-table :data="tableData" style="width: 95%">
+    <el-table :data="this.$store.state.HomeBlockInfoList" style="width: 95%" empty-text="loading...">
       <el-table-column label="Latest Blocks" width="180">
         <template v-slot:default="scope">
           <div class="table-column-row">
@@ -9,14 +9,14 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column width="300">
+      <el-table-column>
         <template v-slot:default="scope">
           <div class="table-column-row">
             <div>
               Miner <router-link :to="'/'">{{ scope.row.miner }}</router-link>
             </div>
             <el-tooltip class="box-item" effect="dark" content="Transactions in this block" placement="right">
-              <div style="width: 45px">
+              <div style="width: 60px">
                 <router-link :to="'/'">{{ scope.row.txCount }} txns</router-link>
               </div>
             </el-tooltip>
@@ -26,30 +26,25 @@
       <el-table-column>
         <template v-slot:default="scope">
           <el-tooltip class="box-item" effect="dark" content="gasUsed" placement="right">
-            <div style="text-align: right">{{ scope.row.gasUsed }} Eth</div>
+            <div style="text-align: right">
+              <el-tag type="info">{{ scope.row.gasUsed }} Wei</el-tag>
+            </div>
           </el-tooltip>
         </template>
       </el-table-column>
     </el-table>
+    <el-button type="primary" plain style="width: 95%; margin-top: 1%">View all Blocks</el-button>
   </div>
 </template>
 <script>
-import { getBlockList } from "../../js/block.js";
 export default {
   name: "ScanBlock",
-  data() {
-    return {
-      tableData: [],
-    };
-  },
   created() {
     this.getBlockListRes();
   },
   methods: {
-    async getBlockListRes() {
-      let res = await getBlockList(this.$rpc_http);
-      this.$store.state.lastBlockNum = res[0];
-      this.tableData = res[1];
+    getBlockListRes() {
+      this.tableData = this.$store.state.HomeBlockInfoList;
     },
   },
 };
