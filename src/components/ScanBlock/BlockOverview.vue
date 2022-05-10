@@ -3,8 +3,31 @@
     <el-table-column prop="parameterDisplay" width="350px"></el-table-column>
     <el-table-column prop="parameterValue">
       <template v-slot:default="scope">
-        <div v-if="scope.row.parameterName == 'blockHeight'">blockHeight {{ scope.row.parameterValue }}</div>
-        <div v-else-if="scope.row.parameterName == 'timestamp'">time {{ scope.row.parameterValue }}</div>
+        <div v-if="scope.row.parameterName == 'blockHeight'" style="font-weight: 900">
+          {{ scope.row.parameterValue }}
+        </div>
+        <div class="center-row" v-else-if="scope.row.parameterName == 'timestamp'">
+          <el-icon><clock /></el-icon>&nbsp;{{ scope.row.parameterValue }}
+        </div>
+        <div v-else-if="scope.row.parameterName == 'transactions'">
+          <el-tooltip class="box-item" effect="dark" content="Click to view Transactions" placement="top-start">
+            <el-button type="primary" plain size="small">{{ scope.row.parameterValue }} transactions</el-button>
+          </el-tooltip>
+          &nbsp;in this block
+        </div>
+        <div v-else-if="scope.row.parameterName == 'minedBy'">
+          <router-link :to="'/'">{{ scope.row.parameterValue }}</router-link>
+        </div>
+        <div v-else-if="scope.row.parameterName == 'difficulty'">
+          {{ scope.row.parameterValue }}
+        </div>
+        <div v-else-if="scope.row.parameterName == 'totalDifficulty'">
+          {{ scope.row.parameterValue }}
+        </div>
+        <div v-else-if="scope.row.parameterName == 'size'">{{ scope.row.parameterValue }}&nbsp;bytes</div>
+        <div v-else-if="scope.row.parameterName == 'gasUsed'">{{ scope.row.parameterValue }}</div>
+        <div v-else-if="scope.row.parameterName == 'baseFeePerGas'">{{ scope.row.parameterValue }} wei</div>
+
         <div v-else>
           {{ scope.row.parameterValue }}
         </div>
@@ -13,121 +36,141 @@
   </el-table>
 </template>
 <script>
+import { getBlock } from "../../js/block.js";
+import { diffTime } from "../../js/utils.js";
+import { Clock } from "@element-plus/icons-vue";
 export default {
   name: "BlockOverview",
   props: ["data"],
+  components: [Clock],
   data() {
     return {
-      tableData: [
+      tableData: [],
+    };
+  },
+  created() {
+    this.getBlockRes(this.data.blockNumber);
+  },
+  methods: {
+    formatTimestamp(timestamp) {
+      let createTime = new Date(parseInt(timestamp)) * 1000;
+      let date = new Date(parseInt(timestamp) * 1000).toUTCString();
+      return diffTime(createTime, new Date()) + "(" + date + ")";
+    },
+    async getBlockRes(blockNumber) {
+      let res = await getBlock(this.$rpc_http, blockNumber);
+      console.log("getBlockRes", res);
+      this.tableData.push(
         {
           parameterName: "blockHeight",
           parameterDisplay: "Block Height:",
-          parameterValue: "14660757",
+          parameterValue: blockNumber,
         },
         {
           parameterName: "timestamp",
           parameterDisplay: "Timestamp:",
-          parameterValue: "1 day 10 hrs ago (Apr-26-2022 02:48:48 PM +UTC)",
+          parameterValue: this.formatTimestamp(res.timestamp),
         },
         {
           parameterName: "transactions",
           parameterDisplay: "Transactions:",
-          parameterValue: "308 transactions and 70 contract internal transactions in this block",
+          parameterValue: res.transactions.length,
         },
         {
           parameterName: "minedBy",
           parameterDisplay: "Mined by:",
-          parameterValue: "0x00192fb10df37c9fb26829eb2cc623cd1bf599e8 (2Miners: PPLNS) in 65 secs",
+          parameterValue: res.miner,
         },
         {
           parameterName: "blockReward",
           parameterDisplay: "Block Reward:",
-          parameterValue: "2.058262409143852486 Ether (2 + 1.325123428079492042 - 1.266861018935639556)",
-        },
-        {
-          parameterName: "blockReward",
-          parameterDisplay: "Block Reward:",
-          parameterValue: "2.058262409143852486 Ether (2 + 1.325123428079492042 - 1.266861018935639556)",
+          parameterValue: "(test)2.058262409143852486 Ether (2 + 1.325123428079492042 - 1.266861018935639556)",
         },
         {
           parameterName: "unclesReward",
           parameterDisplay: "Uncles Reward:",
-          parameterValue: "0",
+          parameterValue: "(test)0",
         },
         {
           parameterName: "difficulty",
           parameterDisplay: "Difficulty:",
-          parameterValue: "13,173,991,395,647,696",
+          parameterValue: BigInt(parseInt(res.difficulty))
+            .toString()
+            .replace(/(\d)(?=(?:\d{3})+$)/g, "$1,"),
         },
         {
           parameterName: "totalDifficulty",
           parameterDisplay: "Total Difficulty:",
-          parameterValue: "13,173,991,395,647,696",
+          parameterValue: BigInt(parseInt(res.totalDifficulty))
+            .toString()
+            .replace(/(\d)(?=(?:\d{3})+$)/g, "$1,"),
         },
         {
           parameterName: "size",
           parameterDisplay: "Size:",
-          parameterValue: "137,666 bytes",
+          parameterValue: parseInt(res.size)
+            .toString()
+            .replace(/(\d)(?=(?:\d{3})+$)/g, "$1,"),
         },
         {
           parameterName: "gasUsed",
           parameterDisplay: "Gas Used:",
-          parameterValue: "19,182,321 (64.00%)",
+          parameterValue: parseInt(res.gasUsed)
+            .toString()
+            .replace(/(\d)(?=(?:\d{3})+$)/g, "$1,"),
         },
         {
-          parameterName: "gasUsed",
-          parameterDisplay: "Gas Used:",
-          parameterValue: "29,970,647",
+          parameterName: "gasLimit",
+          parameterDisplay: "Gas Limit:",
+          parameterValue: parseInt(res.gasLimit)
+            .toString()
+            .replace(/(\d)(?=(?:\d{3})+$)/g, "$1,"),
         },
         {
-          parameterName: "baseFeePerGas:",
+          parameterName: "baseFeePerGas",
           parameterDisplay: "Base Fee Per Gas:",
-          parameterValue: "0.000000066043156036 Ether (66.043156036 Gwei)",
+          parameterValue: parseInt(res.baseFeePerGas),
         },
         {
           parameterName: "burntFees",
           parameterDisplay: "Burnt Fees:",
-          parameterValue: "1.266861018935639556 Ether",
+          parameterValue: "(test)1.266861018935639556 Ether",
         },
         {
           parameterName: "extraData",
           parameterDisplay: "Extra Data:",
-          parameterValue: "EthereumPPLNS/2miners_ASIA2 (Hex:0x457468657265756d50504c4e532f326d696e6572735f4153494132)",
-        },
-        {
-          parameterName: "etherPrice:",
-          parameterDisplay: "Ether Price:",
-          parameterValue: "$2,809.60 / ETH",
+          parameterValue: res.extraData,
         },
         {
           parameterName: "hash",
           parameterDisplay: "Hash:",
-          parameterValue: "0xa36593f9ff209a1eb668da6b6b3a996d63ea3b7105cd1ff1829d1f296ec47930",
+          parameterValue: res.hash,
         },
         {
           parameterName: "parentHash",
           parameterDisplay: "Parent Hash:",
-          parameterValue: "0x9c0831353cd9bee917db6a1893d4db6b81998401203045ff9a653973089a6801",
+          parameterValue: res.parentHash,
         },
         {
           parameterName: "sha3Uncles",
           parameterDisplay: "Sha3Uncles:",
-          parameterValue: "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+          parameterValue: res.sha3Uncles,
         },
-
         {
           parameterName: "stateRoot",
           parameterDisplay: "StateRoot:",
-          parameterValue: "0x4b726b531b15c7181eb65721b9647b9fdf4c270807ab4a06db346435209e53bf",
+          parameterValue: res.stateRoot,
         },
         {
           parameterName: "nonce",
           parameterDisplay: "Nonce:",
-          parameterValue: "0x4a07d5fb923fdc52",
-        },
-      ],
-    };
+          parameterValue: res.nonce,
+        }
+      );
+    },
   },
 };
 </script>
-<style lang=""></style>
+<style lang="less" scoped>
+@import "../../css/style.css";
+</style>

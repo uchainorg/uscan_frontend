@@ -9,6 +9,7 @@
     "stage": "vite build --mode stage"
   },
   "dependencies": {
+    "@element-plus/icons-vue": "^1.1.4",
     "axios": "^0.27.2",
     "element-plus": "^2.1.10",
     "vue": "^3.2.25",
@@ -22,6 +23,7 @@
     "eslint-plugin-vue": "^8.7.1",
     "less": "^4.1.2",
     "unplugin-auto-import": "^0.7.1",
+    "unplugin-icons": "^0.14.3",
     "unplugin-vue-components": "^0.19.3",
     "vite": "^2.9.5"
   }

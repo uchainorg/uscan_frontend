@@ -5,9 +5,15 @@ async function getLastBlockNum(http) {
   return parseInt(res.result);
 }
 
+// async function getTransactionListByRpc(http, transactionHashList) {
+//   transactionHashList.
+// }
+
 async function getBlockListByRpc(http, lastBlockNum) {
   let requestList = [];
-  let resList = [];
+  let blockList = [];
+  let transactionList = [];
+  let getTransactionFlag = false;
   for (let i = 0; i < 10; i++) {
     let blockNumHex = "0x" + (lastBlockNum - i).toString(16);
     requestList.push({
@@ -21,20 +27,46 @@ async function getBlockListByRpc(http, lastBlockNum) {
   res.forEach((element) => {
     // console.log("res for each", element.result);
     let createTime = new Date(parseInt(element.result.timestamp)) * 1000;
-    resList.push({
+    blockList.push({
       blockNumber: parseInt(element.result.number),
       diffTime: diffTime(createTime, new Date()),
       txCount: element.result.transactions.length,
       gasUsed: parseInt(element.result.gasUsed),
       miner: element.result.miner.slice(0, 19) + "...",
     });
+    if (!getTransactionFlag) {
+      if (element.result.transactions.length > 10) {
+        element.result.transactions.slice(0, 10).forEach((tx) => {
+          // console.log("res for each", tx);
+          transactionList.push({
+            transactionHash: tx.hash.slice(0, 15) + "...",
+            diffTime: diffTime(createTime, new Date()),
+            from: tx.from.slice(0, 19) + "...",
+            to: tx.to.slice(0, 19) + "...",
+            transactionAmount: parseInt(tx.value),
+          });
+        });
+        getTransactionFlag = true;
+      }
+    }
   });
-  return resList;
+  // console.log("transactionRes", transactionList);
+  return [blockList, transactionList];
 }
 
 export async function getBlockList(http) {
   let lastBlockNum = await getLastBlockNum(http);
-  let blockRes = await getBlockListByRpc(http, lastBlockNum);
-  let transactionRes = [];
-  return [lastBlockNum, blockRes, transactionRes];
+  let res = await getBlockListByRpc(http, lastBlockNum);
+  return [lastBlockNum, res[0], res[1]];
+}
+
+export async function getBlock(http, blockNumber) {
+  let blockNumHex = "0x" + parseInt(blockNumber).toString(16);
+  let { data: res } = await http.post("", {
+    jsonrpc: "2.0",
+    method: "eth_getBlockByNumber",
+    params: [blockNumHex, true],
+    id: 1,
+  });
+  return res.result;
 }

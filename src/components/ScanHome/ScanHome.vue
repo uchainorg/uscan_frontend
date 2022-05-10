@@ -16,6 +16,7 @@ export default {
       let res = await getBlockList(this.$rpc_http);
       this.$store.state.lastBlockNum = res[0];
       this.$store.state.HomeBlockInfoList = res[1];
+      this.$store.state.HomeTransactionInfoList = res[2];
     },
   },
 };

@@ -13,20 +13,14 @@
   </div>
 </template>
 <script>
-import BlockOverview from "./BlockOverview.vue";
-import BlockComments from "./BlockComments.vue";
 export default {
   name: "BlockInfo",
   props: ["number"],
-  components: {
-    BlockOverview,
-    BlockComments,
-  },
   data() {
     return {
       activeName: "first",
-      blockOverviewData: { blockNumber: 1000 },
-      blockCommentsData: { blockNumber: 2000 },
+      blockOverviewData: { blockNumber: this.number },
+      blockCommentsData: { blockNumber: this.number },
     };
   },
   methods: {

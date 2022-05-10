@@ -1,7 +1,7 @@
 <template lang="">
   <div class="block-container">
     <el-table :data="this.$store.state.HomeBlockInfoList" style="width: 95%" empty-text="loading...">
-      <el-table-column label="Latest Blocks" width="180">
+      <el-table-column label="Latest Blocks" width="190">
         <template v-slot:default="scope">
           <div class="table-column-row">
             <router-link :to="'/block/' + scope.row.blockNumber">{{ scope.row.blockNumber }}</router-link>
@@ -27,7 +27,7 @@
         <template v-slot:default="scope">
           <el-tooltip class="box-item" effect="dark" content="gasUsed" placement="right">
             <div style="text-align: right">
-              <el-tag type="info">{{ scope.row.gasUsed }} Wei</el-tag>
+              <el-tag type="info">{{ scope.row.gasUsed }} wei</el-tag>
             </div>
           </el-tooltip>
         </template>

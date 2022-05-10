@@ -1,10 +1,12 @@
 <template lang="">
   <div class="block-container">
-    <el-table :data="tableData" style="width: 95%">
-      <el-table-column label="Latest Transactions" width="180">
+    <el-table :data="this.$store.state.HomeTransactionInfoList" style="width: 95%" empty-text="loading...">
+      <el-table-column label="Latest Transactions" width="190">
         <template v-slot:default="scope">
           <div class="table-column-row">
-            <div>{{ scope.row.transactionHash }}</div>
+            <div>
+              <router-link :to="'/'">{{ scope.row.transactionHash }}</router-link>
+            </div>
             <div>{{ scope.row.diffTime }}</div>
           </div>
         </template>
@@ -12,17 +14,26 @@
       <el-table-column width="250">
         <template v-slot:default="scope">
           <div class="table-column-row">
-            <div>From {{ scope.row.from }}</div>
-            <div>To {{ scope.row.to }}</div>
+            <div>
+              From <router-link :to="'/'">{{ scope.row.from }}</router-link>
+            </div>
+            <div>
+              To <router-link :to="'/'">{{ scope.row.to }}</router-link>
+            </div>
           </div>
         </template>
       </el-table-column>
       <el-table-column>
         <template v-slot:default="scope">
-          <div style="text-align: right">{{ scope.row.transactionAmount }} Eth</div>
+          <el-tooltip class="box-item" effect="dark" content="value" placement="right">
+            <div style="text-align: right">
+              <el-tag type="info">{{ scope.row.transactionAmount }} wei</el-tag>
+            </div>
+          </el-tooltip>
         </template>
       </el-table-column>
     </el-table>
+    <el-button type="primary" plain style="width: 95%; margin-top: 1%">View all Transactions</el-button>
   </div>
 </template>
 <script>
