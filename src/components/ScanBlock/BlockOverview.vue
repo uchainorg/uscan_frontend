@@ -1,5 +1,5 @@
 <template lang="">
-  <el-table :data="tableData" style="width: 100%; margin-top: -3%">
+  <el-table :data="tableData" style="width: 100%; margin-top: -3%" empty-text="loading...">
     <el-table-column prop="parameterDisplay" width="350px"></el-table-column>
     <el-table-column prop="parameterValue">
       <template v-slot:default="scope">

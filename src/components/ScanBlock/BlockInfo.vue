@@ -1,5 +1,5 @@
 <template lang="">
-  <div class="container" style="margin-top: 2%; max-width: 1350px">
+  <div class="container">
     <h3 style="display: inline">Block</h3>
     <p style="display: inline; margin-left: 1%">#{{ number }}</p>
     <el-tabs v-model="activeName" style="">
@@ -30,4 +30,6 @@ export default {
   // },
 };
 </script>
-<style lang=""></style>
+<style lang="less" scoped>
+@import "../../css/style.css";
+</style>

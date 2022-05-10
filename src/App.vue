@@ -1,5 +1,5 @@
 <template lang="">
-  <div class="container">
+  <div class="container-main">
     <scan-header title="Coq Chain Scan"></scan-header>
     <router-view></router-view>
     <scan-tail></scan-tail>
@@ -11,7 +11,7 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-.container {
+.container-main {
   margin: auto;
   max-width: 1400px;
 }
