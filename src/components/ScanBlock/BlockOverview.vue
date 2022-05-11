@@ -11,7 +11,7 @@
         </div>
         <div v-else-if="scope.row.parameterName == 'transactions'">
           <el-tooltip class="box-item" effect="dark" content="Click to view Transactions" placement="top-start">
-            <el-button type="primary" plain size="small">{{ scope.row.parameterValue }} transactions</el-button>
+            <el-button type="primary" plain size="small" @click="moveToTxs">{{ scope.row.parameterValue }} transactions</el-button>
           </el-tooltip>
           &nbsp;in this block
         </div>
@@ -39,7 +39,8 @@
 import { getBlock } from "../../js/block.js";
 import { diffTime } from "../../js/utils.js";
 import { Clock } from "@element-plus/icons-vue";
-export default {
+import { defineComponent } from "vue";
+export default defineComponent({
   name: "BlockOverview",
   props: ["data"],
   components: [Clock],
@@ -57,9 +58,12 @@ export default {
       let date = new Date(parseInt(timestamp) * 1000).toUTCString();
       return diffTime(createTime, new Date()) + "(" + date + ")";
     },
+    moveToTxs() {
+      this.$router.push("/block/txs/" + this.data.blockNumber);
+    },
     async getBlockRes(blockNumber) {
       let res = await getBlock(this.$rpc_http, blockNumber);
-      console.log("getBlockRes", res);
+      // console.log("getBlockRes", res);
       this.tableData.push(
         {
           parameterName: "blockHeight",
@@ -169,7 +173,7 @@ export default {
       );
     },
   },
-};
+});
 </script>
 <style lang="less" scoped>
 @import "../../css/style.css";

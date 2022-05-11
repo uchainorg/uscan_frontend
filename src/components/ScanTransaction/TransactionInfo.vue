@@ -1,13 +1,13 @@
 <template lang="">
   <div class="container">
-    <h3 style="display: inline">Block</h3>
-    <p style="display: inline; margin-left: 1%">#{{ number }}</p>
+    <h3 style="display: inline">Transactions Details</h3>
+    <!-- <p style="display: inline; margin-left: 1%">#{{ txHash }}</p> -->
     <el-tabs v-model="activeName" style="">
       <el-tab-pane label="Overview" name="first">
-        <block-overview :data="blockOverviewData"></block-overview>
+        <transaction-overview :data="transactionOverviewData"></transaction-overview>
       </el-tab-pane>
       <el-tab-pane label="Comments" name="second">
-        <block-comments :data="blockCommentsData"></block-comments>
+        <transaction-comments :data="transactionCommentsData"></transaction-comments>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -15,13 +15,13 @@
 <script>
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "BlockInfo",
-  props: ["number"],
+  name: "TransactionInfo",
+  props: ["txHash"],
   data() {
     return {
       activeName: "first",
-      blockOverviewData: { blockNumber: this.number },
-      blockCommentsData: { blockNumber: this.number },
+      transactionOverviewData: { txHash: this.txHash },
+      transactionCommentsData: { txHash: this.txHash },
     };
   },
   // methods: {

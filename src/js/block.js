@@ -39,7 +39,7 @@ async function getBlockListByRpc(http, lastBlockNum) {
         element.result.transactions.slice(0, 10).forEach((tx) => {
           // console.log("res for each", tx);
           transactionList.push({
-            transactionHash: tx.hash.slice(0, 15) + "...",
+            transactionHash: tx.hash,
             diffTime: diffTime(createTime, new Date()),
             from: tx.from.slice(0, 19) + "...",
             to: tx.to.slice(0, 19) + "...",
@@ -66,6 +66,16 @@ export async function getBlock(http, blockNumber) {
     jsonrpc: "2.0",
     method: "eth_getBlockByNumber",
     params: [blockNumHex, true],
+    id: 1,
+  });
+  return res.result;
+}
+
+export async function getTransaction(http, txHash) {
+  let { data: res } = await http.post("", {
+    jsonrpc: "2.0",
+    method: "eth_getTransactionByHash",
+    params: [txHash],
     id: 1,
   });
   return res.result;

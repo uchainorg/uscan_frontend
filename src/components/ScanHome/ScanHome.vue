@@ -6,7 +6,8 @@
 </template>
 <script>
 import { getBlockList } from "../../js/block.js";
-export default {
+import { defineComponent } from "vue";
+export default defineComponent({
   name: "ScanHome",
   created() {
     this.getBlockListRes();
@@ -19,7 +20,7 @@ export default {
       this.$store.state.HomeTransactionInfoList = res[2];
     },
   },
-};
+});
 </script>
 <style lang="less" scoped>
 .container-display {

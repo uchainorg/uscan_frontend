@@ -1,10 +1,10 @@
 <template lang="">
-  <div>BlockComments {{ data.blockNumber }}</div>
+  <div>TransactionComments {{ this.data.txHash }}</div>
 </template>
 <script>
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "BlockComments",
+  name: "TransactionComments",
   props: ["data"],
 });
 </script>

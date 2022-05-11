@@ -2,9 +2,10 @@
   <div class="tail-container">Let's do something interesting.End!</div>
 </template>
 <script>
-export default {
+import { defineComponent } from "vue";
+export default defineComponent({
   name: "ScanTail",
-};
+});
 </script>
 <style lang="less" scoped>
 .tail-container {

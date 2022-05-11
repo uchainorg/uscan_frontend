@@ -6,9 +6,10 @@
   </div>
 </template>
 <script>
-export default {
+import { defineComponent } from "vue";
+export default defineComponent({
   name: "chain-scan",
-};
+});
 </script>
 <style lang="less" scoped>
 .container-main {

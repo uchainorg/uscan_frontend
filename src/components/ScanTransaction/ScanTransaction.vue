@@ -5,7 +5,7 @@
         <template v-slot:default="scope">
           <div class="table-column-row">
             <div>
-              <router-link :to="'/'">{{ scope.row.transactionHash }}</router-link>
+              <router-link :to="'/tx/' + scope.row.transactionHash">{{ scope.row.transactionHash.slice(0, 15) + "..." }}</router-link>
             </div>
             <div>{{ scope.row.diffTime }}</div>
           </div>
@@ -37,24 +37,15 @@
   </div>
 </template>
 <script>
-import { mockGetTransactionList } from "../../js/mock.js";
-
-export default {
+import { defineComponent } from "vue";
+export default defineComponent({
   name: "ScanTransaction",
   data() {
     return {
       tableData: [],
     };
   },
-  created() {
-    this.loadTransactionList();
-  },
-  methods: {
-    loadTransactionList() {
-      this.tableData = mockGetTransactionList();
-    },
-  },
-};
+});
 </script>
 <style lang="less" scoped>
 @import "../../css/style.css";
