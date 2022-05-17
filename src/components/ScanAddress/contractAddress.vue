@@ -30,7 +30,7 @@
       </div>
     </div>
     <div style="margin-top: 3%">
-      <el-tabs v-model="activeName" style="">
+      <el-tabs v-model="activeName" @tab-click="handleTabClick">
         <el-tab-pane label="Transactions" name="transactions">
           <!-- <general-txs :txsData="generalTransactionsList"></general-txs> -->
           <general-txs :txsData="generalTransactionsList" :headerData="generalTransactionsHeaderList"></general-txs>
@@ -227,11 +227,42 @@ export default defineComponent({
       res.transactions.slice(0, 50).forEach((tx) => {
         (tx.method = "test-method"), (tx.age = diffTime(new Date(parseInt(res.timestamp)) * 1000, new Date())), (tx.ageFormat = new Date(parseInt(res.timestamp) * 1000).toUTCString());
         this.generalTransactionsList.push(tx);
+      });
+      // console.log(this.internalTransactionsList);
+    },
+    async getInternalTransactionsList() {
+      let res = await getBlock(this.$rpc_http, 14790713);
+      res.transactions.slice(0, 50).forEach((tx) => {
+        (tx.method = "test-method"), (tx.age = diffTime(new Date(parseInt(res.timestamp)) * 1000, new Date())), (tx.ageFormat = new Date(parseInt(res.timestamp) * 1000).toUTCString());
         this.internalTransactionsList.push(tx);
+      });
+      // console.log(this.internalTransactionsList);
+    },
+    async getErc20TransactionsList() {
+      let res = await getBlock(this.$rpc_http, 14790713);
+      res.transactions.slice(0, 50).forEach((tx) => {
+        (tx.method = "test-method"), (tx.age = diffTime(new Date(parseInt(res.timestamp)) * 1000, new Date())), (tx.ageFormat = new Date(parseInt(res.timestamp) * 1000).toUTCString());
         this.erc20TransactionsList.push(tx);
+      });
+      // console.log(this.internalTransactionsList);
+    },
+    async getErc721lTransactionsList() {
+      let res = await getBlock(this.$rpc_http, 14790713);
+      res.transactions.slice(0, 50).forEach((tx) => {
+        (tx.method = "test-method"), (tx.age = diffTime(new Date(parseInt(res.timestamp)) * 1000, new Date())), (tx.ageFormat = new Date(parseInt(res.timestamp) * 1000).toUTCString());
         this.erc721TransactionsList.push(tx);
       });
-      console.log(this.internalTransactionsList);
+      // console.log(this.internalTransactionsList);
+    },
+    handleTabClick(tab) {
+      console.log(tab.props);
+      if (tab.props.name == "internalTxns") {
+        this.getInternalTransactionsList();
+      } else if (tab.props.name == "erc20TokenTxns") {
+        this.getErc20TransactionsList();
+      } else if (tab.props.name == "erc721TokenTxns") {
+        this.getErc721lTransactionsList();
+      }
     },
   },
 });
