@@ -34,7 +34,9 @@
         <el-tab-pane label="Transactions" name="transactions">
           <general-txs :txsData="generalTransactionsList"></general-txs>
         </el-tab-pane>
-        <el-tab-pane label="Internal Txns" name="internalTxns"> </el-tab-pane>
+        <el-tab-pane label="Internal Txns" name="internalTxns">
+          <internal-txs :txsData="internalTransactionsList"></internal-txs>
+        </el-tab-pane>
         <el-tab-pane label="Erc20 Token Txns" name="erc20TokenTxns"> </el-tab-pane>
         <el-tab-pane label="Erc721 Token Txns" name="erc721TokenTxns"> </el-tab-pane>
         <el-tab-pane label="Contract" name="contract"> </el-tab-pane>
@@ -45,13 +47,14 @@
 </template>
 <script>
 import { defineComponent } from "vue";
-import generalTxs from "../Transaction/generalTxs.vue";
 import { getBlock } from "../../js/block.js";
 import { diffTime } from "../../js/utils.js";
+import generalTxs from "../Transaction/generalTxs.vue";
+import internalTxs from "../Transaction/internalTxs.vue";
 export default defineComponent({
   name: "ContractAddress",
   props: ["address"],
-  components: { generalTxs },
+  components: { generalTxs, internalTxs },
   data() {
     return {
       activeName: "transactions",
@@ -90,6 +93,7 @@ export default defineComponent({
         },
       ],
       generalTransactionsList: [],
+      internalTransactionsList: [],
     };
   },
   created() {
@@ -101,6 +105,7 @@ export default defineComponent({
       res.transactions.slice(0, 50).forEach((tx) => {
         (tx.method = "test-method"), (tx.age = diffTime(new Date(parseInt(res.timestamp)) * 1000, new Date())), (tx.ageFormat = new Date(parseInt(res.timestamp) * 1000).toUTCString());
         this.generalTransactionsList.push(tx);
+        this.internalTransactionsList.push(tx);
       });
       // console.log(this.tableDate);
     },
