@@ -38,8 +38,12 @@
         <el-tab-pane label="Internal Txns" name="internalTxns">
           <general-txs :txsData="internalTransactionsList" :headerData="internalTransactionsHeaderList"></general-txs>
         </el-tab-pane>
-        <el-tab-pane label="Erc20 Token Txns" name="erc20TokenTxns"> </el-tab-pane>
-        <el-tab-pane label="Erc721 Token Txns" name="erc721TokenTxns"> </el-tab-pane>
+        <el-tab-pane label="Erc20 Token Txns" name="erc20TokenTxns">
+          <general-txs :txsData="erc20TransactionsList" :headerData="erc20TransactionsHeaderList"></general-txs>
+        </el-tab-pane>
+        <el-tab-pane label="Erc721 Token Txns" name="erc721TokenTxns">
+          <general-txs :txsData="erc721TransactionsList" :headerData="erc721TransactionsHeaderList"></general-txs>
+        </el-tab-pane>
         <el-tab-pane label="Contract" name="contract"> </el-tab-pane>
         <el-tab-pane label="Events" name="events"> </el-tab-pane>
       </el-tabs>
@@ -154,6 +158,64 @@ export default defineComponent({
           key: "value",
         },
       ],
+      erc20TransactionsList: [],
+      erc20TransactionsHeaderList: [
+        {
+          label: "Txn Hash",
+          key: "hash",
+        },
+        {
+          label: "Age",
+          key: "age",
+        },
+        {
+          label: "From",
+          key: "from",
+        },
+        {
+          label: "To",
+          key: "to",
+        },
+        {
+          label: "Value",
+          key: "value",
+        },
+        {
+          label: "Token",
+          key: "from",
+        },
+      ],
+      erc721TransactionsList: [],
+      erc721TransactionsHeaderList: [
+        {
+          label: "Txn Hash",
+          key: "hash",
+        },
+        {
+          label: "Age",
+          key: "age",
+        },
+        {
+          label: "From",
+          key: "from",
+        },
+        {
+          label: "To",
+          key: "to",
+        },
+        {
+          label: "Token ID",
+          key: "blockNumber",
+        },
+        {
+          label: "Token",
+          key: "from",
+        },
+        {
+          label: "Details",
+          key: "to",
+        },
+      ],
     };
   },
   created() {
@@ -166,6 +228,8 @@ export default defineComponent({
         (tx.method = "test-method"), (tx.age = diffTime(new Date(parseInt(res.timestamp)) * 1000, new Date())), (tx.ageFormat = new Date(parseInt(res.timestamp) * 1000).toUTCString());
         this.generalTransactionsList.push(tx);
         this.internalTransactionsList.push(tx);
+        this.erc20TransactionsList.push(tx);
+        this.erc721TransactionsList.push(tx);
       });
       console.log(this.internalTransactionsList);
     },
