@@ -32,10 +32,11 @@
     <div style="margin-top: 3%">
       <el-tabs v-model="activeName" style="">
         <el-tab-pane label="Transactions" name="transactions">
-          <general-txs :txsData="generalTransactionsList"></general-txs>
+          <!-- <general-txs :txsData="generalTransactionsList"></general-txs> -->
+          <general-txs :txsData="generalTransactionsList" :headerData="generalTransactionsHeaderList"></general-txs>
         </el-tab-pane>
         <el-tab-pane label="Internal Txns" name="internalTxns">
-          <internal-txs :txsData="internalTransactionsList"></internal-txs>
+          <general-txs :txsData="internalTransactionsList" :headerData="internalTransactionsHeaderList"></general-txs>
         </el-tab-pane>
         <el-tab-pane label="Erc20 Token Txns" name="erc20TokenTxns"> </el-tab-pane>
         <el-tab-pane label="Erc721 Token Txns" name="erc721TokenTxns"> </el-tab-pane>
@@ -50,11 +51,10 @@ import { defineComponent } from "vue";
 import { getBlock } from "../../js/block.js";
 import { diffTime } from "../../js/utils.js";
 import generalTxs from "../Transaction/generalTxs.vue";
-import internalTxs from "../Transaction/internalTxs.vue";
 export default defineComponent({
   name: "ContractAddress",
   props: ["address"],
-  components: { generalTxs, internalTxs },
+  components: { generalTxs },
   data() {
     return {
       activeName: "transactions",
@@ -93,7 +93,67 @@ export default defineComponent({
         },
       ],
       generalTransactionsList: [],
+      generalTransactionsHeaderList: [
+        {
+          label: "Txn Hash",
+          key: "hash",
+        },
+        {
+          label: "Method",
+          key: "method",
+        },
+        {
+          label: "Block",
+          key: "blockNumber",
+        },
+        {
+          label: "Age",
+          key: "age",
+        },
+        {
+          label: "From",
+          key: "hash",
+        },
+        {
+          label: "To",
+          key: "to",
+        },
+        {
+          label: "Value",
+          key: "value",
+        },
+        {
+          label: "Txn Fee",
+          key: "gas",
+        },
+      ],
       internalTransactionsList: [],
+      internalTransactionsHeaderList: [
+        {
+          label: "Parent Txn Hash",
+          key: "hash",
+        },
+        {
+          label: "block",
+          key: "blockNumber",
+        },
+        {
+          label: "Age",
+          key: "age",
+        },
+        {
+          label: "From",
+          key: "from",
+        },
+        {
+          label: "To",
+          key: "to",
+        },
+        {
+          label: "Value",
+          key: "value",
+        },
+      ],
     };
   },
   created() {
@@ -107,7 +167,7 @@ export default defineComponent({
         this.generalTransactionsList.push(tx);
         this.internalTransactionsList.push(tx);
       });
-      // console.log(this.tableDate);
+      console.log(this.internalTransactionsList);
     },
   },
 });

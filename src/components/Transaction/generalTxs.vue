@@ -1,48 +1,22 @@
 <template lang="">
   <el-table :data="txsData" empty-text="loading...">
-    <el-table-column label="Txn Hash" width="190">
+    <el-table-column v-for="info in headerData" :key="info.key" :property="info.key" :label="info.label">
+      <!-- <template #header>
+        <div>hhhhhh</div>
+      </template> -->
       <template v-slot:default="scope">
-        <div>{{ scope.row.hash.slice(0, 18) + "..." }}</div>
-      </template>
-    </el-table-column>
-    <el-table-column label="Method" width="130">
-      <template v-slot:default="scope">
-        <div>{{ scope.row.method }}</div>
-      </template>
-    </el-table-column>
-    <el-table-column label="Block" width="130">
-      <template v-slot:default="scope">
-        <div>
-          <router-link :to="'/block/' + parseInt(scope.row.blockNumber)">{{ parseInt(scope.row.blockNumber) }}</router-link>
+        <div v-if="scope.column.property == 'hash'" style="width: 180px">
+          <router-link :to="'/tx/' + scope.row[scope.column.property]">{{ scope.row[scope.column.property].slice(0, 18) + "..." }}</router-link>
         </div>
-      </template>
-    </el-table-column>
-    <el-table-column label="Age" width="130">
-      <template v-slot:default="scope">
-        <el-tooltip class="box-item" effect="dark" placement="top">
-          <template #content> {{ scope.row.ageFormat }} </template>
-          <div>{{ scope.row.age }}</div>
-        </el-tooltip>
-      </template>
-    </el-table-column>
-    <el-table-column label="From" width="190">
-      <template v-slot:default="scope">
-        <div>{{ scope.row.from.slice(0, 19) + "..." }}</div>
-      </template>
-    </el-table-column>
-    <el-table-column label="To" width="190">
-      <template v-slot:default="scope">
-        <div>{{ scope.row.to.slice(0, 19) + "..." }}</div>
-      </template>
-    </el-table-column>
-    <el-table-column label="Value">
-      <template v-slot:default="scope">
-        <div>{{ parseInt(scope.row.value) }}</div>
-      </template>
-    </el-table-column>
-    <el-table-column label="Txn Fee">
-      <template v-slot:default="scope">
-        <div>{{ parseInt(scope.row.gas) }}</div>
+        <div v-else-if="scope.column.property == 'blockNumber'">
+          <router-link :to="'/block/' + parseInt(scope.row[scope.column.property])">{{ parseInt(scope.row[scope.column.property]) }}</router-link>
+        </div>
+        <div v-else-if="scope.column.property == 'from'" style="width: 180px">
+          <router-link :to="'/tx/' + scope.row[scope.column.property]">{{ scope.row[scope.column.property].slice(0, 18) + "..." }}</router-link>
+        </div>
+        <div v-else-if="scope.column.property == 'to'" style="width: 180px">
+          <router-link :to="'/tx/' + scope.row[scope.column.property]">{{ scope.row[scope.column.property].slice(0, 18) + "..." }}</router-link>
+        </div>
       </template>
     </el-table-column>
   </el-table>
@@ -52,6 +26,10 @@ export default {
   name: "generalTxs",
   props: {
     txsData: {
+      type: Array,
+      require: true,
+    },
+    headerData: {
       type: Array,
       require: true,
     },

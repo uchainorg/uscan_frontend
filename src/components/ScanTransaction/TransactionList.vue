@@ -2,7 +2,7 @@
   <div class="container">
     <h3 style="display: inline">Transactions</h3>
     <div>For Block {{ number }}</div>
-    <general-txs :txsData="tableDate"></general-txs>
+    <general-txs :txsData="tableDate" :headerData="headerList"></general-txs>
   </div>
 </template>
 <script>
@@ -17,6 +17,40 @@ export default defineComponent({
   data() {
     return {
       tableDate: [],
+      headerList: [
+        {
+          label: "Txn Hash",
+          key: "hash",
+        },
+        {
+          label: "Method",
+          key: "method",
+        },
+        {
+          label: "Block",
+          key: "blockNumber",
+        },
+        {
+          label: "Age",
+          key: "age",
+        },
+        {
+          label: "From",
+          key: "hash",
+        },
+        {
+          label: "To",
+          key: "to",
+        },
+        {
+          label: "Value",
+          key: "value",
+        },
+        {
+          label: "Txn Fee",
+          key: "gas",
+        },
+      ],
     };
   },
   created() {
