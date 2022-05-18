@@ -44,7 +44,9 @@
         <el-tab-pane label="Erc721 Token Txns" name="erc721TokenTxns">
           <general-txs :txsData="erc721TransactionsList" :headerData="erc721TransactionsHeaderList"></general-txs>
         </el-tab-pane>
-        <el-tab-pane label="Contract" name="contract"> </el-tab-pane>
+        <el-tab-pane label="Contract" name="contract">
+          <contract-info :contractAddress="address"></contract-info>
+        </el-tab-pane>
         <el-tab-pane label="Events" name="events"> </el-tab-pane>
       </el-tabs>
     </div>
@@ -55,13 +57,14 @@ import { defineComponent } from "vue";
 import { getBlock } from "../../js/block.js";
 import { diffTime } from "../../js/utils.js";
 import generalTxs from "../Transaction/generalTxs.vue";
+import contractInfo from "../Contract/contractInfo.vue";
 export default defineComponent({
   name: "ContractAddress",
   props: ["address"],
-  components: { generalTxs },
+  components: { generalTxs, contractInfo },
   data() {
     return {
-      activeName: "transactions",
+      activeName: "contract",
       contractOverviewTableData: [
         {
           parameterName: "balance",
@@ -255,7 +258,7 @@ export default defineComponent({
       // console.log(this.internalTransactionsList);
     },
     handleTabClick(tab) {
-      console.log(tab.props);
+      // console.log(tab.props);
       if (tab.props.name == "internalTxns") {
         this.getInternalTransactionsList();
       } else if (tab.props.name == "erc20TokenTxns") {

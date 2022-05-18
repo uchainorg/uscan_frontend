@@ -22,7 +22,8 @@
   </el-table>
 </template>
 <script>
-export default {
+import { defineComponent } from "vue";
+export default defineComponent({
   name: "generalTxs",
   props: {
     txsData: {
@@ -34,7 +35,7 @@ export default {
       require: true,
     },
   },
-};
+});
 </script>
 <style lang="less" scoped>
 @import "../../css/style.css";
