@@ -23,60 +23,59 @@
         <el-icon><Document /></el-icon> &nbsp;
         <h4>Contract Source Code (Solidity)</h4>
       </div>
-      <textarea style="width: 85%; height: 100px" readonly="readonly">
-  //Submitted for verification at Etherscan.io on 2020-05-05
-  // File: contracts/interfaces/IUniswapV2Pair.sol
-  pragma solidity >=0.5.0;
-  ...
-      </textarea>
+      <div>
+        <!-- <codemirror
+          v-model="code"
+          placeholder="Code gose here..."
+          :style="{ height: '400px' }"
+          :autofocus="true"
+          :indent-with-tab="true"
+          :tabSize="2"
+          :extensions="extensions"
+          @ready="log('ready', $event)"
+          @change="log('change', $event)"
+          @focus="log('focus', $event)"
+          @blur="log('blur', $event)"
+        /> -->
+      </div>
     </div>
     <div>
       <div class="center-row">
         <el-icon><Document /></el-icon> &nbsp;
         <h4>Contract Security Audit</h4>
       </div>
+      <code-view :codeData="'select a from table1 where b = 1'"></code-view>
+    </div>
+    <div>
       <div class="center-row">
         <el-icon><Document /></el-icon> &nbsp;
         <h4>Contract ABI</h4>
       </div>
-      <textarea style="width: 85%; height: 100px" readonly="readonly">
-  //Submitted for verification at Etherscan.io on 2020-05-05
-  // File: contracts/interfaces/IUniswapV2Pair.sol
-  pragma solidity >=0.5.0;
-  ...
-      </textarea>
+      <code-view :codeData="'select a from table1 where b = 1'"></code-view>
     </div>
     <div>
       <div class="center-row">
         <el-icon><Document /></el-icon> &nbsp;
         <h4>Contract Creation Code</h4>
       </div>
-      <textarea style="width: 85%; height: 100px" readonly="readonly">
-  //Submitted for verification at Etherscan.io on 2020-05-05
-  // File: contracts/interfaces/IUniswapV2Pair.sol
-  pragma solidity >=0.5.0;
-  ...
-      </textarea>
+      <code-view :codeData="'select a from table1 where b = 1'"></code-view>
     </div>
     <div>
       <div class="center-row">
         <el-icon><Document /></el-icon> &nbsp;
         <h4>Deployed ByteCode Sourcemap</h4>
       </div>
-      <textarea style="width: 85%; height: 100px" readonly="readonly">
-  //Submitted for verification at Etherscan.io on 2020-05-05
-  // File: contracts/interfaces/IUniswapV2Pair.sol
-  pragma solidity >=0.5.0;
-  ...
-      </textarea>
+      <code-view :codeData="'select a from table1 where b = 1'"></code-view>
     </div>
   </div>
 </template>
 <script>
 import { defineComponent } from "vue";
+import codeView from "../Code/codeView.vue";
 export default defineComponent({
   name: "contractInfo",
   props: ["contractAddress"],
+  components: { codeView },
   data() {
     return {
       contractInfoData: [

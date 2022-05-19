@@ -57,7 +57,7 @@ import { defineComponent } from "vue";
 import { getBlock } from "../../js/block.js";
 import { diffTime } from "../../js/utils.js";
 import generalTxs from "../Transaction/generalTxs.vue";
-import contractInfo from "../Contract/contractInfo.vue";
+import contractInfo from "../ScanContract/contractInfo.vue";
 export default defineComponent({
   name: "ContractAddress",
   props: ["address"],
@@ -228,7 +228,9 @@ export default defineComponent({
     async getGeneralTransactionsList() {
       let res = await getBlock(this.$rpc_http, 14790713);
       res.transactions.slice(0, 50).forEach((tx) => {
-        (tx.method = "test-method"), (tx.age = diffTime(new Date(parseInt(res.timestamp)) * 1000, new Date())), (tx.ageFormat = new Date(parseInt(res.timestamp) * 1000).toUTCString());
+        (tx.method = "test-method"),
+          (tx.age = diffTime(new Date(parseInt(res.timestamp)) * 1000, new Date())),
+          (tx.ageFormat = new Date(parseInt(res.timestamp) * 1000).toUTCString());
         this.generalTransactionsList.push(tx);
       });
       // console.log(this.internalTransactionsList);
@@ -236,7 +238,9 @@ export default defineComponent({
     async getInternalTransactionsList() {
       let res = await getBlock(this.$rpc_http, 14790713);
       res.transactions.slice(0, 50).forEach((tx) => {
-        (tx.method = "test-method"), (tx.age = diffTime(new Date(parseInt(res.timestamp)) * 1000, new Date())), (tx.ageFormat = new Date(parseInt(res.timestamp) * 1000).toUTCString());
+        (tx.method = "test-method"),
+          (tx.age = diffTime(new Date(parseInt(res.timestamp)) * 1000, new Date())),
+          (tx.ageFormat = new Date(parseInt(res.timestamp) * 1000).toUTCString());
         this.internalTransactionsList.push(tx);
       });
       // console.log(this.internalTransactionsList);
@@ -244,7 +248,9 @@ export default defineComponent({
     async getErc20TransactionsList() {
       let res = await getBlock(this.$rpc_http, 14790713);
       res.transactions.slice(0, 50).forEach((tx) => {
-        (tx.method = "test-method"), (tx.age = diffTime(new Date(parseInt(res.timestamp)) * 1000, new Date())), (tx.ageFormat = new Date(parseInt(res.timestamp) * 1000).toUTCString());
+        (tx.method = "test-method"),
+          (tx.age = diffTime(new Date(parseInt(res.timestamp)) * 1000, new Date())),
+          (tx.ageFormat = new Date(parseInt(res.timestamp) * 1000).toUTCString());
         this.erc20TransactionsList.push(tx);
       });
       // console.log(this.internalTransactionsList);
@@ -252,7 +258,9 @@ export default defineComponent({
     async getErc721lTransactionsList() {
       let res = await getBlock(this.$rpc_http, 14790713);
       res.transactions.slice(0, 50).forEach((tx) => {
-        (tx.method = "test-method"), (tx.age = diffTime(new Date(parseInt(res.timestamp)) * 1000, new Date())), (tx.ageFormat = new Date(parseInt(res.timestamp) * 1000).toUTCString());
+        (tx.method = "test-method"),
+          (tx.age = diffTime(new Date(parseInt(res.timestamp)) * 1000, new Date())),
+          (tx.ageFormat = new Date(parseInt(res.timestamp) * 1000).toUTCString());
         this.erc721TransactionsList.push(tx);
       });
       // console.log(this.internalTransactionsList);

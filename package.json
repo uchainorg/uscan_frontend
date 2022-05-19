@@ -9,10 +9,15 @@
     "stage": "vite build --mode stage"
   },
   "dependencies": {
+    "@codemirror/lang-html": "^0.20.0",
+    "@codemirror/lang-javascript": "^0.20.0",
+    "@codemirror/lang-json": "^0.20.0",
+    "@codemirror/theme-one-dark": "^0.20.0",
     "@element-plus/icons-vue": "^1.1.4",
     "axios": "^0.27.2",
     "element-plus": "^2.1.10",
     "vue": "^3.2.25",
+    "vue-codemirror": "^5.0.1",
     "vue-router": "^4.0.14",
     "vuex": "^4.0.2"
   },
