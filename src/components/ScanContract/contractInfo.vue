@@ -23,21 +23,7 @@
         <el-icon><Document /></el-icon> &nbsp;
         <h4>Contract Source Code (Solidity)</h4>
       </div>
-      <div>
-        <!-- <codemirror
-          v-model="code"
-          placeholder="Code gose here..."
-          :style="{ height: '400px' }"
-          :autofocus="true"
-          :indent-with-tab="true"
-          :tabSize="2"
-          :extensions="extensions"
-          @ready="log('ready', $event)"
-          @change="log('change', $event)"
-          @focus="log('focus', $event)"
-          @blur="log('blur', $event)"
-        /> -->
-      </div>
+      <code-view :codeData="'select a from table1 where b = 1'"></code-view>
     </div>
     <div>
       <div class="center-row">

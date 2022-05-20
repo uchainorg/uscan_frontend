@@ -55,7 +55,7 @@
 
 "@codemirror/lang-css@^0.20.0":
   version "0.20.0"
-  resolved "https://registry.yarnpkg.com/@codemirror/lang-css/-/lang-css-0.20.0.tgz#7acbab259b0df3369d5a9a4df33a56759e4e4ae5"
+  resolved "https://registry.npmjs.org/@codemirror/lang-css/-/lang-css-0.20.0.tgz"
   integrity sha512-NvYBkDu5Abvzp3bRnU7oHnz3QGeYLYcMIVlEAExtDw6QLbKn8beObuJLQmQB1TqAk7KJcrMvH0xf73DAF9ICHg==
   dependencies:
     "@codemirror/autocomplete" "^0.20.0"
@@ -65,7 +65,7 @@
 
 "@codemirror/lang-html@^0.20.0":
   version "0.20.0"
-  resolved "https://registry.yarnpkg.com/@codemirror/lang-html/-/lang-html-0.20.0.tgz#9cc29ad8f6b0bd1a0a0e7fde3acd972e27e90dd6"
+  resolved "https://registry.npmjs.org/@codemirror/lang-html/-/lang-html-0.20.0.tgz"
   integrity sha512-hh/vii8Hw0eoPQy6vacqrrt4FMeLn9cNOG7zPFFOyc+oTl66+FYHgOtWH8b6HysTx0pdTMtpNbBF4tTLMbmP1w==
   dependencies:
     "@codemirror/autocomplete" "^0.20.0"
@@ -78,7 +78,7 @@
 
 "@codemirror/lang-javascript@^0.20.0":
   version "0.20.0"
-  resolved "https://registry.yarnpkg.com/@codemirror/lang-javascript/-/lang-javascript-0.20.0.tgz#64a7beaa634ad2163dbfdcff94bae8ff28bae476"
+  resolved "https://registry.npmjs.org/@codemirror/lang-javascript/-/lang-javascript-0.20.0.tgz"
   integrity sha512-Wawq5+o1DlWtsqAyaa9NkiSXNT7geFcfdUael0hIQdM7P23gkQaD+xgZcyQP6QvPxVAdnY4VIWHFzFAqBti+WQ==
   dependencies:
     "@codemirror/autocomplete" "^0.20.0"
@@ -90,7 +90,7 @@
 
 "@codemirror/lang-json@^0.20.0":
   version "0.20.0"
-  resolved "https://registry.yarnpkg.com/@codemirror/lang-json/-/lang-json-0.20.0.tgz#0cef6c3db35a4d9107896312b444d41f77cda0b4"
+  resolved "https://registry.npmjs.org/@codemirror/lang-json/-/lang-json-0.20.0.tgz"
   integrity sha512-Dj9iW3larS3HDdzd8+GXP5+7EUG7SeQexy0mh7l3N/n7vicIY+9AxRPZ1H6nsVI97uZpYIm8OZWG/eUzCdksdA==
   dependencies:
     "@codemirror/language" "^0.20.0"
@@ -132,7 +132,7 @@
 
 "@codemirror/theme-one-dark@^0.20.0":
   version "0.20.0"
-  resolved "https://registry.yarnpkg.com/@codemirror/theme-one-dark/-/theme-one-dark-0.20.0.tgz#112074e446d46931d1104405154ccbe8c8874009"
+  resolved "https://registry.npmjs.org/@codemirror/theme-one-dark/-/theme-one-dark-0.20.0.tgz"
   integrity sha512-iqTKaiOZddwlc2rYF+9D60Gfyz9EsSawVejSjyP2FCtOwZ1X0frG5/ByTKH5FBDD2+P7W8+h/OIG4r5dWq4bgA==
   dependencies:
     "@codemirror/language" "^0.20.0"
@@ -224,7 +224,7 @@
 
 "@lezer/css@^0.16.0":
   version "0.16.0"
-  resolved "https://registry.yarnpkg.com/@lezer/css/-/css-0.16.0.tgz#a035f4c5afe8b0387a64526adfe04f5257731cea"
+  resolved "https://registry.npmjs.org/@lezer/css/-/css-0.16.0.tgz"
   integrity sha512-/YjbaCjgAYb7z/yDOpB/8dXdx1pTyXBsfvsZ6qL1jDg5kIjLUdqKmGGupx+xLTbKEdRC7mMUDPDsQPqXs6JJWQ==
   dependencies:
     "@lezer/highlight" "^0.16.0"
@@ -239,7 +239,7 @@
 
 "@lezer/html@^0.16.0":
   version "0.16.1"
-  resolved "https://registry.yarnpkg.com/@lezer/html/-/html-0.16.1.tgz#8ab99a4ff8247e7c018ebee02fca7a544a8baea7"
+  resolved "https://registry.npmjs.org/@lezer/html/-/html-0.16.1.tgz"
   integrity sha512-3T7xJhNeETZpX+xzI7rO7Ba8ozhb8+raNVJKxKLZv/ARsMnhH5uhVqV3GQ8wwU4bjCmaF3q22+RWf/08GqF/Uw==
   dependencies:
     "@lezer/highlight" "^0.16.0"
@@ -247,7 +247,7 @@
 
 "@lezer/javascript@^0.16.0":
   version "0.16.0"
-  resolved "https://registry.yarnpkg.com/@lezer/javascript/-/javascript-0.16.0.tgz#712c3bc098bfc91b381a386551a86e9d4baf95eb"
+  resolved "https://registry.npmjs.org/@lezer/javascript/-/javascript-0.16.0.tgz"
   integrity sha512-kDcwX3QMFKVd7VJwlYTeTNtcj3/gXQEDa7cQzXXsFMvTGV/RTDq0r8agTpZu0zBc1RUZkVILusd1Cluz3STRqw==
   dependencies:
     "@lezer/highlight" "^0.16.0"
@@ -255,7 +255,7 @@
 
 "@lezer/json@^0.16.0":
   version "0.16.0"
-  resolved "https://registry.yarnpkg.com/@lezer/json/-/json-0.16.0.tgz#f841fd7557fac8eac14c4dd52cb0e36abd9e8164"
+  resolved "https://registry.npmjs.org/@lezer/json/-/json-0.16.0.tgz"
   integrity sha512-Aqsi+qclD1f27tKGV9nND29WRXur8kfVnbPf5gUms3SNTY5mRIADnXy9/5dQxKlPkVHSuS1RCUJvA0+mdNQtsQ==
   dependencies:
     "@lezer/highlight" "^0.16.0"
