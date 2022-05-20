@@ -3,6 +3,7 @@ import ScanHome from "./components/ScanHome/ScanHome.vue";
 import BlockInfo from "./components/ScanBlock/BlockInfo.vue";
 import TransactionInfo from "./components/ScanTransaction/TransactionInfo.vue";
 import TransactionList from "./components/ScanTransaction/TransactionList.vue";
+import BlocksList from "./components/ScanBlock/BlockList.vue";
 import AddressInfo from "./components/ScanAddress/AddressInfo.vue";
 
 const router = createRouter({
@@ -13,6 +14,7 @@ const router = createRouter({
     { path: "/tx/:txHash", component: TransactionInfo, props: true },
     { path: "/block/txs/:number", component: TransactionList, props: true },
     { path: "/address/:address", component: AddressInfo, props: true },
+    { path: "/blocks", component: BlocksList, props: false },
   ],
 });
 

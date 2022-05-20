@@ -5,7 +5,9 @@
         <template v-slot:default="scope">
           <div class="table-column-row">
             <div>
-              <router-link :to="'/tx/' + scope.row.transactionHash">{{ scope.row.transactionHash.slice(0, 15) + "..." }}</router-link>
+              <router-link :to="'/tx/' + scope.row.transactionHash">{{
+                scope.row.transactionHash.slice(0, 15) + "..."
+              }}</router-link>
             </div>
             <div>{{ scope.row.diffTime }}</div>
           </div>
@@ -15,19 +17,19 @@
         <template v-slot:default="scope">
           <div class="table-column-row">
             <div>
-              From <router-link :to="'/'">{{ scope.row.from }}</router-link>
+              From <router-link :to="'/'">{{ scope.row.from.slice(0, 19) + "..." }}</router-link>
             </div>
             <div>
-              To <router-link :to="'/'">{{ scope.row.to }}</router-link>
+              To <router-link :to="'/'">{{ scope.row.to.slice(0, 19) + "..." }}</router-link>
             </div>
           </div>
         </template>
       </el-table-column>
       <el-table-column>
         <template v-slot:default="scope">
-          <el-tooltip class="box-item" effect="dark" content="value" placement="right">
+          <el-tooltip class="box-item" effect="dark" content="amount" placement="right">
             <div style="text-align: right">
-              <el-tag type="info">{{ scope.row.transactionAmount }} wei</el-tag>
+              <el-tag type="info">{{ this.$wei2eth(scope.row.transactionAmount) }} Eth</el-tag>
             </div>
           </el-tooltip>
         </template>

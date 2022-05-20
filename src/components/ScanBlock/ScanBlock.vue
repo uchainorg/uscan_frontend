@@ -13,7 +13,7 @@
         <template v-slot:default="scope">
           <div class="table-column-row">
             <div>
-              Miner <router-link :to="'/'">{{ scope.row.miner }}</router-link>
+              Miner <router-link :to="'/'"> {{ scope.row.miner.slice(0, 19) + "..." }} </router-link>
             </div>
             <el-tooltip class="box-item" effect="dark" content="Transactions in this block" placement="right">
               <div style="width: 60px">
@@ -27,7 +27,7 @@
         <template v-slot:default="scope">
           <el-tooltip class="box-item" effect="dark" content="gasUsed" placement="right">
             <div style="text-align: right">
-              <el-tag type="info">{{ scope.row.gasUsed }} wei</el-tag>
+              <el-tag type="info">{{ this.$wei2eth(scope.row.gasUsed) }} Eth</el-tag>
             </div>
           </el-tooltip>
         </template>

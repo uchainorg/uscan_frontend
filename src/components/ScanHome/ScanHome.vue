@@ -5,7 +5,8 @@
   </div>
 </template>
 <script>
-import { getBlockList } from "../../js/block.js";
+// import { getBlockList } from "../../js/block.js";
+import { GetHomeInfo } from "../../js/request";
 import { defineComponent } from "vue";
 export default defineComponent({
   name: "ScanHome",
@@ -14,10 +15,9 @@ export default defineComponent({
   },
   methods: {
     async getBlockListRes() {
-      let res = await getBlockList(this.$rpc_http);
-      this.$store.state.lastBlockNum = res[0];
-      this.$store.state.HomeBlockInfoList = res[1];
-      this.$store.state.HomeTransactionInfoList = res[2];
+      let res = await GetHomeInfo(this.$rpc_http);
+      this.$store.state.HomeBlockInfoList = res.blockList;
+      this.$store.state.HomeTransactionInfoList = res.txsList;
     },
   },
 });

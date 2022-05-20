@@ -1,0 +1,8 @@
+###
+// get block list
+GET https://apis-stage.ankr.com/chain-scan/v1/blocks?offset=0&limit=10
+
+
+###
+// get txs list
+GET https://apis-stage.ankr.com/chain-scan/v1/txs?offset=0&limit=20

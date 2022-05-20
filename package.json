@@ -16,6 +16,7 @@
     "@element-plus/icons-vue": "^1.1.4",
     "axios": "^0.27.2",
     "element-plus": "^2.1.10",
+    "ethers": "^5.6.6",
     "vue": "^3.2.25",
     "vue-codemirror": "^5.0.1",
     "vue-router": "^4.0.14",
