@@ -1,15 +1,5 @@
 import { diffTime } from "./utils.js";
 
-async function getBlockList(http, offset, limit) {
-  let url = "/v1/blocks?offset=" + offset + "&limit=" + limit;
-  let { data: res } = await http.get(url);
-  let result = {
-    resList: res.data.items,
-    total: res.data.total,
-  };
-  return result;
-}
-
 export async function GetBlockList(http, offset, limit) {
   let url = "/v1/blocks?offset=" + offset + "&limit=" + limit;
   let { data: res } = await http.get(url);
@@ -32,16 +22,6 @@ export async function GetBlockList(http, offset, limit) {
     total: res.data.total,
   };
   // console.log(result);
-  return result;
-}
-
-async function getTransactionsList(http, offset, limit) {
-  let url = "/v1/txs?offset=" + offset + "&limit=" + limit;
-  let { data: res } = await http.get(url);
-  let result = {
-    resList: res.data.items,
-    total: res.data.total,
-  };
   return result;
 }
 
@@ -72,40 +52,36 @@ export async function GetTransactionsList(http, offset, limit) {
 }
 
 export async function GetHomeInfo(http) {
-  let blockListRes = [];
-  let transactionList = [];
-  let blockRes = await getBlockList(http, 0, 10);
-  // blockList = blockRes.resList;
-  let txsRes = await getTransactionsList(http, 0, 10);
-  // transactionList = txsRes.resList;
-  blockRes.resList.forEach((element) => {
-    // console.log(element);
-    let createTimeBk = new Date(parseInt(element.createdTime)) * 1000;
-    blockListRes.push({
-      blockNumber: parseInt(element.number),
-      diffTime: diffTime(createTimeBk, new Date()),
-      txCount: element.transactions.length,
-      gasUsed: parseInt(element.gasUsed),
-      miner: element.miner,
-    });
-  });
-
-  txsRes.resList.forEach((element) => {
-    let createTimeTx = new Date(parseInt(element.createTime)) * 1000;
-    // console.log(element);
-    transactionList.push({
-      transactionHash: element.hash,
-      diffTime: diffTime(createTimeTx, new Date()),
-      from: element.from,
-      to: element.to,
-      transactionAmount: parseInt(element.gas * element.gasPrice),
-    });
-  });
+  let resBlocks = await GetBlockList(http, 0, 10);
+  let blockListRes = resBlocks.resList;
+  let resTxs = await GetTransactionsList(http, 0, 10);
+  let transactionList = resTxs.resList;
 
   let result = {
     blockList: blockListRes,
     txsList: transactionList,
   };
-
+  // console.log(result);
   return result;
+}
+
+export async function GetBlockByNumber(http, blockNumber) {
+  let url = "/v1/blocks/" + blockNumber;
+  let { data: res } = await http.get(url);
+  // console.log(res.data);
+  return res.data;
+}
+
+export async function GetTxsByBlock(http, blockNumber) {
+  let url = "/v1/txs?blockBegin=" + blockNumber + "&blockEnd=" + blockNumber;
+  let { data: res } = await http.get(url);
+  // console.log(res.data.items);
+  return res.data.items;
+}
+
+export async function GetTxByHash(http, hash) {
+  let url = "/v1/txs/" + hash;
+  let { data: res } = await http.get(url);
+  // console.log(res.data.items);
+  return res.data.items;
 }

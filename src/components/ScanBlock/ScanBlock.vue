@@ -17,7 +17,7 @@
             </div>
             <el-tooltip class="box-item" effect="dark" content="Transactions in this block" placement="right">
               <div style="width: 60px">
-                <router-link :to="'/block/txs/' + scope.row.blockNumber">{{ scope.row.txCount }} txns</router-link>
+                <router-link :to="'/block/txs/' + scope.row.blockNumber">{{ scope.row.txn }} txns</router-link>
               </div>
             </el-tooltip>
           </div>
@@ -40,13 +40,7 @@
 import { defineComponent } from "vue";
 export default defineComponent({
   name: "ScanBlock",
-  created() {
-    this.getBlockListRes();
-  },
   methods: {
-    getBlockListRes() {
-      this.tableData = this.$store.state.HomeBlockInfoList;
-    },
     moveToBlocks() {
       this.$router.push("/blocks");
     },

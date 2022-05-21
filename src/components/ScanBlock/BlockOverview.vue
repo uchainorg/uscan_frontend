@@ -36,9 +36,9 @@
   </el-table>
 </template>
 <script>
-import { getBlock } from "../../js/block.js";
 import { diffTime } from "../../js/utils.js";
 import { Clock } from "@element-plus/icons-vue";
+import { GetBlockByNumber } from "../../js/request.js";
 import { defineComponent } from "vue";
 export default defineComponent({
   name: "BlockOverview",
@@ -62,8 +62,9 @@ export default defineComponent({
       this.$router.push("/block/txs/" + this.data.blockNumber);
     },
     async getBlockRes(blockNumber) {
-      let res = await getBlock(this.$rpc_http, blockNumber);
+      // let res = await getBlock(this.$rpc_http, blockNumber);
       // console.log("getBlockRes", res);
+      let res = await GetBlockByNumber(this.$rpc_http, blockNumber);
       this.tableData.push(
         {
           parameterName: "blockHeight",
@@ -84,16 +85,6 @@ export default defineComponent({
           parameterName: "minedBy",
           parameterDisplay: "Mined by:",
           parameterValue: res.miner,
-        },
-        {
-          parameterName: "blockReward",
-          parameterDisplay: "Block Reward:",
-          parameterValue: "(test)2.058262409143852486 Ether (2 + 1.325123428079492042 - 1.266861018935639556)",
-        },
-        {
-          parameterName: "unclesReward",
-          parameterDisplay: "Uncles Reward:",
-          parameterValue: "(test)0",
         },
         {
           parameterName: "difficulty",
@@ -129,16 +120,6 @@ export default defineComponent({
           parameterValue: parseInt(res.gasLimit)
             .toString()
             .replace(/(\d)(?=(?:\d{3})+$)/g, "$1,"),
-        },
-        {
-          parameterName: "baseFeePerGas",
-          parameterDisplay: "Base Fee Per Gas:",
-          parameterValue: parseInt(res.baseFeePerGas),
-        },
-        {
-          parameterName: "burntFees",
-          parameterDisplay: "Burnt Fees:",
-          parameterValue: "(test)1.266861018935639556 Ether",
         },
         {
           parameterName: "extraData",

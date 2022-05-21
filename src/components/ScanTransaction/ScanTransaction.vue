@@ -5,9 +5,7 @@
         <template v-slot:default="scope">
           <div class="table-column-row">
             <div>
-              <router-link :to="'/tx/' + scope.row.transactionHash">{{
-                scope.row.transactionHash.slice(0, 15) + "..."
-              }}</router-link>
+              <router-link :to="'/tx/' + scope.row.hash">{{ scope.row.hash.slice(0, 15) + "..." }}</router-link>
             </div>
             <div>{{ scope.row.diffTime }}</div>
           </div>
@@ -29,13 +27,13 @@
         <template v-slot:default="scope">
           <el-tooltip class="box-item" effect="dark" content="amount" placement="right">
             <div style="text-align: right">
-              <el-tag type="info">{{ this.$wei2eth(scope.row.transactionAmount) }} Eth</el-tag>
+              <el-tag type="info">{{ this.$wei2eth(scope.row.gas) }} Eth</el-tag>
             </div>
           </el-tooltip>
         </template>
       </el-table-column>
     </el-table>
-    <el-button type="primary" plain style="width: 95%; margin-top: 1%">View all Transactions</el-button>
+    <el-button type="primary" plain style="width: 95%; margin-top: 1%" @click="moveToTxs">View all Transactions</el-button>
   </div>
 </template>
 <script>
@@ -46,6 +44,11 @@ export default defineComponent({
     return {
       tableData: [],
     };
+  },
+  methods: {
+    moveToTxs() {
+      this.$router.push("/transactions");
+    },
   },
 });
 </script>

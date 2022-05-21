@@ -6,3 +6,16 @@ GET https://apis-stage.ankr.com/chain-scan/v1/blocks?offset=0&limit=10
 ###
 // get txs list
 GET https://apis-stage.ankr.com/chain-scan/v1/txs?offset=0&limit=20
+
+
+###
+// get block
+GET https://apis-stage.ankr.com/chain-scan/v1/blocks/55
+
+###
+// get block txs
+GET https://apis-stage.ankr.com/chain-scan/v1/txs?blockBegin=55&blockEnd=55
+
+###
+// get tx
+GET https://apis-stage.ankr.com/chain-scan/v1/txs/0x105005c43ca417615deac804999be20ee761865893becb28ab80a78b6c376a0e
