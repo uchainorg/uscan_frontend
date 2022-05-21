@@ -31,6 +31,7 @@ export async function GetBlockList(http, offset, limit) {
     resList: blockListRes,
     total: res.data.total,
   };
+  // console.log(result);
   return result;
 }
 
@@ -52,17 +53,21 @@ export async function GetTransactionsList(http, offset, limit) {
     let createTimeTx = new Date(parseInt(element.createTime)) * 1000;
     // console.log(element);
     txsListRes.push({
-      transactionHash: element.hash,
-      diffTime: diffTime(createTimeTx, new Date()),
+      hash: element.hash,
+      method: element.method,
+      blockNumber: parseInt(element.blockNumber),
+      age: diffTime(createTimeTx, new Date()),
       from: element.from,
       to: element.to,
-      transactionAmount: parseInt(element.gas * element.gasPrice),
+      value: element.value,
+      gas: parseInt(element.gas * element.gasPrice),
     });
   });
   let result = {
     resList: txsListRes,
     total: res.data.total,
   };
+  // console.log(result);
   return result;
 }
 
@@ -87,7 +92,7 @@ export async function GetHomeInfo(http) {
 
   txsRes.resList.forEach((element) => {
     let createTimeTx = new Date(parseInt(element.createTime)) * 1000;
-    console.log(element);
+    // console.log(element);
     transactionList.push({
       transactionHash: element.hash,
       diffTime: diffTime(createTimeTx, new Date()),

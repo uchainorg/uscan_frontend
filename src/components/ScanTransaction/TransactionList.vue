@@ -36,7 +36,7 @@ export default defineComponent({
         },
         {
           label: "From",
-          key: "hash",
+          key: "from",
         },
         {
           label: "To",
@@ -60,7 +60,9 @@ export default defineComponent({
     async getTransactionList() {
       let res = await getBlock(this.$rpc_http, this.number);
       res.transactions.slice(0, 50).forEach((tx) => {
-        (tx.method = "test-method"), (tx.age = diffTime(new Date(parseInt(res.timestamp)) * 1000, new Date())), (tx.ageFormat = new Date(parseInt(res.timestamp) * 1000).toUTCString());
+        (tx.method = "test-method"),
+          (tx.age = diffTime(new Date(parseInt(res.timestamp)) * 1000, new Date())),
+          (tx.ageFormat = new Date(parseInt(res.timestamp) * 1000).toUTCString());
         this.tableDate.push(tx);
       });
       // console.log(this.tableDate);

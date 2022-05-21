@@ -1,7 +1,7 @@
 <template lang="">
   <div class="container">
-    <h3 style="display: inline">Blocks</h3>
-    <general-blocks :blocksData="tableDate" :headerData="headerList"></general-blocks>
+    <h3 style="display: inline">Transactions</h3>
+    <general-txs :txsData="tableDate" :headerData="headerList"></general-txs>
     <div style="margin-top: 1%; display: flex; justify-content: center">
       <el-pagination
         :currentPage="currentPage"
@@ -19,11 +19,11 @@
 </template>
 <script>
 import { defineComponent } from "vue";
-import generalBlocks from "../Block/generalBlocks.vue";
-import { GetBlockList } from "../../js/request";
+import generalTxs from "../Transaction/generalTxs.vue";
+import { GetTransactionsList } from "../../js/request";
 export default defineComponent({
-  name: "BlocksList",
-  components: { generalBlocks },
+  name: "AllTransactionsList",
+  components: { generalTxs },
   data() {
     return {
       tableDate: [],
@@ -33,6 +33,14 @@ export default defineComponent({
       total: 0,
       headerList: [
         {
+          label: "Txn Hash",
+          key: "hash",
+        },
+        {
+          label: "Method",
+          key: "method",
+        },
+        {
           label: "Block",
           key: "blockNumber",
         },
@@ -41,51 +49,45 @@ export default defineComponent({
           key: "age",
         },
         {
-          label: "Txn",
-          key: "txn",
+          label: "From",
+          key: "from",
         },
         {
-          label: "Miner",
-          key: "miner",
+          label: "To",
+          key: "to",
         },
         {
-          label: "Gas Used",
-          key: "gasUsed",
+          label: "Value",
+          key: "value",
         },
         {
-          label: "Gas Limit",
-          key: "gasLimit",
-        },
-        {
-          label: "Base Fee",
-          key: "baseFee",
+          label: "Txn Fee",
+          key: "gas",
         },
       ],
     };
   },
   created() {
-    this.getBlocksList();
+    this.getTxsList();
   },
   methods: {
-    async getBlocksList() {
-      let res = await GetBlockList(this.$rpc_http, this.currentPage - 1, this.pageSize);
+    async getTxsList() {
+      let res = await GetTransactionsList(this.$rpc_http, this.currentPage - 1, this.pageSize);
       this.tableDate = res.resList;
       this.total = res.total;
     },
     async handleCurrentChange(val) {
-      // console.log(`current page: ${val}`);
       this.tableDate = [];
       this.currentPage = val;
-      let res = await GetBlockList(this.$rpc_http, this.currentPage - 1, this.pageSize);
+      let res = await GetTransactionsList(this.$rpc_http, this.currentPage - 1, this.pageSize);
       this.tableDate = res.resList;
       this.total = res.total;
     },
     async handleSizeChange(val) {
-      // console.log(`${val} items per page`);
       this.tableDate = [];
       this.currentPage = 1;
       this.pageSize = val;
-      let res = await GetBlockList(this.$rpc_http, this.currentPage - 1, this.pageSize);
+      let res = await GetTransactionsList(this.$rpc_http, this.currentPage - 1, this.pageSize);
       this.tableDate = res.resList;
       this.total = res.total;
     },
