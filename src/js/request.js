@@ -44,6 +44,28 @@ async function getTransactionsList(http, offset, limit) {
   return result;
 }
 
+export async function GetTransactionsList(http, offset, limit) {
+  let url = "/v1/txs?offset=" + offset + "&limit=" + limit;
+  let { data: res } = await http.get(url);
+  let txsListRes = [];
+  res.data.items.forEach((element) => {
+    let createTimeTx = new Date(parseInt(element.createTime)) * 1000;
+    // console.log(element);
+    txsListRes.push({
+      transactionHash: element.hash,
+      diffTime: diffTime(createTimeTx, new Date()),
+      from: element.from,
+      to: element.to,
+      transactionAmount: parseInt(element.gas * element.gasPrice),
+    });
+  });
+  let result = {
+    resList: txsListRes,
+    total: res.data.total,
+  };
+  return result;
+}
+
 export async function GetHomeInfo(http) {
   let blockListRes = [];
   let transactionList = [];

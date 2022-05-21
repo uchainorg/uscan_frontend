@@ -33,7 +33,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-button type="primary" plain style="width: 95%; margin-top: 1%">View all Blocks</el-button>
+    <el-button type="primary" plain style="width: 95%; margin-top: 1%" @click="moveToBlocks">View all Blocks</el-button>
   </div>
 </template>
 <script>
@@ -46,6 +46,9 @@ export default defineComponent({
   methods: {
     getBlockListRes() {
       this.tableData = this.$store.state.HomeBlockInfoList;
+    },
+    moveToBlocks() {
+      this.$router.push("/blocks");
     },
   },
 });
