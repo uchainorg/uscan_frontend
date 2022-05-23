@@ -36,7 +36,7 @@
   </el-table>
 </template>
 <script>
-import { diffTime } from "../../js/utils.js";
+import { formatTimestamp } from "../../js/utils.js";
 import { Clock } from "@element-plus/icons-vue";
 import { GetBlockByNumber } from "../../js/request.js";
 import { defineComponent } from "vue";
@@ -53,11 +53,11 @@ export default defineComponent({
     this.getBlockRes(this.data.blockNumber);
   },
   methods: {
-    formatTimestamp(timestamp) {
-      let createTime = new Date(parseInt(timestamp)) * 1000;
-      let date = new Date(parseInt(timestamp) * 1000).toUTCString();
-      return diffTime(createTime, new Date()) + "(" + date + ")";
-    },
+    // formatTimestamp(timestamp) {
+    //   let createTime = new Date(parseInt(timestamp)) * 1000;
+    //   let date = new Date(parseInt(timestamp) * 1000).toUTCString();
+    //   return diffTime(createTime, new Date()) + "(" + date + ")";
+    // },
     moveToTxs() {
       this.$router.push("/block/txs/" + this.data.blockNumber);
     },
@@ -74,7 +74,7 @@ export default defineComponent({
         {
           parameterName: "timestamp",
           parameterDisplay: "Timestamp:",
-          parameterValue: this.formatTimestamp(res.timestamp),
+          parameterValue: formatTimestamp(res.timestamp),
         },
         {
           parameterName: "transactions",

@@ -18,4 +18,4 @@ GET https://apis-stage.ankr.com/chain-scan/v1/txs?blockBegin=55&blockEnd=55
 
 ###
 // get tx
-GET https://apis-stage.ankr.com/chain-scan/v1/txs/0x105005c43ca417615deac804999be20ee761865893becb28ab80a78b6c376a0e
+GET https://apis-stage.ankr.com/chain-scan/v1/txs/0x244c02c40b5484138f2fed0326b608080486adc5fa99047be8b4377eea57a87b

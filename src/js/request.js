@@ -82,6 +82,5 @@ export async function GetTxsByBlock(http, blockNumber) {
 export async function GetTxByHash(http, hash) {
   let url = "/v1/txs/" + hash;
   let { data: res } = await http.get(url);
-  // console.log(res.data.items);
-  return res.data.items;
+  return res.data;
 }

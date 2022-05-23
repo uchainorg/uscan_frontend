@@ -25,7 +25,8 @@
 </template>
 <script>
 import { defineComponent } from "vue";
-import { getTransaction } from "../../js/block.js";
+import { GetTxByHash } from "../../js/request.js";
+import { formatTimestamp } from "../../js/utils.js";
 export default defineComponent({
   name: "TransactionOverview",
   props: ["data"],
@@ -39,8 +40,8 @@ export default defineComponent({
   },
   methods: {
     async getTransactionRes(txHash) {
-      let res = await getTransaction(this.$rpc_http, txHash);
-      console.log(res);
+      // let res = await getTransaction(this.$rpc_http, txHash);
+      let res = await GetTxByHash(this.$rpc_http, txHash);
       this.tableData.push(
         {
           parameterName: "txHash",
@@ -50,7 +51,7 @@ export default defineComponent({
         {
           parameterName: "status",
           parameterDisplay: "Status:",
-          parameterValue: "Success",
+          parameterValue: res.status,
         },
         {
           parameterName: "blockNumber",
@@ -60,7 +61,7 @@ export default defineComponent({
         {
           parameterName: "timestamp",
           parameterDisplay: "Timestamp:",
-          parameterValue: "(test)19 secs ago(Wed, 11 May 2022 05:14:27 GMT)",
+          parameterValue: formatTimestamp(res.createTime),
         },
         {
           parameterName: "from",
@@ -86,16 +87,6 @@ export default defineComponent({
           parameterName: "gasPrice",
           parameterDisplay: "Gas Price:",
           parameterValue: parseInt(res.gasPrice),
-        },
-        {
-          parameterName: "gasLimit",
-          parameterDisplay: "Gas Limit & Usage by Txn:",
-          parameterValue: "(test)21,000 | 21,000 (100%)",
-        },
-        {
-          parameterName: "gasFees",
-          parameterDisplay: "Gas Fees:",
-          parameterValue: "(test)Base: 45.990898678 Gwei |Max: 69.725511714 Gwei |Max Priority: 1 Gwei",
         },
         {
           parameterName: "input",
