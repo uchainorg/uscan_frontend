@@ -76,17 +76,22 @@ export default defineComponent({
         {
           parameterName: "value",
           parameterDisplay: "Value:",
-          parameterValue: parseInt(res.value),
+          parameterValue: this.$wei2eth(res.value) + " Eth",
         },
         {
           parameterName: "transactionFee",
           parameterDisplay: "Transaction Fee:",
-          parameterValue: parseInt(res.gas),
+          parameterValue: this.$wei2eth(res.gas * res.gasPrice) + " Eth",
         },
         {
           parameterName: "gasPrice",
           parameterDisplay: "Gas Price:",
-          parameterValue: parseInt(res.gasPrice),
+          parameterValue: this.$wei2eth(res.gasPrice),
+        },
+        {
+          parameterName: "gas",
+          parameterDisplay: "Gas:",
+          parameterValue: parseInt(res.gas),
         },
         {
           parameterName: "input",

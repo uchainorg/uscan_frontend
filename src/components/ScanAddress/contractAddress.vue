@@ -24,7 +24,16 @@
         <el-table :data="moreInfoTableData" style="margin-top: -3%; width: 95%" empty-text="loading...">
           <el-table-column prop="parameterDisplay"></el-table-column>
           <el-table-column prop="parameterValue">
-            <template v-slot:default="scope"> {{ scope.row.parameterValue }}</template>
+            <template v-slot:default="scope">
+              <div v-if="scope.row.parameterName == 'creator'" style="font-weight: 900">
+                <router-link :to="'/address/' + scope.row.parameterValue.creator">{{ scope.row.parameterValue.creator.slice(0, 11) + "..." }}</router-link>
+                at txn
+                <router-link :to="'/tx/' + scope.row.parameterValue.tx">{{ scope.row.parameterValue.tx.slice(0, 11) + "..." }}</router-link>
+              </div>
+              <div v-else>
+                {{ scope.row.parameterValue }}
+              </div>
+            </template>
           </el-table-column>
         </el-table>
       </div>
@@ -32,10 +41,22 @@
     <div style="margin-top: 3%">
       <el-tabs v-model="activeName" @tab-click="handleTabClick">
         <el-tab-pane label="Transactions" name="transactions">
-          <!-- <general-txs :txsData="generalTransactionsList"></general-txs> -->
           <general-txs :txsData="generalTransactionsList" :headerData="generalTransactionsHeaderList"></general-txs>
+          <div style="margin-top: 1%; display: flex; justify-content: center">
+            <el-pagination
+              :currentPage="currentPage"
+              :page-size="pageSize"
+              :page-sizes="[10, 25, 50, 100]"
+              :pager-count="5"
+              :small="small"
+              layout="total, sizes, prev, pager, next, jumper"
+              :total="total"
+              @size-change="GeneralHandleSizeChange"
+              @current-change="GeneralHandleCurrentChange"
+            />
+          </div>
         </el-tab-pane>
-        <el-tab-pane label="Internal Txns" name="internalTxns">
+        <!-- <el-tab-pane label="Internal Txns" name="internalTxns">
           <general-txs :txsData="internalTransactionsList" :headerData="internalTransactionsHeaderList"></general-txs>
         </el-tab-pane>
         <el-tab-pane label="Erc20 Token Txns" name="erc20TokenTxns">
@@ -43,62 +64,29 @@
         </el-tab-pane>
         <el-tab-pane label="Erc721 Token Txns" name="erc721TokenTxns">
           <general-txs :txsData="erc721TransactionsList" :headerData="erc721TransactionsHeaderList"></general-txs>
-        </el-tab-pane>
+        </el-tab-pane> -->
         <el-tab-pane label="Contract" name="contract">
           <contract-info :contractAddress="address"></contract-info>
         </el-tab-pane>
-        <el-tab-pane label="Events" name="events"> </el-tab-pane>
+        <!-- <el-tab-pane label="Events" name="events"> </el-tab-pane> -->
       </el-tabs>
     </div>
   </div>
 </template>
 <script>
 import { defineComponent } from "vue";
-import { getBlock } from "../../js/block.js";
-import { diffTime } from "../../js/utils.js";
+import { GetTxsByContract } from "../../js/request.js";
 import generalTxs from "../Transaction/generalTxs.vue";
 import contractInfo from "../ScanContract/contractInfo.vue";
 export default defineComponent({
-  name: "ContractAddress",
-  props: ["address"],
+  name: "contractAddress",
+  props: ["address", "info"],
   components: { generalTxs, contractInfo },
   data() {
     return {
-      activeName: "contract",
-      contractOverviewTableData: [
-        {
-          parameterName: "balance",
-          parameterDisplay: "Balance:",
-          parameterValue: "12.509180342280236748 Ether",
-        },
-        {
-          parameterName: "value",
-          parameterDisplay: "Value:",
-          parameterValue: "$25,203.87 (@ $2,014.83/ETH)",
-        },
-        {
-          parameterName: "token",
-          parameterDisplay: "Token:",
-          parameterValue: ">$10,429,996.22",
-        },
-      ],
-      moreInfoTableData: [
-        {
-          parameterName: "balance",
-          parameterDisplay: "Balance:",
-          parameterValue: "12.509180342280236748 Ether",
-        },
-        {
-          parameterName: "value",
-          parameterDisplay: "Value:",
-          parameterValue: "$25,203.87 (@ $2,014.83/ETH)",
-        },
-        {
-          parameterName: "token",
-          parameterDisplay: "Token:",
-          parameterValue: ">$10,429,996.22",
-        },
-      ],
+      activeName: "transactions",
+      contractOverviewTableData: [],
+      moreInfoTableData: [],
       generalTransactionsList: [],
       generalTransactionsHeaderList: [
         {
@@ -219,52 +207,58 @@ export default defineComponent({
           key: "to",
         },
       ],
+      currentPage: 1,
+      pageSize: 10,
+      small: true,
+      total: 50,
     };
   },
   created() {
     this.getGeneralTransactionsList();
   },
+  updated() {
+    this.contractOverviewTableData.push({
+      parameterName: "balance",
+      parameterDisplay: "Balance:",
+      parameterValue: this.$wei2eth(this.info.balance) + " Eth",
+    });
+    this.moreInfoTableData.push({
+      parameterName: "creator",
+      parameterDisplay: "Creator:",
+      parameterValue: { creator: this.info.creator, tx: this.info.creator },
+    });
+  },
   methods: {
     async getGeneralTransactionsList() {
-      let res = await getBlock(this.$rpc_http, 14790713);
-      res.transactions.slice(0, 50).forEach((tx) => {
-        (tx.method = "test-method"),
-          (tx.age = diffTime(new Date(parseInt(res.timestamp)) * 1000, new Date())),
-          (tx.ageFormat = new Date(parseInt(res.timestamp) * 1000).toUTCString());
-        this.generalTransactionsList.push(tx);
-      });
-      // console.log(this.internalTransactionsList);
+      let res = await GetTxsByContract(this.$rpc_http, this.address, this.currentPage - 1, this.pageSize);
+      // console.log("getGeneralTransactionsList", res);
+      this.generalTransactionsList = res.resList;
+      // this.total = res.total;
     },
-    async getInternalTransactionsList() {
-      let res = await getBlock(this.$rpc_http, 14790713);
-      res.transactions.slice(0, 50).forEach((tx) => {
-        (tx.method = "test-method"),
-          (tx.age = diffTime(new Date(parseInt(res.timestamp)) * 1000, new Date())),
-          (tx.ageFormat = new Date(parseInt(res.timestamp) * 1000).toUTCString());
-        this.internalTransactionsList.push(tx);
-      });
-      // console.log(this.internalTransactionsList);
-    },
-    async getErc20TransactionsList() {
-      let res = await getBlock(this.$rpc_http, 14790713);
-      res.transactions.slice(0, 50).forEach((tx) => {
-        (tx.method = "test-method"),
-          (tx.age = diffTime(new Date(parseInt(res.timestamp)) * 1000, new Date())),
-          (tx.ageFormat = new Date(parseInt(res.timestamp) * 1000).toUTCString());
-        this.erc20TransactionsList.push(tx);
-      });
-      // console.log(this.internalTransactionsList);
-    },
-    async getErc721lTransactionsList() {
-      let res = await getBlock(this.$rpc_http, 14790713);
-      res.transactions.slice(0, 50).forEach((tx) => {
-        (tx.method = "test-method"),
-          (tx.age = diffTime(new Date(parseInt(res.timestamp)) * 1000, new Date())),
-          (tx.ageFormat = new Date(parseInt(res.timestamp) * 1000).toUTCString());
-        this.erc721TransactionsList.push(tx);
-      });
-      // console.log(this.internalTransactionsList);
-    },
+    // async getInternalTransactionsList() {
+    //   let res = await getBlock(this.$rpc_http, 14790713);
+    //   res.transactions.slice(0, 50).forEach((tx) => {
+    //     (tx.method = "test-method"), (tx.age = diffTime(new Date(parseInt(res.timestamp)) * 1000, new Date())), (tx.ageFormat = new Date(parseInt(res.timestamp) * 1000).toUTCString());
+    //     this.internalTransactionsList.push(tx);
+    //   });
+    //   // console.log(this.internalTransactionsList);
+    // },
+    // async getErc20TransactionsList() {
+    //   let res = await getBlock(this.$rpc_http, 14790713);
+    //   res.transactions.slice(0, 50).forEach((tx) => {
+    //     (tx.method = "test-method"), (tx.age = diffTime(new Date(parseInt(res.timestamp)) * 1000, new Date())), (tx.ageFormat = new Date(parseInt(res.timestamp) * 1000).toUTCString());
+    //     this.erc20TransactionsList.push(tx);
+    //   });
+    //   // console.log(this.internalTransactionsList);
+    // },
+    // async getErc721lTransactionsList() {
+    //   let res = await getBlock(this.$rpc_http, 14790713);
+    //   res.transactions.slice(0, 50).forEach((tx) => {
+    //     (tx.method = "test-method"), (tx.age = diffTime(new Date(parseInt(res.timestamp)) * 1000, new Date())), (tx.ageFormat = new Date(parseInt(res.timestamp) * 1000).toUTCString());
+    //     this.erc721TransactionsList.push(tx);
+    //   });
+    //   // console.log(this.internalTransactionsList);
+    // },
     handleTabClick(tab) {
       // console.log(tab.props);
       if (tab.props.name == "internalTxns") {
@@ -275,6 +269,21 @@ export default defineComponent({
         this.getErc721lTransactionsList();
       }
     },
+    async GeneralHandleCurrentChange(val) {
+      this.tableDate = [];
+      this.currentPage = val;
+      let res = await GetTxsByContract(this.$rpc_http, this.address, this.currentPage - 1, this.pageSize);
+      this.generalTransactionsList = res.resList;
+      // this.total = res.total;
+    },
+    async GeneralHandleSizeChange(val) {
+      this.tableDate = [];
+      this.currentPage = 1;
+      this.pageSize = val;
+      let res = await GetTxsByContract(this.$rpc_http, this.address, this.currentPage - 1, this.pageSize);
+      this.generalTransactionsList = res.resList;
+      // this.total = res.total;
+    },
   },
 });
 </script>
@@ -284,4 +293,5 @@ export default defineComponent({
   justify-content: center;
   width: 100%;
 }
+@import "../../css/style.css";
 </style>
