@@ -1,7 +1,7 @@
 import { diffTime } from "./utils.js";
 
 export async function GetBlockList(http, pageNumber, pageSize) {
-  let offset = pageNumber * pageSize - 1;
+  let offset = pageNumber * pageSize;
   let limit = pageSize;
   let url = "/v1/blocks?offset=" + offset + "&limit=" + limit;
   let { data: res } = await http.get(url);
@@ -127,6 +127,7 @@ export async function GetTxsByERC(http, erc, pageNumber, pageSize) {
   let offset = pageNumber * pageSize;
   let limit = pageSize;
   let url = "/v1/tokens/txns/" + erc + "?offset=" + offset + "&limit=" + limit;
+  // console.log(url);
   let { data: res } = await http.get(url);
   let txsListRes = [];
   res.data.items.forEach((element) => {

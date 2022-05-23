@@ -4,7 +4,10 @@
       {{ title }}
     </div>
     <div class="header-input-container">
-      <el-link style="align-self: flex-start; margin-bottom: 4%" type="primary" @click="moveToHome">Home</el-link>
+      <el-link style="align-self: flex-start; margin-bottom: 2%" type="primary" @click="moveToHome">Home</el-link>
+      <el-link style="align-self: flex-start; margin-bottom: 1%" type="primary" @click="moveToErc('erc20')">erc20</el-link>
+      <el-link style="align-self: flex-start; margin-bottom: 1%" type="primary" @click="moveToErc('erc721')">erc721</el-link>
+      <el-link style="align-self: flex-start; margin-bottom: 2%" type="primary" @click="moveToErc('erc1155')">erc1155</el-link>
       <el-input style="width: 100%" v-model.trim="search_data" placeholder="Search by Address / Txhash / Block / Token / Ens"> </el-input>
     </div>
   </div>
@@ -37,6 +40,9 @@ export default defineComponent({
   methods: {
     moveToHome() {
       this.$router.push("/");
+    },
+    moveToErc(erc) {
+      this.$router.push("/transactions/" + erc);
     },
   },
 });

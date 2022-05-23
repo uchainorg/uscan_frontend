@@ -34,6 +34,7 @@ export default defineComponent({
       small: true,
       total: 0,
       headerList: [],
+      txType: this.type,
     };
   },
   created() {
@@ -103,6 +104,12 @@ export default defineComponent({
       ];
     }
   },
+  async beforeRouteUpdate(to) {
+    // console.log(to.params.type);
+    this.txType = to.params.type;
+    (this.currentPage = 1), (this.pageSize = 25), (this.total = 0);
+    this.getTxsByERC();
+  },
   methods: {
     async getTxsList() {
       let res = await GetTransactionsList(this.$rpc_http, this.currentPage - 1, this.pageSize);
@@ -110,14 +117,19 @@ export default defineComponent({
       this.total = res.total;
     },
     async getTxsByERC() {
-      let res = await GetTxsByERC(this.$rpc_http, this.type, this.currentPage - 1, this.pageSize);
+      let res = await GetTxsByERC(this.$rpc_http, this.txType, this.currentPage - 1, this.pageSize);
       this.tableDate = res.resList;
       this.total = res.total;
     },
     async handleCurrentChange(val) {
       this.tableDate = [];
       this.currentPage = val;
-      let res = await GetTransactionsList(this.$rpc_http, this.currentPage - 1, this.pageSize);
+      let res = {};
+      if (this.type) {
+        res = await GetTxsByERC(this.$rpc_http, this.txType, this.currentPage - 1, this.pageSize);
+      } else {
+        res = await GetTransactionsList(this.$rpc_http, this.currentPage - 1, this.pageSize);
+      }
       this.tableDate = res.resList;
       this.total = res.total;
     },
@@ -125,7 +137,12 @@ export default defineComponent({
       this.tableDate = [];
       this.currentPage = 1;
       this.pageSize = val;
-      let res = await GetTransactionsList(this.$rpc_http, this.currentPage - 1, this.pageSize);
+      let res = {};
+      if (this.type) {
+        res = await GetTxsByERC(this.$rpc_http, this.txType, this.currentPage - 1, this.pageSize);
+      } else {
+        res = await GetTransactionsList(this.$rpc_http, this.currentPage - 1, this.pageSize);
+      }
       this.tableDate = res.resList;
       this.total = res.total;
     },
