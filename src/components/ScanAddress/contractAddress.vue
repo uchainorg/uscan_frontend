@@ -3,6 +3,7 @@
     <h3 style="display: inline">Contract</h3>
     &nbsp;
     <p style="display: inline">{{ address }}</p>
+    <!-- <p style="display: inline">{{ info }}</p> -->
     <!-- <el-row style="margin-top: 0.5%">
       <el-button type="info" size="small" round>info1</el-button>
       <el-button type="info" size="small" round>info1</el-button>
@@ -66,7 +67,7 @@
           <general-txs :txsData="erc721TransactionsList" :headerData="erc721TransactionsHeaderList"></general-txs>
         </el-tab-pane> -->
         <el-tab-pane label="Contract" name="contract">
-          <contract-info :contractAddress="address"></contract-info>
+          <contract-info :contractAddress="address" :code="info.code"></contract-info>
         </el-tab-pane>
         <!-- <el-tab-pane label="Events" name="events"> </el-tab-pane> -->
       </el-tabs>
@@ -217,16 +218,21 @@ export default defineComponent({
     this.getGeneralTransactionsList();
   },
   updated() {
-    this.contractOverviewTableData.push({
-      parameterName: "balance",
-      parameterDisplay: "Balance:",
-      parameterValue: this.$wei2eth(this.info.balance) + " Eth",
-    });
-    this.moreInfoTableData.push({
-      parameterName: "creator",
-      parameterDisplay: "Creator:",
-      parameterValue: { creator: this.info.creator, tx: this.info.creator },
-    });
+    if (this.contractOverviewTableData.length == 0) {
+      this.contractOverviewTableData.push({
+        parameterName: "balance",
+        parameterDisplay: "Balance:",
+        parameterValue: this.$wei2eth(this.info.balance) + " Eth",
+      });
+    }
+
+    if (this.moreInfoTableData.length == 0) {
+      this.moreInfoTableData.push({
+        parameterName: "creator",
+        parameterDisplay: "Creator:",
+        parameterValue: { creator: this.info.creator, tx: this.info.creator },
+      });
+    }
   },
   methods: {
     async getGeneralTransactionsList() {
