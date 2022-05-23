@@ -1,6 +1,8 @@
 import { diffTime } from "./utils.js";
 
-export async function GetBlockList(http, offset, limit) {
+export async function GetBlockList(http, pageNumber, pageSize) {
+  let offset = pageNumber * pageSize - 1;
+  let limit = pageSize;
   let url = "/v1/blocks?offset=" + offset + "&limit=" + limit;
   let { data: res } = await http.get(url);
   let blockListRes = [];
@@ -25,7 +27,9 @@ export async function GetBlockList(http, offset, limit) {
   return result;
 }
 
-export async function GetTransactionsList(http, offset, limit) {
+export async function GetTransactionsList(http, pageNumber, pageSize) {
+  let offset = pageNumber * pageSize - 1;
+  let limit = pageSize;
   let url = "/v1/txs?offset=" + offset + "&limit=" + limit;
   let { data: res } = await http.get(url);
   let txsListRes = [];
@@ -91,7 +95,9 @@ export async function GetAddressInfo(http, hash) {
   return res.data;
 }
 
-export async function GetTxsByContract(http, hash, offset, limit) {
+export async function GetTxsByContract(http, hash, pageNumber, pageSize) {
+  let offset = pageNumber * pageSize - 1;
+  let limit = pageSize;
   let url = "/v1/accounts/" + hash + "/txns?offset=" + offset + "&limit=" + limit;
   let { data: res } = await http.get(url);
   let txsListRes = [];

@@ -1,5 +1,5 @@
 <template lang="">
-  <el-table :data="txsData" empty-text="loading...">
+  <el-table :data="txsData" empty-text="loading..." style="width: 100%">
     <el-table-column v-for="info in headerData" :key="info.key" :property="info.key" :label="info.label">
       <!-- <template #header>
         <div>hhhhhh</div>
@@ -22,7 +22,7 @@
           </div>
         </div>
         <div v-else-if="scope.column.property == 'value'">{{ this.$wei2eth(scope.row[scope.column.property]) }} Ether</div>
-        <div v-else-if="scope.column.property == 'gas'">{{ this.$wei2eth(scope.row[scope.column.property]) }}</div>
+        <div v-else-if="scope.column.property == 'gas'" style="width: 170px; font-size: 11px">{{ this.$wei2eth(scope.row[scope.column.property]) }}</div>
       </template>
     </el-table-column>
   </el-table>

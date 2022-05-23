@@ -3,12 +3,12 @@
     <h3 style="display: inline">Contract</h3>
     &nbsp;
     <p style="display: inline">{{ address }}</p>
-    <el-row style="margin-top: 0.5%">
+    <!-- <el-row style="margin-top: 0.5%">
       <el-button type="info" size="small" round>info1</el-button>
       <el-button type="info" size="small" round>info1</el-button>
       <el-button type="info" size="small" round>info1</el-button>
-    </el-row>
-    <el-divider />
+    </el-row> -->
+    <!-- <el-divider /> -->
     <div class="container-display">
       <div style="width: 50%">
         <h4>Contract Overview</h4>
@@ -208,9 +208,9 @@ export default defineComponent({
         },
       ],
       currentPage: 1,
-      pageSize: 10,
+      pageSize: 25,
       small: true,
-      total: 50,
+      total: 0,
     };
   },
   created() {
@@ -233,7 +233,7 @@ export default defineComponent({
       let res = await GetTxsByContract(this.$rpc_http, this.address, this.currentPage - 1, this.pageSize);
       // console.log("getGeneralTransactionsList", res);
       this.generalTransactionsList = res.resList;
-      // this.total = res.total;
+      this.total = res.total;
     },
     // async getInternalTransactionsList() {
     //   let res = await getBlock(this.$rpc_http, 14790713);
@@ -274,7 +274,7 @@ export default defineComponent({
       this.currentPage = val;
       let res = await GetTxsByContract(this.$rpc_http, this.address, this.currentPage - 1, this.pageSize);
       this.generalTransactionsList = res.resList;
-      // this.total = res.total;
+      this.total = res.total;
     },
     async GeneralHandleSizeChange(val) {
       this.tableDate = [];
@@ -282,7 +282,7 @@ export default defineComponent({
       this.pageSize = val;
       let res = await GetTxsByContract(this.$rpc_http, this.address, this.currentPage - 1, this.pageSize);
       this.generalTransactionsList = res.resList;
-      // this.total = res.total;
+      this.total = res.total;
     },
   },
 });
