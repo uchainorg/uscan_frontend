@@ -76,7 +76,7 @@
 </template>
 <script>
 import { defineComponent } from "vue";
-import { GetTxsByContract } from "../../js/request.js";
+import { GetTxsByAddress } from "../../js/request.js";
 import generalTxs from "../Transaction/generalTxs.vue";
 import contractInfo from "../ScanContract/contractInfo.vue";
 export default defineComponent({
@@ -239,7 +239,7 @@ export default defineComponent({
   },
   methods: {
     async getGeneralTransactionsList() {
-      let res = await GetTxsByContract(this.$rpc_http, this.address, this.generalCurrentPage - 1, this.generalPageSize);
+      let res = await GetTxsByAddress(this.$rpc_http, this.address, this.generalCurrentPage - 1, this.generalPageSize);
       // console.log("getGeneralTransactionsList", res);
       this.generalTransactionsList = res.resList;
       this.generalTotal = res.total;
@@ -281,7 +281,7 @@ export default defineComponent({
     async GeneralHandleCurrentChange(val) {
       this.tableDate = [];
       this.generalCurrentPage = val;
-      let res = await GetTxsByContract(this.$rpc_http, this.address, this.generalCurrentPage - 1, this.generalPageSize);
+      let res = await GetTxsByAddress(this.$rpc_http, this.address, this.generalCurrentPage - 1, this.generalPageSize);
       this.generalTransactionsList = res.resList;
       this.generalTotal = res.total;
     },
@@ -289,7 +289,7 @@ export default defineComponent({
       this.tableDate = [];
       this.generalCurrentPage = 1;
       this.generalPageSize = val;
-      let res = await GetTxsByContract(this.$rpc_http, this.address, this.generalCurrentPage - 1, this.generalPageSize);
+      let res = await GetTxsByAddress(this.$rpc_http, this.address, this.generalCurrentPage - 1, this.generalPageSize);
       this.generalTransactionsList = res.resList;
       this.generalTotal = res.total;
     },
