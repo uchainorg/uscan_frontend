@@ -16,7 +16,7 @@ export default defineComponent({
   components: { contractAddress, accountAddress },
   data() {
     return {
-      comName: "contractAddress",
+      comName: "unknown",
       addressInfo: {},
     };
   },

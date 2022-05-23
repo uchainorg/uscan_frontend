@@ -96,7 +96,36 @@ export async function GetAddressInfo(http, hash) {
 }
 
 export async function GetTxsByContract(http, hash, pageNumber, pageSize) {
-  let offset = pageNumber * pageSize - 1;
+  let offset = pageNumber * pageSize;
+  let limit = pageSize;
+  let url = "/v1/accounts/" + hash + "/txns?offset=" + offset + "&limit=" + limit;
+  console.log(url);
+  let { data: res } = await http.get(url);
+  let txsListRes = [];
+  res.data.items.forEach((element) => {
+    let createTimeTx = new Date(parseInt(element.createTime)) * 1000;
+    // console.log(element);
+    txsListRes.push({
+      hash: element.hash,
+      method: element.method,
+      blockNumber: parseInt(element.blockNumber),
+      age: diffTime(createTimeTx, new Date()),
+      from: element.from,
+      to: element.to,
+      value: element.value,
+      gas: parseInt(element.gas * element.gasPrice),
+    });
+  });
+  let result = {
+    resList: txsListRes,
+    total: res.data.total,
+  };
+  // console.log(result);
+  return result;
+}
+
+export async function GetTxsByAddress(http, hash, pageNumber, pageSize) {
+  let offset = pageNumber * pageSize;
   let limit = pageSize;
   let url = "/v1/accounts/" + hash + "/txns?offset=" + offset + "&limit=" + limit;
   let { data: res } = await http.get(url);

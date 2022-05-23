@@ -11,10 +11,10 @@
           <el-icon><clock /></el-icon>&nbsp;{{ scope.row.parameterValue }}
         </div>
         <div v-else-if="scope.row.parameterName == 'from'">
-          <router-link :to="'/'">{{ scope.row.parameterValue }}</router-link>
+          <router-link :to="'/address/' + scope.row.parameterValue">{{ scope.row.parameterValue }}</router-link>
         </div>
         <div v-else-if="scope.row.parameterName == 'to'">
-          <router-link :to="'/'">{{ scope.row.parameterValue }}</router-link>
+          <router-link :to="'/address/' + scope.row.parameterValue">{{ scope.row.parameterValue }}</router-link>
         </div>
         <div v-else>
           {{ scope.row.parameterValue }}

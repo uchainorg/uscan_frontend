@@ -13,7 +13,7 @@
         <template v-slot:default="scope">
           <div class="table-column-row">
             <div>
-              Miner <router-link :to="'/'"> {{ scope.row.miner.slice(0, 19) + "..." }} </router-link>
+              Miner <router-link :to="'/address/' + scope.row.miner"> {{ scope.row.miner.slice(0, 19) + "..." }} </router-link>
             </div>
             <el-tooltip class="box-item" effect="dark" content="Transactions in this block" placement="right">
               <div style="width: 60px">

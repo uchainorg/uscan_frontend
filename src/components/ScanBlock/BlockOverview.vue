@@ -16,7 +16,7 @@
           &nbsp;in this block
         </div>
         <div v-else-if="scope.row.parameterName == 'minedBy'">
-          <router-link :to="'/'">{{ scope.row.parameterValue }}</router-link>
+          <router-link :to="'/address/' + scope.row.parameterValue">{{ scope.row.parameterValue }}</router-link>
         </div>
         <div v-else-if="scope.row.parameterName == 'difficulty'">
           {{ scope.row.parameterValue }}

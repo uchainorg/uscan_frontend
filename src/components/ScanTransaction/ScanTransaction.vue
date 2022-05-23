@@ -15,10 +15,10 @@
         <template v-slot:default="scope">
           <div class="table-column-row">
             <div>
-              From <router-link :to="'/'">{{ scope.row.from.slice(0, 19) + "..." }}</router-link>
+              From <router-link :to="'/address/' + scope.row.from">{{ scope.row.from.slice(0, 19) + "..." }}</router-link>
             </div>
             <div>
-              To <router-link :to="'/'">{{ scope.row.to.slice(0, 19) + "..." }}</router-link>
+              To <router-link :to="'/address/' + scope.row.to">{{ scope.row.to.slice(0, 19) + "..." }}</router-link>
             </div>
           </div>
         </template>

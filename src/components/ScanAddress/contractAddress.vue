@@ -45,13 +45,13 @@
           <general-txs :txsData="generalTransactionsList" :headerData="generalTransactionsHeaderList"></general-txs>
           <div style="margin-top: 1%; display: flex; justify-content: center">
             <el-pagination
-              :currentPage="currentPage"
-              :page-size="pageSize"
+              :currentPage="generalCurrentPage"
+              :page-size="generalPageSize"
               :page-sizes="[10, 25, 50, 100]"
               :pager-count="5"
               :small="small"
               layout="total, sizes, prev, pager, next, jumper"
-              :total="total"
+              :total="generalTotal"
               @size-change="GeneralHandleSizeChange"
               @current-change="GeneralHandleCurrentChange"
             />
@@ -67,7 +67,7 @@
           <general-txs :txsData="erc721TransactionsList" :headerData="erc721TransactionsHeaderList"></general-txs>
         </el-tab-pane> -->
         <el-tab-pane label="Contract" name="contract">
-          <contract-info :contractAddress="address" :code="info.code"></contract-info>
+          <contract-info :contractAddress="address" :code="codeContent"></contract-info>
         </el-tab-pane>
         <!-- <el-tab-pane label="Events" name="events"> </el-tab-pane> -->
       </el-tabs>
@@ -208,16 +208,17 @@ export default defineComponent({
           key: "to",
         },
       ],
-      currentPage: 1,
-      pageSize: 25,
+      generalCurrentPage: 1,
+      generalPageSize: 25,
       small: true,
-      total: 0,
+      generalTotal: 0,
+      codeContent: "",
     };
   },
   created() {
     this.getGeneralTransactionsList();
   },
-  updated() {
+  mounted() {
     if (this.contractOverviewTableData.length == 0) {
       this.contractOverviewTableData.push({
         parameterName: "balance",
@@ -233,13 +234,15 @@ export default defineComponent({
         parameterValue: { creator: this.info.creator, tx: this.info.creator },
       });
     }
+
+    this.codeContent = this.info.code;
   },
   methods: {
     async getGeneralTransactionsList() {
-      let res = await GetTxsByContract(this.$rpc_http, this.address, this.currentPage - 1, this.pageSize);
+      let res = await GetTxsByContract(this.$rpc_http, this.address, this.generalCurrentPage - 1, this.generalPageSize);
       // console.log("getGeneralTransactionsList", res);
       this.generalTransactionsList = res.resList;
-      this.total = res.total;
+      this.generalTotal = res.total;
     },
     // async getInternalTransactionsList() {
     //   let res = await getBlock(this.$rpc_http, 14790713);
@@ -277,18 +280,18 @@ export default defineComponent({
     },
     async GeneralHandleCurrentChange(val) {
       this.tableDate = [];
-      this.currentPage = val;
-      let res = await GetTxsByContract(this.$rpc_http, this.address, this.currentPage - 1, this.pageSize);
+      this.generalCurrentPage = val;
+      let res = await GetTxsByContract(this.$rpc_http, this.address, this.generalCurrentPage - 1, this.generalPageSize);
       this.generalTransactionsList = res.resList;
-      this.total = res.total;
+      this.generalTotal = res.total;
     },
     async GeneralHandleSizeChange(val) {
       this.tableDate = [];
-      this.currentPage = 1;
-      this.pageSize = val;
-      let res = await GetTxsByContract(this.$rpc_http, this.address, this.currentPage - 1, this.pageSize);
+      this.generalCurrentPage = 1;
+      this.generalPageSize = val;
+      let res = await GetTxsByContract(this.$rpc_http, this.address, this.generalCurrentPage - 1, this.generalPageSize);
       this.generalTransactionsList = res.resList;
-      this.total = res.total;
+      this.generalTotal = res.total;
     },
   },
 });

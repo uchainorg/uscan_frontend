@@ -25,13 +25,13 @@ GET https://apis-stage.ankr.com/chain-scan/v1/txs/0x0d6c426707c35c27e4bd7a3f7736
 GET https://apis-stage.ankr.com/chain-scan/v1/accounts/0x84868afcC4Ba758a4ae2aca141D2fF0ECD8C5fac
 
 ###
-// get address
-GET https://apis-stage.ankr.com/chain-scan/v1/accounts/0x4915f56a21F1f2e651f8130c5a9257Cd429c6136
+// get account address
+GET https://apis-stage.ankr.com/chain-scan/v1/accounts/0x2594d5efA1cBb3a5486988f8A5b094E9707539e5
 
 ###
 // get address
-GET https://apis-stage.ankr.com/chain-scan/v1/accounts
+GET https://apis-stage.ankr.com/chain-scan/v1/accounts?offset=0&limit=100
 
 ###
 // get address
-GET https://apis-stage.ankr.com/chain-scan/v1/accounts/0x84868afcC4Ba758a4ae2aca141D2fF0ECD8C5fac/txns?offset=34&limit=34
+GET https://apis-stage.ankr.com/chain-scan/v1/accounts/0x2594d5efA1cBb3a5486988f8A5b094E9707539e5/txns

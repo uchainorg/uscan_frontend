@@ -11,7 +11,7 @@
           </router-link>
         </div>
         <div v-else-if="scope.column.property == 'miner'" style="width: 180px">
-          <router-link :to="'/'"> {{ scope.row.miner.slice(0, 18) + "..." }} </router-link>
+          <router-link :to="'/address/' + scope.row.miner"> {{ scope.row.miner.slice(0, 18) + "..." }} </router-link>
         </div>
       </template>
     </el-table-column>
