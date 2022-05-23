@@ -28,7 +28,7 @@ export async function GetBlockList(http, pageNumber, pageSize) {
 }
 
 export async function GetTransactionsList(http, pageNumber, pageSize) {
-  let offset = pageNumber * pageSize - 1;
+  let offset = pageNumber * pageSize;
   let limit = pageSize;
   let url = "/v1/txs?offset=" + offset + "&limit=" + limit;
   let { data: res } = await http.get(url);
@@ -95,11 +95,10 @@ export async function GetAddressInfo(http, hash) {
   return res.data;
 }
 
-export async function GetTxsByContract(http, hash, pageNumber, pageSize) {
+export async function GetTxsByAddress(http, hash, pageNumber, pageSize) {
   let offset = pageNumber * pageSize;
   let limit = pageSize;
   let url = "/v1/accounts/" + hash + "/txns?offset=" + offset + "&limit=" + limit;
-  console.log(url);
   let { data: res } = await http.get(url);
   let txsListRes = [];
   res.data.items.forEach((element) => {
@@ -124,24 +123,22 @@ export async function GetTxsByContract(http, hash, pageNumber, pageSize) {
   return result;
 }
 
-export async function GetTxsByAddress(http, hash, pageNumber, pageSize) {
+export async function GetTxsByERC(http, erc, pageNumber, pageSize) {
   let offset = pageNumber * pageSize;
   let limit = pageSize;
-  let url = "/v1/accounts/" + hash + "/txns?offset=" + offset + "&limit=" + limit;
+  let url = "/v1/tokens/txns/" + erc + "?offset=" + offset + "&limit=" + limit;
   let { data: res } = await http.get(url);
   let txsListRes = [];
   res.data.items.forEach((element) => {
-    let createTimeTx = new Date(parseInt(element.createTime)) * 1000;
+    let createTimeTx = new Date(parseInt(element.createdTime)) * 1000;
     // console.log(element);
     txsListRes.push({
-      hash: element.hash,
-      method: element.method,
-      blockNumber: parseInt(element.blockNumber),
+      hash: element.transactionHash,
       age: diffTime(createTimeTx, new Date()),
       from: element.from,
       to: element.to,
       value: element.value,
-      gas: parseInt(element.gas * element.gasPrice),
+      token: element.contract,
     });
   });
   let result = {

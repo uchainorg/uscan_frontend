@@ -21,9 +21,11 @@
 import { defineComponent } from "vue";
 import generalTxs from "../Transaction/generalTxs.vue";
 import { GetTransactionsList } from "../../js/request";
+import { GetTxsByERC } from "../../js/request";
 export default defineComponent({
   name: "AllTransactionsList",
   components: { generalTxs },
+  props: ["type"],
   data() {
     return {
       tableDate: [],
@@ -31,7 +33,41 @@ export default defineComponent({
       pageSize: 25,
       small: true,
       total: 0,
-      headerList: [
+      headerList: [],
+    };
+  },
+  created() {
+    if (this.type) {
+      this.getTxsByERC();
+      this.headerList = [
+        {
+          label: "Txn Hash",
+          key: "hash",
+        },
+        {
+          label: "Age",
+          key: "age",
+        },
+        {
+          label: "From",
+          key: "from",
+        },
+        {
+          label: "To",
+          key: "to",
+        },
+        {
+          label: "Value",
+          key: "value",
+        },
+        {
+          label: "Token",
+          key: "token",
+        },
+      ];
+    } else {
+      this.getTxsList();
+      this.headerList = [
         {
           label: "Txn Hash",
           key: "hash",
@@ -64,15 +100,17 @@ export default defineComponent({
           label: "Txn Fee",
           key: "gas",
         },
-      ],
-    };
-  },
-  created() {
-    this.getTxsList();
+      ];
+    }
   },
   methods: {
     async getTxsList() {
       let res = await GetTransactionsList(this.$rpc_http, this.currentPage - 1, this.pageSize);
+      this.tableDate = res.resList;
+      this.total = res.total;
+    },
+    async getTxsByERC() {
+      let res = await GetTxsByERC(this.$rpc_http, this.type, this.currentPage - 1, this.pageSize);
       this.tableDate = res.resList;
       this.total = res.total;
     },

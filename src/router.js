@@ -17,6 +17,7 @@ const router = createRouter({
     { path: "/address/:address", component: AddressInfo, props: true },
     { path: "/blocks", component: BlocksList, props: false },
     { path: "/transactions", component: AllTransactionsList, props: false },
+    { path: "/transactions/:type", component: AllTransactionsList, props: true },
   ],
 });
 
