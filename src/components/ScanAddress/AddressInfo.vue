@@ -23,6 +23,10 @@ export default defineComponent({
   created() {
     this.getAccountInfo(this.address);
   },
+  async beforeRouteUpdate(to) {
+    // console.log(to.params.address);
+    this.getAccountInfo(to.params.address);
+  },
   methods: {
     async getAccountInfo(address) {
       let res = await GetAddressInfo(this.$rpc_http, address);

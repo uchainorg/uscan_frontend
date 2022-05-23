@@ -108,7 +108,7 @@ export default defineComponent({
         },
         {
           label: "From",
-          key: "hash",
+          key: "from",
         },
         {
           label: "To",
