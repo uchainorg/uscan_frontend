@@ -5,7 +5,7 @@
         <template v-slot:default="scope">
           <div class="table-column-row">
             <div>
-              <router-link :to="'/'">{{ scope.row.transactionHash }}</router-link>
+              <router-link :to="'/tx/' + scope.row.hash">{{ scope.row.hash.slice(0, 15) + "..." }}</router-link>
             </div>
             <div>{{ scope.row.diffTime }}</div>
           </div>
@@ -15,46 +15,42 @@
         <template v-slot:default="scope">
           <div class="table-column-row">
             <div>
-              From <router-link :to="'/'">{{ scope.row.from }}</router-link>
+              From <router-link :to="'/address/' + scope.row.from">{{ scope.row.from.slice(0, 19) + "..." }}</router-link>
             </div>
             <div>
-              To <router-link :to="'/'">{{ scope.row.to }}</router-link>
+              To <router-link :to="'/address/' + scope.row.to">{{ scope.row.to.slice(0, 19) + "..." }}</router-link>
             </div>
           </div>
         </template>
       </el-table-column>
       <el-table-column>
         <template v-slot:default="scope">
-          <el-tooltip class="box-item" effect="dark" content="value" placement="right">
+          <el-tooltip class="box-item" effect="dark" content="amount" placement="right">
             <div style="text-align: right">
-              <el-tag type="info">{{ scope.row.transactionAmount }} wei</el-tag>
+              <el-tag type="info">{{ this.$wei2eth(scope.row.gas) }} Eth</el-tag>
             </div>
           </el-tooltip>
         </template>
       </el-table-column>
     </el-table>
-    <el-button type="primary" plain style="width: 95%; margin-top: 1%">View all Transactions</el-button>
+    <el-button type="primary" plain style="width: 95%; margin-top: 1%" @click="moveToTxs">View all Transactions</el-button>
   </div>
 </template>
 <script>
-import { mockGetTransactionList } from "../../js/mock.js";
-
-export default {
+import { defineComponent } from "vue";
+export default defineComponent({
   name: "ScanTransaction",
   data() {
     return {
       tableData: [],
     };
   },
-  created() {
-    this.loadTransactionList();
-  },
   methods: {
-    loadTransactionList() {
-      this.tableData = mockGetTransactionList();
+    moveToTxs() {
+      this.$router.push("/transactions");
     },
   },
-};
+});
 </script>
 <style lang="less" scoped>
 @import "../../css/style.css";

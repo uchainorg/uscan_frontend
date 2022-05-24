@@ -5,21 +5,21 @@
   </div>
 </template>
 <script>
-import { getBlockList } from "../../js/block.js";
-export default {
+import { GetHomeInfo } from "../../js/request";
+import { defineComponent } from "vue";
+export default defineComponent({
   name: "ScanHome",
   created() {
     this.getBlockListRes();
   },
   methods: {
     async getBlockListRes() {
-      let res = await getBlockList(this.$rpc_http);
-      this.$store.state.lastBlockNum = res[0];
-      this.$store.state.HomeBlockInfoList = res[1];
-      this.$store.state.HomeTransactionInfoList = res[2];
+      let res = await GetHomeInfo(this.$rpc_http);
+      this.$store.state.HomeBlockInfoList = res.blockList;
+      this.$store.state.HomeTransactionInfoList = res.txsList;
     },
   },
-};
+});
 </script>
 <style lang="less" scoped>
 .container-display {

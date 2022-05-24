@@ -1,5 +1,5 @@
 <template lang="">
-  <el-table :data="tableData" style="width: 100%; margin-top: -3%">
+  <el-table :data="tableData" style="width: 100%; margin-top: -3%" empty-text="loading...">
     <el-table-column prop="parameterDisplay" width="350px"></el-table-column>
     <el-table-column prop="parameterValue">
       <template v-slot:default="scope">
@@ -11,12 +11,12 @@
         </div>
         <div v-else-if="scope.row.parameterName == 'transactions'">
           <el-tooltip class="box-item" effect="dark" content="Click to view Transactions" placement="top-start">
-            <el-button type="primary" plain size="small">{{ scope.row.parameterValue }} transactions</el-button>
+            <el-button type="primary" plain size="small" @click="moveToTxs">{{ scope.row.parameterValue }} transactions</el-button>
           </el-tooltip>
           &nbsp;in this block
         </div>
         <div v-else-if="scope.row.parameterName == 'minedBy'">
-          <router-link :to="'/'">{{ scope.row.parameterValue }}</router-link>
+          <router-link :to="'/address/' + scope.row.parameterValue">{{ scope.row.parameterValue }}</router-link>
         </div>
         <div v-else-if="scope.row.parameterName == 'difficulty'">
           {{ scope.row.parameterValue }}
@@ -36,10 +36,11 @@
   </el-table>
 </template>
 <script>
-import { getBlock } from "../../js/block.js";
-import { diffTime } from "../../js/utils.js";
+import { formatTimestamp } from "../../js/utils.js";
 import { Clock } from "@element-plus/icons-vue";
-export default {
+import { GetBlockByNumber } from "../../js/request.js";
+import { defineComponent } from "vue";
+export default defineComponent({
   name: "BlockOverview",
   props: ["data"],
   components: [Clock],
@@ -52,14 +53,18 @@ export default {
     this.getBlockRes(this.data.blockNumber);
   },
   methods: {
-    formatTimestamp(timestamp) {
-      let createTime = new Date(parseInt(timestamp)) * 1000;
-      let date = new Date(parseInt(timestamp) * 1000).toUTCString();
-      return diffTime(createTime, new Date()) + "(" + date + ")";
+    // formatTimestamp(timestamp) {
+    //   let createTime = new Date(parseInt(timestamp)) * 1000;
+    //   let date = new Date(parseInt(timestamp) * 1000).toUTCString();
+    //   return diffTime(createTime, new Date()) + "(" + date + ")";
+    // },
+    moveToTxs() {
+      this.$router.push("/block/txs/" + this.data.blockNumber);
     },
     async getBlockRes(blockNumber) {
-      let res = await getBlock(this.$rpc_http, blockNumber);
-      console.log("getBlockRes", res);
+      // let res = await getBlock(this.$rpc_http, blockNumber);
+      // console.log("getBlockRes", res);
+      let res = await GetBlockByNumber(this.$rpc_http, blockNumber);
       this.tableData.push(
         {
           parameterName: "blockHeight",
@@ -69,7 +74,7 @@ export default {
         {
           parameterName: "timestamp",
           parameterDisplay: "Timestamp:",
-          parameterValue: this.formatTimestamp(res.timestamp),
+          parameterValue: formatTimestamp(res.timestamp),
         },
         {
           parameterName: "transactions",
@@ -80,16 +85,6 @@ export default {
           parameterName: "minedBy",
           parameterDisplay: "Mined by:",
           parameterValue: res.miner,
-        },
-        {
-          parameterName: "blockReward",
-          parameterDisplay: "Block Reward:",
-          parameterValue: "(test)2.058262409143852486 Ether (2 + 1.325123428079492042 - 1.266861018935639556)",
-        },
-        {
-          parameterName: "unclesReward",
-          parameterDisplay: "Uncles Reward:",
-          parameterValue: "(test)0",
         },
         {
           parameterName: "difficulty",
@@ -127,16 +122,6 @@ export default {
             .replace(/(\d)(?=(?:\d{3})+$)/g, "$1,"),
         },
         {
-          parameterName: "baseFeePerGas",
-          parameterDisplay: "Base Fee Per Gas:",
-          parameterValue: parseInt(res.baseFeePerGas),
-        },
-        {
-          parameterName: "burntFees",
-          parameterDisplay: "Burnt Fees:",
-          parameterValue: "(test)1.266861018935639556 Ether",
-        },
-        {
           parameterName: "extraData",
           parameterDisplay: "Extra Data:",
           parameterValue: res.extraData,
@@ -169,7 +154,7 @@ export default {
       );
     },
   },
-};
+});
 </script>
 <style lang="less" scoped>
 @import "../../css/style.css";

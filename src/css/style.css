@@ -20,3 +20,8 @@ a {
   display: flex;
   align-items: center;
 }
+
+.container {
+  margin-top: 2%;
+  max-width: 1350px;
+}

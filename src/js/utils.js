@@ -51,3 +51,10 @@ export function diffTime(startDate, endDate) {
   }
   return returnStr;
 }
+
+export function formatTimestamp(timestamp) {
+  // console.log("formatTimestamp", timestamp);
+  let createTime = new Date(parseInt(timestamp)) * 1000;
+  let date = new Date(parseInt(timestamp) * 1000).toUTCString();
+  return diffTime(createTime, new Date()) + "(" + date + ")";
+}
