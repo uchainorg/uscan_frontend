@@ -1,7 +1,7 @@
 FROM node:10
 COPY ./ /anke-chain-browser
 WORKDIR /anke-chain-browser
-RUN npm install && yarn build
+RUN yarn install && yarn build
 
 FROM nginx
 RUN mkdir /anke-chain-browser
