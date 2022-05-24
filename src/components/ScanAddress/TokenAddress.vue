@@ -54,10 +54,7 @@
 </template>
 <script>
 import { defineComponent } from "vue";
-import { GetTokenType } from "../../js/request.js";
-import { GetAddressInfo } from "../../js/request.js";
-import { GetTokenHolders } from "../../js/request.js";
-import { GetTxsByToken } from "../../js/request.js";
+import { GetTokenType, GetAddressInfo, GetTokenHolders, GetTxsByToken } from "../../js/request.js";
 export default defineComponent({
   name: "TokenAddress",
   props: ["address"],
@@ -235,7 +232,6 @@ export default defineComponent({
       });
       this.holdersList = res.items;
       this.holdersTotal = res.total;
-      console.log(res);
     },
     async GetTxsByToken() {
       let res = await GetTxsByToken(this.$rpc_http, this.address, this.tokenType, this.generalCurrentPage - 1, this.generalPageSize);

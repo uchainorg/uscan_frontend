@@ -170,7 +170,6 @@ export async function GetTokenHolders(http, address, type, pageNumber, pageSize)
   let limit = pageSize;
   let url = "/v1/tokens/" + address + "/holders" + "?type=" + type + "&offset=" + offset + "&limit=" + limit;
   let { data: res } = await http.get(url);
-  console.log("GetTokenHolders", url);
   return res.data;
 }
 

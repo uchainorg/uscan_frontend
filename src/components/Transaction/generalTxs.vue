@@ -23,6 +23,9 @@
         </div>
         <div v-else-if="scope.column.property == 'value'">{{ this.$wei2eth(scope.row[scope.column.property]) }} Ether</div>
         <div v-else-if="scope.column.property == 'gas'" style="width: 170px; font-size: 11px">{{ this.$wei2eth(scope.row[scope.column.property]) }}</div>
+        <div v-else-if="scope.column.property == 'token'" style="width: 170px; font-size: 11px">
+          <router-link :to="'/token/' + scope.row[scope.column.property]">{{ scope.row[scope.column.property].slice(0, 18) + "..." }}</router-link>
+        </div>
       </template>
     </el-table-column>
   </el-table>

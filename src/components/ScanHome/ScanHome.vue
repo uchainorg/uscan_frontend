@@ -5,7 +5,6 @@
   </div>
 </template>
 <script>
-// import { getBlockList } from "../../js/block.js";
 import { GetHomeInfo } from "../../js/request";
 import { defineComponent } from "vue";
 export default defineComponent({
