@@ -202,3 +202,9 @@ export async function GetTxsByToken(http, address, type, pageNumber, pageSize) {
   // console.log(result);
   return result;
 }
+
+export async function GetLogsByTxHash(http, txHash) {
+  let url = "/v1/txs/" + txHash + "/event-logs";
+  let { data: res } = await http.get(url);
+  return res.data;
+}

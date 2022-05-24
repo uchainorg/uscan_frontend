@@ -56,3 +56,7 @@ GET https://apis-stage.ankr.com/chain-scan/v1/tokens/0x84868afcc4ba758a4ae2aca14
 ###
 // get nft transfers
 GET https://apis-stage.ankr.com/chain-scan/v1/tokens/0xbedb5e825989b8ef4b195bfc3a9196eec35beae4/transfers?type=erc721
+
+###
+// get logs
+GET https://apis-stage.ankr.com/chain-scan/v1/txs/0x6de151b9f4f0c2515f3fe3570f6e0b7456934c70677088e19a305c0d4803862c/event-logs

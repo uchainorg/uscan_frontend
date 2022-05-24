@@ -6,29 +6,40 @@
       <el-tab-pane label="Overview" name="first">
         <transaction-overview :data="transactionOverviewData"></transaction-overview>
       </el-tab-pane>
-      <el-tab-pane label="Comments" name="second">
-        <transaction-comments :data="transactionCommentsData"></transaction-comments>
+      <el-tab-pane>
+        <template #label>
+          <span>Logs({{ logCount }})</span>
+        </template>
+        <transaction-logs :data="transactionLogsData"></transaction-logs>
       </el-tab-pane>
     </el-tabs>
   </div>
 </template>
 <script>
 import { defineComponent } from "vue";
+import { GetLogsByTxHash } from "../../js/request.js";
 export default defineComponent({
   name: "TransactionInfo",
   props: ["txHash"],
   data() {
     return {
       activeName: "first",
+      logCount: 0,
       transactionOverviewData: { txHash: this.txHash },
-      transactionCommentsData: { txHash: this.txHash },
+      transactionLogsData: { txHash: this.txHash, logs: [] },
     };
   },
-  // methods: {
-  //   handleClick(tab) {
-  //     console.log(tab);
-  //   },
-  // },
+  created() {
+    this.getLogsByTxHash();
+  },
+  methods: {
+    async getLogsByTxHash() {
+      let res = await GetLogsByTxHash(this.$rpc_http, this.txHash);
+      console.log(res);
+      this.logCount = res.total;
+      this.transactionLogsData.logs = res.items;
+    },
+  },
 });
 </script>
 <style lang="less" scoped>
