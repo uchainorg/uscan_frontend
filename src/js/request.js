@@ -149,3 +149,57 @@ export async function GetTxsByERC(http, erc, pageNumber, pageSize) {
   // console.log(result);
   return result;
 }
+
+export async function GetTokenType(http, address) {
+  let url = "/v1/tokens/" + address + "/type";
+  let { data: res } = await http.get(url);
+  // console.log(res.data);
+  if (res.data.erc1155 != 0) {
+    return "erc1155";
+  } else if (res.data.erc20 != 0) {
+    return "erc20";
+  } else if (res.data.erc721 != 0) {
+    return "erc721";
+  } else {
+    return "";
+  }
+}
+
+export async function GetTokenHolders(http, address, type, pageNumber, pageSize) {
+  let offset = pageNumber * pageSize;
+  let limit = pageSize;
+  let url = "/v1/tokens/" + address + "/holders" + "?type=" + type + "&offset=" + offset + "&limit=" + limit;
+  let { data: res } = await http.get(url);
+  console.log("GetTokenHolders", url);
+  return res.data;
+}
+
+export async function GetTxsByToken(http, address, type, pageNumber, pageSize) {
+  let offset = pageNumber * pageSize;
+  let limit = pageSize;
+  let url = "/v1/tokens/" + address + "/transfers" + "?type=" + type + "&offset=" + offset + "&limit=" + limit;
+  // console.log(url);
+  let { data: res } = await http.get(url);
+  let txsListRes = [];
+  res.data.items.forEach((element) => {
+    let createTimeTx = new Date(parseInt(element.createdTime)) * 1000;
+    // console.log(element);
+    txsListRes.push({
+      hash: element.transactionHash,
+      method: element.method,
+      blockNumber: parseInt(element.blockNumber),
+      age: diffTime(createTimeTx, new Date()),
+      from: element.from,
+      to: element.to,
+      quantity: element.value,
+      gas: parseInt(element.gas * element.gasPrice),
+      tokenID: element.tokenID,
+    });
+  });
+  let result = {
+    resList: txsListRes,
+    total: res.data.total,
+  };
+  // console.log(result);
+  return result;
+}

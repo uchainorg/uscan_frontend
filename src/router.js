@@ -6,6 +6,7 @@ import TransactionList from "./components/ScanTransaction/TransactionList.vue";
 import BlocksList from "./components/ScanBlock/BlockList.vue";
 import AddressInfo from "./components/ScanAddress/AddressInfo.vue";
 import AllTransactionsList from "./components/ScanTransaction/TransactionAll.vue";
+import TokenAddress from "./components/ScanAddress/TokenAddress.vue";
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -18,6 +19,7 @@ const router = createRouter({
     { path: "/blocks", component: BlocksList, props: false },
     { path: "/transactions", component: AllTransactionsList, props: false },
     { path: "/transactions/:type", component: AllTransactionsList, props: true },
+    { path: "/token/:address", component: TokenAddress, props: true },
   ],
 });
 
