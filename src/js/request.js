@@ -208,3 +208,11 @@ export async function GetLogsByTxHash(http, txHash) {
   let { data: res } = await http.get(url);
   return res.data;
 }
+
+export async function GetSearchType(http, filterType, keyWord) {
+  let url = "/v1/search?type=" + filterType + "&keyword=" + keyWord;
+  let { data: res } = await http.get(url);
+  // console.log(url);
+  // console.log(res.data);
+  return parseInt(res.data.type);
+}
