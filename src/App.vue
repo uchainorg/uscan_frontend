@@ -1,5 +1,5 @@
 <template lang="">
-  <div class="container-main">
+  <div>
     <scan-header title="Coq Chain Scan"></scan-header>
     <router-view></router-view>
     <scan-tail></scan-tail>
@@ -11,9 +11,4 @@ export default defineComponent({
   name: "chain-scan",
 });
 </script>
-<style lang="less" scoped>
-.container-main {
-  margin: auto;
-  max-width: 1400px;
-}
-</style>
+<style lang="less" scoped></style>

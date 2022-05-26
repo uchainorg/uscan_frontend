@@ -1,14 +1,40 @@
 <template lang="">
-  <div class="header-container">
-    <div class="header-title-container" :style="{ fontSize: fsize + 'px' }">
-      {{ title }}
-    </div>
-    <div class="header-input-container">
-      <el-link style="align-self: flex-start; margin-bottom: 2%" type="primary" @click="moveToHome">Home</el-link>
-      <el-link style="align-self: flex-start; margin-bottom: 1%" type="primary" @click="moveToErc('erc20')">erc20</el-link>
-      <el-link style="align-self: flex-start; margin-bottom: 1%" type="primary" @click="moveToErc('erc721')">erc721</el-link>
-      <el-link style="align-self: flex-start; margin-bottom: 2%" type="primary" @click="moveToErc('erc1155')">erc1155</el-link>
-      <el-autocomplete class="inline-input" v-model="inputValue" :fetch-suggestions="querySearch" placeholder="Search by Address / Txhash / Block" @select="handleSubmit"></el-autocomplete>
+  <div style="background-color: white">
+    <div style="width: 1400px; height: 140px; margin: 0 auto">
+      <el-row>
+        <el-col :span="12" class="header-left">
+          <div class="header-left-items">
+            <el-icon color="#253258" :size="30"><Management /></el-icon>
+            <h2>{{ title }}</h2>
+          </div>
+        </el-col>
+        <el-col :span="12" class="header-right">
+          <div style="display: flex; flex-direction: row; align-items: center; justify-content: center">
+            <el-icon><Search /></el-icon>
+            <el-autocomplete v-model="inputValue" :fetch-suggestions="querySearch" placeholder="Search by Address / Txhash / Block" @select="handleSubmit" style="width: 550px; margin-left: 1%"></el-autocomplete>
+          </div>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="12" :offset="7" class="header-right-bar">
+          <div class="header-right-items">
+            <el-button text style="font-size: 15px; font-weight: bold" @click="moveToHome">Home</el-button>
+            &nbsp;&nbsp;
+            <el-dropdown style="margin-bottom: 1%">
+              <span style="font-size: 15px; font-weight: bold">
+                Tokens<el-icon><arrow-down /></el-icon>
+              </span>
+              <template #dropdown>
+                <el-dropdown-menu>
+                  <el-dropdown-item @click.native="moveToErc('erc20')">ERC20</el-dropdown-item>
+                  <el-dropdown-item @click.native="moveToErc('erc721')">ERC721</el-dropdown-item>
+                  <el-dropdown-item @click.native="moveToErc('erc1155')">ERC1155</el-dropdown-item>
+                </el-dropdown-menu>
+              </template>
+            </el-dropdown>
+          </div>
+        </el-col>
+      </el-row>
     </div>
   </div>
 </template>
@@ -22,15 +48,11 @@ export default defineComponent({
       type: String,
       default: "ankr chain scan",
     },
-    fsize: {
-      type: Number,
-      default: 35,
-    },
   },
   data() {
     return {
-      lastBlockNumber: 0,
       inputValue: "",
+      activeIndex: "1",
     };
   },
   methods: {
@@ -44,7 +66,6 @@ export default defineComponent({
       this.$router.push(arg.link);
       this.inputValue = "";
     },
-    //输入框获取焦点时调用的方法
     async querySearch(queryString, cb) {
       let queryArg = queryString.trim();
       let typeMap = {
@@ -70,25 +91,40 @@ export default defineComponent({
       let res = await GetSearchType(this.$rpc_http, filterType, keyWord);
       return res;
     },
+    handleCommand(arg) {
+      console.log(arg);
+    },
   },
 });
 </script>
 <style lang="less" scoped>
-.header-container {
+.header-left {
   display: flex;
-  margin-top: 50px;
-  justify-content: center;
-}
-
-.header-title-container {
-  width: 30%;
-  font-family: "Gill Sans", Times, serif;
   margin-top: 2%;
 }
 
-.header-input-container {
-  width: 30%;
+.header-left-items {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 15%;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+.header-right-bar {
+  display: flex;
+  align-items: center;
+  margin-top: -1%;
+}
+
+.header-right-items {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 40%;
 }
 </style>
