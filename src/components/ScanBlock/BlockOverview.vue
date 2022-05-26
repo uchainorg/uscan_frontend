@@ -1,17 +1,32 @@
 <template lang="">
-  <el-table :data="tableData" style="width: 100%; margin-top: -3%" empty-text="loading...">
-    <el-table-column prop="parameterDisplay" width="350px"></el-table-column>
+  <el-table :data="tableData" style="width: 100%; margin-top: -37px" empty-text="loading..." :row-style="{ height: '50px' }">
+    <el-table-column width="350px">
+      <template v-slot:default="scope">
+        <div class="center-row">
+          <el-icon><QuestionFilled /></el-icon>&nbsp;{{ scope.row.parameterDisplay }}
+        </div>
+      </template>
+    </el-table-column>
     <el-table-column prop="parameterValue">
       <template v-slot:default="scope">
         <div v-if="scope.row.parameterName == 'blockHeight'" style="font-weight: 900">
           {{ scope.row.parameterValue }}
+          &nbsp;
+          <el-button-group>
+            <el-button type="primary" size="small" plain @click="moveToBlock(parseInt(this.blockNumber) - 1)">
+              <el-icon><ArrowLeftBold /></el-icon>
+            </el-button>
+            <el-button type="primary" size="small" plain @click="moveToBlock(parseInt(this.blockNumber) + 1)">
+              <el-icon><ArrowRightBold /></el-icon>
+            </el-button>
+          </el-button-group>
         </div>
         <div class="center-row" v-else-if="scope.row.parameterName == 'timestamp'">
           <el-icon><clock /></el-icon>&nbsp;{{ scope.row.parameterValue }}
         </div>
         <div v-else-if="scope.row.parameterName == 'transactions'">
           <el-tooltip class="box-item" effect="dark" content="Click to view Transactions" placement="top-start">
-            <el-button type="primary" plain size="small" @click="moveToTxs">{{ scope.row.parameterValue }} transactions</el-button>
+            <el-button type="primary" plain size="small" @click="moveToTxs" style="border: 0">{{ scope.row.parameterValue }} transactions</el-button>
           </el-tooltip>
           &nbsp;in this block
         </div>
@@ -42,7 +57,8 @@ import { GetBlockByNumber } from "../../js/request.js";
 import { defineComponent } from "vue";
 export default defineComponent({
   name: "BlockOverview",
-  props: ["data"],
+  props: ["blockNumber"],
+  emits: ["update:blockNumber"],
   components: [Clock],
   data() {
     return {
@@ -50,7 +66,11 @@ export default defineComponent({
     };
   },
   created() {
-    this.getBlockRes(this.data.blockNumber);
+    this.getBlockRes(this.blockNumber);
+  },
+  beforeRouteUpdate(to, from) {
+    console.log(to);
+    console.log(from);
   },
   methods: {
     // formatTimestamp(timestamp) {
@@ -59,7 +79,12 @@ export default defineComponent({
     //   return diffTime(createTime, new Date()) + "(" + date + ")";
     // },
     moveToTxs() {
-      this.$router.push("/block/txs/" + this.data.blockNumber);
+      this.$router.push("/block/txs/" + this.blockNumber);
+    },
+    moveToBlock(blkNum) {
+      this.$emit("update:blockNumber", blkNum);
+      this.tableData = [];
+      this.getBlockRes(blkNum);
     },
     async getBlockRes(blockNumber) {
       // let res = await getBlock(this.$rpc_http, blockNumber);

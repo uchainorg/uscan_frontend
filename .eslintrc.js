@@ -11,5 +11,6 @@ module.exports = {
   plugins: ["vue"],
   rules: {
     "vue/comment-directive": "off",
+    "vue/no-v-model-argument": "off",
   },
 };
