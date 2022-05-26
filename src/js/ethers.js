@@ -15,3 +15,11 @@ export function gwei2eth(x) {
   let ref = x.toString();
   return ethers.utils.formatUnits(ref, 9);
 }
+
+export function wei2gwei(x) {
+  if (!x) {
+    x = 0;
+  }
+  let ref = x.toString();
+  return ethers.utils.formatUnits(ref, 9);
+}

@@ -1,17 +1,17 @@
 <template lang="">
   <div>
     <el-table :data="this.$store.state.HomeTransactionInfoList" empty-text="loading..." :row-style="{ height: '75px' }">
-      <el-table-column label="Latest Transactions" width="210">
+      <el-table-column label="Latest Transactions" width="240">
         <template v-slot:default="scope">
           <el-row>
-            <el-col :span="12">
+            <el-col :span="6">
               <div class="list-icon-circle">
                 <p style="font-size: 15px; font-weight: bold">Tx</p>
               </div>
             </el-col>
-            <el-col :span="12" style="margin-left: -20%">
+            <el-col :span="18">
               <div class="table-column-row">
-                <router-link :to="'/block/' + scope.row.blockNumber">{{ scope.row.blockNumber }}</router-link>
+                <router-link :to="'/block/' + scope.row.hash">{{ scope.row.hash.slice(0, 15) + "..." }}</router-link>
                 <div>{{ scope.row.age }}</div>
               </div>
             </el-col>
@@ -34,7 +34,7 @@
         <template v-slot:default="scope">
           <el-tooltip class="box-item" effect="dark" content="amount" placement="right">
             <div style="text-align: right">
-              <el-tag type="info">{{ this.$wei2eth(scope.row.gas) }} Eth</el-tag>
+              <el-tag type="info">{{ this.$wei2gwei(scope.row.gas) }} Gwei</el-tag>
             </div>
           </el-tooltip>
         </template>

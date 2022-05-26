@@ -4,12 +4,12 @@
       <el-table-column label="Latest Blocks" width="250">
         <template v-slot:default="scope">
           <el-row>
-            <el-col :span="12">
+            <el-col :span="6">
               <div class="list-icon">
                 <p style="font-size: 15px; font-weight: bold">Bk</p>
               </div>
             </el-col>
-            <el-col :span="12" style="margin-left: -25%">
+            <el-col :span="18">
               <div class="table-column-row">
                 <router-link :to="'/block/' + scope.row.blockNumber">{{ scope.row.blockNumber }}</router-link>
                 <div>{{ scope.row.age }}</div>
