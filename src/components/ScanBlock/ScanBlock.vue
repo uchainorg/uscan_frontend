@@ -1,19 +1,28 @@
 <template lang="">
-  <div class="block-container">
-    <el-table :data="this.$store.state.HomeBlockInfoList" style="width: 95%" empty-text="loading...">
-      <el-table-column label="Latest Blocks" width="190">
+  <div>
+    <el-table :data="this.$store.state.HomeBlockInfoList" empty-text="loading..." :row-style="{ height: '75px' }">
+      <el-table-column label="Latest Blocks" width="250">
         <template v-slot:default="scope">
-          <div class="table-column-row">
-            <router-link :to="'/block/' + scope.row.blockNumber">{{ scope.row.blockNumber }}</router-link>
-            <div>{{ scope.row.diffTime }}</div>
-          </div>
+          <el-row>
+            <el-col :span="12">
+              <div class="list-icon">
+                <p style="font-size: 15px; font-weight: bold">Bk</p>
+              </div>
+            </el-col>
+            <el-col :span="12" style="margin-left: -25%">
+              <div class="table-column-row">
+                <router-link :to="'/block/' + scope.row.blockNumber">{{ scope.row.blockNumber }}</router-link>
+                <div>{{ scope.row.age }}</div>
+              </div>
+            </el-col>
+          </el-row>
         </template>
       </el-table-column>
       <el-table-column>
         <template v-slot:default="scope">
           <div class="table-column-row">
             <div>
-              Miner <router-link :to="'/address/' + scope.row.miner"> {{ scope.row.miner.slice(0, 19) + "..." }} </router-link>
+              Miner <router-link :to="'/address/' + scope.row.miner"> {{ scope.row.miner.slice(0, 15) + "..." }} </router-link>
             </div>
             <el-tooltip class="box-item" effect="dark" content="Transactions in this block" placement="right">
               <div style="width: 60px">
@@ -33,7 +42,9 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-button type="primary" plain style="width: 95%; margin-top: 1%" @click="moveToBlocks">View all Blocks</el-button>
+    <div style="display: flex; justify-content: center">
+      <el-button type="primary" plain style="width: 95%; margin-top: 1%; border: 0" @click="moveToBlocks">View all Blocks</el-button>
+    </div>
   </div>
 </template>
 <script>

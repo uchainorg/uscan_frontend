@@ -1,5 +1,4 @@
 .block-container {
-  margin-top: -2%;
   width: 50%;
 }
 .last-column {
@@ -24,4 +23,24 @@ a {
 .container {
   margin-top: 2%;
   max-width: 1350px;
+}
+
+.list-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 45px;
+  width: 45px;
+  background-color: #f1f2f3;
+  border-radius: 10px;
+}
+
+.list-icon-circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 45px;
+  width: 45px;
+  background-color: #f1f2f3;
+  border-radius: 50%;
 }

@@ -1,14 +1,21 @@
 <template lang="">
-  <div class="block-container">
-    <el-table :data="this.$store.state.HomeTransactionInfoList" style="width: 95%" empty-text="loading...">
-      <el-table-column label="Latest Transactions" width="190">
+  <div>
+    <el-table :data="this.$store.state.HomeTransactionInfoList" empty-text="loading..." :row-style="{ height: '75px' }">
+      <el-table-column label="Latest Transactions" width="210">
         <template v-slot:default="scope">
-          <div class="table-column-row">
-            <div>
-              <router-link :to="'/tx/' + scope.row.hash">{{ scope.row.hash.slice(0, 15) + "..." }}</router-link>
-            </div>
-            <div>{{ scope.row.diffTime }}</div>
-          </div>
+          <el-row>
+            <el-col :span="12">
+              <div class="list-icon-circle">
+                <p style="font-size: 15px; font-weight: bold">Tx</p>
+              </div>
+            </el-col>
+            <el-col :span="12" style="margin-left: -20%">
+              <div class="table-column-row">
+                <router-link :to="'/block/' + scope.row.blockNumber">{{ scope.row.blockNumber }}</router-link>
+                <div>{{ scope.row.age }}</div>
+              </div>
+            </el-col>
+          </el-row>
         </template>
       </el-table-column>
       <el-table-column width="250">
@@ -33,7 +40,9 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-button type="primary" plain style="width: 95%; margin-top: 1%" @click="moveToTxs">View all Transactions</el-button>
+    <div style="display: flex; justify-content: center">
+      <el-button type="primary" plain style="width: 95%; margin-top: 1%; border: 0" @click="moveToTxs">View all Transactions</el-button>
+    </div>
   </div>
 </template>
 <script>

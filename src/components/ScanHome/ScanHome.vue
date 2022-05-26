@@ -1,7 +1,9 @@
 <template lang="">
   <div class="container-display">
-    <scan-block></scan-block>
-    <scan-transaction></scan-transaction>
+    <el-row :gutter="20">
+      <el-col :span="12"><scan-block></scan-block></el-col>
+      <el-col :span="12"><scan-transaction></scan-transaction></el-col>
+    </el-row>
   </div>
 </template>
 <script>
@@ -21,10 +23,4 @@ export default defineComponent({
   },
 });
 </script>
-<style lang="less" scoped>
-.container-display {
-  display: flex;
-  justify-content: center;
-  margin-top: 5%;
-}
-</style>
+<style lang="less" scoped></style>

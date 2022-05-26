@@ -1,6 +1,6 @@
 <template lang="">
   <div style="background-color: white">
-    <div style="width: 1400px; height: 140px; margin: 0 auto">
+    <div style="width: 1350px; height: 140px; margin: 0 auto">
       <el-row>
         <el-col :span="12" class="header-left">
           <div class="header-left-items">
