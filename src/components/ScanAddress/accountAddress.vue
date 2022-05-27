@@ -22,7 +22,7 @@
     </div>
 
     <div style="margin-top: 2%">
-      <el-tabs v-model="activeName" @tab-click="handleTabClick">
+      <el-tabs v-model="activeName">
         <el-tab-pane label="Transactions" name="transactions">
           <general-txs :txsData="generalTransactionsList" :headerData="generalTransactionsHeaderList"></general-txs>
           <div style="margin-top: 1%; display: flex; justify-content: center">
@@ -54,8 +54,8 @@
               :small="small"
               layout="total, sizes, prev, pager, next, jumper"
               :total="erc20Total"
-              @size-change="GeneralHandleSizeChange"
-              @current-change="GeneralHandleCurrentChange"
+              @size-change="Erc20HandleSizeChange"
+              @current-change="Erc20HandleCurrentChange"
             />
           </div>
         </el-tab-pane>
@@ -74,8 +74,8 @@
               :small="small"
               layout="total, sizes, prev, pager, next, jumper"
               :total="erc721Total"
-              @size-change="GeneralHandleSizeChange"
-              @current-change="GeneralHandleCurrentChange"
+              @size-change="Erc721HandleSizeChange"
+              @current-change="Erc721HandleCurrentChange"
             />
           </div>
         </el-tab-pane>
@@ -94,8 +94,8 @@
               :small="small"
               layout="total, sizes, prev, pager, next, jumper"
               :total="erc1155Total"
-              @size-change="GeneralHandleSizeChange"
-              @current-change="GeneralHandleCurrentChange"
+              @size-change="Erc1155HandleSizeChange"
+              @current-change="Erc1155HandleCurrentChange"
             />
           </div>
         </el-tab-pane>
@@ -271,9 +271,6 @@ export default defineComponent({
       this.generalTransactionsList = res.resList;
       this.generalTotal = res.total;
     },
-    handleTabClick(tab) {
-      console.log(tab.props);
-    },
     async GeneralHandleCurrentChange(val) {
       this.tableDate = [];
       this.generalCurrentPage = val;
@@ -289,19 +286,64 @@ export default defineComponent({
       this.generalTransactionsList = res.resList;
       this.generalTotal = res.total;
     },
+    async Erc20HandleCurrentChange(val) {
+      this.erc20TransactionsList = [];
+      this.erc20CurrentPage = val;
+      let erc20txns = await GetTxsByErcAccount(this.$rpc_http, "erc20", this.address, this.erc20CurrentPage - 1, this.erc20PageSize);
+      this.erc20Total = erc20txns.total;
+      this.erc20TransactionsList = erc20txns.resList;
+    },
+    async Erc20HandleSizeChange(val) {
+      this.erc20TransactionsList = [];
+      this.erc20CurrentPage = 1;
+      this.erc20PageSize = val;
+      let erc20txns = await GetTxsByErcAccount(this.$rpc_http, "erc20", this.address, this.erc20CurrentPage - 1, this.erc20PageSize);
+      this.erc20Total = erc20txns.total;
+      this.erc20TransactionsList = erc20txns.resList;
+    },
+    async Erc721HandleCurrentChange(val) {
+      this.erc721TransactionsList = [];
+      this.erc721CurrentPage = val;
+      let erc721txns = await GetTxsByErcAccount(this.$rpc_http, "erc721", this.address, this.erc721CurrentPage - 1, this.erc721PageSize);
+      this.erc721Total = erc721txns.total;
+      this.erc721TransactionsList = erc721txns.resList;
+    },
+    async Erc721HandleSizeChange(val) {
+      this.erc721TransactionsList = [];
+      this.erc721CurrentPage = 1;
+      this.erc721PageSize = val;
+      let erc721txns = await GetTxsByErcAccount(this.$rpc_http, "erc721", this.address, this.erc721CurrentPage - 1, this.erc721PageSize);
+      this.erc721Total = erc721txns.total;
+      this.erc721TransactionsList = erc721txns.resList;
+    },
+    async Erc1155HandleCurrentChange(val) {
+      this.erc1155TransactionsList = [];
+      this.erc1155CurrentPage = val;
+      let erc1155txns = await GetTxsByErcAccount(this.$rpc_http, "erc1155", this.address, this.erc1155CurrentPage - 1, this.erc1155PageSize);
+      this.erc1155Total = erc1155txns.total;
+      this.erc1155TransactionsList = erc1155txns.resList;
+    },
+    async Erc1155HandleSizeChange(val) {
+      this.erc1155TransactionsList = [];
+      this.erc1155CurrentPage = 1;
+      this.erc1155PageSize = val;
+      let erc1155txns = await GetTxsByErcAccount(this.$rpc_http, "erc1155", this.address, this.erc1155CurrentPage - 1, this.erc1155PageSize);
+      this.erc721Total = erc1155txns.total;
+      this.erc721TransactionsList = erc1155txns.resList;
+    },
     async getErc20Txs() {
       let erc20txns = await GetTxsByErcAccount(this.$rpc_http, "erc20", this.address, this.erc20CurrentPage - 1, this.erc20PageSize);
       this.erc20Total = erc20txns.total;
       this.erc20TransactionsList = erc20txns.resList;
-      console.log(erc20txns);
-      let erc721txns = await GetTxsByErcAccount(this.$rpc_http, "erc721", this.address, this.erc20CurrentPage - 1, this.erc20PageSize);
+      // console.log(erc20txns);
+      let erc721txns = await GetTxsByErcAccount(this.$rpc_http, "erc721", this.address, this.erc721CurrentPage - 1, this.erc721PageSize);
       this.erc721Total = erc721txns.total;
       this.erc721TransactionsList = erc721txns.resList;
-      console.log(erc721txns);
-      let erc1155txns = await GetTxsByErcAccount(this.$rpc_http, "erc1155", this.address, this.erc20CurrentPage - 1, this.erc20PageSize);
+      // console.log(erc721txns);
+      let erc1155txns = await GetTxsByErcAccount(this.$rpc_http, "erc1155", this.address, this.erc1155CurrentPage - 1, this.erc1155PageSize);
       this.erc1155Total = erc1155txns.total;
       this.erc1155TransactionsList = erc1155txns.resList;
-      console.log(erc1155txns);
+      // console.log(erc1155txns);
     },
   },
 });
