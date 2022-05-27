@@ -1,6 +1,6 @@
 <template lang="">
   <div class="container">
-    <h3 style="display: inline">Transactions</h3>
+    <h3>Transactions {{ this.typeDisplay }}</h3>
     <general-txs :txsData="tableDate" :headerData="headerList"></general-txs>
     <div style="margin-top: 1%; display: flex; justify-content: center">
       <el-pagination
@@ -35,10 +35,12 @@ export default defineComponent({
       total: 0,
       headerList: [],
       txType: this.type,
+      typeDisplay: "",
     };
   },
   created() {
     if (this.type) {
+      this.typeDisplay = " for " + this.type;
       this.getTxsByERC();
       this.headerList = [
         {
@@ -67,6 +69,7 @@ export default defineComponent({
         },
       ];
     } else {
+      this.typeDisplay = " for all";
       this.getTxsList();
       this.headerList = [
         {

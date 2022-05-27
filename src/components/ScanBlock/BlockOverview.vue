@@ -1,5 +1,5 @@
 <template lang="">
-  <el-table :data="tableData" style="width: 100%; margin-top: -37px; border-radius: 15px" empty-text="loading..." :row-style="{ height: '50px' }">
+  <el-table :data="tableData" style="width: 100%; border-radius: 15px" empty-text="loading..." :row-style="{ height: '50px' }">
     <el-table-column width="350px">
       <template v-slot:default="scope">
         <div class="center-row">
@@ -13,10 +13,10 @@
           {{ scope.row.parameterValue }}
           &nbsp;
           <el-button-group>
-            <el-button type="primary" size="small" plain @click="moveToBlock(parseInt(this.blockNumber) - 1)">
+            <el-button type="primary" size="small" style="border: 0" plain @click="moveToBlock(parseInt(this.blockNumber) - 1)">
               <el-icon><ArrowLeftBold /></el-icon>
             </el-button>
-            <el-button type="primary" size="small" plain @click="moveToBlock(parseInt(this.blockNumber) + 1)">
+            <el-button type="primary" size="small" style="border: 0" plain @click="moveToBlock(parseInt(this.blockNumber) + 1)">
               <el-icon><ArrowRightBold /></el-icon>
             </el-button>
           </el-button-group>

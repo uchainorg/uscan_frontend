@@ -50,6 +50,11 @@ a {
   border-radius: 15px;
 }
 
+.box-card-log {
+  width: 70%;
+  border-radius: 15px;
+}
+
 .card-header {
   display: flex;
   justify-content: space-between;

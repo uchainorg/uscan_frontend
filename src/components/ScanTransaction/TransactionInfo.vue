@@ -6,7 +6,7 @@
       <el-tab-pane label="Overview" name="first">
         <transaction-overview :data="transactionOverviewData"></transaction-overview>
       </el-tab-pane>
-      <el-tab-pane>
+      <el-tab-pane name="second">
         <template #label>
           <span>Logs({{ logCount }})</span>
         </template>
@@ -23,7 +23,7 @@ export default defineComponent({
   props: ["txHash"],
   data() {
     return {
-      activeName: "first",
+      activeName: "second",
       logCount: 0,
       transactionOverviewData: { txHash: this.txHash },
       transactionLogsData: { txHash: this.txHash, logs: [] },
@@ -35,7 +35,6 @@ export default defineComponent({
   methods: {
     async getLogsByTxHash() {
       let res = await GetLogsByTxHash(this.$rpc_http, this.txHash);
-      console.log(res);
       this.logCount = res.total;
       this.transactionLogsData.logs = res.items;
     },

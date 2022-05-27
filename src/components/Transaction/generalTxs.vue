@@ -16,7 +16,7 @@
         <div v-else-if="scope.column.property == 'blockNumber'">
           <router-link :to="'/block/' + parseInt(scope.row[scope.column.property])">{{ parseInt(scope.row[scope.column.property]) }}</router-link>
         </div>
-        <div v-if="scope.column.property == 'age'" style="width: 70px">
+        <div v-if="scope.column.property == 'age'">
           {{ scope.row[scope.column.property].slice(0, 15) }}
         </div>
         <div v-else-if="scope.column.property == 'from'" style="width: 170px">

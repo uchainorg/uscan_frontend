@@ -1,6 +1,6 @@
 <template lang="">
   <div class="container">
-    <h3 style="display: inline">Blocks</h3>
+    <h3>Blocks</h3>
     <general-blocks :blocksData="tableDate" :headerData="headerList"></general-blocks>
     <div style="margin-top: 1%; display: flex; justify-content: center">
       <el-pagination

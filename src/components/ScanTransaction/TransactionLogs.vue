@@ -1,13 +1,36 @@
 <template lang="">
   <div>
     <div v-for="(log, index) in this.data.logs" :key="index">
-      <h4>Address :</h4>
-      {{ log.address }}
-      <h4>topics:</h4>
-      {{ log.topics }}
-      <h4>Data:</h4>
-      {{ log.data }}
-      <el-divider />
+      <div style="margin-top: 2%">
+        <el-card class="box-card-log" shadow="hover">
+          <template #header>
+            <div class="card-header">
+              <span>Log Index {{ index }}</span>
+            </div>
+          </template>
+          <div class="card-content">
+            <el-row>
+              <el-col :span="4">Address:</el-col>
+              <!-- <el-col :span="20">{{ log.address }}</el-col> -->
+              <el-col :span="20">
+                <router-link :to="'/address/' + log.address">{{ log.address }}</router-link>
+              </el-col>
+            </el-row>
+            &nbsp;
+            <div v-for="(topic, index) in log.topics" :key="index">
+              <el-row>
+                <el-col :span="4">Topic {{ index }}:</el-col>
+                <el-col :span="20">{{ topic }}</el-col>
+              </el-row>
+            </div>
+            &nbsp;
+            <el-row>
+              <el-col :span="4">Data:</el-col>
+              <el-col :span="20">{{ log.data }}</el-col>
+            </el-row>
+          </div>
+        </el-card>
+      </div>
     </div>
   </div>
 </template>
@@ -18,4 +41,6 @@ export default defineComponent({
   props: ["data"],
 });
 </script>
-<style lang=""></style>
+<style lang="less" scoped>
+@import "../../css/style.css";
+</style>
