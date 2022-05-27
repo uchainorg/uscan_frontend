@@ -1,7 +1,6 @@
 <template lang="">
   <div class="container">
-    <h3 style="display: inline">Transactions</h3>
-    <div>For Block {{ number }}</div>
+    <h3>Transactions For Block {{ number }}</h3>
     <general-txs :txsData="tableDate" :headerData="headerList"></general-txs>
   </div>
 </template>
