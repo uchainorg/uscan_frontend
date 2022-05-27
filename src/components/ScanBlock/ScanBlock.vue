@@ -1,6 +1,6 @@
 <template lang="">
   <div>
-    <el-table :data="this.$store.state.HomeBlockInfoList" empty-text="loading..." :row-style="{ height: '75px' }">
+    <el-table style="border-radius: 15px" :data="this.$store.state.HomeBlockInfoList" empty-text="loading..." :row-style="{ height: '75px' }">
       <el-table-column label="Latest Blocks" width="250">
         <template v-slot:default="scope">
           <el-row>
