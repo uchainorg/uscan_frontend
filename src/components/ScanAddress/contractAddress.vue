@@ -1,45 +1,56 @@
 <template lang="">
   <div>
-    <h3 style="display: inline">Contract</h3>
-    &nbsp;
-    <p style="display: inline">{{ address }}</p>
-    <!-- <p style="display: inline">{{ info }}</p> -->
-    <!-- <el-row style="margin-top: 0.5%">
-      <el-button type="info" size="small" round>info1</el-button>
-      <el-button type="info" size="small" round>info1</el-button>
-      <el-button type="info" size="small" round>info1</el-button>
-    </el-row> -->
-    <!-- <el-divider /> -->
-    <div class="container-display">
-      <div style="width: 50%">
-        <h4>Contract Overview</h4>
-        <el-table :data="contractOverviewTableData" style="margin-top: -3%; width: 95%" empty-text="loading...">
-          <el-table-column prop="parameterDisplay"></el-table-column>
-          <el-table-column prop="parameterValue">
-            <template v-slot:default="scope"> {{ scope.row.parameterValue }}</template>
-          </el-table-column>
-        </el-table>
-      </div>
-      <div style="width: 50%">
-        <h4>More Info</h4>
-        <el-table :data="moreInfoTableData" style="margin-top: -3%; width: 95%" empty-text="loading...">
-          <el-table-column prop="parameterDisplay"></el-table-column>
-          <el-table-column prop="parameterValue">
-            <template v-slot:default="scope">
-              <div v-if="scope.row.parameterName == 'creator'" style="font-weight: 900">
-                <router-link :to="'/address/' + scope.row.parameterValue.creator">{{ scope.row.parameterValue.creator.slice(0, 11) + "..." }}</router-link>
-                at txn
-                <router-link :to="'/tx/' + scope.row.parameterValue.tx">{{ scope.row.parameterValue.tx.slice(0, 11) + "..." }}</router-link>
-              </div>
-              <div v-else>
-                {{ scope.row.parameterValue }}
-              </div>
-            </template>
-          </el-table-column>
-        </el-table>
-      </div>
+    <div>
+      <el-row>
+        <el-col>
+          <h4>Contract : {{ address }}</h4>
+        </el-col>
+      </el-row>
     </div>
-    <div style="margin-top: 3%">
+
+    <div>
+      <el-row :gutter="20">
+        <el-col :span="12">
+          <div>
+            <el-card class="box-card-address">
+              <template #header>
+                <div class="card-header">
+                  <span>Overview</span>
+                </div>
+              </template>
+              <div class="card-content">
+                <el-row>
+                  <el-col :span="10">Balance:</el-col>
+                  <el-col :span="14">{{ this.$wei2eth(this.info.balance) + " Eth" }}</el-col>
+                </el-row>
+              </div>
+            </el-card>
+          </div>
+        </el-col>
+        <el-col :span="12">
+          <div>
+            <el-card class="box-card-address">
+              <template #header>
+                <div class="card-header">
+                  <span>More Info</span>
+                </div>
+              </template>
+              <div class="card-content">
+                <el-row>
+                  <el-col :span="10">Creator:</el-col>
+                  <el-col :span="14">
+                    <router-link :to="'/address/' + this.info.creator">{{ this.info.creator.slice(0, 15) + "..." }}</router-link>
+                    at txn
+                    <router-link :to="'/tx/' + this.info.txHash">{{ this.info.txHash.slice(0, 15) + "..." }}</router-link>
+                  </el-col>
+                </el-row>
+              </div>
+            </el-card>
+          </div>
+        </el-col>
+      </el-row>
+    </div>
+    <div style="margin-top: 2%">
       <el-tabs v-model="activeName" @tab-click="handleTabClick">
         <el-tab-pane label="Transactions" name="transactions">
           <general-txs :txsData="generalTransactionsList" :headerData="generalTransactionsHeaderList"></general-txs>
@@ -86,8 +97,6 @@ export default defineComponent({
   data() {
     return {
       activeName: "transactions",
-      contractOverviewTableData: [],
-      moreInfoTableData: [],
       generalTransactionsList: [],
       generalTransactionsHeaderList: [
         {
@@ -219,22 +228,6 @@ export default defineComponent({
     this.getGeneralTransactionsList();
   },
   mounted() {
-    if (this.contractOverviewTableData.length == 0) {
-      this.contractOverviewTableData.push({
-        parameterName: "balance",
-        parameterDisplay: "Balance:",
-        parameterValue: this.$wei2eth(this.info.balance) + " Eth",
-      });
-    }
-
-    if (this.moreInfoTableData.length == 0) {
-      this.moreInfoTableData.push({
-        parameterName: "creator",
-        parameterDisplay: "Creator:",
-        parameterValue: { creator: this.info.creator, tx: this.info.creator },
-      });
-    }
-
     this.codeContent = this.info.code;
   },
   methods: {

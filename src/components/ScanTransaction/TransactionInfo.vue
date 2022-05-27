@@ -23,7 +23,7 @@ export default defineComponent({
   props: ["txHash"],
   data() {
     return {
-      activeName: "second",
+      activeName: "first",
       logCount: 0,
       transactionOverviewData: { txHash: this.txHash },
       transactionLogsData: { txHash: this.txHash, logs: [] },

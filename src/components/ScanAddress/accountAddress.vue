@@ -1,6 +1,11 @@
 <template lang="">
   <div>
-    <div style="margin-top: 3%">
+    <el-row>
+      <el-col>
+        <h4>Address : {{ address }}</h4>
+      </el-col>
+    </el-row>
+    <div>
       <el-card class="box-card">
         <template #header>
           <div class="card-header">
