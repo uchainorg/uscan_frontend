@@ -76,11 +76,33 @@ export async function GetBlockByNumber(http, blockNumber) {
   return res.data;
 }
 
+// export async function GetTxsByBlock(http, blockNumber) {
+//   let url = "/v1/txs?blockBegin=" + blockNumber + "&blockEnd=" + blockNumber;
+//   let { data: res } = await http.get(url);
+//   // console.log(res.data.items);
+//   return res.data.items;
+// }
+
 export async function GetTxsByBlock(http, blockNumber) {
   let url = "/v1/txs?blockBegin=" + blockNumber + "&blockEnd=" + blockNumber;
   let { data: res } = await http.get(url);
   // console.log(res.data.items);
-  return res.data.items;
+  let txsListRes = [];
+  res.data.items.forEach((element) => {
+    let createTimeTx = new Date(parseInt(element.createTime)) * 1000;
+    // console.log(element);
+    txsListRes.push({
+      hash: element.hash,
+      method: element.method,
+      blockNumber: parseInt(element.blockNumber),
+      age: diffTime(createTimeTx, new Date()),
+      from: element.from,
+      to: element.to,
+      value: element.value,
+      gas: parseInt(element.gas * element.gasPrice),
+    });
+  });
+  return txsListRes;
 }
 
 export async function GetTxByHash(http, hash) {
