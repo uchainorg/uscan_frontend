@@ -10,11 +10,6 @@
   flex-direction: column;
 }
 
-a {
-  color: #3498db;
-  text-decoration: none;
-}
-
 .center-row {
   display: flex;
   align-items: center;
