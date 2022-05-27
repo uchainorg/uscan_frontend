@@ -21,6 +21,18 @@ GET https://apis-stage.ankr.com/chain-scan/v1/txs?blockBegin=55&blockEnd=55
 GET https://apis-stage.ankr.com/chain-scan/v1/txs/0x0d6c426707c35c27e4bd7a3f7736e533efa6e73d6b9baa3533cdc8f37d45caaa
 
 ###
+// get address erc tx
+GET https://apis-stage.ankr.com/chain-scan/v1/accounts/0x20cD8eB93c50BDAc35d6A526f499c0104958e3F6/txns-erc20
+
+###
+// get address erc tx
+GET https://apis-stage.ankr.com/chain-scan/v1/accounts/0x20cD8eB93c50BDAc35d6A526f499c0104958e3F6/txns-erc721
+
+###
+// get address erc tx
+GET https://apis-stage.ankr.com/chain-scan/v1/accounts/0x20cD8eB93c50BDAc35d6A526f499c0104958e3F6/txns-erc1155
+
+###
 // get contract address
 GET https://apis-stage.ankr.com/chain-scan/v1/accounts/0x84868afcC4Ba758a4ae2aca141D2fF0ECD8C5fac
 

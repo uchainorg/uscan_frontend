@@ -203,6 +203,35 @@ export async function GetTxsByToken(http, address, type, pageNumber, pageSize) {
   return result;
 }
 
+export async function GetTxsByErcAccount(http, erc, account, pageNumber, pageSize) {
+  let offset = pageNumber * pageSize;
+  let limit = pageSize;
+  let url = "/v1/accounts/" + account + "/txns-" + erc + "?offset=" + offset + "&limit=" + limit;
+  // console.log(url);
+  let { data: res } = await http.get(url);
+  let txsListRes = [];
+  res.data.items.forEach((element) => {
+    let createTimeTx = new Date(parseInt(element.createdTime)) * 1000;
+    // console.log(element);
+    txsListRes.push({
+      hash: element.transactionHash,
+      method: element.method,
+      blockNumber: parseInt(element.blockNumber),
+      age: diffTime(createTimeTx, new Date()),
+      from: element.from,
+      to: element.to,
+      valueToken: parseInt(element.value),
+      tokenID: element.tokenID,
+    });
+  });
+  let result = {
+    resList: txsListRes,
+    total: res.data.total,
+  };
+  // console.log(result);
+  return result;
+}
+
 export async function GetLogsByTxHash(http, txHash) {
   let url = "/v1/txs/" + txHash + "/event-logs";
   let { data: res } = await http.get(url);
