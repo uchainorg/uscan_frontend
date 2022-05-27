@@ -26,7 +26,9 @@
             &nbsp;
             <el-row>
               <el-col :span="4">Data:</el-col>
-              <el-col :span="20">{{ log.data }}</el-col>
+              <el-col :span="20" style="word-break: break-all">
+                <div>{{ log.data }}</div>
+              </el-col>
             </el-row>
           </div>
         </el-card>
