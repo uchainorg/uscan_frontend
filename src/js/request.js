@@ -207,7 +207,7 @@ export async function GetTxsByErcAccount(http, erc, account, pageNumber, pageSiz
   let offset = pageNumber * pageSize;
   let limit = pageSize;
   let url = "/v1/accounts/" + account + "/txns-" + erc + "?offset=" + offset + "&limit=" + limit;
-  console.log(url);
+  // console.log(url);
   let { data: res } = await http.get(url);
   let txsListRes = [];
   res.data.items.forEach((element) => {
