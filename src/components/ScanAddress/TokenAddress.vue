@@ -1,9 +1,14 @@
 <template lang="">
   <div>
-    <h3 style="display: inline">Token</h3>
-    &nbsp;
-    <p style="display: inline">{{ address }}</p>
-    <div class="container-display">
+    <div>
+      <el-row>
+        <el-col>
+          <h4>Token : {{ address }}</h4>
+        </el-col>
+      </el-row>
+    </div>
+
+    <!-- <div class="container-display">
       <div style="width: 50%">
         <h4>Overview ({{ this.tokenType }})</h4>
         <el-table :data="addressOverviewTableData" style="margin-top: -3%; width: 95%" empty-text="loading...">
@@ -13,8 +18,63 @@
           </el-table-column>
         </el-table>
       </div>
+    </div> -->
+
+    <div>
+      <el-row :gutter="20">
+        <el-col :span="12">
+          <div>
+            <el-card class="box-card-address">
+              <template #header>
+                <div class="card-header">
+                  <span>Overview</span>
+                </div>
+              </template>
+              <div class="card-content">
+                <el-row>
+                  <el-col :span="9">Max Total Supply:</el-col>
+                  <el-col :span="15">{{ this.maxTotalSupply }}</el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="9">Holders:</el-col>
+                  <el-col :span="15">{{ this.holdersTotal }}</el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="9">Transfers:</el-col>
+                  <el-col :span="15">{{ this.transfersTotal }}</el-col>
+                </el-row>
+              </div>
+            </el-card>
+          </div>
+        </el-col>
+        <el-col :span="12">
+          <div>
+            <el-card class="box-card-address">
+              <template #header>
+                <div class="card-header">
+                  <span>Profile Summary</span>
+                </div>
+              </template>
+              <div class="card-content">
+                <el-row>
+                  <el-col :span="9">Contract:</el-col>
+                  <el-col :span="15">
+                    <router-link :to="'/address/' + this.address">{{ this.address }}</router-link>
+                  </el-col>
+                </el-row>
+                <div v-if="this.tokenType == 'erc20'">
+                  <el-row>
+                    <el-col :span="9">Decimals:</el-col>
+                    <el-col :span="15">{{ this.decimals }}</el-col>
+                  </el-row>
+                </div>
+              </div>
+            </el-card>
+          </div>
+        </el-col>
+      </el-row>
     </div>
-    <div style="margin-top: 3%">
+    <div style="margin-top: 2%">
       <el-tabs v-model="activeName">
         <el-tab-pane label="Transactions" name="transactions">
           <general-txs :txsData="generalTransactionsList" :headerData="generalTransactionsHeaderList"></general-txs>
@@ -62,7 +122,6 @@ export default defineComponent({
     return {
       activeName: "transactions",
       tokenType: "",
-      addressOverviewTableData: [],
       generalTransactionsList: [],
       generalTransactionsHeaderList: [],
       generalCurrentPage: 1,
@@ -84,15 +143,13 @@ export default defineComponent({
       holdersCurrentPage: 1,
       holdersPageSize: 25,
       holdersTotal: 0,
+      transfersTotal: 0,
+      maxTotalSupply: 0,
+      decimals: 0,
     };
   },
   created() {
     this.GetTokenType();
-    this.addressOverviewTableData.push({
-      parameterName: "contract",
-      parameterDisplay: "Contract:",
-      parameterValue: this.address,
-    });
   },
   methods: {
     async GeneralHandleCurrentChange(val) {
@@ -130,30 +187,16 @@ export default defineComponent({
       this.tokenType = res;
       this.GetTokenHoldersTotal();
       let total = await this.GetTxsByToken();
-      this.addressOverviewTableData.push({
-        parameterName: "transfers",
-        parameterDisplay: "Transfers:",
-        parameterValue: total,
-      });
+      this.transfersTotal = total;
       this.GetAccountInfo();
     },
     async GetAccountInfo() {
       let res = await GetAddressInfo(this.$rpc_http, this.address);
-      //   if (res.code) {
-      //     this.comName = "contractAddress";
-      //   } else {
-      //     this.comName = "accountAddress";
-      //   }
-      // this.addressInfo = res;
 
       let totalSupply = 0;
       if (this.tokenType == "erc20") {
-        this.addressOverviewTableData.push({
-          parameterName: "decimals",
-          parameterDisplay: "Decimals:",
-          parameterValue: res.decimals,
-        });
         totalSupply = res.tokenTotalSupply;
+        this.decimals = res.decimals;
         this.generalTransactionsHeaderList = [
           {
             label: "Txn Hash",
@@ -217,19 +260,10 @@ export default defineComponent({
           },
         ];
       }
-      this.addressOverviewTableData.push({
-        parameterName: "totalSupply",
-        parameterDisplay: "Max Total Supply:",
-        parameterValue: totalSupply,
-      });
+      this.maxTotalSupply = totalSupply;
     },
     async GetTokenHoldersTotal() {
       let res = await GetTokenHolders(this.$rpc_http, this.address, this.tokenType, this.holdersCurrentPage - 1, this.holdersPageSize);
-      this.addressOverviewTableData.push({
-        parameterName: "holders:",
-        parameterDisplay: "Holders:",
-        parameterValue: res.total,
-      });
       this.holdersList = res.items;
       this.holdersTotal = res.total;
     },
@@ -242,4 +276,6 @@ export default defineComponent({
   },
 });
 </script>
-<style lang=""></style>
+<style lang="less" scoped>
+@import "../../css/style.css";
+</style>
