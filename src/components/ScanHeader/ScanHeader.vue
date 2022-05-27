@@ -4,7 +4,8 @@
       <el-row>
         <el-col :span="12" class="header-left">
           <div class="header-left-items">
-            <el-icon color="#253258" :size="30"><Management /></el-icon>
+            <el-icon color="#253258" :size="33"><Bowl /></el-icon>
+            &nbsp;
             <h2>{{ title }}</h2>
           </div>
         </el-col>

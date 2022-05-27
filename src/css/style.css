@@ -32,7 +32,7 @@ a {
   height: 45px;
   width: 45px;
   background-color: #f1f2f3;
-  border-radius: 10px;
+  border-radius: 15px;
 }
 
 .list-icon-circle {
@@ -43,4 +43,21 @@ a {
   width: 45px;
   background-color: #f1f2f3;
   border-radius: 50%;
+}
+
+.box-card {
+  width: 50%;
+  border-radius: 15px;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  height: 10px;
+}
+
+.card-content {
+  font-size: 15px;
 }

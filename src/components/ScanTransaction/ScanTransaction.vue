@@ -11,7 +11,7 @@
             </el-col>
             <el-col :span="18">
               <div class="table-column-row">
-                <router-link :to="'/block/' + scope.row.hash">{{ scope.row.hash.slice(0, 15) + "..." }}</router-link>
+                <router-link :to="'/tx/' + scope.row.hash">{{ scope.row.hash.slice(0, 15) + "..." }}</router-link>
                 <div>{{ scope.row.age }}</div>
               </div>
             </el-col>

@@ -1,20 +1,22 @@
 <template lang="">
   <div>
-    <h3 style="display: inline">Address</h3>
-    &nbsp;
-    <p style="display: inline">{{ address }}</p>
-    <div class="container-display">
-      <div style="width: 50%">
-        <h4>Overview</h4>
-        <el-table :data="addressOverviewTableData" style="margin-top: -3%; width: 95%" empty-text="loading...">
-          <el-table-column prop="parameterDisplay"></el-table-column>
-          <el-table-column prop="parameterValue">
-            <template v-slot:default="scope"> {{ scope.row.parameterValue }}</template>
-          </el-table-column>
-        </el-table>
-      </div>
-    </div>
     <div style="margin-top: 3%">
+      <el-card class="box-card">
+        <template #header>
+          <div class="card-header">
+            <span>Overview</span>
+          </div>
+        </template>
+        <div class="card-content">
+          <el-row>
+            <el-col :span="10">Balance:</el-col>
+            <el-col :span="14">{{ this.$wei2eth(this.info.balance) + " Eth" }}</el-col>
+          </el-row>
+        </div>
+      </el-card>
+    </div>
+
+    <div style="margin-top: 2%">
       <el-tabs v-model="activeName" @tab-click="handleTabClick">
         <el-tab-pane label="Transactions" name="transactions">
           <general-txs :txsData="generalTransactionsList" :headerData="generalTransactionsHeaderList"></general-txs>
@@ -32,7 +34,7 @@
             />
           </div>
         </el-tab-pane>
-        <el-tab-pane label="Comments" name="Comments"> </el-tab-pane>
+        <!-- <el-tab-pane label="Comments" name="Comments"> </el-tab-pane> -->
       </el-tabs>
     </div>
   </div>
@@ -46,7 +48,9 @@ export default defineComponent({
   data() {
     return {
       activeName: "transactions",
-      addressOverviewTableData: [],
+      addressOverview: {
+        balance: 0,
+      },
       generalTransactionsList: [],
       generalTransactionsHeaderList: [
         {
@@ -89,13 +93,6 @@ export default defineComponent({
     };
   },
   created() {
-    if (this.addressOverviewTableData.length == 0) {
-      this.addressOverviewTableData.push({
-        parameterName: "balance",
-        parameterDisplay: "Balance:",
-        parameterValue: this.$wei2eth(this.info.balance) + " Eth",
-      });
-    }
     this.getGeneralTransactionsList();
   },
   methods: {
@@ -125,4 +122,6 @@ export default defineComponent({
   },
 });
 </script>
-<style lang=""></style>
+<style lang="less" scoped>
+@import "../../css/style.css";
+</style>

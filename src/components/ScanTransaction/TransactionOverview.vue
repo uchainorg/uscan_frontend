@@ -1,6 +1,12 @@
 <template lang="">
-  <el-table :data="tableData" style="width: 100%; margin-top: -3%" empty-text="loading...">
-    <el-table-column prop="parameterDisplay" width="350px"></el-table-column>
+  <el-table :data="tableData" style="width: 100%; margin-top: -37px" empty-text="loading..." :row-style="{ height: '50px' }">
+    <el-table-column width="350px">
+      <template v-slot:default="scope">
+        <div class="center-row">
+          <el-icon><QuestionFilled /></el-icon>&nbsp;{{ scope.row.parameterDisplay }}
+        </div>
+      </template>
+    </el-table-column>
     <el-table-column prop="parameterValue">
       <template v-slot:default="scope">
         <!-- {{ scope.row.parameterValue }} -->
