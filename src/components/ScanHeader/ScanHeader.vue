@@ -1,42 +1,40 @@
 <template lang="">
-  <div style="background-color: white">
-    <div style="width: 1350px; height: 140px; margin: 0 auto">
-      <el-row>
-        <el-col :span="12" class="header-left">
-          <div class="header-left-items">
-            <el-icon color="#253258" :size="33"><Bowl /></el-icon>
-            &nbsp;
-            <h2>{{ title }}</h2>
-          </div>
-        </el-col>
-        <el-col :span="12" class="header-right">
-          <div style="display: flex; flex-direction: row; align-items: center; justify-content: center">
-            <el-icon><Search /></el-icon>
-            <el-autocomplete v-model="inputValue" :fetch-suggestions="querySearch" placeholder="Search by Address / Txhash / Block" @select="handleSubmit" style="width: 550px; margin-left: 1%"></el-autocomplete>
-          </div>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="12" :offset="7" class="header-right-bar">
-          <div class="header-right-items">
-            <el-button text style="font-size: 15px; font-weight: bold" @click="moveToHome">Home</el-button>
-            &nbsp;&nbsp;
-            <el-dropdown style="margin-bottom: 1%">
-              <span style="font-size: 15px; font-weight: bold">
-                Tokens<el-icon><arrow-down /></el-icon>
-              </span>
-              <template #dropdown>
-                <el-dropdown-menu>
-                  <el-dropdown-item @click.native="moveToErc('erc20')">ERC20</el-dropdown-item>
-                  <el-dropdown-item @click.native="moveToErc('erc721')">ERC721</el-dropdown-item>
-                  <el-dropdown-item @click.native="moveToErc('erc1155')">ERC1155</el-dropdown-item>
-                </el-dropdown-menu>
-              </template>
-            </el-dropdown>
-          </div>
-        </el-col>
-      </el-row>
-    </div>
+  <div style="margin-top: 10px">
+    <el-row>
+      <el-col :span="12" class="header-left">
+        <div class="header-left-items">
+          <el-icon color="#253258" :size="33"><Bowl /></el-icon>
+          &nbsp;
+          <h2>{{ title }}</h2>
+        </div>
+      </el-col>
+      <el-col :span="12" class="header-right">
+        <div style="display: flex; flex-direction: row; align-items: center; justify-content: center">
+          <el-icon><Search /></el-icon>
+          <el-autocomplete v-model="inputValue" :fetch-suggestions="querySearch" placeholder="Search by Address / Txhash / Block" @select="handleSubmit" style="width: 550px; margin-left: 1%"></el-autocomplete>
+        </div>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col :span="12" :offset="7" class="header-right-bar">
+        <div class="header-right-items">
+          <el-button text style="font-size: 15px; font-weight: bold" @click="moveToHome">Home</el-button>
+          &nbsp;&nbsp;
+          <el-dropdown style="margin-bottom: 1%">
+            <span style="font-size: 15px; font-weight: bold">
+              Tokens<el-icon><arrow-down /></el-icon>
+            </span>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item @click.native="moveToErc('erc20')">ERC20</el-dropdown-item>
+                <el-dropdown-item @click.native="moveToErc('erc721')">ERC721</el-dropdown-item>
+                <el-dropdown-item @click.native="moveToErc('erc1155')">ERC1155</el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
+        </div>
+      </el-col>
+    </el-row>
   </div>
 </template>
 <script>
