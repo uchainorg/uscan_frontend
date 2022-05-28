@@ -47,7 +47,7 @@ export default defineComponent({
 }
 .el-main {
   height: 100%;
-  overflow: hidden;
+  width: 100%;
   margin-top: 5px;
 }
 .el-footer {
