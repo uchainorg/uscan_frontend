@@ -6,7 +6,7 @@
       <el-tab-pane label="Overview" name="first">
         <transaction-overview :data="transactionOverviewData"></transaction-overview>
       </el-tab-pane>
-      <el-tab-pane name="second">
+      <el-tab-pane v-if="this.logCount != 0" name="second">
         <template #label>
           <span>Logs({{ logCount }})</span>
         </template>

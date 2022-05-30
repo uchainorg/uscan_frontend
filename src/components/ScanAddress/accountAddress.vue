@@ -40,7 +40,7 @@
           </div>
         </el-tab-pane>
 
-        <el-tab-pane name="second">
+        <el-tab-pane v-if="this.erc20Total != 0" name="second">
           <template #label>
             <span>erc20 Transaction({{ erc20Total }})</span>
           </template>
@@ -60,7 +60,7 @@
           </div>
         </el-tab-pane>
 
-        <el-tab-pane name="third">
+        <el-tab-pane v-if="this.erc721Total != 0" name="third">
           <template #label>
             <span>erc721 Transaction({{ erc721Total }})</span>
           </template>
@@ -80,7 +80,7 @@
           </div>
         </el-tab-pane>
 
-        <el-tab-pane name="fourth">
+        <el-tab-pane v-if="this.erc1155Total != 0" name="fourth">
           <template #label>
             <span>erc1155 Transaction({{ erc1155Total }})</span>
           </template>
@@ -263,7 +263,7 @@ export default defineComponent({
   },
   created() {
     this.getGeneralTransactionsList();
-    this.getErc20Txs();
+    this.getErcTxs();
   },
   methods: {
     async getGeneralTransactionsList() {
@@ -331,7 +331,7 @@ export default defineComponent({
       this.erc721Total = erc1155txns.total;
       this.erc721TransactionsList = erc1155txns.resList;
     },
-    async getErc20Txs() {
+    async getErcTxs() {
       let erc20txns = await GetTxsByErcAccount(this.$rpc_http, "erc20", this.address, this.erc20CurrentPage - 1, this.erc20PageSize);
       this.erc20Total = erc20txns.total;
       this.erc20TransactionsList = erc20txns.resList;

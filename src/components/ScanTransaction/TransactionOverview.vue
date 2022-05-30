@@ -17,14 +17,25 @@
           <el-icon><clock /></el-icon>&nbsp;{{ scope.row.parameterValue }}
         </div>
         <div v-else-if="scope.row.parameterName == 'from'">
-          <router-link :to="'/address/' + scope.row.parameterValue">{{ scope.row.parameterValue }}</router-link>
+          <div v-if="scope.row.parameterValue.fromName != ''">
+            Contract <router-link :to="'/address/' + scope.row.parameterValue.from">{{ scope.row.parameterValue.from }}</router-link> ({{ scope.row.parameterValue.fromName }})
+          </div>
+          <div v-else>
+            <router-link :to="'/address/' + scope.row.parameterValue.from">{{ scope.row.parameterValue.from }}</router-link>
+          </div>
         </div>
         <div v-else-if="scope.row.parameterName == 'to'">
-          <router-link :to="'/address/' + scope.row.parameterValue">{{ scope.row.parameterValue }}</router-link>
+          <div v-if="scope.row.parameterValue.toName != ''">
+            Contract <router-link :to="'/address/' + scope.row.parameterValue.to">{{ scope.row.parameterValue.to }}</router-link> ({{ scope.row.parameterValue.toName }})
+          </div>
+          <div v-else>
+            <router-link :to="'/address/' + scope.row.parameterValue.to">{{ scope.row.parameterValue.to }}</router-link>
+          </div>
         </div>
         <div v-else-if="scope.row.parameterName == 'tokensTransferred'">
           <tokens-trans :tokensTransferData="scope.row.parameterValue"></tokens-trans>
         </div>
+        <div v-else-if="scope.row.parameterName == 'gasFess'">Base: {{ scope.row.parameterValue.base }} | Max: {{ scope.row.parameterValue.max }} | Max Priority: {{ scope.row.parameterValue.maxPriority }}</div>
         <div v-else>
           {{ scope.row.parameterValue }}
         </div>
@@ -44,6 +55,11 @@ export default defineComponent({
   data() {
     return {
       tableData: [],
+      statusMap: new Map([
+        [0, "Fail"],
+        [1, "Success"],
+        [3, "Pending"],
+      ]),
     };
   },
   created() {
@@ -62,7 +78,7 @@ export default defineComponent({
         {
           parameterName: "status",
           parameterDisplay: "Status:",
-          parameterValue: res.status,
+          parameterValue: this.statusMap.get(res.status),
         },
         {
           parameterName: "blockNumber",
@@ -77,12 +93,22 @@ export default defineComponent({
         {
           parameterName: "from",
           parameterDisplay: "From:",
-          parameterValue: res.from,
+          parameterValue: {
+            from: res.from,
+            fromCode: res.fromCode,
+            fromName: res.fromName,
+            fromSymbol: res.fromSymbol,
+          },
         },
         {
           parameterName: "to",
           parameterDisplay: "To:",
-          parameterValue: res.to,
+          parameterValue: {
+            to: res.to,
+            toCode: res.toCode,
+            toName: res.toName,
+            toSymbol: res.toSymbol,
+          },
         },
         {
           parameterName: "value",
@@ -105,12 +131,26 @@ export default defineComponent({
           parameterValue: parseInt(res.gas),
         },
         {
+          parameterName: "gasFess",
+          parameterDisplay: "Gas Fees:",
+          parameterValue: {
+            base: 0 + " Gwei",
+            max: this.$wei2gwei(parseInt(res.maxFeePerGas)) + " Gwei",
+            maxPriority: this.$wei2gwei(parseInt(res.maxPriorityFeePerGas)) + " Gwei",
+          },
+        },
+        {
+          parameterName: "gas",
+          parameterDisplay: "Gas:",
+          parameterValue: parseInt(res.gas),
+        },
+        {
           parameterName: "input",
           parameterDisplay: "Input Data:",
           parameterValue: res.input,
         }
       );
-      if (res.tokensTransferred.length !== 0) {
+      if (res.tokensTransferred) {
         this.tableData.push({
           parameterName: "tokensTransferred",
           parameterDisplay: "Tokens Transferred:",
