@@ -22,6 +22,9 @@
         <div v-else-if="scope.row.parameterName == 'to'">
           <router-link :to="'/address/' + scope.row.parameterValue">{{ scope.row.parameterValue }}</router-link>
         </div>
+        <div v-else-if="scope.row.parameterName == 'tokensTransferred'">
+          <tokens-trans :tokensTransferData="scope.row.parameterValue"></tokens-trans>
+        </div>
         <div v-else>
           {{ scope.row.parameterValue }}
         </div>
@@ -33,9 +36,11 @@
 import { defineComponent } from "vue";
 import { GetTxByHash } from "../../js/request.js";
 import { formatTimestamp } from "../../js/utils.js";
+import TokensTrans from "../Transaction/tokensTransferred.vue";
 export default defineComponent({
   name: "TransactionOverview",
   props: ["data"],
+  components: { TokensTrans },
   data() {
     return {
       tableData: [],
@@ -105,6 +110,13 @@ export default defineComponent({
           parameterValue: res.input,
         }
       );
+      if (res.tokensTransferred.length !== 0) {
+        this.tableData.push({
+          parameterName: "tokensTransferred",
+          parameterDisplay: "Tokens Transferred:",
+          parameterValue: res.tokensTransferred,
+        });
+      }
     },
   },
 });

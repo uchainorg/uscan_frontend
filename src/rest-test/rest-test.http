@@ -18,7 +18,7 @@ GET https://apis-stage.ankr.com/chain-scan/v1/txs?blockBegin=55&blockEnd=55
 
 ###
 // get tx
-GET https://apis-stage.ankr.com/chain-scan/v1/txs/0x0d6c426707c35c27e4bd7a3f7736e533efa6e73d6b9baa3533cdc8f37d45caaa
+GET https://apis-stage.ankr.com/chain-scan/v1/txs/0xf403097775c31691d70a0d5fdc2e30e8497e96b70a641f318b99df6a2c07dac3
 
 ###
 // get address erc tx
@@ -34,7 +34,7 @@ GET https://apis-stage.ankr.com/chain-scan/v1/accounts/0x20cD8eB93c50BDAc35d6A52
 
 ###
 // get contract address
-GET https://apis-stage.ankr.com/chain-scan/v1/accounts/0x84868afcC4Ba758a4ae2aca141D2fF0ECD8C5fac
+GET https://apis-stage.ankr.com/chain-scan/v1/accounts/0xBedb5e825989B8ef4B195bfC3A9196eEC35Beae4
 
 ###
 // get account address
