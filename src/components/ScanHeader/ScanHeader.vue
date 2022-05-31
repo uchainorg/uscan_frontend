@@ -2,7 +2,7 @@
   <div style="margin-top: 10px">
     <el-row>
       <el-col :span="12" class="header-left">
-        <div class="header-left-items">
+        <div class="header-left-items" @click="moveToHome">
           <el-icon color="#253258" :size="33"><Bowl /></el-icon>
           &nbsp;
           <h2>{{ title }}</h2>
@@ -107,6 +107,7 @@ export default defineComponent({
   flex-direction: row;
   align-items: center;
   margin-left: 15%;
+  cursor: pointer;
 }
 
 .header-right {

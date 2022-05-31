@@ -36,6 +36,7 @@
           <tokens-trans :tokensTransferData="scope.row.parameterValue"></tokens-trans>
         </div>
         <div v-else-if="scope.row.parameterName == 'gasFess'">Base: {{ scope.row.parameterValue.base }} | Max: {{ scope.row.parameterValue.max }} | Max Priority: {{ scope.row.parameterValue.maxPriority }}</div>
+        <div :class="inputDataIsRolling ? 'rolling' : ''" v-else-if="scope.row.parameterName == 'input'">{{ scope.row.parameterValue }}</div>
         <div v-else>
           {{ scope.row.parameterValue }}
         </div>
@@ -60,6 +61,7 @@ export default defineComponent({
         [1, "Success"],
         [3, "Pending"],
       ]),
+      inputDataIsRolling: false,
     };
   },
   created() {
@@ -134,15 +136,10 @@ export default defineComponent({
           parameterName: "gasFess",
           parameterDisplay: "Gas Fees:",
           parameterValue: {
-            base: 0 + " Gwei",
+            base: "(test)" + 0 + " Gwei",
             max: this.$wei2gwei(parseInt(res.maxFeePerGas)) + " Gwei",
             maxPriority: this.$wei2gwei(parseInt(res.maxPriorityFeePerGas)) + " Gwei",
           },
-        },
-        {
-          parameterName: "gas",
-          parameterDisplay: "Gas:",
-          parameterValue: parseInt(res.gas),
         },
         {
           parameterName: "input",
@@ -157,10 +154,17 @@ export default defineComponent({
           parameterValue: res.tokensTransferred,
         });
       }
+      if (res.input.length >= 761) {
+        this.inputDataIsRolling = true;
+      }
     },
   },
 });
 </script>
 <style lang="less" scoped>
 @import "../../css/style.css";
+.rolling {
+  height: 200px;
+  overflow: auto;
+}
 </style>
