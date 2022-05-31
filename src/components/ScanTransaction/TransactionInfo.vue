@@ -32,6 +32,9 @@ export default defineComponent({
   created() {
     this.getLogsByTxHash();
   },
+  beforeCreate() {
+    document.title = "Transaction Hash Details | The Coq Explorer";
+  },
   methods: {
     async getLogsByTxHash() {
       let res = await GetLogsByTxHash(this.$rpc_http, this.txHash);

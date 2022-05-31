@@ -66,6 +66,9 @@ export default defineComponent({
   created() {
     this.getBlocksList();
   },
+  beforeCreate() {
+    document.title = "Blocks | The Coq Explorer";
+  },
   methods: {
     async getBlocksList() {
       let res = await GetBlockList(this.$rpc_http, this.currentPage - 1, this.pageSize);

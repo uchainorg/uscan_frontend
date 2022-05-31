@@ -14,6 +14,9 @@ export default defineComponent({
   created() {
     this.getBlockListRes();
   },
+  beforeCreate() {
+    document.title = "Home | The Coq Explorer";
+  },
   methods: {
     async getBlockListRes() {
       let res = await GetHomeInfo(this.$rpc_http);

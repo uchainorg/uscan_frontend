@@ -230,6 +230,9 @@ export default defineComponent({
   mounted() {
     this.codeContent = this.info.code;
   },
+  beforeCreate() {
+    document.title = "Contract | The Coq Explorer";
+  },
   methods: {
     async getGeneralTransactionsList() {
       let res = await GetTxsByAddress(this.$rpc_http, this.address, this.generalCurrentPage - 1, this.generalPageSize);
@@ -237,30 +240,6 @@ export default defineComponent({
       this.generalTransactionsList = res.resList;
       this.generalTotal = res.total;
     },
-    // async getInternalTransactionsList() {
-    //   let res = await getBlock(this.$rpc_http, 14790713);
-    //   res.transactions.slice(0, 50).forEach((tx) => {
-    //     (tx.method = "test-method"), (tx.age = diffTime(new Date(parseInt(res.timestamp)) * 1000, new Date())), (tx.ageFormat = new Date(parseInt(res.timestamp) * 1000).toUTCString());
-    //     this.internalTransactionsList.push(tx);
-    //   });
-    //   // console.log(this.internalTransactionsList);
-    // },
-    // async getErc20TransactionsList() {
-    //   let res = await getBlock(this.$rpc_http, 14790713);
-    //   res.transactions.slice(0, 50).forEach((tx) => {
-    //     (tx.method = "test-method"), (tx.age = diffTime(new Date(parseInt(res.timestamp)) * 1000, new Date())), (tx.ageFormat = new Date(parseInt(res.timestamp) * 1000).toUTCString());
-    //     this.erc20TransactionsList.push(tx);
-    //   });
-    //   // console.log(this.internalTransactionsList);
-    // },
-    // async getErc721lTransactionsList() {
-    //   let res = await getBlock(this.$rpc_http, 14790713);
-    //   res.transactions.slice(0, 50).forEach((tx) => {
-    //     (tx.method = "test-method"), (tx.age = diffTime(new Date(parseInt(res.timestamp)) * 1000, new Date())), (tx.ageFormat = new Date(parseInt(res.timestamp) * 1000).toUTCString());
-    //     this.erc721TransactionsList.push(tx);
-    //   });
-    //   // console.log(this.internalTransactionsList);
-    // },
     handleTabClick(tab) {
       // console.log(tab.props);
       if (tab.props.name == "internalTxns") {

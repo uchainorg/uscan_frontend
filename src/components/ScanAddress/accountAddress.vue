@@ -265,6 +265,9 @@ export default defineComponent({
     this.getGeneralTransactionsList();
     this.getErcTxs();
   },
+  beforeCreate() {
+    document.title = "Address | The Coq Explorer";
+  },
   methods: {
     async getGeneralTransactionsList() {
       let res = await GetTxsByAddress(this.$rpc_http, this.address, this.generalCurrentPage - 1, this.generalPageSize);

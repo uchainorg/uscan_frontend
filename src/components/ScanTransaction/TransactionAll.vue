@@ -38,6 +38,9 @@ export default defineComponent({
       typeDisplay: "",
     };
   },
+  beforeCreate() {
+    document.title = "Transactions | The Coq Explorer";
+  },
   created() {
     if (this.type) {
       this.typeDisplay = " for " + this.type;

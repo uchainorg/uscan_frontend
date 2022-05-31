@@ -20,6 +20,9 @@ export default defineComponent({
       blockNumber: this.number,
     };
   },
+  beforeCreate() {
+    document.title = "Blocks #" + this.number + " | The Coq Explorer";
+  },
   // methods: {
   //   handleClick(tab) {
   //     console.log(tab);

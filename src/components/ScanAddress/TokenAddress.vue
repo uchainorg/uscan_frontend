@@ -151,6 +151,9 @@ export default defineComponent({
   created() {
     this.GetTokenType();
   },
+  beforeCreate() {
+    document.title = "Token | The Coq Explorer";
+  },
   methods: {
     async GeneralHandleCurrentChange(val) {
       this.generalTransactionsList = [];
