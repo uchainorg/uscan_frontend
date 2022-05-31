@@ -17,19 +17,14 @@
           <el-icon><clock /></el-icon>&nbsp;{{ scope.row.parameterValue }}
         </div>
         <div v-else-if="scope.row.parameterName == 'from'">
-          <div v-if="scope.row.parameterValue.fromName != ''">
-            Contract <router-link :to="'/address/' + scope.row.parameterValue.from">{{ scope.row.parameterValue.from }}</router-link> ({{ scope.row.parameterValue.fromName }})
-          </div>
-          <div v-else>
-            <router-link :to="'/address/' + scope.row.parameterValue.from">{{ scope.row.parameterValue.from }}</router-link>
-          </div>
+          <router-link :to="'/address/' + scope.row.parameterValue.from">{{ scope.row.parameterValue.from }}</router-link>
         </div>
         <div v-else-if="scope.row.parameterName == 'to'">
-          <div v-if="scope.row.parameterValue.toName != ''">
-            Contract <router-link :to="'/address/' + scope.row.parameterValue.to">{{ scope.row.parameterValue.to }}</router-link> ({{ scope.row.parameterValue.toName }})
+          <div v-if="scope.row.parameterValue.to == ''">
+            Contract <router-link :to="'/address/' + scope.row.parameterValue.contractAddress">{{ scope.row.parameterValue.contractAddress }}</router-link> Created
           </div>
-          <div v-else>
-            <router-link :to="'/address/' + scope.row.parameterValue.to">{{ scope.row.parameterValue.to }}</router-link>
+          <div v-else-if="scope.row.parameterValue.toName != ''">
+            Contract <router-link :to="'/address/' + scope.row.parameterValue.to">{{ scope.row.parameterValue.to }} &nbsp; {{ scope.row.parameterValue.toName }}</router-link>
           </div>
         </div>
         <div v-else-if="scope.row.parameterName == 'tokensTransferred'">
@@ -37,6 +32,23 @@
         </div>
         <div v-else-if="scope.row.parameterName == 'gasFess'">Base: {{ scope.row.parameterValue.base }} | Max: {{ scope.row.parameterValue.max }} | Max Priority: {{ scope.row.parameterValue.maxPriority }}</div>
         <div :class="inputDataIsRolling ? 'rolling' : ''" v-else-if="scope.row.parameterName == 'input'">{{ scope.row.parameterValue }}</div>
+        <div v-else-if="scope.row.parameterName == 'status'">
+          <div v-if="scope.row.parameterValue == 1">
+            <div class="success-status">
+              <el-icon color="green"><SuccessFilled /></el-icon> &nbsp; Success
+            </div>
+          </div>
+          <div v-if="scope.row.parameterValue == 0">
+            <div class="fail-status">
+              <el-icon color="red"><Failed /></el-icon> &nbsp; Fail
+            </div>
+          </div>
+          <div v-if="scope.row.parameterValue == 3">
+            <div class="pending-status">
+              <el-icon><VideoPause /></el-icon> &nbsp; Pending
+            </div>
+          </div>
+        </div>
         <div v-else>
           {{ scope.row.parameterValue }}
         </div>
@@ -56,11 +68,6 @@ export default defineComponent({
   data() {
     return {
       tableData: [],
-      statusMap: new Map([
-        [0, "Fail"],
-        [1, "Success"],
-        [3, "Pending"],
-      ]),
       inputDataIsRolling: false,
     };
   },
@@ -80,7 +87,7 @@ export default defineComponent({
         {
           parameterName: "status",
           parameterDisplay: "Status:",
-          parameterValue: this.statusMap.get(res.status),
+          parameterValue: res.status,
         },
         {
           parameterName: "blockNumber",
@@ -110,6 +117,9 @@ export default defineComponent({
             toCode: res.toCode,
             toName: res.toName,
             toSymbol: res.toSymbol,
+            contractAddress: res.contractAddress,
+            contractAddressName: res.contractAddressName,
+            contractAddressSymbol: res.contractAddressSymbol,
           },
         },
         {
@@ -166,5 +176,35 @@ export default defineComponent({
 .rolling {
   height: 200px;
   overflow: auto;
+}
+
+.success-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(238, 249, 246);
+  height: 33px;
+  width: 90px;
+  border-radius: 15px;
+}
+
+.pending-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(241, 242, 243);
+  height: 33px;
+  width: 90px;
+  border-radius: 15px;
+}
+
+.fail-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(241, 242, 243);
+  height: 33px;
+  width: 90px;
+  border-radius: 15px;
 }
 </style>
