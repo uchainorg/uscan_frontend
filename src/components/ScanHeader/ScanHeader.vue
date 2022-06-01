@@ -63,10 +63,10 @@ export default defineComponent({
       this.$router.push("/transactions/" + erc);
     },
     handleSubmit(arg) {
+      this.inputValue = "";
       if (arg.value != "Not Found") {
         this.$router.push(arg.link);
       }
-      this.inputValue = "";
     },
     async querySearch(queryString, cb) {
       let queryArg = queryString.trim();
