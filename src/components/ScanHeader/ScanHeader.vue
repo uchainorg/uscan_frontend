@@ -34,26 +34,6 @@
         </div>
       </el-col>
     </el-row>
-    <!-- <el-row>
-      <el-col :span="12" :offset="7" class="header-right-bar">
-        <div class="header-right-items">
-          <el-button text style="font-size: 15px; font-weight: bold" @click="moveToHome">Home</el-button>
-          &nbsp;&nbsp;
-          <el-dropdown style="margin-bottom: 1%">
-            <span style="font-size: 15px; font-weight: bold">
-              Tokens<el-icon><arrow-down /></el-icon>
-            </span>
-            <template #dropdown>
-              <el-dropdown-menu>
-                <el-dropdown-item @click.native="moveToErc('erc20')">ERC20</el-dropdown-item>
-                <el-dropdown-item @click.native="moveToErc('erc721')">ERC721</el-dropdown-item>
-                <el-dropdown-item @click.native="moveToErc('erc1155')">ERC1155</el-dropdown-item>
-              </el-dropdown-menu>
-            </template>
-          </el-dropdown>
-        </div>
-      </el-col>
-    </el-row> -->
   </div>
 </template>
 <script>
@@ -125,18 +105,5 @@ export default defineComponent({
 .header-right {
   display: flex;
   align-items: center;
-}
-
-.header-right-bar {
-  display: flex;
-  align-items: center;
-  margin-top: -1%;
-}
-
-.header-right-items {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-left: 40%;
 }
 </style>

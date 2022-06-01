@@ -1,7 +1,7 @@
 <template lang="">
   <div class="index">
     <el-container>
-      <div style="background-color: #263258">
+      <div :class="this.$store.state.headerName == 'scan-header' ? 'header-home' : 'header-info'">
         <el-header>
           <!-- <scan-header title="Coq Chain Scan"></scan-header> -->
           <component :is="this.$store.state.headerName"></component>
@@ -37,6 +37,16 @@ export default defineComponent({
 });
 </script>
 <style lang="less" scoped>
+.header-home {
+  background-color: #263258;
+  height: 240px;
+}
+
+.header-info {
+  background-color: white;
+  height: 110px;
+}
+
 .index {
   height: 100%;
   width: 100%;
@@ -54,7 +64,7 @@ export default defineComponent({
 .el-header {
   background-color: transparent;
   width: 1350px;
-  height: 240px;
+  height: 100%;
   // margin: 0 auto;
   display: flex;
   align-items: center;
