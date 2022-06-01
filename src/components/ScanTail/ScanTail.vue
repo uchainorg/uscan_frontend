@@ -1,8 +1,9 @@
 <template lang="">
   <!-- <div class="tail-container">Let's do something interesting.End!</div> -->
   <div class="footer-container">
-    <el-icon color="#253258" :size="33"><Bowl /></el-icon>
-    <h2>Let's do something interesting.End!</h2>
+    <img src="../../assets/logo.png" width="35" height="35" />
+    &nbsp;&nbsp;
+    <h2 style="color: white">Let's do something interesting.End!</h2>
   </div>
 </template>
 <script>

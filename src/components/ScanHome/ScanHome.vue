@@ -11,11 +11,17 @@ import { GetHomeInfo } from "../../js/request";
 import { defineComponent } from "vue";
 export default defineComponent({
   name: "ScanHome",
+  watch: {
+    $route() {
+      this.$store.state.headerName = "scan-header-info";
+    },
+  },
   created() {
     this.getBlockListRes();
   },
   beforeCreate() {
     document.title = "Home | The Coq Explorer";
+    this.$store.state.headerName = "scan-header";
   },
   methods: {
     async getBlockListRes() {

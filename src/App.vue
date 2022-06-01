@@ -1,16 +1,17 @@
 <template lang="">
   <div class="index">
     <el-container>
-      <div style="background-color: white">
+      <div style="background-color: #263258">
         <el-header>
-          <scan-header title="Coq Chain Scan"></scan-header>
+          <!-- <scan-header title="Coq Chain Scan"></scan-header> -->
+          <component :is="this.$store.state.headerName"></component>
         </el-header>
       </div>
 
       <el-main>
         <router-view style="width: 1350px; margin: 0 auto; margin-top: 2%"></router-view>
       </el-main>
-      <div style="background-color: white">
+      <div style="background-color: #263258; margin-top: 5%">
         <el-footer>
           <scan-tail></scan-tail>
         </el-footer>
@@ -20,8 +21,19 @@
 </template>
 <script>
 import { defineComponent } from "vue";
+import ScanHeader from "./components/ScanHeader/ScanHeader.vue";
+import ScanHeaderInfo from "./components/ScanHeader/ScanHeaderInfo.vue";
 export default defineComponent({
   name: "chain-scan",
+  data() {
+    return {
+      comName: "scan-header-info",
+    };
+  },
+  components: {
+    ScanHeader,
+    ScanHeaderInfo,
+  },
 });
 </script>
 <style lang="less" scoped>
@@ -40,10 +52,12 @@ export default defineComponent({
   justify-content: space-between;
 }
 .el-header {
-  background-color: white;
+  background-color: transparent;
   width: 1350px;
-  height: 150px;
-  margin: 0 auto;
+  height: 240px;
+  // margin: 0 auto;
+  display: flex;
+  align-items: center;
 }
 .el-main {
   height: 100%;
@@ -52,10 +66,10 @@ export default defineComponent({
 }
 .el-footer {
   display: flex;
-  height: 150px;
+  height: 240px;
   width: 1350px;
   align-items: center;
-  background-color: white;
+  background-color: transparent;
   justify-content: center;
   align-items: center;
   margin: 0 auto;
