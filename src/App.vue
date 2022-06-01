@@ -65,7 +65,7 @@ export default defineComponent({
   background-color: transparent;
   width: 1350px;
   height: 100%;
-  // margin: 0 auto;
+  margin: 0 auto;
   display: flex;
   align-items: center;
 }
