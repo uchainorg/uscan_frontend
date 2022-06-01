@@ -39,7 +39,7 @@ export default defineComponent({
 <style lang="less" scoped>
 .header-home {
   background-color: #263258;
-  height: 240px;
+  height: 190px;
 }
 
 .header-info {

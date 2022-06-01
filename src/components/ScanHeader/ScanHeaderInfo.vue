@@ -12,7 +12,14 @@
         <div style="display: flex; flex-direction: column">
           <div style="display: flex; flex-direction: row; align-items: center; justify-content: center">
             <el-icon><Search /></el-icon>
-            <el-autocomplete v-model="inputValue" :fetch-suggestions="querySearch" placeholder="Search by Address / Txhash / Block" @select="handleSubmit" style="width: 550px; margin-left: 1%"></el-autocomplete>
+            <el-autocomplete
+              v-model="inputValue"
+              :fetch-suggestions="querySearch"
+              placeholder="Search by Address / Txhash / Block"
+              @select="handleSubmit"
+              style="width: 550px; margin-left: 1%"
+              @keyup.enter.native="handleSearch"
+            ></el-autocomplete>
           </div>
           <div style="margin-top: 15px">
             <!-- <el-button text style="font-size: 15px; font-weight: bold" @click="moveToHome">Home</el-button> -->
@@ -45,6 +52,7 @@ export default defineComponent({
     return {
       inputValue: "",
       activeIndex: "1",
+      searchResults: [],
     };
   },
   methods: {
@@ -55,7 +63,9 @@ export default defineComponent({
       this.$router.push("/transactions/" + erc);
     },
     handleSubmit(arg) {
-      this.$router.push(arg.link);
+      if (arg.value != "Not Found") {
+        this.$router.push(arg.link);
+      }
       this.inputValue = "";
     },
     async querySearch(queryString, cb) {
@@ -66,25 +76,36 @@ export default defineComponent({
         3: { display: "Block", route: "/block/" },
         4: { display: "Transaction", route: "/tx/" },
       };
-      let results = [];
+      this.searchResults = [];
       if (queryArg !== "") {
         if (queryArg.length == 42 || !isNaN(Number(queryArg))) {
           let type = await this.GetSearchType(1, queryArg);
           if (type == 1 || type == 0) {
-            results.push({ value: "Not Found", link: "404" });
+            this.searchResults.push({ value: "Not Found", link: "404" });
           } else {
-            results.push({ value: typeMap[parseInt(type)].display + " : " + queryArg, link: typeMap[parseInt(type)].route + queryArg });
+            this.searchResults.push({ value: typeMap[parseInt(type)].display + " : " + queryArg, link: typeMap[parseInt(type)].route + queryArg });
           }
         }
       }
-      cb(results);
+      cb(this.searchResults);
     },
     async GetSearchType(filterType, keyWord) {
       let res = await GetSearchType(this.$rpc_http, filterType, keyWord);
       return res;
     },
     handleCommand(arg) {
+      if (arg.value == "Not Found") {
+        return;
+      }
       console.log(arg);
+    },
+    handleSearch() {
+      if (this.searchResults.length != 0) {
+        if (this.searchResults[0].value != "Not Found") {
+          // console.log(this.searchResults[0].link);
+          this.$router.push(this.searchResults[0].link);
+        }
+      }
     },
   },
 });
@@ -98,7 +119,7 @@ export default defineComponent({
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-left: 30%;
+  // margin-left: 30%;
   cursor: pointer;
 }
 
