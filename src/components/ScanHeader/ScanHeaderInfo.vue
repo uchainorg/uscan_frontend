@@ -1,14 +1,14 @@
 <template lang="">
   <div>
     <el-row>
-      <el-col :span="21" class="header-left">
+      <el-col :span="20" class="header-left">
         <div class="header-left-items" @click="moveToHome">
           <img src="../../assets/logo.png" width="35" height="35" />
           &nbsp;&nbsp;
           <h2>Coq Chain Scan</h2>
         </div>
       </el-col>
-      <el-col :span="3" class="header-right">
+      <el-col :span="4" class="header-right">
         <div style="display: flex; flex-direction: column">
           <div style="display: flex; flex-direction: row; align-items: center; justify-content: center">
             <el-icon><Search /></el-icon>
