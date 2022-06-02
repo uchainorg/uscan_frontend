@@ -1,54 +1,56 @@
 <template lang="">
-  <el-table :data="tableData" style="width: 100%; border-radius: 15px" empty-text="loading..." :row-style="{ height: '50px' }">
-    <el-table-column width="350px">
-      <template v-slot:default="scope">
-        <div class="center-row">
-          <el-icon><QuestionFilled /></el-icon>&nbsp;{{ scope.row.parameterDisplay }}
-        </div>
-      </template>
-    </el-table-column>
-    <el-table-column prop="parameterValue">
-      <template v-slot:default="scope">
-        <div v-if="scope.row.parameterName == 'blockHeight'" style="font-weight: 900">
-          {{ scope.row.parameterValue }}
-          &nbsp;
-          <el-button-group>
-            <el-button type="primary" size="small" style="border: 0" plain @click="moveToBlock(parseInt(this.blockNumber) - 1)">
-              <el-icon><ArrowLeftBold /></el-icon>
-            </el-button>
-            <el-button type="primary" size="small" style="border: 0" plain @click="moveToBlock(parseInt(this.blockNumber) + 1)">
-              <el-icon><ArrowRightBold /></el-icon>
-            </el-button>
-          </el-button-group>
-        </div>
-        <div class="center-row" v-else-if="scope.row.parameterName == 'timestamp'">
-          <el-icon><clock /></el-icon>&nbsp;{{ scope.row.parameterValue }}
-        </div>
-        <div v-else-if="scope.row.parameterName == 'transactions'">
-          <el-tooltip class="box-item" effect="dark" content="Click to view Transactions" placement="top-start">
-            <el-button type="primary" plain size="small" @click="moveToTxs" style="border: 0">{{ scope.row.parameterValue }} transactions</el-button>
-          </el-tooltip>
-          &nbsp;in this block
-        </div>
-        <div v-else-if="scope.row.parameterName == 'minedBy'">
-          <router-link :to="'/address/' + scope.row.parameterValue">{{ scope.row.parameterValue }}</router-link>
-        </div>
-        <div v-else-if="scope.row.parameterName == 'difficulty'">
-          {{ scope.row.parameterValue }}
-        </div>
-        <div v-else-if="scope.row.parameterName == 'totalDifficulty'">
-          {{ scope.row.parameterValue }}
-        </div>
-        <div v-else-if="scope.row.parameterName == 'size'">{{ scope.row.parameterValue }}&nbsp;bytes</div>
-        <div v-else-if="scope.row.parameterName == 'gasUsed'">{{ scope.row.parameterValue }}</div>
-        <div v-else-if="scope.row.parameterName == 'baseFeePerGas'">{{ scope.row.parameterValue }} wei</div>
+  <div>
+    <el-table :data="tableData" style="width: 100%; border-radius: 15px" empty-text="loading..." :row-style="{ height: '50px' }">
+      <el-table-column width="350px">
+        <template v-slot:default="scope">
+          <div class="center-row">
+            <el-icon><QuestionFilled /></el-icon>&nbsp;{{ scope.row.parameterDisplay }}
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column prop="parameterValue">
+        <template v-slot:default="scope">
+          <div v-if="scope.row.parameterName == 'blockHeight'" style="font-weight: 900">
+            {{ scope.row.parameterValue }}
+            &nbsp;
+            <el-button-group>
+              <el-button type="primary" size="small" style="border: 0" plain @click="moveToBlock(parseInt(this.blkNumArg) - 1)">
+                <el-icon><ArrowLeftBold /></el-icon>
+              </el-button>
+              <el-button type="primary" size="small" style="border: 0" plain @click="moveToBlock(parseInt(this.blkNumArg) + 1)">
+                <el-icon><ArrowRightBold /></el-icon>
+              </el-button>
+            </el-button-group>
+          </div>
+          <div class="center-row" v-else-if="scope.row.parameterName == 'timestamp'">
+            <el-icon><clock /></el-icon>&nbsp;{{ scope.row.parameterValue }}
+          </div>
+          <div v-else-if="scope.row.parameterName == 'transactions'">
+            <el-tooltip class="box-item" effect="dark" content="Click to view Transactions" placement="top-start">
+              <el-button type="primary" plain size="small" @click="moveToTxs" style="border: 0">{{ scope.row.parameterValue }} transactions</el-button>
+            </el-tooltip>
+            &nbsp;in this block
+          </div>
+          <div v-else-if="scope.row.parameterName == 'minedBy'">
+            <router-link :to="'/address/' + scope.row.parameterValue">{{ scope.row.parameterValue }}</router-link>
+          </div>
+          <div v-else-if="scope.row.parameterName == 'difficulty'">
+            {{ scope.row.parameterValue }}
+          </div>
+          <div v-else-if="scope.row.parameterName == 'totalDifficulty'">
+            {{ scope.row.parameterValue }}
+          </div>
+          <div v-else-if="scope.row.parameterName == 'size'">{{ scope.row.parameterValue }}&nbsp;bytes</div>
+          <div v-else-if="scope.row.parameterName == 'gasUsed'">{{ scope.row.parameterValue }}</div>
+          <div v-else-if="scope.row.parameterName == 'baseFeePerGas'">{{ scope.row.parameterValue }} wei</div>
 
-        <div v-else>
-          {{ scope.row.parameterValue }}
-        </div>
-      </template>
-    </el-table-column>
-  </el-table>
+          <div v-else>
+            {{ scope.row.parameterValue }}
+          </div>
+        </template>
+      </el-table-column>
+    </el-table>
+  </div>
 </template>
 <script>
 import { formatTimestamp } from "../../js/utils.js";
@@ -57,8 +59,8 @@ import { GetBlockByNumber } from "../../js/request.js";
 import { defineComponent } from "vue";
 export default defineComponent({
   name: "BlockOverview",
-  props: ["blockNumber"],
-  emits: ["update:blockNumber"],
+  props: ["blkNumArg"],
+  emits: ["update:blkNumArg"],
   components: [Clock],
   data() {
     return {
@@ -66,25 +68,20 @@ export default defineComponent({
     };
   },
   created() {
-    this.getBlockRes(this.blockNumber);
+    this.getBlockRes(this.blkNumArg);
   },
-  beforeRouteUpdate(to, from) {
-    console.log(to);
-    console.log(from);
+  watch: {
+    async blkNumArg(newVal) {
+      this.tableData = [];
+      this.getBlockRes(newVal);
+    },
   },
   methods: {
-    // formatTimestamp(timestamp) {
-    //   let createTime = new Date(parseInt(timestamp)) * 1000;
-    //   let date = new Date(parseInt(timestamp) * 1000).toUTCString();
-    //   return diffTime(createTime, new Date()) + "(" + date + ")";
-    // },
     moveToTxs() {
-      this.$router.push("/block/txs/" + this.blockNumber);
+      this.$router.push("/block/txs/" + this.blkNumArg);
     },
     moveToBlock(blkNum) {
-      this.$emit("update:blockNumber", blkNum);
-      this.tableData = [];
-      this.getBlockRes(blkNum);
+      this.$router.push("/block/" + blkNum);
     },
     async getBlockRes(blockNumber) {
       // let res = await getBlock(this.$rpc_http, blockNumber);
@@ -94,7 +91,7 @@ export default defineComponent({
         {
           parameterName: "blockHeight",
           parameterDisplay: "Block Height:",
-          parameterValue: blockNumber,
+          parameterValue: this.blkNumArg,
         },
         {
           parameterName: "timestamp",
