@@ -1,60 +1,62 @@
 <template lang="">
-  <el-table :data="tableData" style="width: 100%; border-radius: 15px" empty-text="loading..." :row-style="{ height: '50px' }">
-    <el-table-column width="350px">
-      <template v-slot:default="scope">
-        <div class="center-row">
-          <el-icon><QuestionFilled /></el-icon>&nbsp;{{ scope.row.parameterDisplay }}
-        </div>
-      </template>
-    </el-table-column>
-    <el-table-column prop="parameterValue">
-      <template v-slot:default="scope">
-        <!-- {{ scope.row.parameterValue }} -->
-        <div v-if="scope.row.parameterName == 'blockNumber'" style="font-weight: 900">
-          <router-link :to="'/block/' + scope.row.parameterValue">{{ scope.row.parameterValue }}</router-link>
-        </div>
-        <div class="center-row" v-else-if="scope.row.parameterName == 'timestamp'">
-          <el-icon><clock /></el-icon>&nbsp;{{ scope.row.parameterValue }}
-        </div>
-        <div v-else-if="scope.row.parameterName == 'from'">
-          <router-link :to="'/address/' + scope.row.parameterValue.from">{{ scope.row.parameterValue.from }}</router-link>
-        </div>
-        <div v-else-if="scope.row.parameterName == 'to'">
-          <div v-if="scope.row.parameterValue.to == ''">
-            Contract <router-link :to="'/address/' + scope.row.parameterValue.contractAddress">{{ scope.row.parameterValue.contractAddress }}</router-link> Created
+  <div>
+    <el-table :data="tableData" style="width: 100%; border-radius: 15px" empty-text="loading..." :row-style="{ height: '50px' }">
+      <el-table-column width="350px">
+        <template v-slot:default="scope">
+          <div class="center-row">
+            <el-icon><QuestionFilled /></el-icon>&nbsp;{{ scope.row.parameterDisplay }}
           </div>
-          <div v-else-if="scope.row.parameterValue.toName != ''">
-            Contract <router-link :to="'/address/' + scope.row.parameterValue.to">{{ scope.row.parameterValue.to }} &nbsp; {{ scope.row.parameterValue.toName }}</router-link>
+        </template>
+      </el-table-column>
+      <el-table-column prop="parameterValue">
+        <template v-slot:default="scope">
+          <!-- {{ scope.row.parameterValue }} -->
+          <div v-if="scope.row.parameterName == 'blockNumber'" style="font-weight: 900">
+            <router-link :to="'/block/' + scope.row.parameterValue">{{ scope.row.parameterValue }}</router-link>
           </div>
-        </div>
-        <div v-else-if="scope.row.parameterName == 'tokensTransferred'">
-          <tokens-trans :tokensTransferData="scope.row.parameterValue"></tokens-trans>
-        </div>
-        <div v-else-if="scope.row.parameterName == 'gasFess'">Base: {{ scope.row.parameterValue.base }} | Max: {{ scope.row.parameterValue.max }} | Max Priority: {{ scope.row.parameterValue.maxPriority }}</div>
-        <div :class="inputDataIsRolling ? 'rolling' : ''" v-else-if="scope.row.parameterName == 'input'">{{ scope.row.parameterValue }}</div>
-        <div v-else-if="scope.row.parameterName == 'status'">
-          <div v-if="scope.row.parameterValue == 1">
-            <div class="success-status">
-              <el-icon color="green"><SuccessFilled /></el-icon> &nbsp; Success
+          <div class="center-row" v-else-if="scope.row.parameterName == 'timestamp'">
+            <el-icon><clock /></el-icon>&nbsp;{{ scope.row.parameterValue }}
+          </div>
+          <div v-else-if="scope.row.parameterName == 'from'">
+            <router-link :to="'/address/' + scope.row.parameterValue.from">{{ scope.row.parameterValue.from }}</router-link>
+          </div>
+          <div v-else-if="scope.row.parameterName == 'to'">
+            <div v-if="scope.row.parameterValue.to == ''">
+              Contract <router-link :to="'/address/' + scope.row.parameterValue.contractAddress">{{ scope.row.parameterValue.contractAddress }}</router-link> Created
+            </div>
+            <div v-else-if="scope.row.parameterValue.toName != ''">
+              Contract <router-link :to="'/address/' + scope.row.parameterValue.to">{{ scope.row.parameterValue.to }} &nbsp; {{ scope.row.parameterValue.toName }}</router-link>
             </div>
           </div>
-          <div v-if="scope.row.parameterValue == 0">
-            <div class="fail-status">
-              <el-icon color="red"><Failed /></el-icon> &nbsp; Fail
+          <div v-else-if="scope.row.parameterName == 'tokensTransferred'">
+            <tokens-trans :tokensTransferData="scope.row.parameterValue"></tokens-trans>
+          </div>
+          <div v-else-if="scope.row.parameterName == 'gasFess'">Base: {{ scope.row.parameterValue.base }} | Max: {{ scope.row.parameterValue.max }} | Max Priority: {{ scope.row.parameterValue.maxPriority }}</div>
+          <div :class="inputDataIsRolling ? 'rolling' : ''" v-else-if="scope.row.parameterName == 'input'">{{ scope.row.parameterValue }}</div>
+          <div v-else-if="scope.row.parameterName == 'status'">
+            <div v-if="scope.row.parameterValue == 1">
+              <div class="success-status">
+                <el-icon color="green"><SuccessFilled /></el-icon> &nbsp; Success
+              </div>
+            </div>
+            <div v-if="scope.row.parameterValue == 0">
+              <div class="fail-status">
+                <el-icon color="red"><Failed /></el-icon> &nbsp; Fail
+              </div>
+            </div>
+            <div v-if="scope.row.parameterValue == 3">
+              <div class="pending-status">
+                <el-icon><VideoPause /></el-icon> &nbsp; Pending
+              </div>
             </div>
           </div>
-          <div v-if="scope.row.parameterValue == 3">
-            <div class="pending-status">
-              <el-icon><VideoPause /></el-icon> &nbsp; Pending
-            </div>
+          <div v-else>
+            {{ scope.row.parameterValue }}
           </div>
-        </div>
-        <div v-else>
-          {{ scope.row.parameterValue }}
-        </div>
-      </template>
-    </el-table-column>
-  </el-table>
+        </template>
+      </el-table-column>
+    </el-table>
+  </div>
 </template>
 <script>
 import { defineComponent } from "vue";
@@ -63,7 +65,7 @@ import { formatTimestamp } from "../../js/utils.js";
 import TokensTrans from "../Transaction/tokensTransferred.vue";
 export default defineComponent({
   name: "TransactionOverview",
-  props: ["data"],
+  props: ["txHashArg"],
   components: { TokensTrans },
   data() {
     return {
@@ -72,7 +74,13 @@ export default defineComponent({
     };
   },
   created() {
-    this.getTransactionRes(this.data.txHash);
+    this.getTransactionRes(this.txHashArg);
+  },
+  watch: {
+    async txHashArg(newVal) {
+      this.tableData = [];
+      this.getTransactionRes(newVal);
+    },
   },
   methods: {
     async getTransactionRes(txHash) {
@@ -82,7 +90,7 @@ export default defineComponent({
         {
           parameterName: "txHash",
           parameterDisplay: "Transaction Hash:",
-          parameterValue: this.data.txHash,
+          parameterValue: this.txHashArg,
         },
         {
           parameterName: "status",

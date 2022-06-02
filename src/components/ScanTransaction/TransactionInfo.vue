@@ -4,7 +4,7 @@
     <!-- <p style="display: inline; margin-left: 1%">#{{ txHash }}</p> -->
     <el-tabs v-model="activeName" style="">
       <el-tab-pane label="Overview" name="first">
-        <transaction-overview :data="transactionOverviewData"></transaction-overview>
+        <transaction-overview :txHashArg="transactionOverviewHash"></transaction-overview>
       </el-tab-pane>
       <el-tab-pane v-if="this.logCount != 0" name="second">
         <template #label>
@@ -25,19 +25,27 @@ export default defineComponent({
     return {
       activeName: "first",
       logCount: 0,
-      transactionOverviewData: { txHash: this.txHash },
+      transactionOverviewHash: this.txHash,
       transactionLogsData: { txHash: this.txHash, logs: [] },
     };
   },
+  watch: {
+    $route(to) {
+      if (to.params.txHash) {
+        this.transactionOverviewHash = to.params.txHash;
+        this.getLogsByTxHash(to.params.txHash);
+      }
+    },
+  },
   created() {
-    this.getLogsByTxHash();
+    this.getLogsByTxHash(this.txHash);
   },
   beforeCreate() {
     document.title = "Transaction Hash Details | The Coq Explorer";
   },
   methods: {
-    async getLogsByTxHash() {
-      let res = await GetLogsByTxHash(this.$rpc_http, this.txHash);
+    async getLogsByTxHash(txHash) {
+      let res = await GetLogsByTxHash(this.$rpc_http, txHash);
       this.logCount = res.total;
       this.transactionLogsData.logs = res.items;
     },
