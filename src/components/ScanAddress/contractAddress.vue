@@ -68,15 +68,6 @@
             />
           </div>
         </el-tab-pane>
-        <!-- <el-tab-pane label="Internal Txns" name="internalTxns">
-          <general-txs :txsData="internalTransactionsList" :headerData="internalTransactionsHeaderList"></general-txs>
-        </el-tab-pane>
-        <el-tab-pane label="Erc20 Token Txns" name="erc20TokenTxns">
-          <general-txs :txsData="erc20TransactionsList" :headerData="erc20TransactionsHeaderList"></general-txs>
-        </el-tab-pane>
-        <el-tab-pane label="Erc721 Token Txns" name="erc721TokenTxns">
-          <general-txs :txsData="erc721TransactionsList" :headerData="erc721TransactionsHeaderList"></general-txs>
-        </el-tab-pane> -->
         <el-tab-pane label="Contract" name="contract">
           <contract-info :contractAddress="address" :code="codeContent"></contract-info>
         </el-tab-pane>
@@ -132,91 +123,6 @@ export default defineComponent({
           key: "gas",
         },
       ],
-      internalTransactionsList: [],
-      internalTransactionsHeaderList: [
-        {
-          label: "Parent Txn Hash",
-          key: "hash",
-        },
-        {
-          label: "block",
-          key: "blockNumber",
-        },
-        {
-          label: "Age",
-          key: "age",
-        },
-        {
-          label: "From",
-          key: "from",
-        },
-        {
-          label: "To",
-          key: "to",
-        },
-        {
-          label: "Value",
-          key: "value",
-        },
-      ],
-      erc20TransactionsList: [],
-      erc20TransactionsHeaderList: [
-        {
-          label: "Txn Hash",
-          key: "hash",
-        },
-        {
-          label: "Age",
-          key: "age",
-        },
-        {
-          label: "From",
-          key: "from",
-        },
-        {
-          label: "To",
-          key: "to",
-        },
-        {
-          label: "Value",
-          key: "value",
-        },
-        {
-          label: "Token",
-          key: "from",
-        },
-      ],
-      erc721TransactionsList: [],
-      erc721TransactionsHeaderList: [
-        {
-          label: "Txn Hash",
-          key: "hash",
-        },
-        {
-          label: "Age",
-          key: "age",
-        },
-        {
-          label: "From",
-          key: "from",
-        },
-        {
-          label: "To",
-          key: "to",
-        },
-        {
-          label: "Token ID",
-          key: "blockNumber",
-        },
-        {
-          label: "Token",
-          key: "from",
-        },
-        {
-          label: "Details",
-          key: "to",
-        },
-      ],
       generalCurrentPage: 1,
       generalPageSize: 25,
       small: true,
@@ -232,6 +138,16 @@ export default defineComponent({
   },
   beforeCreate() {
     document.title = "Contract | The Coq Explorer";
+  },
+  watch: {
+    async address(newVal) {
+      this.tableDate = [];
+      this.generalCurrentPage = 1;
+      this.generalPageSize = 25;
+      let res = await GetTxsByAddress(this.$rpc_http, newVal, this.generalCurrentPage - 1, this.generalPageSize);
+      this.generalTransactionsList = res.resList;
+      this.generalTotal = res.total;
+    },
   },
   methods: {
     async getGeneralTransactionsList() {

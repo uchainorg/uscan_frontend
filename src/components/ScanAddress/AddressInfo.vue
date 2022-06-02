@@ -20,12 +20,15 @@ export default defineComponent({
       addressInfo: {},
     };
   },
+  watch: {
+    $route(to) {
+      if (to.params.address) {
+        this.getAccountInfo(to.params.address);
+      }
+    },
+  },
   created() {
     this.getAccountInfo(this.address);
-  },
-  async beforeRouteUpdate(to) {
-    // console.log(to.params.address);
-    this.getAccountInfo(to.params.address);
   },
   methods: {
     async getAccountInfo(address) {

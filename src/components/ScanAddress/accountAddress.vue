@@ -268,6 +268,37 @@ export default defineComponent({
   beforeCreate() {
     document.title = "Address | The Coq Explorer";
   },
+  watch: {
+    async address(newVal) {
+      this.tableDate = [];
+      this.generalCurrentPage = 1;
+      this.generalPageSize = 25;
+      let res = await GetTxsByAddress(this.$rpc_http, newVal, this.generalCurrentPage - 1, this.generalPageSize);
+      this.generalTransactionsList = res.resList;
+      this.generalTotal = res.total;
+
+      this.erc20TransactionsList = [];
+      this.erc20CurrentPage = 1;
+      this.erc20PageSize = 25;
+      let erc20txns = await GetTxsByErcAccount(this.$rpc_http, "erc20", newVal, this.erc20CurrentPage - 1, this.erc20PageSize);
+      this.erc20Total = erc20txns.total;
+      this.erc20TransactionsList = erc20txns.resList;
+
+      this.erc721TransactionsList = [];
+      this.erc721CurrentPage = 1;
+      this.erc721PageSize = 25;
+      let erc721txns = await GetTxsByErcAccount(this.$rpc_http, "erc721", this.address, this.erc721CurrentPage - 1, this.erc721PageSize);
+      this.erc721Total = erc721txns.total;
+      this.erc721TransactionsList = erc721txns.resList;
+
+      this.erc1155TransactionsList = [];
+      this.erc1155CurrentPage = 1;
+      this.erc1155PageSize = 25;
+      let erc1155txns = await GetTxsByErcAccount(this.$rpc_http, "erc1155", this.address, this.erc1155CurrentPage - 1, this.erc1155PageSize);
+      this.erc1155Total = erc1155txns.total;
+      this.erc1155TransactionsList = erc1155txns.resList;
+    },
+  },
   methods: {
     async getGeneralTransactionsList() {
       let res = await GetTxsByAddress(this.$rpc_http, this.address, this.generalCurrentPage - 1, this.generalPageSize);
@@ -331,8 +362,8 @@ export default defineComponent({
       this.erc1155CurrentPage = 1;
       this.erc1155PageSize = val;
       let erc1155txns = await GetTxsByErcAccount(this.$rpc_http, "erc1155", this.address, this.erc1155CurrentPage - 1, this.erc1155PageSize);
-      this.erc721Total = erc1155txns.total;
-      this.erc721TransactionsList = erc1155txns.resList;
+      this.erc1155Total = erc1155txns.total;
+      this.erc1155TransactionsList = erc1155txns.resList;
     },
     async getErcTxs() {
       let erc20txns = await GetTxsByErcAccount(this.$rpc_http, "erc20", this.address, this.erc20CurrentPage - 1, this.erc20PageSize);
