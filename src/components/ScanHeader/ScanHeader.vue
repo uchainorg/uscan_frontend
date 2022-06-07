@@ -1,32 +1,21 @@
 <template lang="">
-  <div>
-    <el-row>
-      <el-col :span="20" class="header-left">
-        <div class="header-left-items" @click="moveToHome">
-          <img src="../../assets/logo.png" width="35" height="35" />
-          &nbsp;&nbsp;
-          <h2 style="color: white">Coq Chain Scan</h2>
-        </div>
-      </el-col>
-      <el-col :span="4" class="header-right">
-        <div style="display: flex; flex-direction: column">
-          <div style="display: flex; flex-direction: row; align-items: center; justify-content: center">
-            <el-icon color="white"><Search /></el-icon>
-            <el-autocomplete
-              v-model="inputValue"
-              :fetch-suggestions="querySearch"
-              placeholder="Search by Address / Txhash / Block"
-              @select="handleSubmit"
-              style="width: 550px; margin-left: 1%"
-              @keyup.enter.native="handleSearch"
-            ></el-autocomplete>
+  <div class="header-menu">
+    <div class="home-header">
+      <el-row>
+        <el-col :span="21">
+          <div class="header-left-items" @click="moveToHome">
+            <img src="../../assets/logo.png" width="35" height="35" />
+            &nbsp;&nbsp;
+            <h1>Coq Chain Scan</h1>
           </div>
-          <div style="margin-top: 30px">
+        </el-col>
+        <el-col :span="3">
+          <div style="display: flex; flex-direction: row; align-items: center; height: 100%">
             <!-- <el-button text style="font-size: 15px; font-weight: bold" @click="moveToHome">Home</el-button> -->
             <router-link :to="'/'" style="font-size: 15px; font-weight: bold"> Home </router-link>
-            &nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <el-dropdown>
-              <span style="font-size: 15px; font-weight: bold; color: white">
+              <span style="font-size: 15px; font-weight: bold">
                 Tokens<el-icon><arrow-down /></el-icon>
               </span>
               <template #dropdown>
@@ -38,9 +27,24 @@
               </template>
             </el-dropdown>
           </div>
+        </el-col>
+        <div style="margin-top: 50px">
+          <h1 style="color: white">The Coq Chain Explorer</h1>
+          <div style="display: flex; flex-direction: row; align-items: center; justify-content: center">
+            <el-icon color="white" :size="23"><Search /></el-icon>
+            <el-autocomplete
+              v-model="inputValue"
+              :fetch-suggestions="querySearch"
+              placeholder="Search by Address / Txhash / Block"
+              @select="handleSubmit"
+              style="width: 750px; margin-left: 2%"
+              @keyup.enter.native="handleSearch"
+              size="large"
+            ></el-autocomplete>
+          </div>
         </div>
-      </el-col>
-    </el-row>
+      </el-row>
+    </div>
   </div>
 </template>
 <script>
@@ -51,8 +55,10 @@ export default defineComponent({
   data() {
     return {
       inputValue: "",
-      activeIndex: "1",
       searchResults: [],
+
+      // new
+      activeIndex: "1",
     };
   },
   methods: {
@@ -108,6 +114,7 @@ export default defineComponent({
 });
 </script>
 <style lang="less" scoped>
+@import "../../css/style.css";
 .header-left {
   display: flex;
 }
@@ -123,5 +130,24 @@ export default defineComponent({
 .header-right {
   display: flex;
   align-items: center;
+}
+
+.header-menu {
+  background-color: white;
+  height: 60px;
+}
+
+.home-header {
+  background-color: transparent;
+  height: 60px;
+  margin: 0 auto;
+  width: 1350px;
+}
+
+.header-left-items {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 60px;
 }
 </style>

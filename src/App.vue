@@ -3,7 +3,6 @@
     <el-container>
       <div :class="this.$store.state.headerName == 'scan-header' ? 'header-home' : 'header-info'">
         <el-header>
-          <!-- <scan-header title="Coq Chain Scan"></scan-header> -->
           <component :is="this.$store.state.headerName"></component>
         </el-header>
       </div>
@@ -39,7 +38,7 @@ export default defineComponent({
 <style lang="less" scoped>
 .header-home {
   background-color: #263258;
-  height: 190px;
+  height: 300px;
 }
 
 .header-info {
@@ -62,12 +61,14 @@ export default defineComponent({
   justify-content: space-between;
 }
 .el-header {
-  background-color: transparent;
-  width: 1350px;
+  // background-color: transparent;
+  // width: 1350px;
+  // height: 100%;
+  // margin: 0 auto;
+  // display: flex;
+  // align-items: center;
+  padding: 0;
   height: 100%;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
 }
 .el-main {
   height: 100%;

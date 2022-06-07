@@ -1,5 +1,5 @@
 <template lang="">
-  <div>
+  <div class="header-info">
     <el-row>
       <el-col :span="20" class="header-left">
         <div class="header-left-items" @click="moveToHome">
@@ -111,6 +111,14 @@ export default defineComponent({
 });
 </script>
 <style lang="less" scoped>
+.header-info {
+  background-color: transparent;
+  width: 1350px;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+}
 .header-left {
   display: flex;
 }
