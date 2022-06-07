@@ -6,12 +6,11 @@
           <div class="header-left-items" @click="moveToHome">
             <img src="../../assets/logo.png" width="35" height="35" />
             &nbsp;&nbsp;
-            <h1>Coq Chain Scan</h1>
+            <p style="font-size: 23px">Coq Chain Scan</p>
           </div>
         </el-col>
         <el-col :span="3">
           <div style="display: flex; flex-direction: row; align-items: center; height: 100%">
-            <!-- <el-button text style="font-size: 15px; font-weight: bold" @click="moveToHome">Home</el-button> -->
             <router-link :to="'/'" style="font-size: 15px; font-weight: bold"> Home </router-link>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <el-dropdown>
@@ -28,19 +27,22 @@
             </el-dropdown>
           </div>
         </el-col>
-        <div style="margin-top: 50px">
-          <h1 style="color: white">The Coq Chain Explorer</h1>
+        <div style="margin-top: 40px">
+          <p style="color: white; font-size: 20px">The Coq Chain Explorer</p>
           <div style="display: flex; flex-direction: row; align-items: center; justify-content: center">
-            <el-icon color="white" :size="23"><Search /></el-icon>
             <el-autocomplete
               v-model="inputValue"
               :fetch-suggestions="querySearch"
               placeholder="Search by Address / Txhash / Block"
               @select="handleSubmit"
-              style="width: 750px; margin-left: 2%"
+              style="width: 700px"
               @keyup.enter.native="handleSearch"
               size="large"
-            ></el-autocomplete>
+            >
+            </el-autocomplete>
+            <el-button text bg style="height: 42px; width: 42px; background-color: #5296d5" @click="searchFilter">
+              <el-icon color="white" size="large"><Search /></el-icon>
+            </el-button>
           </div>
         </div>
       </el-row>
@@ -59,6 +61,7 @@ export default defineComponent({
 
       // new
       activeIndex: "1",
+      searchResult: {},
     };
   },
   methods: {
@@ -88,10 +91,16 @@ export default defineComponent({
           let type = await this.GetSearchType(1, queryArg);
           if (type == 1 || type == 0) {
             this.searchResults.push({ value: "Not Found", link: "404" });
+            this.searchResult = {};
           } else {
             this.searchResults.push({ value: typeMap[parseInt(type)].display + " : " + queryArg, link: typeMap[parseInt(type)].route + queryArg });
+            this.searchResult = { value: typeMap[parseInt(type)].display + " : " + queryArg, link: typeMap[parseInt(type)].route + queryArg };
           }
+        } else {
+          this.searchResult = {};
         }
+      } else {
+        this.searchResult = {};
       }
       cb(this.searchResults);
     },
@@ -108,6 +117,11 @@ export default defineComponent({
           // console.log(this.searchResults[0].link);
           this.$router.push(this.searchResults[0].link);
         }
+      }
+    },
+    searchFilter() {
+      if (this.searchResult.link) {
+        this.$router.push(this.searchResult.link);
       }
     },
   },
