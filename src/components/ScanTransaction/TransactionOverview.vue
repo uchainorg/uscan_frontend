@@ -27,6 +27,9 @@
             <div v-else-if="scope.row.parameterValue.toName != ''">
               Contract <router-link :to="'/address/' + scope.row.parameterValue.to">{{ scope.row.parameterValue.to }} &nbsp; {{ scope.row.parameterValue.toName }}</router-link>
             </div>
+            <div v-else>
+              <router-link :to="'/address/' + scope.row.parameterValue.to">{{ scope.row.parameterValue.to }}</router-link>
+            </div>
           </div>
           <div v-else-if="scope.row.parameterName == 'tokensTransferred'">
             <tokens-trans :tokensTransferData="scope.row.parameterValue"></tokens-trans>
