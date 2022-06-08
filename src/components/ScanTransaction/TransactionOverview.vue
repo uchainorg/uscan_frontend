@@ -168,7 +168,7 @@ export default defineComponent({
           parameterName: "gasFess",
           parameterDisplay: "Gas Fees:",
           parameterValue: {
-            base: "(test)" + 0 + " Gwei",
+            base: this.$wei2gwei(parseInt(res.baseFeePerGas)) + " Gwei",
             max: this.$wei2gwei(parseInt(res.maxFeePerGas)) + " Gwei",
             maxPriority: this.$wei2gwei(parseInt(res.maxPriorityFeePerGas)) + " Gwei",
           },
