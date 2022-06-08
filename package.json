@@ -18,6 +18,7 @@
     "element-plus": "^2.1.10",
     "ethers": "^5.6.6",
     "vue": "^3.2.25",
+    "vue-clipboard3": "^2.0.0",
     "vue-codemirror": "^5.0.1",
     "vue-router": "^4.0.14",
     "vuex": "^4.0.2"

@@ -16,7 +16,6 @@
 }
 
 .container {
-  margin-top: 2%;
   max-width: 1350px;
 }
 
@@ -65,4 +64,9 @@
 
 .card-content {
   font-size: 15px;
+}
+
+.copy-icon {
+  color: #9ba2aa;
+  cursor: pointer;
 }

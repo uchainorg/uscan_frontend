@@ -61,19 +61,13 @@ export default defineComponent({
   justify-content: space-between;
 }
 .el-header {
-  // background-color: transparent;
-  // width: 1350px;
-  // height: 100%;
-  // margin: 0 auto;
-  // display: flex;
-  // align-items: center;
   padding: 0;
   height: 100%;
 }
 .el-main {
   height: 100%;
   width: 100%;
-  margin-top: 5px;
+  padding: 0;
 }
 .el-footer {
   display: flex;

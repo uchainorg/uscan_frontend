@@ -17,18 +17,29 @@
           <div class="center-row" v-else-if="scope.row.parameterName == 'timestamp'">
             <el-icon><clock /></el-icon>&nbsp;{{ scope.row.parameterValue }}
           </div>
-          <div v-else-if="scope.row.parameterName == 'from'">
+          <div class="center-row" v-else-if="scope.row.parameterName == 'txHash'">
+            {{ scope.row.parameterValue }} &nbsp;
+            <copy-icon :text="scope.row.parameterValue"></copy-icon>
+          </div>
+          <div class="center-row" v-else-if="scope.row.parameterName == 'from'">
             <router-link :to="'/address/' + scope.row.parameterValue.from">{{ scope.row.parameterValue.from }}</router-link>
+            &nbsp;
+            <copy-icon :text="scope.row.parameterValue.from"></copy-icon>
           </div>
           <div v-else-if="scope.row.parameterName == 'to'">
-            <div v-if="scope.row.parameterValue.to == ''">
-              Contract <router-link :to="'/address/' + scope.row.parameterValue.contractAddress">{{ scope.row.parameterValue.contractAddress }}</router-link> Created
+            <div class="center-row" v-if="scope.row.parameterValue.to == ''">
+              Contract &nbsp; <router-link :to="'/address/' + scope.row.parameterValue.contractAddress">{{ scope.row.parameterValue.contractAddress }}</router-link> Created &nbsp;
+              <copy-icon :text="scope.row.parameterValue.contractAddress"></copy-icon>
             </div>
-            <div v-else-if="scope.row.parameterValue.toName != ''">
-              Contract <router-link :to="'/address/' + scope.row.parameterValue.to">{{ scope.row.parameterValue.to }} &nbsp; {{ scope.row.parameterValue.toName }}</router-link>
+            <div class="center-row" v-else-if="scope.row.parameterValue.toName != ''">
+              Contract &nbsp; <router-link :to="'/address/' + scope.row.parameterValue.to">{{ scope.row.parameterValue.to }} &nbsp; {{ scope.row.parameterValue.toName }}</router-link>
+              &nbsp;
+              <copy-icon :text="scope.row.parameterValue.to"></copy-icon>
             </div>
-            <div v-else>
+            <div class="center-row" v-else>
               <router-link :to="'/address/' + scope.row.parameterValue.to">{{ scope.row.parameterValue.to }}</router-link>
+              &nbsp;
+              <copy-icon :text="scope.row.parameterValue.to"></copy-icon>
             </div>
           </div>
           <div v-else-if="scope.row.parameterName == 'tokensTransferred'">
@@ -168,7 +179,7 @@ export default defineComponent({
           parameterValue: res.input,
         }
       );
-      if (res.tokensTransferred) {
+      if (res.tokensTransferred.length > 0) {
         this.tableData.push({
           parameterName: "tokensTransferred",
           parameterDisplay: "Tokens Transferred:",

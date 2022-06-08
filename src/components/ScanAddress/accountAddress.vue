@@ -1,10 +1,10 @@
 <template lang="">
   <div>
-    <el-row>
-      <el-col>
-        <h4>Address : {{ address }}</h4>
-      </el-col>
-    </el-row>
+    <div class="center-row">
+      <h4>Address : {{ address }}</h4>
+      &nbsp;
+      <copy-icon :text="this.address"></copy-icon>
+    </div>
     <div>
       <el-card class="box-card">
         <template #header>

@@ -1,24 +1,10 @@
 <template lang="">
   <div>
-    <div>
-      <el-row>
-        <el-col>
-          <h4>Token : {{ address }}</h4>
-        </el-col>
-      </el-row>
+    <div class="center-row">
+      <h4>Token : {{ address }}</h4>
+      &nbsp;
+      <copy-icon :text="this.address"></copy-icon>
     </div>
-
-    <!-- <div class="container-display">
-      <div style="width: 50%">
-        <h4>Overview ({{ this.tokenType }})</h4>
-        <el-table :data="addressOverviewTableData" style="margin-top: -3%; width: 95%" empty-text="loading...">
-          <el-table-column prop="parameterDisplay"></el-table-column>
-          <el-table-column prop="parameterValue">
-            <template v-slot:default="scope"> {{ scope.row.parameterValue }}</template>
-          </el-table-column>
-        </el-table>
-      </div>
-    </div> -->
 
     <div>
       <el-row :gutter="20">
