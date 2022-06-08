@@ -3,9 +3,9 @@
     <el-row>
       <el-col :span="20" class="header-left">
         <div class="header-left-items" @click="moveToHome">
-          <img src="../../assets/logo.png" width="35" height="35" />
+          <img src="../../assets/logo.png" width="33" height="33" />
           &nbsp;&nbsp;
-          <h2>Coq Chain Scan</h2>
+          <p style="font-size: 23px">Coq Chain Scan</p>
         </div>
       </el-col>
       <el-col :span="4" class="header-right">

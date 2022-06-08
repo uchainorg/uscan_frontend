@@ -77,12 +77,10 @@ export default defineComponent({
 }
 .el-footer {
   display: flex;
-  height: 240px;
+  height: 290px;
   width: 1350px;
-  align-items: center;
   background-color: transparent;
   justify-content: center;
-  align-items: center;
   margin: 0 auto;
 }
 </style>
