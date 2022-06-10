@@ -11,12 +11,29 @@
       <h4>Contract Source Code Verified</h4>
     </div>
     <div style="width: 50%">
-      <el-table :data="contractInfoData" style="margin-top: -3%; width: 95%" empty-text="loading...">
+      <!-- <el-table :data="contractInfoData" style="margin-top: -3%; width: 95%" empty-text="loading...">
         <el-table-column prop="parameterDisplay"></el-table-column>
         <el-table-column prop="parameterValue">
           <template v-slot:default="scope"> {{ scope.row.parameterValue }}</template>
         </el-table-column>
-      </el-table>
+      </el-table> -->
+      <el-card class="box-card-address">
+        <template #header>
+          <div class="card-header">
+            <span>Contract Overview</span>
+          </div>
+        </template>
+        <div class="card-content">
+          <el-row>
+            <el-col :span="10">Contract Name:</el-col>
+            <el-col :span="14">123</el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="10">Contract Version:</el-col>
+            <el-col :span="14">1234</el-col>
+          </el-row>
+        </div>
+      </el-card>
     </div>
     <div>
       <div class="center-row">
