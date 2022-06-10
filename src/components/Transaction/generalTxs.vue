@@ -1,5 +1,5 @@
 <template lang="">
-  <el-table :data="txsData" empty-text="loading..." style="width: 100%; border-radius: 15px" :row-style="{ height: '50px' }">
+  <el-table :data="txsData" empty-text="loading..." style="width: 100%; border-radius: 0.35rem" :row-style="{ height: '50px' }">
     <el-table-column width="37px">
       <el-button style="width: 5px" type="info" size="small">
         <el-icon><View /></el-icon>
@@ -33,7 +33,9 @@
         <div v-else-if="scope.column.property == 'valueToken'">{{ this.$wei2eth(parseInt(scope.row[scope.column.property])) }}</div>
         <div v-else-if="scope.column.property == 'gas'" style="width: 170px; font-size: 11px">{{ this.$wei2eth(parseInt(scope.row[scope.column.property])) }}</div>
         <div v-else-if="scope.column.property == 'token'" style="width: 170px; font-size: 11px">
-          <router-link :to="'/token/' + scope.row[scope.column.property]">{{ scope.row[scope.column.property].slice(0, 15) + "..." }}</router-link>
+          <div v-if="scope.row[scope.column.property]">
+            <router-link :to="'/token/' + scope.row[scope.column.property]">{{ scope.row[scope.column.property].slice(0, 15) + "..." }}</router-link>
+          </div>
         </div>
       </template>
     </el-table-column>

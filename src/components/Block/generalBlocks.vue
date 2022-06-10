@@ -1,5 +1,5 @@
 <template lang="">
-  <el-table :data="blocksData" empty-text="loading..." style="width: 100%; border-radius: 15px" :row-style="{ height: '50px' }">
+  <el-table :data="blocksData" empty-text="loading..." style="width: 100%; border-radius: 0.35rem" :row-style="{ height: '50px' }">
     <el-table-column v-for="info in headerData" :key="info.key" :property="info.key" :label="info.label">
       <!-- <template #header>
         <div>hhhhhh</div>

@@ -7,6 +7,8 @@ import BlocksList from "./components/ScanBlock/BlockList.vue";
 import AddressInfo from "./components/ScanAddress/AddressInfo.vue";
 import AllTransactionsList from "./components/ScanTransaction/TransactionAll.vue";
 import TokenAddress from "./components/ScanAddress/TokenAddress.vue";
+import VerifyContract from "./components/ScanContract/VerifyContract.vue";
+import VerifyContractSubmit from "./components/ScanContract/VerifyContractSubmit.vue";
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -20,6 +22,8 @@ const router = createRouter({
     { path: "/transactions", component: AllTransactionsList, props: false },
     { path: "/transactions/:type", component: AllTransactionsList, props: true },
     { path: "/token/:address", component: TokenAddress, props: true },
+    { path: "/verifyContract/:contractAddress", component: VerifyContract, props: true },
+    { path: "/verifyContract/submit", component: VerifyContractSubmit },
   ],
 });
 

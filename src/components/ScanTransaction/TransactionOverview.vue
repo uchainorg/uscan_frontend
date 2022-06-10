@@ -1,6 +1,6 @@
 <template lang="">
   <div>
-    <el-table :data="tableData" style="width: 100%; border-radius: 15px" empty-text="loading..." :row-style="{ height: '50px' }">
+    <el-table :data="tableData" style="width: 100%; border-radius: 0.35rem" empty-text="loading..." :row-style="{ height: '50px' }">
       <el-table-column width="350px">
         <template v-slot:default="scope">
           <div class="center-row">
@@ -179,7 +179,7 @@ export default defineComponent({
           parameterValue: res.input,
         }
       );
-      if (res.tokensTransferred.length > 0) {
+      if (res.tokensTransferred != null && res.tokensTransferred.length != 0) {
         this.tableData.push({
           parameterName: "tokensTransferred",
           parameterDisplay: "Tokens Transferred:",
@@ -207,7 +207,7 @@ export default defineComponent({
   background: rgb(238, 249, 246);
   height: 33px;
   width: 90px;
-  border-radius: 15px;
+  border-radius: 0.35rem;
 }
 
 .pending-status {
@@ -217,7 +217,7 @@ export default defineComponent({
   background: rgb(241, 242, 243);
   height: 33px;
   width: 90px;
-  border-radius: 15px;
+  border-radius: 0.35rem;
 }
 
 .fail-status {
@@ -227,6 +227,6 @@ export default defineComponent({
   background: rgb(241, 242, 243);
   height: 33px;
   width: 90px;
-  border-radius: 15px;
+  border-radius: 0.35rem;
 }
 </style>

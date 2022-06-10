@@ -69,6 +69,9 @@
         <el-tab-pane label="Contract" name="contract">
           <contract-info :contractAddress="address" :code="codeContent"></contract-info>
         </el-tab-pane>
+        <el-tab-pane label="(test verified)Contract" name="contract-verified">
+          <verified-contract-info :contractAddress="address"></verified-contract-info>
+        </el-tab-pane>
         <!-- <el-tab-pane label="Events" name="events"> </el-tab-pane> -->
       </el-tabs>
     </div>

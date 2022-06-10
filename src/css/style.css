@@ -41,17 +41,17 @@
 
 .box-card {
   width: 50%;
-  border-radius: 15px;
+  border-radius: 0.35rem;
 }
 
 .box-card-address {
   width: 100%;
-  border-radius: 15px;
+  border-radius: 0.35rem;
 }
 
 .box-card-log {
   width: 70%;
-  border-radius: 15px;
+  border-radius: 0.35rem;
 }
 
 .card-header {
@@ -69,4 +69,19 @@
 .copy-icon {
   color: #9ba2aa;
   cursor: pointer;
+}
+
+.byte-codes-text {
+  padding: 0.75rem;
+  width: 98%;
+  overflow: auto;
+  word-break: break-all;
+  background-color: #f8f9fa;
+  border: 1px solid #e7eaf3;
+  border-radius: 0.35rem;
+  margin-bottom: 0.5rem;
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+  font-size: 85%;
+  line-height: 1.5;
+  margin-top: 25px;
 }

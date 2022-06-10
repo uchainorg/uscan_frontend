@@ -1,6 +1,6 @@
 <template lang="">
   <div>
-    <el-table :data="tableData" style="width: 100%; border-radius: 15px" empty-text="loading..." :row-style="{ height: '50px' }">
+    <el-table :data="tableData" style="width: 100%; border-radius: 0.35rem" empty-text="loading..." :row-style="{ height: '50px' }">
       <el-table-column width="350px">
         <template v-slot:default="scope">
           <div class="center-row">

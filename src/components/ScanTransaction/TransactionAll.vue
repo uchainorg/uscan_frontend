@@ -110,11 +110,86 @@ export default defineComponent({
       ];
     }
   },
-  async beforeRouteUpdate(to) {
-    // console.log(to.params.type);
-    this.txType = to.params.type;
-    (this.currentPage = 1), (this.pageSize = 25), (this.total = 0);
-    this.getTxsByERC();
+  // async beforeRouteUpdate(to) {
+  //   console.log(to.params.type);
+  //   this.txType = to.params.type;
+  //   (this.currentPage = 1), (this.pageSize = 25), (this.total = 0), (this.typeDisplay = " for " + this.txType);
+  //   this.getTxsByERC();
+  // },
+  watch: {
+    $route(to) {
+      console.log(to.params);
+      if (!to.params.type) {
+        // console.log("all");
+        this.typeDisplay = " for all";
+        this.getTxsList();
+        this.headerList = [
+          {
+            label: "Txn Hash",
+            key: "hash",
+          },
+          {
+            label: "Method",
+            key: "method",
+          },
+          {
+            label: "Block",
+            key: "blockNumber",
+          },
+          {
+            label: "Age",
+            key: "age",
+          },
+          {
+            label: "From",
+            key: "from",
+          },
+          {
+            label: "To",
+            key: "to",
+          },
+          {
+            label: "Value",
+            key: "value",
+          },
+          {
+            label: "Txn Fee",
+            key: "gas",
+          },
+        ];
+      } else {
+        this.headerList = [
+          {
+            label: "Txn Hash",
+            key: "hash",
+          },
+          {
+            label: "Age",
+            key: "age",
+          },
+          {
+            label: "From",
+            key: "from",
+          },
+          {
+            label: "To",
+            key: "to",
+          },
+          {
+            label: "Value",
+            key: "value",
+          },
+          {
+            label: "Token",
+            key: "token",
+          },
+        ];
+        this.txType = to.params.type;
+        this.typeDisplay = " for " + this.txType;
+        (this.currentPage = 1), (this.pageSize = 25), (this.total = 0), (this.typeDisplay = " for " + this.txType);
+        this.getTxsByERC();
+      }
+    },
   },
   methods: {
     async getTxsList() {
@@ -125,6 +200,7 @@ export default defineComponent({
     async getTxsByERC() {
       let res = await GetTxsByERC(this.$rpc_http, this.txType, this.currentPage - 1, this.pageSize);
       this.tableDate = res.resList;
+      // console.log(this.tableDate);
       this.total = res.total;
     },
     async handleCurrentChange(val) {

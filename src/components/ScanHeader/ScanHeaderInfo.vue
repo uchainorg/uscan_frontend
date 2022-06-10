@@ -97,7 +97,7 @@ export default defineComponent({
       if (arg.value == "Not Found") {
         return;
       }
-      console.log(arg);
+      // console.log(arg);
     },
     handleSearch() {
       if (this.searchResults.length != 0) {
