@@ -42,7 +42,7 @@
 
         <el-tab-pane v-if="this.erc20Total != 0" name="second">
           <template #label>
-            <span>erc20 Transaction({{ erc20Total }})</span>
+            <span>Erc20 Token Txns({{ erc20Total }})</span>
           </template>
           <general-txs :txsData="erc20TransactionsList" :headerData="erc20TransactionsHeaderList"></general-txs>
           <div style="margin-top: 1%; display: flex; justify-content: center">
@@ -62,7 +62,7 @@
 
         <el-tab-pane v-if="this.erc721Total != 0" name="third">
           <template #label>
-            <span>erc721 Transaction({{ erc721Total }})</span>
+            <span>Erc721 Token Txns({{ erc721Total }})</span>
           </template>
           <general-txs :txsData="erc721TransactionsList" :headerData="erc721TransactionsHeaderList"></general-txs>
           <div style="margin-top: 1%; display: flex; justify-content: center">
@@ -82,7 +82,7 @@
 
         <el-tab-pane v-if="this.erc1155Total != 0" name="fourth">
           <template #label>
-            <span>erc1155 Transaction({{ erc1155Total }})</span>
+            <span>Erc1155 Token Txns({{ erc1155Total }})</span>
           </template>
           <general-txs :txsData="erc1155TransactionsList" :headerData="erc1155TransactionsHeaderList"></general-txs>
           <div style="margin-top: 1%; display: flex; justify-content: center">

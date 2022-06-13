@@ -1,5 +1,5 @@
 <template lang="">
-  <div>
+  <div style="-webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none">
     <el-tooltip placement="right" v-model:visible="visible">
       <template #content>{{ this.copyTip }} </template>
       <el-icon

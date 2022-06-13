@@ -4,7 +4,12 @@
       <el-table-column width="350px">
         <template v-slot:default="scope">
           <div class="center-row">
-            <el-icon><QuestionFilled /></el-icon>&nbsp;{{ scope.row.parameterDisplay }}
+            <el-tooltip effect="dark" placement="top">
+              <template #content> {{ scope.row.parameterExplain }} </template>
+              <el-icon><QuestionFilled /></el-icon>
+            </el-tooltip>
+            &nbsp;{{ scope.row.parameterDisplay }}
+            <!-- <el-icon><QuestionFilled /></el-icon>&nbsp;{{ scope.row.parameterDisplay }} -->
           </div>
         </template>
       </el-table-column>
@@ -26,13 +31,13 @@
             <el-icon><clock /></el-icon>&nbsp;{{ scope.row.parameterValue }}
           </div>
           <div v-else-if="scope.row.parameterName == 'transactions'">
-            <el-tooltip class="box-item" effect="dark" content="Click to view Transactions" placement="left">
-              <div v-if="scope.row.parameterValue == 0">0 transaction in this block</div>
-              <div v-else>
+            <div v-if="scope.row.parameterValue == 0">0 transaction in this block</div>
+            <div v-else>
+              <el-tooltip class="box-item" effect="dark" content="Click to view Transactions" placement="left">
                 <el-button type="primary" plain size="small" @click="moveToTxs" style="border: 0">{{ scope.row.parameterValue }} transactions</el-button>
                 &nbsp;in this block
-              </div>
-            </el-tooltip>
+              </el-tooltip>
+            </div>
           </div>
           <div v-else-if="scope.row.parameterName == 'minedBy'">
             <router-link :to="'/address/' + scope.row.parameterValue">{{ scope.row.parameterValue }}</router-link>
@@ -95,21 +100,25 @@ export default defineComponent({
           parameterName: "blockHeight",
           parameterDisplay: "Block Height:",
           parameterValue: this.blkNumArg,
+          parameterExplain: "Also known as Block Number. The block height, which indicates the length of the blockchain, increases after the addition of the new block.",
         },
         {
           parameterName: "timestamp",
           parameterDisplay: "Timestamp:",
           parameterValue: formatTimestamp(res.timestamp),
+          parameterExplain: "The date and time at which a block is mined.",
         },
         {
           parameterName: "transactions",
           parameterDisplay: "Transactions:",
           parameterValue: res.transactions.length,
+          parameterExplain: "The number of transactions in the block. Internal transaction is transactions as a result of contract execution that involves Ether value.",
         },
         {
           parameterName: "minedBy",
           parameterDisplay: "Mined by:",
           parameterValue: res.miner,
+          parameterExplain: "Miner who successfully include the block onto the blockchain.",
         },
         {
           parameterName: "difficulty",
@@ -117,6 +126,7 @@ export default defineComponent({
           parameterValue: BigInt(parseInt(res.difficulty))
             .toString()
             .replace(/(\d)(?=(?:\d{3})+$)/g, "$1,"),
+          parameterExplain: "The amount of effort required to mine a new block. The difficulty algorithm may adjust according to time.",
         },
         {
           parameterName: "totalDifficulty",
@@ -124,6 +134,7 @@ export default defineComponent({
           parameterValue: BigInt(parseInt(res.totalDifficulty))
             .toString()
             .replace(/(\d)(?=(?:\d{3})+$)/g, "$1,"),
+          parameterExplain: "Total difficulty of the chain until this block.",
         },
         {
           parameterName: "size",
@@ -131,6 +142,7 @@ export default defineComponent({
           parameterValue: parseInt(res.size)
             .toString()
             .replace(/(\d)(?=(?:\d{3})+$)/g, "$1,"),
+          parameterExplain: "The block size is actually determined by the block's gas limit.",
         },
         {
           parameterName: "gasUsed",
@@ -138,6 +150,7 @@ export default defineComponent({
           parameterValue: parseInt(res.gasUsed)
             .toString()
             .replace(/(\d)(?=(?:\d{3})+$)/g, "$1,"),
+          parameterExplain: "The total gas used in the block and its percentage of gas filled in the block.",
         },
         {
           parameterName: "gasLimit",
@@ -145,36 +158,43 @@ export default defineComponent({
           parameterValue: parseInt(res.gasLimit)
             .toString()
             .replace(/(\d)(?=(?:\d{3})+$)/g, "$1,"),
+          parameterExplain: "Total gas limit provided by all transactions in the block.",
         },
         {
           parameterName: "extraData",
           parameterDisplay: "Extra Data:",
           parameterValue: res.extraData,
+          parameterExplain: "Any data that can be included by the miner in the block.",
         },
         {
           parameterName: "hash",
           parameterDisplay: "Hash:",
           parameterValue: res.hash,
+          parameterExplain: "The hash of the block header of the current block.",
         },
         {
           parameterName: "parentHash",
           parameterDisplay: "Parent Hash:",
           parameterValue: res.parentHash,
+          parameterExplain: "The hash of the block from which this block was generated, also known as its parent block.",
         },
         {
           parameterName: "sha3Uncles",
           parameterDisplay: "Sha3Uncles:",
           parameterValue: res.sha3Uncles,
+          parameterExplain: "The mechanism which Ethereum Javascript RLP encodes an empty string.",
         },
         {
           parameterName: "stateRoot",
           parameterDisplay: "StateRoot:",
           parameterValue: res.stateRoot,
+          parameterExplain: "The root of the state trie",
         },
         {
           parameterName: "nonce",
           parameterDisplay: "Nonce:",
           parameterValue: res.nonce,
+          parameterExplain: "Block nonce is a value used during mining to demonstrate proof of work for a block.",
         }
       );
     },

@@ -110,15 +110,9 @@ export default defineComponent({
       ];
     }
   },
-  // async beforeRouteUpdate(to) {
-  //   console.log(to.params.type);
-  //   this.txType = to.params.type;
-  //   (this.currentPage = 1), (this.pageSize = 25), (this.total = 0), (this.typeDisplay = " for " + this.txType);
-  //   this.getTxsByERC();
-  // },
   watch: {
     $route(to) {
-      console.log(to.params);
+      // console.log(to.params);
       if (!to.params.type) {
         // console.log("all");
         this.typeDisplay = " for all";
@@ -201,6 +195,7 @@ export default defineComponent({
       let res = await GetTxsByERC(this.$rpc_http, this.txType, this.currentPage - 1, this.pageSize);
       this.tableDate = res.resList;
       // console.log(this.tableDate);
+      // console.log("getTxsByERC");
       this.total = res.total;
     },
     async handleCurrentChange(val) {

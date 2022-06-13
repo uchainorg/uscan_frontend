@@ -4,7 +4,11 @@
       <el-table-column width="350px">
         <template v-slot:default="scope">
           <div class="center-row">
-            <el-icon><QuestionFilled /></el-icon>&nbsp;{{ scope.row.parameterDisplay }}
+            <el-tooltip effect="dark" placement="top">
+              <template #content> {{ scope.row.parameterExplain }} </template>
+              <el-icon><QuestionFilled /></el-icon>
+            </el-tooltip>
+            &nbsp;{{ scope.row.parameterDisplay }}
           </div>
         </template>
       </el-table-column>
@@ -105,21 +109,25 @@ export default defineComponent({
           parameterName: "txHash",
           parameterDisplay: "Transaction Hash:",
           parameterValue: this.txHashArg,
+          parameterExplain: "A TxHash or transaction hash is a unique 66-character identifier that is generated whenever a transaction is executed.",
         },
         {
           parameterName: "status",
           parameterDisplay: "Status:",
           parameterValue: res.status,
+          parameterExplain: "The status of the transaction.",
         },
         {
           parameterName: "blockNumber",
           parameterDisplay: "Block:",
           parameterValue: parseInt(res.blockNumber),
+          parameterExplain: "Number of the block in which the transaction is recorded. Block confirmations indicate how many blocks have been added since the transaction was mined.",
         },
         {
           parameterName: "timestamp",
           parameterDisplay: "Timestamp:",
           parameterValue: formatTimestamp(res.createTime),
+          parameterExplain: "The date and time at which a transaction is mined.",
         },
         {
           parameterName: "from",
@@ -130,6 +138,7 @@ export default defineComponent({
             fromName: res.fromName,
             fromSymbol: res.fromSymbol,
           },
+          parameterExplain: "The sending party of the transaction.",
         },
         {
           parameterName: "to",
@@ -143,26 +152,31 @@ export default defineComponent({
             contractAddressName: res.contractAddressName,
             contractAddressSymbol: res.contractAddressSymbol,
           },
+          parameterExplain: "The receiving party of the transaction (could be a contract address).",
         },
         {
           parameterName: "value",
           parameterDisplay: "Value:",
           parameterValue: this.$wei2eth(res.value) + " Eth",
+          parameterExplain: "The value being transacted in Ether and fiat value. Note: You can click the fiat value (if available) to see historical value at the time of transaction.",
         },
         {
           parameterName: "transactionFee",
           parameterDisplay: "Transaction Fee:",
           parameterValue: this.$wei2eth(res.gas * res.gasPrice) + " Eth",
+          parameterExplain: "Amount paid to the miner for processing the transaction.",
         },
         {
           parameterName: "gasPrice",
           parameterDisplay: "Gas Price:",
           parameterValue: this.$wei2eth(res.gasPrice),
+          parameterExplain: "Cost per unit of gas specified for the transaction, in Ether and Gwei. The higher the gas price the higher chance of getting included in a block.",
         },
         {
           parameterName: "gas",
           parameterDisplay: "Gas:",
           parameterValue: parseInt(res.gas),
+          parameterExplain: "gas expend",
         },
         {
           parameterName: "gasFess",
@@ -172,11 +186,13 @@ export default defineComponent({
             max: this.$wei2gwei(parseInt(res.maxFeePerGas)) + " Gwei",
             maxPriority: this.$wei2gwei(parseInt(res.maxPriorityFeePerGas)) + " Gwei",
           },
+          parameterExplain: "The amount eventually used.",
         },
         {
           parameterName: "input",
           parameterDisplay: "Input Data:",
           parameterValue: res.input,
+          parameterExplain: "Additional data included for this transaction. Commonly used as part of contract interaction or as a message sent to the recipient.",
         }
       );
       if (res.tokensTransferred != null && res.tokensTransferred.length != 0) {
@@ -184,6 +200,7 @@ export default defineComponent({
           parameterName: "tokensTransferred",
           parameterDisplay: "Tokens Transferred:",
           parameterValue: res.tokensTransferred,
+          parameterExplain: "List of tokens transferred in the transaction.",
         });
       }
       if (res.input.length >= 761) {
