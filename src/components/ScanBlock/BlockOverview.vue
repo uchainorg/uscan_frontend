@@ -26,10 +26,13 @@
             <el-icon><clock /></el-icon>&nbsp;{{ scope.row.parameterValue }}
           </div>
           <div v-else-if="scope.row.parameterName == 'transactions'">
-            <el-tooltip class="box-item" effect="dark" content="Click to view Transactions" placement="top-start">
-              <el-button type="primary" plain size="small" @click="moveToTxs" style="border: 0">{{ scope.row.parameterValue }} transactions</el-button>
+            <el-tooltip class="box-item" effect="dark" content="Click to view Transactions" placement="left">
+              <div v-if="scope.row.parameterValue == 0">0 transaction in this block</div>
+              <div v-else>
+                <el-button type="primary" plain size="small" @click="moveToTxs" style="border: 0">{{ scope.row.parameterValue }} transactions</el-button>
+                &nbsp;in this block
+              </div>
             </el-tooltip>
-            &nbsp;in this block
           </div>
           <div v-else-if="scope.row.parameterName == 'minedBy'">
             <router-link :to="'/address/' + scope.row.parameterValue">{{ scope.row.parameterValue }}</router-link>

@@ -207,7 +207,7 @@ export default defineComponent({
   background: rgb(238, 249, 246);
   height: 33px;
   width: 90px;
-  border-radius: 0.35rem;
+  border-radius: 15px;
 }
 
 .pending-status {
@@ -217,7 +217,7 @@ export default defineComponent({
   background: rgb(241, 242, 243);
   height: 33px;
   width: 90px;
-  border-radius: 0.35rem;
+  border-radius: 15px;
 }
 
 .fail-status {
@@ -227,6 +227,6 @@ export default defineComponent({
   background: rgb(241, 242, 243);
   height: 33px;
   width: 90px;
-  border-radius: 0.35rem;
+  border-radius: 15px;
 }
 </style>

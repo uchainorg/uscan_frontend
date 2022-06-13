@@ -10,7 +10,7 @@
       </el-col>
       <el-col :span="4" class="header-right">
         <div style="display: flex; flex-direction: column">
-          <div style="display: flex; flex-direction: row; align-items: center; justify-content: center">
+          <!-- <div style="display: flex; flex-direction: row; align-items: center; justify-content: center">
             <el-icon><Search /></el-icon>
             <el-autocomplete
               v-model="inputValue"
@@ -20,6 +20,21 @@
               style="width: 550px; margin-left: 1%"
               @keyup.enter.native="handleSearch"
             ></el-autocomplete>
+          </div> -->
+          <div style="display: flex; flex-direction: row; align-items: center; justify-content: center">
+            <el-autocomplete
+              v-model="inputValue"
+              :fetch-suggestions="querySearch"
+              placeholder="Search by Address / Txhash / Block"
+              @select="handleSubmit"
+              style="width: 600px"
+              @keyup.enter.native="handleSearch"
+              size="large"
+            >
+            </el-autocomplete>
+            <el-button text bg style="height: 42px; width: 42px; background-color: #5296d5" @click="searchFilter">
+              <el-icon color="white" size="large"><Search /></el-icon>
+            </el-button>
           </div>
           <div style="margin-top: 15px">
             <!-- <el-button text style="font-size: 15px; font-weight: bold" @click="moveToHome">Home</el-button> -->
@@ -53,6 +68,7 @@ export default defineComponent({
       inputValue: "",
       activeIndex: "1",
       searchResults: [],
+      searchResult: {},
     };
   },
   methods: {
@@ -82,10 +98,16 @@ export default defineComponent({
           let type = await this.GetSearchType(1, queryArg);
           if (type == 1 || type == 0) {
             this.searchResults.push({ value: "Not Found", link: "404" });
+            this.searchResult = {};
           } else {
             this.searchResults.push({ value: typeMap[parseInt(type)].display + " : " + queryArg, link: typeMap[parseInt(type)].route + queryArg });
+            this.searchResult = { value: typeMap[parseInt(type)].display + " : " + queryArg, link: typeMap[parseInt(type)].route + queryArg };
           }
+        } else {
+          this.searchResult = {};
         }
+      } else {
+        this.searchResult = {};
       }
       cb(this.searchResults);
     },
@@ -105,6 +127,11 @@ export default defineComponent({
           // console.log(this.searchResults[0].link);
           this.$router.push(this.searchResults[0].link);
         }
+      }
+    },
+    searchFilter() {
+      if (this.searchResult.link) {
+        this.$router.push(this.searchResult.link);
       }
     },
   },

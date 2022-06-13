@@ -85,3 +85,8 @@
   line-height: 1.5;
   margin-top: 25px;
 }
+
+.box-item {
+  display: flex;
+  flex-direction: row;
+}

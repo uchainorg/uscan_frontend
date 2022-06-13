@@ -43,7 +43,7 @@ export default defineComponent({
 
 .header-info {
   background-color: white;
-  height: 110px;
+  height: 140px;
 }
 
 .index {

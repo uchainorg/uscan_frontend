@@ -3,7 +3,7 @@
     <div class="home-header">
       <el-row>
         <el-col :span="21">
-          <div class="header-left-items" @click="moveToHome">
+          <div class="header-left-items" @click="refreshHome">
             <img src="../../assets/logo.png" width="33" height="33" />
             &nbsp;&nbsp;
             <p style="font-size: 23px">Coq Chain Scan</p>
@@ -11,7 +11,7 @@
         </el-col>
         <el-col :span="3">
           <div style="display: flex; flex-direction: row; align-items: center; height: 100%">
-            <router-link :to="'/'" style="font-size: 15px; font-weight: bold"> Home </router-link>
+            <router-link :to="'/'" style="font-size: 15px; font-weight: bold" @click="refreshHome"> Home </router-link>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <el-dropdown>
               <span style="font-size: 15px; font-weight: bold">
@@ -123,6 +123,9 @@ export default defineComponent({
       if (this.searchResult.link) {
         this.$router.push(this.searchResult.link);
       }
+    },
+    refreshHome() {
+      this.$router.go(0);
     },
   },
 });
