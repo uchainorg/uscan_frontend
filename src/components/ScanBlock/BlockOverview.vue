@@ -5,7 +5,9 @@
         <template v-slot:default="scope">
           <div class="center-row">
             <el-tooltip effect="dark" placement="top">
-              <template #content> {{ scope.row.parameterExplain }} </template>
+              <template #content>
+                <div style="max-width: 250px">{{ scope.row.parameterExplain }}</div>
+              </template>
               <el-icon><QuestionFilled /></el-icon>
             </el-tooltip>
             &nbsp;{{ scope.row.parameterDisplay }}

@@ -3,13 +3,39 @@
     <el-table :data="txsData" empty-text="loading..." style="width: 100%; border-radius: 0.35rem" :row-style="{ height: '50px' }">
       <el-table-column width="37px">
         <template v-slot:default="scope">
-          <el-button style="width: 5px" type="info" size="small">
-            <el-icon @click="moveToTx(scope.row.hash)"><View /></el-icon>
-          </el-button>
+          <el-popover placement="bottom" title="Additional Info" :width="320" trigger="click">
+            <template #reference>
+              <el-button style="width: 5px" type="info" size="small">
+                <el-icon><View /></el-icon>
+              </el-button>
+            </template>
+            <div>
+              <h4>Status:</h4>
+              <div v-if="scope.row.parameterValue == 1">
+                <el-icon color="green"><SuccessFilled /></el-icon> &nbsp; Success
+              </div>
+              <div v-if="scope.row.parameterValue == 0">
+                <el-icon color="red"><Failed /></el-icon> &nbsp; Fail
+              </div>
+              <div v-if="scope.row.parameterValue == 3">
+                <el-icon><VideoPause /></el-icon> &nbsp; Pending
+              </div>
+              <el-divider />
+              <h4>Transaction Fee:</h4>
+              {{ this.$wei2eth(parseInt(scope.row.gas)) }} Eth
+              <el-divider />
+              <h4>Gas Info:</h4>
+              {{ scope.row.gas }} Used From {{ scope.row.gas }} GasLimit
+              <h4>Nonce:</h4>
+              {{ scope.row.nonce }}
+              <el-divider />
+
+              <router-link class="center-row" :to="'/tx/' + scope.row.hash">
+                See more details &nbsp; <el-icon size="large"><Link /></el-icon>
+              </router-link>
+            </div>
+          </el-popover>
         </template>
-        <!-- <el-button style="width: 5px" type="info" size="small">
-          <el-icon @click="moveToTx"><View /></el-icon>
-        </el-button> -->
       </el-table-column>
       <el-table-column v-for="info in headerData" :key="info.key" :property="info.key" :label="info.label">
         <template v-slot:default="scope">
