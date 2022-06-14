@@ -26,6 +26,7 @@
               <el-divider />
               <h4>Gas Info:</h4>
               {{ scope.row.gas }} Used From {{ scope.row.gas }} GasLimit
+              <el-divider />
               <h4>Nonce:</h4>
               {{ scope.row.nonce }}
               <el-divider />

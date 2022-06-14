@@ -26,7 +26,10 @@
             </div>
             <el-tooltip class="box-item" effect="dark" content="Transactions in this block" placement="right">
               <div style="width: 60px">
-                <router-link :to="'/block/txs/' + scope.row.blockNumber">{{ scope.row.txn }} txns</router-link>
+                <div v-if="scope.row.txn == 0">0 txns</div>
+                <div v-else>
+                  <router-link :to="'/block/txs/' + scope.row.blockNumber">{{ scope.row.txn }} txns</router-link>
+                </div>
               </div>
             </el-tooltip>
           </div>
