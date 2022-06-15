@@ -10,8 +10,6 @@
         &nbsp;&nbsp;&nbsp;
         <router-link :to="'/address/' + trans.to">{{ trans.to.slice(0, 18) + "..." }}</router-link>
         &nbsp;&nbsp;&nbsp;
-        <el-icon color="green"><Food /></el-icon>
-        &nbsp;
         <router-link :to="'/address/' + trans.address">
           <div v-if="trans.addressName.length != 0">{{ trans.addressName }}</div>
           <div v-else>
