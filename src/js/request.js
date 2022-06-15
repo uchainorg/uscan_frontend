@@ -45,6 +45,7 @@ export async function GetTransactionsList(http, pageNumber, pageSize) {
       to: element.to,
       value: element.value,
       gas: parseInt(element.gas * element.gasPrice),
+      base: false,
     });
   });
   let result = {
@@ -100,6 +101,7 @@ export async function GetTxsByBlock(http, blockNumber) {
       to: element.to,
       value: element.value,
       gas: parseInt(element.gas * element.gasPrice),
+      base: false,
     });
   });
   return txsListRes;
@@ -135,6 +137,7 @@ export async function GetTxsByAddress(http, hash, pageNumber, pageSize) {
       to: element.to,
       value: element.value,
       gas: parseInt(element.gas * element.gasPrice),
+      base: false,
     });
   });
   let result = {
@@ -162,6 +165,7 @@ export async function GetTxsByERC(http, erc, pageNumber, pageSize) {
       to: element.to,
       value: element.value,
       token: element.contract,
+      base: false,
     });
   });
   let result = {
@@ -215,6 +219,7 @@ export async function GetTxsByToken(http, address, type, pageNumber, pageSize) {
       quantity: element.value,
       gas: parseInt(element.gas * element.gasPrice),
       tokenID: element.tokenID,
+      base: false,
     });
   });
   let result = {
@@ -244,6 +249,7 @@ export async function GetTxsByErcAccount(http, erc, account, pageNumber, pageSiz
       to: element.to,
       valueToken: parseInt(element.value),
       tokenID: element.tokenID,
+      base: false,
     });
   });
   let result = {
@@ -266,4 +272,10 @@ export async function GetSearchType(http, filterType, keyWord) {
   // console.log(url);
   // console.log(res.data);
   return parseInt(res.data.type);
+}
+
+export async function GetBaseTxByTxHash(http, txHash) {
+  let url = "/v1/txs/" + txHash + "/base";
+  let { data: res } = await http.get(url);
+  return res.data;
 }

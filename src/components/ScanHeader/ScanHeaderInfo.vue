@@ -10,17 +10,6 @@
       </el-col>
       <el-col :span="4" class="header-right">
         <div style="display: flex; flex-direction: column">
-          <!-- <div style="display: flex; flex-direction: row; align-items: center; justify-content: center">
-            <el-icon><Search /></el-icon>
-            <el-autocomplete
-              v-model="inputValue"
-              :fetch-suggestions="querySearch"
-              placeholder="Search by Address / Txhash / Block"
-              @select="handleSubmit"
-              style="width: 550px; margin-left: 1%"
-              @keyup.enter.native="handleSearch"
-            ></el-autocomplete>
-          </div> -->
           <div style="display: flex; flex-direction: row; align-items: center; justify-content: center">
             <el-autocomplete
               v-model="inputValue"
@@ -37,7 +26,6 @@
             </el-button>
           </div>
           <div style="margin-top: 15px">
-            <!-- <el-button text style="font-size: 15px; font-weight: bold" @click="moveToHome">Home</el-button> -->
             <router-link :to="'/'" style="font-size: 15px; font-weight: bold"> Home </router-link>
             &nbsp;&nbsp;
             <el-dropdown>

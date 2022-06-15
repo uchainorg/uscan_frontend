@@ -6,35 +6,12 @@
         <template v-slot:default="scope">
           <el-popover placement="right" title="Additional Info" :width="320" trigger="click">
             <template #reference>
-              <el-button style="width: 5px" type="info" size="small">
+              <el-button style="width: 5px" type="info" size="small" @click="scope.row.base = true">
                 <el-icon><View /></el-icon>
               </el-button>
             </template>
-            <div>
-              <h4>Status:</h4>
-              <div v-if="scope.row.parameterValue == 1">
-                <el-icon color="green"><SuccessFilled /></el-icon> &nbsp; Success
-              </div>
-              <div v-if="scope.row.parameterValue == 0">
-                <el-icon color="red"><Failed /></el-icon> &nbsp; Fail
-              </div>
-              <div v-if="scope.row.parameterValue == 3">
-                <el-icon><VideoPause /></el-icon> &nbsp; Pending
-              </div>
-              <el-divider />
-              <h4>Transaction Fee:</h4>
-              {{ this.$wei2eth(parseInt(scope.row.gas)) }} Eth
-              <el-divider />
-              <h4>Gas Info:</h4>
-              {{ scope.row.gas }} Used From {{ scope.row.gas }} GasLimit
-              <el-divider />
-              <h4>Nonce:</h4>
-              {{ scope.row.nonce }}
-              <el-divider />
-
-              <router-link class="center-row" :to="'/tx/' + scope.row.hash">
-                See more details &nbsp; <el-icon size="large"><Link /></el-icon>
-              </router-link>
+            <div v-if="scope.row.base == true">
+              <base-tx-info :txHash="scope.row.hash"></base-tx-info>
             </div>
           </el-popover>
         </template>
