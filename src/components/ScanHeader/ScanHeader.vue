@@ -158,7 +158,7 @@ export default defineComponent({
   background-color: transparent;
   height: 60px;
   margin: 0 auto;
-  width: 1350px;
+  max-width: 1350px;
 }
 
 .header-left-items {

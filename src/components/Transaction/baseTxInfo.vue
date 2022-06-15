@@ -2,13 +2,13 @@
   <!-- <div>{{ this.txHash }} base</div> -->
   <div>
     <h4>Status:</h4>
-    <div v-if="baseInfo.status == 1">
+    <div v-if="baseInfo.status == 1" class="center-row">
       <el-icon color="green"><SuccessFilled /></el-icon> &nbsp; Success
     </div>
-    <div v-if="baseInfo.status == 0">
+    <div v-if="baseInfo.status == 0" class="center-row">
       <el-icon color="red"><Failed /></el-icon> &nbsp; Fail
     </div>
-    <div v-if="baseInfo.status == 3">
+    <div v-if="baseInfo.status == 3" class="center-row">
       <el-icon><VideoPause /></el-icon> &nbsp; Pending
     </div>
     <el-divider />
@@ -52,4 +52,6 @@ export default defineComponent({
   },
 });
 </script>
-<style lang=""></style>
+<style lang="less" scoped>
+@import "../../css/style.css";
+</style>

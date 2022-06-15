@@ -8,7 +8,7 @@
       </div>
 
       <el-main>
-        <router-view style="width: 1350px; margin: 0 auto; margin-top: 2%"></router-view>
+        <router-view style="max-width: 1350px; margin: 0 auto; margin-top: 2%"></router-view>
       </el-main>
       <div style="background-color: #263258; margin-top: 5%">
         <el-footer>
@@ -72,7 +72,7 @@ export default defineComponent({
 .el-footer {
   display: flex;
   height: 290px;
-  width: 1350px;
+  max-width: 1350px;
   background-color: transparent;
   justify-content: center;
   margin: 0 auto;

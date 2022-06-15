@@ -16,7 +16,6 @@
       </el-table-column>
       <el-table-column prop="parameterValue">
         <template v-slot:default="scope">
-          <!-- {{ scope.row.parameterValue }} -->
           <div v-if="scope.row.parameterName == 'blockNumber'" style="font-weight: 900">
             <router-link :to="'/block/' + scope.row.parameterValue">{{ scope.row.parameterValue }}</router-link>
           </div>
@@ -51,6 +50,8 @@
           <div v-else-if="scope.row.parameterName == 'tokensTransferred'">
             <tokens-trans :tokensTransferData="scope.row.parameterValue"></tokens-trans>
           </div>
+          <div v-else-if="scope.row.parameterName == 'gas'">{{ scope.row.parameterValue.gasUsed }} | {{ scope.row.parameterValue.gasLimit }} ({{ scope.row.parameterValue.percent }})</div>
+
           <div v-else-if="scope.row.parameterName == 'gasFess'">Base: {{ scope.row.parameterValue.base }} | Max: {{ scope.row.parameterValue.max }} | Max Priority: {{ scope.row.parameterValue.maxPriority }}</div>
           <div :class="inputDataIsRolling ? 'rolling' : ''" v-else-if="scope.row.parameterName == 'input'">{{ scope.row.parameterValue }}</div>
           <div v-else-if="scope.row.parameterName == 'status'">
@@ -171,14 +172,18 @@ export default defineComponent({
         {
           parameterName: "gasPrice",
           parameterDisplay: "Gas Price:",
-          parameterValue: this.$wei2eth(res.gasPrice),
+          parameterValue: this.$wei2eth(res.gasPrice) + " Eth",
           parameterExplain: "Cost per unit of gas specified for the transaction, in Ether and Gwei. The higher the gas price the higher chance of getting included in a block.",
         },
         {
           parameterName: "gas",
-          parameterDisplay: "Gas:",
-          parameterValue: parseInt(res.gas),
-          parameterExplain: "gas expend",
+          parameterDisplay: "Gas Limit & Usage by Txn:",
+          parameterValue: {
+            gasLimit: parseInt(res.gasLimit),
+            gasUsed: parseInt(res.gasPrice),
+            percent: Math.round((parseInt(res.gasPrice) / parseInt(res.gasLimit)) * 10000) / 100 + "%",
+          },
+          parameterExplain: "Maximum amount of gas allocated for the transaction & the amount eventually used. Normal ETH transfers involve " + res.gasLimit + " gas units while contracts involve higher values.",
         },
         {
           parameterName: "gasFess",
@@ -198,7 +203,7 @@ export default defineComponent({
         }
       );
       if (res.tokensTransferred != null && res.tokensTransferred.length != 0) {
-        this.tableData.push({
+        this.tableData.splice(6, 0, {
           parameterName: "tokensTransferred",
           parameterDisplay: "Tokens Transferred:",
           parameterValue: res.tokensTransferred,

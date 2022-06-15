@@ -128,7 +128,7 @@ export default defineComponent({
 <style lang="less" scoped>
 .header-info {
   background-color: transparent;
-  width: 1350px;
+  max-width: 1350px;
   height: 100%;
   margin: 0 auto;
   display: flex;
