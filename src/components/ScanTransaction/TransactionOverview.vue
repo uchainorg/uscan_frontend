@@ -180,8 +180,8 @@ export default defineComponent({
           parameterDisplay: "Gas Limit & Usage by Txn:",
           parameterValue: {
             gasLimit: parseInt(res.gasLimit),
-            gasUsed: parseInt(res.gasPrice),
-            percent: Math.round((parseInt(res.gasPrice) / parseInt(res.gasLimit)) * 10000) / 100 + "%",
+            gasUsed: parseInt(res.gasUsed),
+            percent: Math.round((parseInt(res.gasUsed) / parseInt(res.gasLimit)) * 10000) / 100 + "%",
           },
           parameterExplain: "Maximum amount of gas allocated for the transaction & the amount eventually used. Normal ETH transfers involve " + res.gasLimit + " gas units while contracts involve higher values.",
         },
