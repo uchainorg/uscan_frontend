@@ -37,7 +37,7 @@
               Contract &nbsp; <router-link :to="'/address/' + scope.row.parameterValue.contractAddress">{{ scope.row.parameterValue.contractAddress }}</router-link> Created &nbsp;
               <copy-icon :text="scope.row.parameterValue.contractAddress"></copy-icon>
             </div>
-            <div class="center-row" v-else-if="scope.row.parameterValue.toName != ''">
+            <div class="center-row" v-else-if="scope.row.parameterValue.toCode != ''">
               Contract &nbsp; <router-link :to="'/address/' + scope.row.parameterValue.to">{{ scope.row.parameterValue.to }} &nbsp; {{ scope.row.parameterValue.toName }}</router-link>
               &nbsp;
               <copy-icon :text="scope.row.parameterValue.to"></copy-icon>
