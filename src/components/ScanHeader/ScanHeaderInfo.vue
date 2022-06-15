@@ -17,7 +17,7 @@
               placeholder="Search by Address / Txhash / Block"
               @select="handleSubmit"
               style="width: 600px"
-              @keyup.enter.native="handleSearch"
+              @keyup.enter.native="searchFilter"
               size="large"
             >
             </el-autocomplete>
@@ -97,6 +97,9 @@ export default defineComponent({
       } else {
         this.searchResult = {};
       }
+      if (this.inputValue == "") {
+        this.searchResults = [];
+      }
       cb(this.searchResults);
     },
     async GetSearchType(filterType, keyWord) {
@@ -109,18 +112,21 @@ export default defineComponent({
       }
       // console.log(arg);
     },
-    handleSearch() {
-      if (this.searchResults.length != 0) {
-        if (this.searchResults[0].value != "Not Found") {
-          // console.log(this.searchResults[0].link);
-          this.$router.push(this.searchResults[0].link);
-        }
-      }
-    },
+    // handleSearch() {
+    //   if (this.searchResults.length != 0) {
+    //     if (this.searchResults[0].value != "Not Found") {
+    //       // console.log(this.searchResults[0].link);
+    //       this.$router.push(this.searchResults[0].link);
+    //     }
+    //   }
+    // },
     searchFilter() {
       if (this.searchResult.link) {
         this.$router.push(this.searchResult.link);
+      } else {
+        this.$router.push("/search/" + this.inputValue.trim());
       }
+      this.inputValue = "";
     },
   },
 });

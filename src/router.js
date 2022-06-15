@@ -10,6 +10,7 @@ import TokenAddress from "./components/ScanAddress/TokenAddress.vue";
 import VerifyContract from "./components/ScanContract/VerifyContract.vue";
 import VerifyContractSubmit from "./components/ScanContract/VerifyContractSubmit.vue";
 import NotFound from "./components/Transaction/notFound.vue";
+import SearchRes from "./components/ScanHeader/SearchRes.vue";
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -26,6 +27,7 @@ const router = createRouter({
     { path: "/verifyContract/:contractAddress", component: VerifyContract, props: true },
     { path: "/verifyContract/submit", component: VerifyContractSubmit },
     { path: "/notFound", component: NotFound, props: false },
+    { path: "/search/:searchText", component: SearchRes, props: true },
   ],
 });
 
