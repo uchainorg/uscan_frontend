@@ -179,8 +179,12 @@ export default defineComponent({
           parameterName: "gas",
           parameterDisplay: "Gas Limit & Usage by Txn:",
           parameterValue: {
-            gasLimit: parseInt(res.gasLimit),
-            gasUsed: parseInt(res.gasUsed),
+            gasLimit: BigInt(parseInt(res.gasLimit))
+              .toString()
+              .replace(/(\d)(?=(?:\d{3})+$)/g, "$1,"),
+            gasUsed: BigInt(parseInt(res.gasUsed))
+              .toString()
+              .replace(/(\d)(?=(?:\d{3})+$)/g, "$1,"),
             percent: Math.round((parseInt(res.gasUsed) / parseInt(res.gasLimit)) * 10000) / 100 + "%",
           },
           parameterExplain: "Maximum amount of gas allocated for the transaction & the amount eventually used. Normal ETH transfers involve " + res.gasLimit + " gas units while contracts involve higher values.",
