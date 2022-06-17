@@ -53,7 +53,7 @@
           <div v-else-if="scope.row.parameterName == 'gas'">{{ scope.row.parameterValue.gasUsed }} | {{ scope.row.parameterValue.gasLimit }} ({{ scope.row.parameterValue.percent }})</div>
 
           <div v-else-if="scope.row.parameterName == 'gasFess'">Base: {{ scope.row.parameterValue.base }} | Max: {{ scope.row.parameterValue.max }} | Max Priority: {{ scope.row.parameterValue.maxPriority }}</div>
-          <div :class="inputDataIsRolling ? 'rolling' : ''" v-else-if="scope.row.parameterName == 'input'">{{ scope.row.parameterValue }}</div>
+          <div v-else-if="scope.row.parameterName == 'input'"><textarea class="byte-codes-text" style="margin: 0px" rows="6" v-model="scope.row.parameterValue"> </textarea></div>
           <div v-else-if="scope.row.parameterName == 'status'">
             <div v-if="scope.row.parameterValue == 1">
               <div class="success-status">
