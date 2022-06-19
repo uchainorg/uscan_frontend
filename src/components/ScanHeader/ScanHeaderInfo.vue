@@ -27,16 +27,16 @@
           </div>
           <div style="margin-top: 15px">
             <router-link :to="'/'" style="font-size: 15px; font-weight: bold"> Home </router-link>
-            &nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;
             <el-dropdown>
               <span style="font-size: 15px; font-weight: bold">
-                Tokens<el-icon><arrow-down /></el-icon>
+                Token Transfers<el-icon><arrow-down /></el-icon>
               </span>
               <template #dropdown>
                 <el-dropdown-menu>
-                  <el-dropdown-item @click.native="moveToErc('erc20')">ERC20</el-dropdown-item>
-                  <el-dropdown-item @click.native="moveToErc('erc721')">ERC721</el-dropdown-item>
-                  <el-dropdown-item @click.native="moveToErc('erc1155')">ERC1155</el-dropdown-item>
+                  <el-dropdown-item @click.native="moveToErc('erc20')">View ERC20 Transfers</el-dropdown-item>
+                  <el-dropdown-item @click.native="moveToErc('erc721')">View ERC721 Transfers</el-dropdown-item>
+                  <el-dropdown-item @click.native="moveToErc('erc1155')">View ERC1155 Transfers</el-dropdown-item>
                 </el-dropdown-menu>
               </template>
             </el-dropdown>

@@ -2,26 +2,26 @@
   <div class="header-menu">
     <div class="home-header">
       <el-row>
-        <el-col :span="21">
+        <el-col :span="20">
           <div class="header-left-items" @click="refreshHome">
             <img src="../../assets/logo.png" width="33" height="33" />
             &nbsp;&nbsp;
             <p style="font-size: 23px">Coq Chain Scan</p>
           </div>
         </el-col>
-        <el-col :span="3">
+        <el-col :span="4">
           <div style="display: flex; flex-direction: row; align-items: center; height: 100%">
             <router-link :to="'/'" style="font-size: 15px; font-weight: bold" @click="refreshHome"> Home </router-link>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <el-dropdown>
               <span style="font-size: 15px; font-weight: bold">
-                Tokens<el-icon><arrow-down /></el-icon>
+                Token Transfers<el-icon><arrow-down /></el-icon>
               </span>
               <template #dropdown>
                 <el-dropdown-menu>
-                  <el-dropdown-item @click.native="moveToErc('erc20')">ERC20</el-dropdown-item>
-                  <el-dropdown-item @click.native="moveToErc('erc721')">ERC721</el-dropdown-item>
-                  <el-dropdown-item @click.native="moveToErc('erc1155')">ERC1155</el-dropdown-item>
+                  <el-dropdown-item @click.native="moveToErc('erc20')">View ERC20 Transfers</el-dropdown-item>
+                  <el-dropdown-item @click.native="moveToErc('erc721')">View ERC721 Transfers</el-dropdown-item>
+                  <el-dropdown-item @click.native="moveToErc('erc1155')">View ERC1155 Transfers</el-dropdown-item>
                 </el-dropdown-menu>
               </template>
             </el-dropdown>
