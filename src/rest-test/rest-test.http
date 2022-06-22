@@ -80,3 +80,7 @@ GET https://apis-stage.ankr.com/chain-scan/v1/txs/0x6de151b9f4f0c2515f3fe3570f6e
 ###
 // search
 GET https://apis-stage.ankr.com/chain-scan/v1/search?type=1&keyword=0xbedb5e825989b8ef4b195bfc3a9196eec35beae4
+
+###
+// metadata
+GET https://apis-stage.ankr.com/chain-scan/v1/contracts/metadata

@@ -12,37 +12,85 @@
             <p style="font-size: 15px; font-weight: bold; margin-top: 0px; margin-left: 10px">Contract Source Code</p>
           </template>
           <div style="margin: 10px">
-            <el-row :gutter="20">
-              <el-col :span="10">
+            <el-row :gutter="10">
+              <el-col :span="7">
+                <div class="title-input">
+                  <p>Contract Name</p>
+                  <el-input v-model="contractName" size="large" />
+                </div>
+              </el-col>
+              <el-col :span="7">
                 <div class="title-input">
                   <p>Contract Address</p>
-                  <el-input v-model="input" size="large" clearable />
+                  <el-input v-model="input" size="large" :readonly="true" />
                 </div>
               </el-col>
-              <el-col :span="10">
+              <el-col :span="7">
                 <div class="title-input">
                   <p>Compiler</p>
-                  <el-select v-model="compilerValue" placeholder="Select" size="large" style="width: 100%">
-                    <el-option v-for="item in compilerOptions" :key="item.value" :label="item.label" :value="item.value" />
-                  </el-select>
+                  <el-select v-model="compilerVersion" size="large" style="width: 100%" disabled> </el-select>
                 </div>
               </el-col>
-              <el-col :span="4">
-                <div class="title-input">
+              <el-col :span="3">
+                <div v-if="this.$route.query.ct == 'solidity-single-file'" class="title-input">
                   <p>Optimization</p>
-                  <el-select v-model="licenseValue" placeholder="Select" size="large" style="width: 100%">
-                    <el-option v-for="item in licenseOptions" :key="item.value" :label="item.label" :value="item.value" />
+                  <el-select v-model="optimizationValue" placeholder="Select" size="large" style="width: 100%">
+                    <el-option :key="1" :label="'Yes'" :value="'yes'" />
+                    <el-option :key="2" :label="'No'" :value="'no'" />
                   </el-select>
                 </div>
               </el-col>
             </el-row>
           </div>
-          <div style="margin: 10px">
+          <div v-if="this.$route.query.ct == 'solidity-single-file'" style="margin: 10px">
             <h4>Enter the Solidity Contract Code below</h4>
             <textarea class="byte-codes-text" rows="10" style="margin-top: 0px; background-color: white"> </textarea>
           </div>
+          <div v-else style="margin: 10px">
+            <h4>Please select the Standard-Input-Json (*.json) file to upload</h4>
+          </div>
+          <div style="margin: 10px; margin-top: 30px">
+            <el-collapse @change="handleChange">
+              <el-collapse-item>
+                <template #title>
+                  <p>Misc Settings</p>
+                  <p style="color: #77838f">(Runs, EvmVersion & License Type settings)</p>
+                </template>
+                <div>
+                  <el-row :gutter="10">
+                    <el-col :span="8">
+                      <div v-if="this.$route.query.ct == 'solidity-single-file'" class="title-input">
+                        <p>Runs</p>
+                        <el-input v-model="contractName" size="large" />
+                      </div>
+                    </el-col>
+                    <el-col :span="8">
+                      <div v-if="this.$route.query.ct == 'solidity-single-file'" class="title-input">
+                        <p>EVM Version to target</p>
+                        <el-select v-model="compilerVersionOptionsValue" placeholder="Select" size="large" style="width: 100%" value-key="name">
+                          <el-option v-for="item in compilerVersionOptions" :key="item.value.name" :label="item.label" :value="item.value" />
+                        </el-select>
+                      </div>
+                    </el-col>
+                    <el-col :span="8">
+                      <div class="title-input">
+                        <p>LicenseType</p>
+                        <el-select v-model="licenseOptionsValue" placeholder="Select" size="large" style="width: 100%">
+                          <el-option v-for="item in licenseOptions" :key="item.value" :label="item.label" :value="item.value" />
+                        </el-select>
+                      </div>
+                    </el-col>
+                  </el-row>
+                </div>
+              </el-collapse-item>
+            </el-collapse>
+          </div>
 
-          <div style="display: flex; justify-content: center; margin-top: 10px; margin-bottom: 30px"><el-button type="primary" size="large">Verify and Publish</el-button></div>
+          <div style="display: flex; justify-content: center; margin-top: 50px; margin-bottom: 30px">
+            <el-button type="primary" size="large" @click="submit">Verify and Publish</el-button>
+            <el-button type="info" size="large" @click="reset">Reset</el-button>
+            <el-button type="info" size="large" @click="returnMain">Return to main</el-button>
+          </div>
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -50,60 +98,63 @@
 </template>
 <script>
 import { defineComponent } from "vue";
+import { GetVerifyMetadata } from "../../js/request.js";
 export default defineComponent({
   name: "VerifyContractSubmit",
   data() {
     return {
       activeName: "first",
       input: "",
-      compilerOptions: [
-        {
-          value: "Option1",
-          label: "Option1",
-        },
-        {
-          value: "Option2",
-          label: "Option2",
-        },
-        {
-          value: "Option3",
-          label: "Option3",
-        },
-        {
-          value: "Option4",
-          label: "Option4",
-        },
-        {
-          value: "Option5",
-          label: "Option5",
-        },
-      ],
-      licenseOptions: [
-        {
-          value: "Option6",
-          label: "Option6",
-        },
-        {
-          value: "Option7",
-          label: "Option7",
-        },
-        {
-          value: "Option8",
-          label: "Option8",
-        },
-        {
-          value: "Option9",
-          label: "Option9",
-        },
-        {
-          value: "Option10",
-          label: "Option10",
-        },
-      ],
+      compilerVersion: "",
+      licenseValue: 0,
+      optimizationValue: "",
+      contractName: "",
+      licenseOptions: [],
+      licenseOptionsValue: "",
+      compilerVersionOptions: [],
+      compilerVersionOptionsValue: "",
     };
+  },
+  beforeCreate() {
+    document.title = "Verify & Publish Contract Source Code | The Coq Explorer";
   },
   created() {
     console.log(this.$route.query);
+    this.input = this.$route.query.a;
+    this.compilerVersion = this.$route.query.cv;
+    this.licenseValue = this.$route.query.lictype;
+  },
+  methods: {
+    async getMeatData() {
+      if (this.compilerVersionOptions.length != 0 || this.licenseOptions.length != 0) {
+        return;
+      }
+      let data = await GetVerifyMetadata(this.$rpc_http);
+      // console.log(data);
+      data.compilerVersions.forEach((element) => {
+        this.compilerVersionOptions.push({
+          value: { name: element.name, fileName: element.fileName },
+          label: element.name,
+        });
+      });
+      data.licenseTypes.forEach((element) => {
+        this.licenseOptions.push({
+          value: element.id,
+          label: element.name,
+        });
+      });
+    },
+    async handleChange() {
+      await this.getMeatData();
+    },
+    submit() {},
+    reset() {
+      this.contractName = "";
+      (this.licenseOptionsValue = ""), (this.compilerVersionOptionsValue = "");
+    },
+    returnMain() {
+      this.$router.push("/verifyContract?a=" + this.$route.query.a);
+    },
   },
 });
 </script>

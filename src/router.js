@@ -24,7 +24,7 @@ const router = createRouter({
     { path: "/transactions", component: AllTransactionsList, props: false },
     { path: "/transactions/:type", component: AllTransactionsList, props: true },
     { path: "/token/:address", component: TokenAddress, props: true },
-    { path: "/verifyContract/:contractAddress", component: VerifyContract, props: true },
+    { path: "/verifyContract", component: VerifyContract },
     { path: "/verifyContract/submit", component: VerifyContractSubmit },
     { path: "/notFound", component: NotFound, props: false },
     { path: "/search/:searchText", component: SearchRes, props: true },

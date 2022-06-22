@@ -279,3 +279,9 @@ export async function GetBaseTxByTxHash(http, txHash) {
   let { data: res } = await http.get(url);
   return res.data;
 }
+
+export async function GetVerifyMetadata(http) {
+  let url = "v1/contracts/metadata";
+  let { data: res } = await http.get(url);
+  return res.data;
+}

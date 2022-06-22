@@ -7,7 +7,6 @@
     </el-row>
     <br />
     <component :is="comName" :contractAddress="contractAddress"></component>
-    <!-- <code-contract :contractAddress="contractAddress"> </code-contract> -->
   </div>
 </template>
 <script>
