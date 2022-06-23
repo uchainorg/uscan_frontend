@@ -4,34 +4,32 @@
       <el-icon :color="'green'"><CircleCheckFilled /></el-icon> &nbsp;
       <h4>Contract Source Code Verified</h4>
     </div>
-    <div style="width: 50%">
-      <el-card class="box-card-address">
-        <template #header>
-          <div class="card-header">
-            <span>Contract Overview</span>
-          </div>
-        </template>
-        <div class="card-content">
-          <el-row style="margin: 10px">
-            <el-col :span="10">Contract Name:</el-col>
-            <el-col :span="14">{{ contractName }}</el-col>
-          </el-row>
-          <el-row style="margin: 10px">
-            <el-col :span="10">Contract Version:</el-col>
-            <el-col :span="14">{{ compilerVersion }}</el-col>
-          </el-row>
-          <el-row style="margin: 10px">
-            <el-col :span="10">Optimization Enabled:</el-col>
-            <el-col :span="14"> No with {{ optimizationRuns }} runs</el-col>
-          </el-row>
-          <el-row style="margin: 10px">
-            <el-col :span="10">Other Settings:</el-col>
-            <el-col :span="14">default evmVersion,{{ license }} license</el-col>
-          </el-row>
-        </div>
-      </el-card>
+    <div style="display: flex; flex-direction: row; margin-top: 20px; margin-bottom: 30px">
+      <div style="width: 50%">
+        <el-row>
+          <el-col :span="8">Contract Name:</el-col>
+          <el-col :span="16" class="bolder">{{ contractName }}</el-col>
+        </el-row>
+        <el-divider />
+        <el-row>
+          <el-col :span="8">Contract Version:</el-col>
+          <el-col :span="16" class="bolder">{{ compilerVersion }}</el-col>
+        </el-row>
+      </div>
+      <div style="width: 50%; margin-left: 3%">
+        <el-row>
+          <el-col :span="8">Optimization Enabled:</el-col>
+          <el-col :span="16" class="bolder">No with {{ optimizationRuns }} runs</el-col>
+        </el-row>
+        <el-divider />
+        <el-row>
+          <el-col :span="8">Other Settings:</el-col>
+          <el-col :span="16" class="bolder">default evmVersion, {{ license }}</el-col>
+        </el-row>
+      </div>
     </div>
-    <div>
+
+    <div style="margin-top: 20px">
       <div v-for="(code, index) in this.contractSourceList" :key="index">
         <div class="center-row">
           <el-icon><Document /></el-icon> &nbsp;
@@ -126,4 +124,9 @@ export default defineComponent({
 </script>
 <style lang="less" scoped>
 @import "../../../css/style.css";
+.bolder {
+  font-size: 15px;
+  font-weight: bold;
+  color: #4a4f55;
+}
 </style>

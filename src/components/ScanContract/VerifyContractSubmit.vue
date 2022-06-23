@@ -80,15 +80,13 @@
                     <el-col :span="8">
                       <div v-if="this.$route.query.ct == 'solidity-single-file'" class="title-input">
                         <p>EVM Version to target</p>
-                        <el-select v-model="compilerVersionOptionsValue" placeholder="Select" size="large" style="width: 100%" value-key="name">
-                          <el-option v-for="item in compilerVersionOptions" :key="item.value.name" :label="item.label" :value="item.value" />
-                        </el-select>
+                        <el-select v-model="this.evmVersionValue" size="large" style="width: 100%" disabled> </el-select>
                       </div>
                     </el-col>
                     <el-col :span="8">
                       <div class="title-input">
                         <p>LicenseType</p>
-                        <el-select v-model="licenseOptionsValue" placeholder="Select" size="large" style="width: 100%">
+                        <el-select v-model="licenseValue" placeholder="Select" size="large" style="width: 100%">
                           <el-option v-for="item in licenseOptions" :key="item.value" :label="item.label" :value="item.value" />
                         </el-select>
                       </div>
@@ -104,14 +102,16 @@
             <el-button type="info" size="large" @click="returnMain">Return to main</el-button>
           </div>
           <div v-if="this.submitRes == -1" class="submit-result">
-            <div v-if="this.submittedStatus >= 200 && this.submittedStatus <= 300"><p>Submitted, please wait for verification( View validation results every three seconds)</p></div>
+            <div v-if="this.submittedStatus >= 200 && this.submittedStatus <= 300"><p>Submitted, please wait for verification( get validation results after ten seconds)</p></div>
             <div v-else-if="this.submittedStatus >= 400 && this.submittedStatus <= 500">
               <p>Something wrong, {{ submittedError }}</p>
             </div>
           </div>
           <div v-else class="submit-result">
             <div v-if="this.submitRes == 1">Verify success!</div>
-            <div v-else-if="this.submitRes == 2">Verify fail!</div>
+            <div v-else-if="this.submitRes == 2">
+              Verify fail! <router-link :to="'/address/' + this.contractAddress"> click this back contract {{ this.contractAddress }} page </router-link>
+            </div>
             <div v-else-if="this.submitRes == 0">Verify handling!</div>
           </div>
         </el-tab-pane>
@@ -134,9 +134,7 @@ export default defineComponent({
       contractName: "",
       contractAddress: "",
       licenseOptions: [],
-      licenseOptionsValue: "",
       compilerVersionOptions: [],
-      compilerVersionOptionsValue: "",
       fileList: [],
       submittedStatus: 100,
       submittedError: "",
@@ -144,17 +142,18 @@ export default defineComponent({
       submitRes: -1,
       sourceCode: "",
       runsValue: 0,
+      evmVersionValue: "default",
     };
   },
   beforeCreate() {
     document.title = "Verify & Publish Contract Source Code | The Coq Explorer";
   },
   created() {
-    // console.log(this.$route.query);
+    console.log(this.$route.query);
     this.input = this.$route.query.a;
     this.contractAddress = this.$route.query.a;
     this.compilerVersion = this.$route.query.cv;
-    this.licenseValue = this.$route.query.lictype;
+    this.licenseValue = parseInt(this.$route.query.lictype);
   },
   methods: {
     async getMeatData() {
@@ -186,12 +185,6 @@ export default defineComponent({
     },
     submit() {
       let formdata = new FormData();
-      if (this.licenseOptionsValue != "") {
-        this.licenseValue = this.licenseOptionsValue;
-      }
-      if (this.compilerVersionOptionsValue != "") {
-        this.compilerVersion = this.compilerVersionOptionsValue.name;
-      }
       formdata.append("contractAddress", this.contractAddress);
       formdata.append("contractName", this.contractName);
       formdata.append("compilerType", this.$route.query.ct);
@@ -218,7 +211,7 @@ export default defineComponent({
           this.submittedStatus = res.data.code;
           if (this.submittedStatus == 200) {
             this.submitId = res.data.data.id;
-            setTimeout(this.getVerifySubmitStatus, 1000 * 5);
+            setTimeout(this.getVerifySubmitStatus, 1000 * 10);
           }
         })
         .catch((e) => {
@@ -228,10 +221,11 @@ export default defineComponent({
     },
     reset() {
       this.contractName = "";
-      (this.licenseOptionsValue = ""), (this.compilerVersionOptionsValue = "");
       this.fileList = [];
       this.sourceCode = "";
       this.runsValue = 0;
+      this.licenseValue = parseInt(this.$route.query.lictype);
+      this.optimizationValue = "";
     },
     returnMain() {
       this.$router.push("/verifyContract?a=" + this.$route.query.a);
@@ -241,6 +235,8 @@ export default defineComponent({
         let status = await GetVerifySubmitStatus(this.$rpc_http, this.submitId);
         // console.log(status);
         this.submitRes = status;
+      } else {
+        this.$router.push("/address/" + this.$route.query.a);
       }
     },
   },
