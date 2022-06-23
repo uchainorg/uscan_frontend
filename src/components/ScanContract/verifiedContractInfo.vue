@@ -1,10 +1,10 @@
 <template lang="">
   <div>
-    <el-row style="margin-top: 0.5%">
+    <!-- <el-row style="margin-top: 0.5%">
       <el-button type="info" plain>Code</el-button>
       <el-button type="info" plain>Read Contract</el-button>
       <el-button type="info" plain>Write Contract</el-button>
-    </el-row>
+    </el-row> -->
     <br />
     <component :is="comName" :contractAddress="contractAddress"></component>
   </div>

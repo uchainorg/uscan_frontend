@@ -18,6 +18,11 @@ export default defineComponent({
       extensions: [javascript()],
     };
   },
+  watch: {
+    codeData(newVal) {
+      this.code = newVal;
+    },
+  },
 });
 </script>
 <style lang="less" scoped>

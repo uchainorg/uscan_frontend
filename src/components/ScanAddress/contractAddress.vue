@@ -66,20 +66,19 @@
             />
           </div>
         </el-tab-pane>
-        <el-tab-pane label="Contract" name="contract">
+        <el-tab-pane v-if="!this.verified" label="Contract" name="contract">
           <contract-info :contractAddress="address" :code="codeContent"></contract-info>
         </el-tab-pane>
-        <el-tab-pane label="(test verified)Contract" name="contract-verified">
+        <el-tab-pane v-if="this.verified" label="Contract(verified)" name="contract-verified">
           <verified-contract-info :contractAddress="address"></verified-contract-info>
         </el-tab-pane>
-        <!-- <el-tab-pane label="Events" name="events"> </el-tab-pane> -->
       </el-tabs>
     </div>
   </div>
 </template>
 <script>
 import { defineComponent } from "vue";
-import { GetTxsByAddress } from "../../js/request.js";
+import { GetTxsByAddress, GetContractContent } from "../../js/request.js";
 import generalTxs from "../Transaction/generalTxs.vue";
 import contractInfo from "../ScanContract/contractInfo.vue";
 export default defineComponent({
@@ -88,6 +87,7 @@ export default defineComponent({
   components: { generalTxs, contractInfo },
   data() {
     return {
+      // activeName: "contract-verified",
       activeName: "transactions",
       generalTransactionsList: [],
       generalTransactionsHeaderList: [
@@ -129,10 +129,12 @@ export default defineComponent({
       small: true,
       generalTotal: 0,
       codeContent: "",
+      verified: false,
     };
   },
   created() {
     this.getGeneralTransactionsList();
+    this.getContractContent();
   },
   mounted() {
     this.codeContent = this.info.code;
@@ -148,6 +150,7 @@ export default defineComponent({
       let res = await GetTxsByAddress(this.$rpc_http, newVal, this.generalCurrentPage - 1, this.generalPageSize);
       this.generalTransactionsList = res.resList;
       this.generalTotal = res.total;
+      this.getContractContent();
     },
   },
   methods: {
@@ -181,6 +184,18 @@ export default defineComponent({
       let res = await GetTxsByAddress(this.$rpc_http, this.address, this.generalCurrentPage - 1, this.generalPageSize);
       this.generalTransactionsList = res.resList;
       this.generalTotal = res.total;
+    },
+    async getContractContent() {
+      let data = {};
+      try {
+        data = await GetContractContent(this.$rpc_http, this.address);
+        // console.log(data);
+      } catch (err) {
+        console.log(err.response);
+      }
+      if (data.contractName) {
+        this.verified = true;
+      }
     },
   },
 });
