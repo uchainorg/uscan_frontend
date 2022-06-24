@@ -193,7 +193,7 @@ export default defineComponent({
       } catch (err) {
         console.log(err.response);
       }
-      if (data.contractName) {
+      if (Object.keys(data).length != 0) {
         this.verified = true;
       }
     },
