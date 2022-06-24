@@ -99,13 +99,13 @@
             </el-collapse>
           </div>
           <div style="display: flex; justify-content: center; margin-top: 50px; margin-bottom: 30px">
-            <el-button type="primary" size="large" @click="submit">Verify and Publish</el-button>
+            <el-button type="primary" size="large" @click="submit" :loading="submitLoading">Verify and Publish</el-button>
             <el-button type="info" size="large" @click="reset">Reset</el-button>
             <el-button type="info" size="large" @click="returnMain">Return to main</el-button>
           </div>
           <div>
             <div v-if="this.submitRes == -1" class="submit-result">
-              <div class="subtitle" v-if="this.submittedStatus >= 200 && this.submittedStatus <= 300"><p>Submitted, please wait for verification( get validation results after ten seconds)</p></div>
+              <div class="subtitle" v-if="this.submittedStatus >= 200 && this.submittedStatus <= 300"><p>Submitted, please wait for verification</p></div>
               <div class="subtitle" v-else-if="this.submittedStatus >= 400">
                 <p>Something wrong, {{ submittedError }}</p>
               </div>
@@ -149,6 +149,7 @@ export default defineComponent({
       sourceCode: "",
       runsValue: 0,
       evmVersionValue: "default",
+      submitLoading: false,
     };
   },
   beforeCreate() {
@@ -191,6 +192,7 @@ export default defineComponent({
       }
     },
     submit() {
+      this.submitLoading = true;
       this.submittedStatus = 0;
       this.contractName.trim() == "" ? (this.contractNameRequired = true) : (this.contractNameRequired = false);
       let formdata = new FormData();
@@ -226,7 +228,8 @@ export default defineComponent({
           this.submittedStatus = res.data.code;
           if (this.submittedStatus == 200) {
             this.submitId = res.data.data.id;
-            setTimeout(this.getVerifySubmitStatus, 1000 * 10);
+            // setTimeout("", 3 * 1000);
+            this.getVerifySubmitStatus();
           }
         })
         .catch((e) => {
@@ -244,18 +247,22 @@ export default defineComponent({
       this.submittedStatus = 0;
       this.fileRequired = false;
       this.contractNameRequired = false;
+      this.submitLoading = false;
     },
     returnMain() {
       this.$router.push("/verifyContract?a=" + this.$route.query.a);
     },
     async getVerifySubmitStatus() {
+      // console.log("submitRes", this.submitRes);
       if (this.submitRes < 0) {
         let status = await GetVerifySubmitStatus(this.$rpc_http, this.submitId);
         // console.log(status);
         this.submitRes = status;
-      } else {
-        this.$router.push("/address/" + this.$route.query.a);
+        if (this.submitRes == 1) {
+          this.$router.push("/address/" + this.$route.query.a);
+        }
       }
+      this.submitLoading = false;
     },
   },
 });
