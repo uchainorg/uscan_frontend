@@ -1,6 +1,6 @@
 <template lang="">
   <div>
-    <div style="width: 100%; height: 120px; display: flex; align-items: center; flex-direction: column; text-align: center">
+    <div class="sub-info">
       <h3 style="font-size: 1.4rem; font-weight: 400; color: #4a4f55">Verify & Publish Contract Source Code</h3>
       <p class="subtitle">Compiler Type: SINGLE FILE / CONCATENANTED METHOD</p>
     </div>
@@ -17,6 +17,7 @@
                 <div class="title-input">
                   <p>Contract Name</p>
                   <el-input v-model="contractName" size="large" />
+                  <div style="color: red" v-if="this.contractNameRequired"><p>Required</p></div>
                 </div>
               </el-col>
               <el-col :span="7">
@@ -55,6 +56,7 @@
                   <el-upload :auto-upload="false" action="Fake Action" accept=".json" :on-change="handleUploadChange" :file-list="fileList">
                     <el-button>Select a file</el-button>
                   </el-upload>
+                  <div style="color: red" v-if="this.fileRequired"><p>Required</p></div>
                 </div>
                 <div v-if="this.fileList.length == 0">
                   <p>No file selected</p>
@@ -74,7 +76,7 @@
                     <el-col :span="8">
                       <div v-if="this.optimizationValue == 1" class="title-input">
                         <p>Runs</p>
-                        <el-input v-model="runsValue" size="large" />
+                        <el-input v-model.number="runsValue" size="large" oninput="value=value.replace(/[^0-9]/g,'')" />
                       </div>
                     </el-col>
                     <el-col :span="8">
@@ -101,18 +103,20 @@
             <el-button type="info" size="large" @click="reset">Reset</el-button>
             <el-button type="info" size="large" @click="returnMain">Return to main</el-button>
           </div>
-          <div v-if="this.submitRes == -1" class="submit-result">
-            <div v-if="this.submittedStatus >= 200 && this.submittedStatus <= 300"><p>Submitted, please wait for verification( get validation results after ten seconds)</p></div>
-            <div v-else-if="this.submittedStatus >= 400 && this.submittedStatus <= 500">
-              <p>Something wrong, {{ submittedError }}</p>
+          <div>
+            <div v-if="this.submitRes == -1" class="submit-result">
+              <div class="subtitle" v-if="this.submittedStatus >= 200 && this.submittedStatus <= 300"><p>Submitted, please wait for verification( get validation results after ten seconds)</p></div>
+              <div class="subtitle" v-else-if="this.submittedStatus >= 400">
+                <p>Something wrong, {{ submittedError }}</p>
+              </div>
             </div>
-          </div>
-          <div v-else class="submit-result">
-            <div v-if="this.submitRes == 1">Verify success!</div>
-            <div v-else-if="this.submitRes == 2">
-              Verify fail! <router-link :to="'/address/' + this.contractAddress"> click this back contract {{ this.contractAddress }} page </router-link>
+            <div v-else class="submit-result">
+              <div class="subtitle" v-if="this.submitRes == 1">Verify success!</div>
+              <div class="subtitle" v-else-if="this.submitRes == 2">
+                Verify fail! <router-link :to="'/address/' + this.contractAddress"> click this back contract {{ this.contractAddress }} page </router-link>
+              </div>
+              <div class="subtitle" v-else-if="this.submitRes == 0">Verify handling!</div>
             </div>
-            <div v-else-if="this.submitRes == 0">Verify handling!</div>
           </div>
         </el-tab-pane>
       </el-tabs>
@@ -132,10 +136,12 @@ export default defineComponent({
       licenseValue: 0,
       optimizationValue: "",
       contractName: "",
+      contractNameRequired: false,
       contractAddress: "",
       licenseOptions: [],
       compilerVersionOptions: [],
       fileList: [],
+      fileRequired: false,
       submittedStatus: 100,
       submittedError: "",
       submitId: "",
@@ -154,6 +160,7 @@ export default defineComponent({
     this.contractAddress = this.$route.query.a;
     this.compilerVersion = this.$route.query.cv;
     this.licenseValue = parseInt(this.$route.query.lictype);
+    this.submittedStatus = 0;
   },
   methods: {
     async getMeatData() {
@@ -184,6 +191,8 @@ export default defineComponent({
       }
     },
     submit() {
+      this.submittedStatus = 0;
+      this.contractName.trim() == "" ? (this.contractNameRequired = true) : (this.contractNameRequired = false);
       let formdata = new FormData();
       formdata.append("contractAddress", this.contractAddress);
       formdata.append("contractName", this.contractName);
@@ -198,6 +207,12 @@ export default defineComponent({
         formdata.append("sourceCode", this.sourceCode);
         formdata.append("optimization", this.optimizationValue == "" ? 0 : this.optimizationValue);
         formdata.append("runs", this.runsValue);
+      } else {
+        this.fileList.length == 0 ? (this.fileRequired = true) : (this.fileRequired = false);
+      }
+
+      if (this.fileRequired || this.contractNameRequired) {
+        return;
       }
 
       this.$rpc_http
@@ -215,8 +230,8 @@ export default defineComponent({
           }
         })
         .catch((e) => {
-          console.log("e=>", e);
-          this.submittedError = e;
+          this.submittedStatus = e.response.data.code;
+          this.submittedError = e.response.data.msg;
         });
     },
     reset() {
@@ -226,6 +241,9 @@ export default defineComponent({
       this.runsValue = 0;
       this.licenseValue = parseInt(this.$route.query.lictype);
       this.optimizationValue = "";
+      this.submittedStatus = 0;
+      this.fileRequired = false;
+      this.contractNameRequired = false;
     },
     returnMain() {
       this.$router.push("/verifyContract?a=" + this.$route.query.a);
@@ -272,5 +290,13 @@ export default defineComponent({
   justify-content: center;
   margin-top: 20px;
   margin-bottom: 30px;
+}
+.sub-info {
+  width: 100%;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
 }
 </style>
