@@ -228,13 +228,13 @@ export default defineComponent({
           this.submittedStatus = res.data.code;
           if (this.submittedStatus == 200) {
             this.submitId = res.data.data.id;
-            // setTimeout("", 3 * 1000);
-            this.getVerifySubmitStatus();
+            setTimeout(this.getVerifySubmitStatus, 3 * 1000);
           }
         })
         .catch((e) => {
           this.submittedStatus = e.response.data.code;
           this.submittedError = e.response.data.msg;
+          this.submitLoading = false;
         });
     },
     reset() {
