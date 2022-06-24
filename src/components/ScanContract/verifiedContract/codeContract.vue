@@ -84,7 +84,7 @@ export default defineComponent({
   },
   watch: {
     contractAddress(newVal) {
-      // console.log(newVal);
+      console.log(newVal);
       this.address = newVal;
       this.getLicenseTypesMap();
       this.getContractContent();
