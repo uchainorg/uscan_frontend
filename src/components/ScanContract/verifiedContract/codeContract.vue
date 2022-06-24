@@ -19,7 +19,7 @@
       <div style="width: 50%; margin-left: 3%">
         <el-row>
           <el-col :span="8">Optimization Enabled:</el-col>
-          <el-col :span="16" class="bolder">No with {{ optimizationRuns }} runs</el-col>
+          <el-col :span="16" class="bolder">{{ this.optimizationRuns == 0 ? "No" : "Yes" }} with {{ optimizationRuns }} runs</el-col>
         </el-row>
         <el-divider />
         <el-row>
