@@ -189,7 +189,7 @@ export default defineComponent({
       let data = {};
       try {
         data = await GetContractContent(this.$rpc_http, this.address);
-        console.log(data);
+        // console.log(data);
       } catch (err) {
         console.log(err.response);
       }

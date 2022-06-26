@@ -44,81 +44,70 @@
         <el-icon><Document /></el-icon> &nbsp;
         <h4>Contract ABI</h4>
       </div>
-      <textarea class="byte-codes-text" style="margin: 0px" rows="10" v-model="this.contractABICode"> </textarea>
+      <textarea class="byte-codes-text" style="margin: 0px" rows="10" v-model="this.contractABICodeContent"> </textarea>
     </div>
     <div>
       <div class="center-row">
         <el-icon><Document /></el-icon> &nbsp;
         <h4>Contract Creation Code</h4>
       </div>
-      <textarea class="byte-codes-text" style="margin: 0px" rows="10" v-model="this.creationCode"> </textarea>
+      <textarea class="byte-codes-text" style="margin: 0px" rows="10" v-model="this.creationCodeContent"> </textarea>
     </div>
   </div>
 </template>
 <script>
 import { defineComponent } from "vue";
-import { GetContractContent, GetVerifyMetadata } from "../../../js/request.js";
 import codeView from "../../Code/codeView.vue";
 export default defineComponent({
   name: "codeContract",
-  props: ["contractAddress"],
+  // props: ["contractAddress"],
   components: { codeView },
+  props: {
+    contractAddress: {
+      type: String,
+      require: true,
+    },
+    contractName: {
+      type: String,
+      require: true,
+    },
+    compilerVersion: {
+      type: String,
+      require: true,
+    },
+    evmVersion: {
+      type: String,
+      require: true,
+    },
+    license: {
+      type: String,
+      require: true,
+    },
+    optimizationRuns: {
+      type: Number,
+    },
+    contractSourceList: {
+      type: Array,
+      require: true,
+    },
+    contractABICode: {
+      type: String,
+      require: true,
+    },
+    creationCode: {
+      type: String,
+      require: true,
+    },
+  },
   data() {
     return {
-      address: this.contractAddress,
-      contractName: "",
-      compilerVersion: "",
-      evmVersion: "default",
-      license: "",
-      licenseMap: new Map(),
-      optimizationRuns: 0,
-      contractSourceList: [],
-      contractABICode: "",
-      creationCode: "",
+      contractABICodeContent: "",
+      creationCodeContent: "",
     };
   },
-  created() {
-    this.getLicenseTypesMap();
-    this.getContractContent();
-    // this.contractABICode = "aaaaaa";
-  },
-  watch: {
-    contractAddress(newVal) {
-      // console.log(newVal);
-      this.address = newVal;
-      this.getLicenseTypesMap();
-      this.getContractContent();
-    },
-  },
-  methods: {
-    async getContractContent() {
-      try {
-        let data = await GetContractContent(this.$rpc_http, this.address);
-        // console.log(data);
-        this.contractName = data.contractName;
-        this.compilerVersion = data.compilerVersion;
-        this.license = this.licenseMap.get(data.licenseType);
-        this.optimizationRuns = data.runs;
-        this.contractABICode = data.abi;
-        this.creationCode = data.object;
-        // console.log(this.contractSourceCode);
-        Object.keys(data.metadata).forEach((key) => {
-          this.contractSourceList.push({
-            filename: key,
-            codeContent: data.metadata[key],
-          });
-        });
-      } catch (err) {
-        console.log(err.response);
-      }
-    },
-    async getLicenseTypesMap() {
-      let data = await GetVerifyMetadata(this.$rpc_http);
-      data.licenseTypes.forEach((element) => {
-        this.licenseMap.set(element.id, element.name);
-      });
-      // console.log(this.licenseMap);
-    },
+  updated() {
+    this.contractABICodeContent = this.contractABICode;
+    this.creationCodeContent = this.creationCode;
   },
 });
 </script>
