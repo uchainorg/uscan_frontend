@@ -8,7 +8,7 @@
     <br />
     <component
       :is="comName"
-      :contractAddress="contractAddress"
+      :contractAddress="address"
       :contractName="contractName"
       :compilerVersion="compilerVersion"
       :optimizationRuns="optimizationRuns"
@@ -73,7 +73,7 @@ export default defineComponent({
         this.optimizationRuns = data.runs;
         this.contractABICode = data.abi;
         this.creationCode = data.object;
-        // console.log(this.contractSourceCode);
+        // console.log(this.contractABICode);
         Object.keys(data.metadata).forEach((key) => {
           this.contractSourceList.push({
             filename: key,

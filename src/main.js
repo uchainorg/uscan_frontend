@@ -7,11 +7,22 @@ import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 import { wei2eth, gwei2eth, wei2gwei } from "./js/ethers";
 
 // axios.defaults.baseURL = "http://localhost:3000/";
-axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
+// axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
+
+const nodeInstance = axios.create({
+  baseURL: import.meta.env.VITE_NODE_URL,
+  headers: { "Content-Type": "application/json" },
+});
+
+const httpInstance = axios.create({
+  baseURL: import.meta.env.VITE_BASE_URL,
+});
 
 const app = createApp(App);
 
-app.config.globalProperties.$rpc_http = axios;
+app.config.globalProperties.$rpc_http = httpInstance;
+
+app.config.globalProperties.$node_http = nodeInstance;
 
 app.use(router);
 
