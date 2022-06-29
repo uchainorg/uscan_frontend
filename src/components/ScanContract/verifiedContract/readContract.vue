@@ -130,8 +130,8 @@ export default defineComponent({
         const abiCoder = new ethers.utils.AbiCoder();
         let requests = [];
         functionList.forEach((element) => {
-          console.log("functionList", element);
-          console.log("function-select", iface.getSighash(element.name));
+          // console.log("functionList", element);
+          // console.log("function-select", iface.getSighash(element.name));
           // console.log("function-arg", abiCoder.encode(["address"], ["0x07861819F3D9773088F67e5572Bd645b2E5c15ef"]));
           let functionSelect = iface.getSighash(element.name);
           let data = "";
@@ -150,7 +150,7 @@ export default defineComponent({
             // console.log("typeList", typeList);
             // console.log("argList", argList);
             requestHash = abiCoder.encode(typeList, argList).slice(2);
-            console.log(requestHash);
+            // console.log(requestHash);
             data = functionSelect + requestHash;
           }
 
@@ -170,16 +170,19 @@ export default defineComponent({
         resMap.forEach((value, key) => {
           let functionObject = functionList[key];
           let typeListResponse = [];
-          let decodeRes = "";
+          let decodeRes = [];
           functionObject.outputs.forEach((element) => {
             typeListResponse.push(element.internalType);
           });
           if (value != "") {
             decodeRes = abiCoder.decode(typeListResponse, value);
           } else {
-            decodeRes = ["error"];
+            typeListResponse.forEach(() => {
+              decodeRes.push("error");
+            });
+            // decodeRes = ["error"];
           }
-          console.log("decodeRes", decodeRes);
+          // console.log("decodeRes", decodeRes);
           // console.log(key);
           functionList[key].outputsRes[0].arg = value;
           functionObject.outputsRes.forEach((element, index) => {
