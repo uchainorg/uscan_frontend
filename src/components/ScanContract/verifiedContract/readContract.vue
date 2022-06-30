@@ -91,7 +91,7 @@ export default defineComponent({
       let index = 0;
       console.log("JSON.parse(this.contractABICode)", JSON.parse(this.contractABICode));
       JSON.parse(this.contractABICode).forEach((element) => {
-        if (element.stateMutability == "view") {
+        if (element.stateMutability == "view" && element.type == "function") {
           // console.log(element);
           let inputsArg = [];
           if (element.inputs.length != 0) {

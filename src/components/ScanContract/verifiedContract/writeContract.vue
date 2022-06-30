@@ -65,10 +65,11 @@ export default defineComponent({
       let index = 0;
       for (let i = 0; i < JSON.parse(this.contractABICode).length; i++) {
         let element = JSON.parse(this.contractABICode)[i];
-        if (element.stateMutability == "nonpayable") {
+        if (element.stateMutability == "nonpayable" && element.type == "function") {
           if (element.inputs.length == 0 && element.outputs.length == 0) {
             continue;
           }
+          console.log("element", element);
           let inputsArg = [];
           if (element.inputs.length != 0) {
             element.inputs.forEach((element) => {
@@ -79,7 +80,7 @@ export default defineComponent({
               });
             });
           }
-          console.log("inputsArg", inputsArg);
+          // console.log("inputsArg", inputsArg);
 
           let outputsRes = [];
           // console.log("element.outputs.length", "outputs" in element);
@@ -127,7 +128,7 @@ export default defineComponent({
         const signer = provider.getSigner();
         const contract = new ethers.Contract(this.contractAddress, this.contractABICode, provider);
         const contractWithSigner = contract.connect(signer);
-        console.log("function", contractWithSigner.functions);
+        // console.log("function", contractWithSigner.functions);
         Reflect.ownKeys(contractWithSigner.functions).forEach(async function (key) {
           if (key == functionObject.name) {
             let requestArgList = [];
@@ -136,7 +137,7 @@ export default defineComponent({
             });
             try {
               let tx = await contractWithSigner.functions[key](...requestArgList);
-              functionObject.resMsg = "success";
+              functionObject.resMsg = "Write succeeded, please wait for confirmation";
               console.log(tx);
             } catch (err) {
               // console.log("err", err.reason);
