@@ -124,6 +124,7 @@ export default defineComponent({
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         if (!this.metaMaskState) {
           await provider.send("eth_requestAccounts", []);
+          window.ethereum._state.accounts.length != 0 ? (this.metaMaskState = true) : (this.metaMaskState = false);
         }
         const signer = provider.getSigner();
         const contract = new ethers.Contract(this.contractAddress, this.contractABICode, provider);
