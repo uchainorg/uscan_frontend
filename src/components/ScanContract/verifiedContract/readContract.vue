@@ -89,7 +89,7 @@ export default defineComponent({
     // console.log(this.contractABICodeContent);
     if (JSON.parse(this.contractABICode).length != 0) {
       let index = 0;
-      console.log("JSON.parse(this.contractABICode)", JSON.parse(this.contractABICode));
+      // console.log("JSON.parse(this.contractABICode)", JSON.parse(this.contractABICode));
       JSON.parse(this.contractABICode).forEach((element) => {
         if (element.stateMutability == "view" && element.type == "function") {
           // console.log(element);
@@ -114,7 +114,7 @@ export default defineComponent({
               });
             });
           }
-          //console.log("outputsRes", outputsRes);
+          // console.log("outputsRes", outputsRes);
           let method = {
             name: element.name,
             inputs: element.inputs,

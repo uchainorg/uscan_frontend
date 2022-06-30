@@ -69,7 +69,7 @@ export default defineComponent({
           if (element.inputs.length == 0 && element.outputs.length == 0) {
             continue;
           }
-          console.log("element", element);
+          // console.log("element", element);
           let inputsArg = [];
           if (element.inputs.length != 0) {
             element.inputs.forEach((element) => {
@@ -145,9 +145,9 @@ export default defineComponent({
             }
             // let tx = await
           }
-          //   console.log(key);
-          //   console.log(contractWithSigner.functions[key]);
-          //   console.log(functionObject.name);
+          // console.log(key);
+          // console.log(contractWithSigner.functions[key]);
+          // console.log(functionObject.name);
         });
       }
     },
