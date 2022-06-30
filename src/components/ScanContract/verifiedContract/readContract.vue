@@ -86,27 +86,35 @@ export default defineComponent({
   },
   created() {
     this.contractABICodeContent = this.contractABICode;
+    // console.log(this.contractABICodeContent);
     if (JSON.parse(this.contractABICode).length != 0) {
       let index = 0;
+      console.log("JSON.parse(this.contractABICode)", JSON.parse(this.contractABICode));
       JSON.parse(this.contractABICode).forEach((element) => {
         if (element.stateMutability == "view") {
           // console.log(element);
           let inputsArg = [];
-          element.inputs.forEach((element) => {
-            inputsArg.push({
-              arg: "",
-              name: element.name,
-              internalType: element.internalType,
+          if (element.inputs.length != 0) {
+            element.inputs.forEach((element) => {
+              inputsArg.push({
+                arg: "",
+                name: element.name,
+                internalType: element.internalType,
+              });
             });
-          });
+          }
+          // console.log("inputsArg", inputsArg);
           let outputsRes = [];
-          element.outputs.forEach((element) => {
-            outputsRes.push({
-              arg: "",
-              name: element.name,
-              internalType: element.internalType,
+          if (element.outputs.length != 0) {
+            element.outputs.forEach((element) => {
+              outputsRes.push({
+                arg: "",
+                name: element.name,
+                internalType: element.internalType,
+              });
             });
-          });
+          }
+          //console.log("outputsRes", outputsRes);
           let method = {
             name: element.name,
             inputs: element.inputs,
@@ -158,7 +166,7 @@ export default defineComponent({
             method: "eth_call",
             params: [
               {
-                from: "0x896bF09f7fEB337d2673B10647fdd32C3124CdF2",
+                from: this.contractAddress,
                 to: this.contractAddress,
                 data: data,
               },
@@ -198,60 +206,4 @@ export default defineComponent({
 </script>
 <style lang="less" scoped>
 @import "../../../css/style.css";
-.method-content {
-  background-color: rgb(248, 247, 247);
-}
-
-.method-object {
-  padding-top: 10px;
-  background-color: rgb(248, 247, 247);
-}
-
-.method-output {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.function-object {
-  border: 1px solid #e7eaf3;
-  border-radius: 0.35rem;
-  background-color: rgb(248, 247, 247);
-  margin-top: 15px;
-}
-.function-title {
-  display: flex;
-  align-items: center;
-  height: 35px;
-  color: #343a40;
-  font-size: 1rem;
-  border-bottom: 1px solid #e7eaf3;
-  padding-right: 0.75rem;
-  padding-left: 0.75rem;
-}
-.function-output {
-  display: flex;
-  flex-direction: row;
-  height: 40px;
-  align-items: center;
-  background-color: white;
-  padding-right: 0.75rem;
-  padding-left: 0.75rem;
-}
-
-.function-input {
-  padding: 0.75rem;
-  background-color: white;
-}
-.arg-type {
-  display: flex;
-  align-items: center;
-  font-style: italic;
-  font-size: 13px;
-  color: grey;
-}
-.res {
-  display: flex;
-  align-items: center;
-}
 </style>

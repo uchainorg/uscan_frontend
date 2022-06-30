@@ -3,7 +3,7 @@
     <el-row style="margin-top: 0.5%">
       <el-button type="info" plain @click="moveToCode" ref="code">Code</el-button>
       <el-button type="info" plain @click="moveToRead">Read Contract</el-button>
-      <el-button type="info" plain>Write Contract</el-button>
+      <el-button type="info" plain @click="moveToWrite">Write Contract</el-button>
     </el-row>
     <br />
     <component
@@ -24,12 +24,13 @@
 import { defineComponent } from "vue";
 import codeContract from "./verifiedContract/codeContract.vue";
 import readContract from "./verifiedContract/readContract.vue";
+import writeContent from "./verifiedContract/writeContract.vue";
 import { GetContractContent, GetVerifyMetadata } from "../../js/request.js";
 
 export default defineComponent({
   name: "verifiedContractInfo",
   props: ["contractAddress"],
-  components: { codeContract, readContract },
+  components: { codeContract, readContract, writeContent },
   data() {
     return {
       comName: "unknown",
@@ -96,6 +97,9 @@ export default defineComponent({
     },
     moveToCode() {
       this.comName = "codeContract";
+    },
+    moveToWrite() {
+      this.comName = "writeContent";
     },
   },
 });
