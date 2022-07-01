@@ -10,19 +10,21 @@
         <el-collapse-item class="method-object" :title="index + 1 + '.' + functionObject.name" :name="index">
           <div style="padding-right: 0.5rem; padding-left: 0.5rem">
             <div v-for="(input, inputIndex) in functionObject.inputsArg" :key="inputIndex">
-              <div>
+              <div style="margin-top: 0.8rem">
                 <div style="font-size: 9px">{{ input.name + "(" + input.internalType + ")" }}</div>
                 <el-input v-model="input.arg" :placeholder="input.name + '(' + input.internalType + ')'" />
               </div>
             </div>
-            <div style="margin-top: 5px" v-if="functionObject.inputsArg.length != 0">
+            <div style="margin-top: 0.8rem" v-if="functionObject.inputsArg.length != 0">
               <el-button type="info" plain @click="query([functionObject])">Query</el-button>
             </div>
-            <div v-for="(output, index) in functionObject.outputsRes" :key="index">
-              <div class="method-output">
-                <div>{{ output.arg }}</div>
-                &nbsp;&nbsp;
-                <div class="arg-type">{{ output.internalType }}</div>
+            <div style="margin-top: 0.8rem">
+              <div v-for="(output, index) in functionObject.outputsRes" :key="index">
+                <div class="method-output">
+                  <div>{{ output.arg }}</div>
+                  &nbsp;&nbsp;
+                  <div class="arg-type">{{ output.internalType }}</div>
+                </div>
               </div>
             </div>
           </div>
@@ -99,7 +101,7 @@ export default defineComponent({
               inputsArg.push({
                 arg: "",
                 name: element.name,
-                internalType: element.internalType,
+                internalType: element.type,
               });
             });
           }
@@ -110,7 +112,7 @@ export default defineComponent({
               outputsRes.push({
                 arg: "",
                 name: element.name,
-                internalType: element.internalType,
+                internalType: element.type,
               });
             });
           }
