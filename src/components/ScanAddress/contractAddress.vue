@@ -151,6 +151,7 @@ export default defineComponent({
       this.generalTransactionsList = res.resList;
       this.generalTotal = res.total;
       this.getContractContent();
+      this.activeName = "transactions";
     },
   },
   methods: {

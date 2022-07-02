@@ -57,6 +57,10 @@ export default defineComponent({
       functionResMap: new Map(),
     };
   },
+  $route(to, from) {
+    console.log("to", to);
+    console.log("from", from);
+  },
   watch: {
     activeNames(newVal, oldVal) {
       let activeFunctionObjectImmediately = [];

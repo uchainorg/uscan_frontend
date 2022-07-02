@@ -36,7 +36,7 @@ export default defineComponent({
       comName: "unknown",
 
       address: this.contractAddress,
-      contractName: "123",
+      contractName: "",
       compilerVersion: "",
       evmVersion: "default",
       license: "",
@@ -57,10 +57,20 @@ export default defineComponent({
   },
   watch: {
     contractAddress(newVal) {
-      // console.log(newVal);
+      console.log(newVal);
       this.address = newVal;
       // this.getLicenseTypesMap();
-      this.getContractContent();
+      (this.contractName = ""),
+        (this.compilerVersion = ""),
+        (this.evmVersion = "default"),
+        (this.license = ""),
+        (this.licenseMap = new Map()),
+        (this.optimizationRuns = 0),
+        (this.contractSourceList = []),
+        (this.contractABICode = ""),
+        (this.creationCode = ""),
+        this.getContractContent();
+      this.comName = "codeContract";
     },
   },
   methods: {

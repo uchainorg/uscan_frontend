@@ -4,7 +4,7 @@
       <el-icon><Document /></el-icon>&nbsp;
       <p>Write Contract Information</p>
     </div>
-    <el-button type="info" plain @click="connect">Connect to MetaMask({{ this.metaMaskState ? "Connected" : "Unconnected" }})</el-button>
+    <p>Please make sure the metamask is installed.</p>
     <div v-for="(functionObject, index) in this.functionObjectList" :key="index">
       <el-collapse class="method-content" v-model="activeNames">
         <el-collapse-item class="method-object" :title="index + 1 + '.' + functionObject.name" :name="index">
@@ -57,7 +57,6 @@ export default defineComponent({
       activeNames: [],
       functionObjectList: [],
       functionResMap: new Map(),
-      metaMaskState: false,
     };
   },
   created() {
@@ -109,21 +108,19 @@ export default defineComponent({
         }
       }
       this.activeNames = Array.from(new Array(this.functionObjectList.length).keys());
-      window.ethereum._state.accounts.length != 0 ? (this.metaMaskState = true) : (this.metaMaskState = false);
     }
   },
   methods: {
-    async connect() {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      await provider.send("eth_requestAccounts", []);
-      window.ethereum._state.accounts.length != 0 ? (this.metaMaskState = true) : (this.metaMaskState = false);
-    },
+    // async connect() {
+    //   const provider = new ethers.providers.Web3Provider(window.ethereum);
+    //   await provider.send("eth_requestAccounts", []);
+    //   window.ethereum._state.accounts.length != 0 ? (this.metaMaskState = true) : (this.metaMaskState = false);
+    // },
     async write(functionObject) {
       if (JSON.parse(this.contractABICode).length != 0) {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
-        if (!this.metaMaskState) {
+        if (window.ethereum._state.accounts.length == 0) {
           await provider.send("eth_requestAccounts", []);
-          window.ethereum._state.accounts.length != 0 ? (this.metaMaskState = true) : (this.metaMaskState = false);
         }
         const signer = provider.getSigner();
         const contract = new ethers.Contract(this.contractAddress, this.contractABICode, provider);
