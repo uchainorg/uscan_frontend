@@ -1,22 +1,20 @@
 <template>
   <div class="index">
     <el-container>
-      <el-header>
-        el-header
-      </el-header>
+      <el-header> el-header </el-header>
       <el-main>
-        <scan-home></scan-home>
+        <router-view class="content"></router-view>
       </el-main>
-      <el-footer>
-        el-footer
-      </el-footer>
+      <el-footer> el-footer </el-footer>
     </el-container>
   </div>
 </template>
 
-<script lang="ts" setup>
-import ScanHome from './components/ScanHome/ScanHome.vue';
-</script>
+<script lang="ts" setup></script>
 
-<style>
+<style lang="less">
+.content {
+  max-width: 1350px;
+  margin: 0 auto;
+}
 </style>

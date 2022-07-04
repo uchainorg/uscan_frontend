@@ -17,6 +17,8 @@
     "new-cap": "off",
     "vue/comment-directive": "off",
     "indent": ["off", 2],
-    "comma-dangle": "off"
+    "comma-dangle": "off",
+    "max-len": ["error", { "code": 120 }],
+    "space-before-function-paren": "off"
   }
 }

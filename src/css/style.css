@@ -1,0 +1,30 @@
+.list-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 45px;
+  width: 45px;
+  background-color: #f1f2f3;
+  border-radius: 15px;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.list-icon-circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 45px;
+  width: 45px;
+  background-color: #f1f2f3;
+  border-radius: 50%;
+}
+
+.table-border {
+  border-radius: 0.35rem;
+}
+
+.list-icon-title {
+  font-size: 15px;
+  font-weight: bold;
+}
