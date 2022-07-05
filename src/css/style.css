@@ -28,3 +28,33 @@
   font-size: 15px;
   font-weight: bold;
 }
+
+.h4-title {
+  font-size: 1.3125rem;
+  color: #4a4f55;
+}
+
+.text-secondary {
+  color: #77838f;
+}
+
+.small {
+  font-size: 80%;
+  font-weight: 400;
+}
+
+.center-row {
+  display: flex;
+  align-items: center;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}
+
+.home-bottom-button {
+  width: 95%;
+  margin-top: 1%;
+  border: 0;
+}

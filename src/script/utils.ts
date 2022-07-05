@@ -61,7 +61,11 @@ const getAge = (startDateStamp: number): string => {
   return diffTime(startDateStamp, new Date().getTime());
 };
 
-export { getAge };
+const formatNumber = (input: number | bigint): string => {
+  return input.toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
+};
+
+export { getAge, formatNumber };
 
 // export function formatTimestamp(timestamp) {
 //   // console.log("formatTimestamp", timestamp);

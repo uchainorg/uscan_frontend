@@ -3,7 +3,7 @@
     <el-container>
       <el-header> el-header </el-header>
       <el-main>
-        <router-view class="content"></router-view>
+        <Suspense><router-view class="content"></router-view></Suspense>
       </el-main>
       <el-footer> el-footer </el-footer>
     </el-container>

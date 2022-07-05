@@ -11,7 +11,7 @@
             </el-col>
             <el-col :span="18">
               <div>
-                <div>{{ parseInt(scope.row.number) }}</div>
+                <router-link :to="'/block/' + parseInt(scope.row.number)">{{ parseInt(scope.row.number) }}</router-link>
                 <div>{{ getAge(scope.row.createdTime) }}</div>
               </div>
             </el-col>
@@ -48,19 +48,22 @@
         </template>
       </el-table-column>
     </el-table>
+    <div class="center">
+      <el-button class="home-bottom-button" type="primary" plain @click="moveToBlocks">View all Blocks</el-button>
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
 import { GetBlocks } from '../../script/service/blockService';
 import { getAge } from '../../script/utils';
 import { ethers } from 'ethers';
-import { useRouter } from 'vue-router';
+// import { useRouter } from 'vue-router';
 
 const res = await GetBlocks(0, 10);
 const tableData = res.data.items;
 console.log('scan-home-blocks', res);
-const router = useRouter();
-console.log('router', router);
+// const router = useRouter();
+// console.log('router', router);
 </script>
 <style lang="less" scoped>
 @import '../../css/style.css';

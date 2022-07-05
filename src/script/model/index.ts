@@ -1,20 +1,35 @@
 import { BlockDetail } from './block';
 import { TransactionDetail } from './transaction';
-
-interface ResponseType<T = any> {
+export interface ResponseType<T = any> {
   code: number;
   msg: string;
   data: T;
 }
 
-interface BlocksResponse {
+export interface BlocksResponse {
   items: BlockDetail[];
   total: number;
 }
 
-interface TransactionsResponse {
+export interface TransactionsResponse {
   items: TransactionDetail[];
   total: number;
 }
 
-export type { ResponseType, BlocksResponse, TransactionsResponse };
+/**
+ * List Header
+ * @class
+ */
+export class TableHeader {
+  label: string;
+  key: string;
+  /**
+   * Create a Overview.
+   * @param {string} label
+   * @param {string} key
+   */
+  constructor(label: string, key: string) {
+    this.label = label;
+    this.key = key;
+  }
+}
