@@ -66,10 +66,3 @@ const formatNumber = (input: number | bigint): string => {
 };
 
 export { getAge, formatNumber };
-
-// export function formatTimestamp(timestamp) {
-//   // console.log("formatTimestamp", timestamp);
-//   const createTime = new Date(parseInt(timestamp)) * 1000;
-//   const date = new Date(parseInt(timestamp) * 1000).toUTCString();
-//   return diffTime(createTime, new Date()) + '(' + date + ')';
-// }

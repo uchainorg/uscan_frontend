@@ -11,6 +11,8 @@ declare module '@vue/runtime-core' {
     BlockInfo: typeof import('./src/components/ScanBlock/BlockInfo.vue')['default']
     BlockList: typeof import('./src/components/ScanBlock/BlockList.vue')['default']
     BlockOverview: typeof import('./src/components/ScanBlock/BlockOverview.vue')['default']
+    BlocksList: typeof import('./src/components/ScanBlock/BlocksList.vue')['default']
+    CopyIcon: typeof import('./src/components/Copy/CopyIcon.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElButtonGroup: typeof import('element-plus/es')['ElButtonGroup']
     ElCol: typeof import('element-plus/es')['ElCol']
@@ -29,11 +31,17 @@ declare module '@vue/runtime-core' {
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
     GeneralBlocks: typeof import('./src/components/ScanBlock/generalBlocks.vue')['default']
     GenerateBlocks: typeof import('./src/components/ScanBlock/GenerateBlocks.vue')['default']
+    GenerateTransactions: typeof import('./src/components/ScanTransaction/GenerateTransactions.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     ScanHome: typeof import('./src/components/ScanHome/ScanHome.vue')['default']
     ScanHomeBlocks: typeof import('./src/components/ScanHome/ScanHomeBlocks.vue')['default']
     ScanHomeTransactions: typeof import('./src/components/ScanHome/ScanHomeTransactions.vue')['default']
+    TokensTransferred: typeof import('./src/components/ScanTransaction/TokensTransferred.vue')['default']
+    TokenTransferred: typeof import('./src/components/ScanTransaction/TokenTransferred.vue')['default']
+    TransactionInfo: typeof import('./src/components/ScanTransaction/TransactionInfo.vue')['default']
+    TransactionOverview: typeof import('./src/components/ScanTransaction/TransactionOverview.vue')['default']
+    TransactionsList: typeof import('./src/components/ScanTransaction/TransactionsList.vue')['default']
   }
 
 }

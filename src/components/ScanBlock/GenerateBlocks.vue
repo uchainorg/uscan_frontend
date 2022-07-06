@@ -1,6 +1,6 @@
 <template lang="">
-  <el-table class="table-border" :data="blocksData" empty-text="loading..." :row-style="{ height: '50px' }">
-    <el-table-column v-for="info in headerData" :key="info.key" :property="info.key" :label="info.label">
+  <el-table class="table-border" :data="props.blocksData" empty-text="loading..." :row-style="{ height: '50px' }">
+    <el-table-column v-for="info in props.headerData" :key="info.key" :property="info.key" :label="info.label">
       <template v-slot:default="scope">
         <div v-if="scope.column.property == 'number'">
           <router-link :to="'/block/' + parseInt(scope.row[scope.column.property])">
@@ -30,8 +30,6 @@ const props = defineProps({
     require: true,
   },
 });
-console.log('blocksData', props.blocksData);
-console.log('headerData', props.headerData);
 </script>
 <style lang="less" scoped>
 @import '../../css/style.css';

@@ -57,13 +57,15 @@
 import { GetBlocks } from '../../script/service/blockService';
 import { getAge } from '../../script/utils';
 import { ethers } from 'ethers';
-// import { useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const res = await GetBlocks(0, 10);
 const tableData = res.data.items;
-console.log('scan-home-blocks', res);
-// const router = useRouter();
-// console.log('router', router);
+
+const moveToBlocks = () => {
+  router.push('/blocks');
+};
 </script>
 <style lang="less" scoped>
 @import '../../css/style.css';

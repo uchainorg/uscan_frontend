@@ -33,3 +33,27 @@ export class TableHeader {
     this.key = key;
   }
 }
+
+/**
+ * Overview
+ * @class
+ */
+export class Overview {
+  parameterName: string;
+  parameterDisplay: string;
+  parameterValue: string;
+  parameterExplain: string;
+  /**
+   * Create a Overview.
+   * @param {string} parameterName
+   * @param {string} parameterDisplay
+   * @param {string} parameterValue
+   * @param {string} parameterExplain
+   */
+  constructor(parameterName: string, parameterDisplay: string, parameterValue: string, parameterExplain: string) {
+    this.parameterName = parameterName;
+    this.parameterDisplay = parameterDisplay;
+    this.parameterValue = parameterValue;
+    this.parameterExplain = parameterExplain;
+  }
+}

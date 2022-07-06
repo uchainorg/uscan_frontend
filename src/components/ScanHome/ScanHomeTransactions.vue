@@ -10,9 +10,7 @@
               </div>
             </el-col>
             <el-col :span="18">
-              <!-- <router-link :to="'/tx/' + scope.row.hash">
-                  {{ scope.row.hash.slice(0, 15) + "..." }}</router-link> -->
-              <div>{{ scope.row.hash.slice(0, 15) + '...' }}</div>
+              <router-link :to="'/tx/' + scope.row.hash"> {{ scope.row.hash.slice(0, 15) + '...' }}</router-link>
               <div>{{ getAge(scope.row.createTime) }}</div>
             </el-col>
           </el-row>
@@ -37,11 +35,11 @@
       <el-table-column>
         <template v-slot:default="scope">
           <div>
-            <el-tooltip effect="dark" content="amount" placement="right">
+            <el-tooltip effect="dark" content="gasPrice" placement="right">
               <div style="text-align: right">
                 <!-- <el-tag type="info">{{ this.$wei2gwei(scope.row.gas) }} Gwei</el-tag> -->
                 <el-tag type="info">
-                  {{ ethers.utils.formatUnits(parseInt(scope.row.gas * scope.row.gasPrice).toString(), 18) }} Eth
+                  {{ ethers.utils.formatUnits(scope.row.gas * scope.row.gasPrice, 18) }} Eth
                 </el-tag>
               </div>
             </el-tooltip>
@@ -49,16 +47,24 @@
         </template>
       </el-table-column>
     </el-table>
+    <div class="center">
+      <el-button class="home-bottom-button" type="primary" plain @click="moveToTxs">View all Blocks</el-button>
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
 import { GetTransactions } from '../../script/service/transactionService';
 import { getAge } from '../../script/utils';
 import { ethers } from 'ethers';
+import { useRouter } from 'vue-router';
 
-const res = await GetTransactions(0, 10);
+const router = useRouter();
+const res = await GetTransactions(0, 10, 'all');
 const tableData = res.data.items;
-console.log('GetTransactions', res);
+
+const moveToTxs = () => {
+  router.push('/txs/all');
+};
 </script>
 <style lang="less" scoped>
 @import '../../css/style.css';

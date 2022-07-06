@@ -4,12 +4,11 @@
     <generate-blocks :blocksData="blocksData" :headerData="BlocksHeaderList"></generate-blocks>
     <div style="margin-top: 1%; display: flex; justify-content: center">
       <el-pagination
+        small
+        background
         :currentPage="currentPageIndex"
         :page-size="pageSizeNumber"
         :page-sizes="[10, 25, 50, 100]"
-        :small="small"
-        :disabled="disabled"
-        :background="background"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"
         @size-change="handleSizeChange"
@@ -23,6 +22,8 @@ import { GetBlocks } from '../../script/service/blockService';
 import { BlockDetail, BlocksHeaderList } from '../../script/model/block';
 import { reactive, ref } from 'vue';
 
+document.title = 'Blocks | The Coq Explorer';
+
 const currentPageIndex = ref(1);
 const pageSizeNumber = ref(25);
 const blocksData: BlockDetail[] = reactive([]);
@@ -31,9 +32,7 @@ res.data.items.forEach((element) => {
   blocksData.push(element);
 });
 const total = ref(res.data.total);
-const small = ref(false);
-const background = ref(true);
-const disabled = ref(false);
+
 const handleSizeChange = async (pageSizeArg: number) => {
   blocksData.length = 0;
   currentPageIndex.value = 1;
