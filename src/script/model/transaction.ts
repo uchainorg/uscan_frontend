@@ -64,6 +64,7 @@ export class TransactionDetail {
   gasPrice: number;
   value: string;
   createTime: number;
+  createdTime: number;
   maxFeePerGas: string;
   maxPriorityFeePerGas: string;
   input: string;
@@ -105,7 +106,8 @@ export class TransactionDetail {
    * @param {string} gas
    * @param {number} gasPrice
    * @param {string} value
-   * @param {number}  createTime
+   * @param {number} createTime
+   * @param {number} createdTime
    * @param {string} maxFeePerGas
    * @param {string} maxPriorityFeePerGas
    * @param {string} input
@@ -148,6 +150,7 @@ export class TransactionDetail {
     gasPrice: number,
     value: string,
     createTime: number,
+    createdTime: number,
     maxFeePerGas: string,
     maxPriorityFeePerGas: string,
     input: string,
@@ -189,6 +192,7 @@ export class TransactionDetail {
     this.gasPrice = gasPrice;
     this.value = value;
     this.createTime = createTime;
+    this.createdTime = createTime;
     this.maxFeePerGas = maxFeePerGas;
     this.maxPriorityFeePerGas = maxPriorityFeePerGas;
     this.input = input;
@@ -230,6 +234,7 @@ export const getTxOverviews = function (tx: TransactionDetail): Overview[] {
     'Number of the block in which the transaction is recorded. Block confirmations indicate how many blocks have been added since the transaction was mined.',
   ]);
   txParameterMap.set('createTime', ['Timestamp', 'The date and time at which a transaction is mined.']);
+  txParameterMap.set('createdTime', ['Timestamp', 'The date and time at which a transaction is mined.']);
   txParameterMap.set('from', ['From', 'The sending party of the transaction.']);
   txParameterMap.set('to', ['To', 'The receiving party of the transaction (could be a contract address).']);
   txParameterMap.set('value', [
@@ -308,7 +313,7 @@ export const Erc20TransactionsHeaderList: TableHeader[] = [
   new TableHeader('Txn Hash', 'transactionHash'),
   new TableHeader('Method', 'method'),
   new TableHeader('Block', 'blockNumber'),
-  new TableHeader('Age', 'createTime'),
+  new TableHeader('Age', 'createdTime'),
   new TableHeader('From', 'from'),
   new TableHeader('To', 'to'),
   new TableHeader('Value(token)', 'value'),
@@ -318,7 +323,7 @@ export const Erc721TransactionsHeaderList: TableHeader[] = [
   new TableHeader('Txn Hash', 'transactionHash'),
   new TableHeader('Method', 'method'),
   new TableHeader('Block', 'blockNumber'),
-  new TableHeader('Age', 'createTime'),
+  new TableHeader('Age', 'createdTime'),
   new TableHeader('From', 'from'),
   new TableHeader('To', 'to'),
   new TableHeader('TokenID', 'tokenID'),

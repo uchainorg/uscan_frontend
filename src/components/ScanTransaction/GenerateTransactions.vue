@@ -21,6 +21,9 @@
         <div v-else-if="scope.column.property == 'createTime'">
           {{ getAge(scope.row[scope.column.property]) }}
         </div>
+        <div v-else-if="scope.column.property == 'createdTime'">
+          {{ getAge(scope.row[scope.column.property]) }}
+        </div>
         <div v-else-if="scope.column.property == 'from'" style="width: 170px">
           <!-- <router-link :to="'/address/' + scope.row[scope.column.property]">{{
               scope.row[scope.column.property].slice(0, 15) + '...'

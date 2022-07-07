@@ -46,10 +46,9 @@
             }})
           </div>
           <div v-else-if="scope.row.parameterName == 'gasFess'">
-            Base: {{ ethers.utils.formatUnits(parseInt(scope.row.parameterValue.baseFeePerGas).toString(), 18) }} Gwei |
-            Max: {{ ethers.utils.formatUnits(parseInt(scope.row.parameterValue.maxFeePerGas).toString(), 18) }} Gwei |
-            MaxPriority:
-            {{ ethers.utils.formatUnits(parseInt(scope.row.parameterValue.maxPriorityFeePerGas).toString(), 18) }} Gwei
+            Base: {{ ethers.utils.formatUnits(scope.row.parameterValue.baseFeePerGas, 18) }} Gwei | Max:
+            {{ ethers.utils.formatUnits(scope.row.parameterValue.maxFeePerGas, 18) }} Gwei | MaxPriority:
+            {{ ethers.utils.formatUnits(scope.row.parameterValue.maxPriorityFeePerGas, 18) }} Gwei
           </div>
           <div v-else-if="scope.row.parameterName == 'input'">
             <textarea class="byte-codes-text" style="margin: 0px" rows="6" v-model="scope.row.parameterValue">

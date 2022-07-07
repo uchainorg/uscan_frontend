@@ -7,14 +7,19 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    AccountAddress: typeof import('./src/components/ScanAddress/accountAddress.vue')['default']
+    AddressIndex: typeof import('./src/components/ScanAddress/AddressIndex.vue')['default']
     Block: typeof import('./src/components/ScanBlock/Block.vue')['default']
+    BlockIndex: typeof import('./src/components/ScanBlock/BlockIndex.vue')['default']
     BlockInfo: typeof import('./src/components/ScanBlock/BlockInfo.vue')['default']
     BlockList: typeof import('./src/components/ScanBlock/BlockList.vue')['default']
     BlockOverview: typeof import('./src/components/ScanBlock/BlockOverview.vue')['default']
     BlocksList: typeof import('./src/components/ScanBlock/BlocksList.vue')['default']
+    ContractAddress: typeof import('./src/components/ScanAddress/ContractAddress.vue')['default']
     CopyIcon: typeof import('./src/components/Copy/CopyIcon.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElButtonGroup: typeof import('element-plus/es')['ElButtonGroup']
+    ElCard: typeof import('element-plus/es')['ElCard']
     ElCol: typeof import('element-plus/es')['ElCol']
     ElContainer: typeof import('element-plus/es')['ElContainer']
     ElFooter: typeof import('element-plus/es')['ElFooter']
@@ -39,6 +44,7 @@ declare module '@vue/runtime-core' {
     ScanHomeTransactions: typeof import('./src/components/ScanHome/ScanHomeTransactions.vue')['default']
     TokensTransferred: typeof import('./src/components/ScanTransaction/TokensTransferred.vue')['default']
     TokenTransferred: typeof import('./src/components/ScanTransaction/TokenTransferred.vue')['default']
+    TransactionIndex: typeof import('./src/components/ScanTransaction/TransactionIndex.vue')['default']
     TransactionInfo: typeof import('./src/components/ScanTransaction/TransactionInfo.vue')['default']
     TransactionOverview: typeof import('./src/components/ScanTransaction/TransactionOverview.vue')['default']
     TransactionsList: typeof import('./src/components/ScanTransaction/TransactionsList.vue')['default']
