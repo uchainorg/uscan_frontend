@@ -8,6 +8,7 @@ const routes: Array<RouteRecordRaw> = [
   { path: '/tx/:txHash', component: () => import('./components/ScanTransaction/TransactionIndex.vue'), props: true },
   { path: '/txs/:txsType', component: () => import('./components/ScanTransaction/TransactionsList.vue'), props: true },
   { path: '/address/:address', component: () => import('./components/ScanAddress/AddressIndex.vue'), props: true },
+  { path: '/token/:address', component: () => import('./components/ScanToken/TokenAddress.vue'), props: true },
 ];
 
 const router = createRouter({

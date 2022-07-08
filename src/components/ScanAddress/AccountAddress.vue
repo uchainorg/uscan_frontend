@@ -5,7 +5,7 @@
         Address <span class="small text-secondary">&nbsp;&nbsp;{{ props.address }}</span>
       </h4>
       &nbsp;
-      <copy-icon :text="this.address"></copy-icon>
+      <copy-icon :text="props.address"></copy-icon>
     </div>
     <div>
       <el-card class="box-card">
@@ -129,7 +129,6 @@ const erc20count = ref(0);
 const erc721count = ref(0);
 const erc1155count = ref(0);
 
-console.log('detail watch,', props.addressInfo);
 watch(props, async () => {
   console.log('update');
   if (props.addressInfo?.id !== undefined) {
@@ -144,7 +143,6 @@ watch(props, async () => {
       props.address as string
     );
     res.data.items.forEach((element) => {
-      console.log('element', element);
       txsData.push(element);
     });
     total.value = res.data.total;

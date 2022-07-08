@@ -46,4 +46,8 @@ const leave = () => {
   -ms-user-select: none;
   user-select: none;
 }
+.copy-icon {
+  color: #9ba2aa;
+  cursor: pointer;
+}
 </style>

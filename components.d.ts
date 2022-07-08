@@ -7,7 +7,7 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    AccountAddress: typeof import('./src/components/ScanAddress/accountAddress.vue')['default']
+    AccountAddress: typeof import('./src/components/ScanAddress/AccountAddress.vue')['default']
     AddressIndex: typeof import('./src/components/ScanAddress/AddressIndex.vue')['default']
     Block: typeof import('./src/components/ScanBlock/Block.vue')['default']
     BlockIndex: typeof import('./src/components/ScanBlock/BlockIndex.vue')['default']
@@ -16,12 +16,14 @@ declare module '@vue/runtime-core' {
     BlockOverview: typeof import('./src/components/ScanBlock/BlockOverview.vue')['default']
     BlocksList: typeof import('./src/components/ScanBlock/BlocksList.vue')['default']
     ContractAddress: typeof import('./src/components/ScanAddress/ContractAddress.vue')['default']
+    ContractInfo: typeof import('./src/components/ScanContract/ContractInfo.vue')['default']
     CopyIcon: typeof import('./src/components/Copy/CopyIcon.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElButtonGroup: typeof import('element-plus/es')['ElButtonGroup']
     ElCard: typeof import('element-plus/es')['ElCard']
     ElCol: typeof import('element-plus/es')['ElCol']
     ElContainer: typeof import('element-plus/es')['ElContainer']
+    ElDivider: typeof import('element-plus/es')['ElDivider']
     ElFooter: typeof import('element-plus/es')['ElFooter']
     ElHeader: typeof import('element-plus/es')['ElHeader']
     ElIcon: typeof import('element-plus/es')['ElIcon']
@@ -36,18 +38,23 @@ declare module '@vue/runtime-core' {
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
     GeneralBlocks: typeof import('./src/components/ScanBlock/generalBlocks.vue')['default']
     GenerateBlocks: typeof import('./src/components/ScanBlock/GenerateBlocks.vue')['default']
+    GenerateHolders: typeof import('./src/components/ScanToken/GenerateHolders.vue')['default']
     GenerateTransactions: typeof import('./src/components/ScanTransaction/GenerateTransactions.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     ScanHome: typeof import('./src/components/ScanHome/ScanHome.vue')['default']
     ScanHomeBlocks: typeof import('./src/components/ScanHome/ScanHomeBlocks.vue')['default']
     ScanHomeTransactions: typeof import('./src/components/ScanHome/ScanHomeTransactions.vue')['default']
+    TokenAddress: typeof import('./src/components/ScanToken/TokenAddress.vue')['default']
     TokensTransferred: typeof import('./src/components/ScanTransaction/TokensTransferred.vue')['default']
     TokenTransferred: typeof import('./src/components/ScanTransaction/TokenTransferred.vue')['default']
     TransactionIndex: typeof import('./src/components/ScanTransaction/TransactionIndex.vue')['default']
     TransactionInfo: typeof import('./src/components/ScanTransaction/TransactionInfo.vue')['default']
+    TransactionLogs: typeof import('./src/components/ScanTransaction/TransactionLogs.vue')['default']
     TransactionOverview: typeof import('./src/components/ScanTransaction/TransactionOverview.vue')['default']
     TransactionsList: typeof import('./src/components/ScanTransaction/TransactionsList.vue')['default']
+    UnVerifiedContract: typeof import('./src/components/ScanContract/UnVerifiedContract.vue')['default']
+    UnVerifiedContractInfo: typeof import('./src/components/ScanContract/UnVerifiedContractInfo.vue')['default']
   }
 
 }

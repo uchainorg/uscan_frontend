@@ -1,6 +1,8 @@
 <template lang="">
   <div>
-    <h4 class="h4-title">Blocks</h4>
+    <h4 class="h4-title">
+      Transactions {{ 'for ' + props.txsType + (blockNumber === -1 ? '' : ' of block ' + blockNumber) }}
+    </h4>
     <generate-transactions :txsData="txsData" :headerData="headerData"></generate-transactions>
     <div style="margin-top: 1%; display: flex; justify-content: center">
       <el-pagination
@@ -27,6 +29,9 @@ import {
 } from '../../script/model/transaction';
 import { TableHeader } from '../../script/model/index';
 import { reactive, ref } from 'vue';
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
 
 document.title = 'Transactions | The Coq Explorer';
 
@@ -39,11 +44,12 @@ const pageSizeNumber = ref(25);
 const txsData: TransactionDetail[] = reactive([]);
 const headerData: TableHeader[] = reactive([]);
 const total = ref(0);
+const blockNumber: number = route.query.block === undefined ? -1 : (route.query.block as unknown as number);
 
 if (props.txsType === 'all' || props.txsType === 'erc20' || props.txsType === 'erc721' || props.txsType === 'erc1155') {
-  const res = await GetTransactions(currentPageIndex.value - 1, pageSizeNumber.value, props.txsType);
+  const res = await GetTransactions(currentPageIndex.value - 1, pageSizeNumber.value, props.txsType, blockNumber);
   res.data.items.forEach((element) => {
-    // console.log(props.txsType, element);
+    console.log('element', element);
     txsData.push(element);
   });
   total.value = res.data.total;
@@ -63,7 +69,12 @@ const handleSizeChange = async (pageSizeArg: number) => {
   txsData.length = 0;
   currentPageIndex.value = 1;
   pageSizeNumber.value = pageSizeArg;
-  const res = await GetTransactions(currentPageIndex.value - 1, pageSizeNumber.value, props.txsType as string);
+  const res = await GetTransactions(
+    currentPageIndex.value - 1,
+    pageSizeNumber.value,
+    props.txsType as string,
+    blockNumber
+  );
   res.data.items.forEach((element) => {
     txsData.push(element);
   });
@@ -73,7 +84,12 @@ const handleSizeChange = async (pageSizeArg: number) => {
 const handleCurrentChange = async (currentPageArg: number) => {
   txsData.length = 0;
   currentPageIndex.value = currentPageArg;
-  const res = await GetTransactions(currentPageIndex.value - 1, pageSizeNumber.value, props.txsType as string);
+  const res = await GetTransactions(
+    currentPageIndex.value - 1,
+    pageSizeNumber.value,
+    props.txsType as string,
+    blockNumber
+  );
   res.data.items.forEach((element) => {
     txsData.push(element);
   });

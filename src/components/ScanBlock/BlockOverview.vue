@@ -55,9 +55,7 @@
             </div>
           </div>
           <div v-else-if="scope.row.parameterName == 'miner'">
-            <!-- <router-link :to="'/address/' + scope.row.parameterValue">
-              {{ scope.row.parameterValue }}</router-link> -->
-            address {{ scope.row.parameterValue }}
+            <router-link :to="'/address/' + scope.row.parameterValue"> {{ scope.row.parameterValue }}</router-link>
           </div>
           <div v-else>{{ scope.row.parameterValue }}</div>
         </template>
@@ -85,8 +83,8 @@ const moveToBlock = function (blockNumber: number) {
   router.push('/block/' + blockNumber);
 };
 
-const moveToTxs = function (blockNumber: number) {
-  console.log('moveToTxs', blockNumber);
+const moveToTxs = function () {
+  router.push('/txs/all?block=' + props.blockNumber);
 };
 
 watchEffect(async () => {

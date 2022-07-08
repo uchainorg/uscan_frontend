@@ -1,5 +1,7 @@
 import { BlockDetail } from './block';
-import { TransactionDetail } from './transaction';
+import { TransactionDetail, TransactionLog } from './transaction';
+import { TokenHolder } from './token';
+
 export interface ResponseType<T = any> {
   code: number;
   msg: string;
@@ -11,8 +13,18 @@ export interface BlocksResponse {
   total: number;
 }
 
+export interface TransactionLogResponse {
+  items: TransactionLog[];
+  total: number;
+}
+
 export interface TransactionsResponse {
   items: TransactionDetail[];
+  total: number;
+}
+
+export interface TokenHoldersResponse {
+  items: TokenHolder[];
   total: number;
 }
 

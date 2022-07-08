@@ -120,3 +120,8 @@
 .card-content {
   font-size: 15px;
 }
+
+.box-card-address {
+  width: 100%;
+  border-radius: 0.35rem;
+}

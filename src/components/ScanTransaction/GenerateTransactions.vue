@@ -25,29 +25,25 @@
           {{ getAge(scope.row[scope.column.property]) }}
         </div>
         <div v-else-if="scope.column.property == 'from'" style="width: 170px">
-          <!-- <router-link :to="'/address/' + scope.row[scope.column.property]">{{
-              scope.row[scope.column.property].slice(0, 15) + '...'
-            }}</router-link> -->
-          {{ scope.row[scope.column.property].slice(0, 15) + '...' }}
+          <router-link :to="'/address/' + scope.row[scope.column.property]">{{
+            scope.row[scope.column.property].slice(0, 15) + '...'
+          }}</router-link>
         </div>
         <div v-else-if="scope.column.property == 'to'" style="width: 170px">
-          <!-- <router-link :to="'/address/' + scope.row[scope.column.property]">{{
+          <router-link :to="'/address/' + scope.row[scope.column.property]">{{
             scope.row[scope.column.property].slice(0, 15) + '...'
-          }}</router-link> -->
-          {{ scope.row[scope.column.property].slice(0, 15) + '...' }}
+          }}</router-link>
         </div>
         <div v-else-if="scope.column.property == 'value'">
-          <!-- {{ ethers.utils.formatUnits(BigInt(parseInt(scope.row[scope.column.property]).toString(), 18)) }} -->
           {{ ethers.utils.formatUnits(scope.row[scope.column.property], 18) }}
         </div>
         <div v-else-if="scope.column.property == 'gas'" style="font-size: 11px">
           {{ ethers.utils.formatUnits(scope.row[scope.column.property], 18) }}
         </div>
-        <div v-else-if="scope.column.property == 'token'" style="width: 170px; font-size: 11px">
-          <!-- <router-link :to="'/token/' + scope.row[scope.column.property]">{{
+        <div v-else-if="scope.column.property == 'contract'" style="width: 170px; font-size: 11px">
+          <router-link :to="'/token/' + scope.row[scope.column.property]">{{
             scope.row[scope.column.property].slice(0, 15) + '...'
-          }}</router-link> -->
-          {{ scope.row[scope.column.property].slice(0, 15) + '...' }}
+          }}</router-link>
         </div>
       </template>
     </el-table-column>

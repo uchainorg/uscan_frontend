@@ -31,11 +31,39 @@
             <copy-icon :text="scope.row.parameterValue"></copy-icon>
           </div>
           <div class="center-row" v-else-if="scope.row.parameterName == 'from'">
-            <!-- <router-link :to="'/address/' + scope.row.parameterValue.from">
-              {{ scope.row.parameterValue.from }}</router-link> -->
-            {{ scope.row.parameterValue.from }}
+            <router-link :to="'/address/' + scope.row.parameterValue.from">
+              {{ scope.row.parameterValue.from }}
+            </router-link>
             &nbsp;
             <copy-icon :text="scope.row.parameterValue.from"></copy-icon>
+          </div>
+          <div v-else-if="scope.row.parameterName == 'to'">
+            <div class="center-row" v-if="scope.row.parameterValue.to == ''">
+              Contract &nbsp;
+              <router-link :to="'/address/' + scope.row.parameterValue.contractAddress">{{
+                scope.row.parameterValue.contractAddress
+              }}</router-link>
+              Created &nbsp;
+              <copy-icon :text="scope.row.parameterValue.contractAddress"></copy-icon>
+            </div>
+            <div class="center-row" v-else-if="scope.row.parameterValue.toCode != ''">
+              Contract &nbsp;
+              <router-link :to="'/address/' + scope.row.parameterValue.to"
+                >{{ scope.row.parameterValue.to }} &nbsp; {{ scope.row.parameterValue.toName }}</router-link
+              >
+              &nbsp;
+              <copy-icon :text="scope.row.parameterValue.to"></copy-icon>
+            </div>
+            <div class="center-row" v-else>
+              <router-link :to="'/address/' + scope.row.parameterValue.to">{{
+                scope.row.parameterValue.to
+              }}</router-link>
+              &nbsp;
+              <copy-icon :text="scope.row.parameterValue.to"></copy-icon>
+            </div>
+          </div>
+          <div v-else-if="scope.row.parameterName == 'value'">
+            {{ ethers.utils.formatEther(scope.row.parameterValue) }} Eth
           </div>
           <div v-else-if="scope.row.parameterName == 'tokensTransferred'">
             <tokens-transferred :tokensTransferData="scope.row.parameterValue"></tokens-transferred>
@@ -45,10 +73,13 @@
               scope.row.parameterValue.percent
             }})
           </div>
-          <div v-else-if="scope.row.parameterName == 'gasFess'">
-            Base: {{ ethers.utils.formatUnits(scope.row.parameterValue.baseFeePerGas, 18) }} Gwei | Max:
-            {{ ethers.utils.formatUnits(scope.row.parameterValue.maxFeePerGas, 18) }} Gwei | MaxPriority:
-            {{ ethers.utils.formatUnits(scope.row.parameterValue.maxPriorityFeePerGas, 18) }} Gwei
+          <div v-else-if="scope.row.parameterName == 'gasPrice'">
+            {{ ethers.utils.formatEther(scope.row.parameterValue) }} Eth
+          </div>
+          <div v-else-if="scope.row.parameterName == 'maxPriorityFeePerGas'">
+            Base: {{ ethers.utils.formatEther(scope.row.parameterValue.baseFeePerGas, 'gwei') }} Gwei | Max:
+            {{ ethers.utils.formatEther(scope.row.parameterValue.maxFeePerGas, 'gwei') }} Gwei | MaxPriority:
+            {{ ethers.utils.formatEther(scope.row.parameterValue.maxPriorityFeePerGas, 'gwei') }} Gwei
           </div>
           <div v-else-if="scope.row.parameterName == 'input'">
             <textarea class="byte-codes-text" style="margin: 0px" rows="6" v-model="scope.row.parameterValue">

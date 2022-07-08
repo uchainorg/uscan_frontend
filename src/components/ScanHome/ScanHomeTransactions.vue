@@ -20,14 +20,11 @@
         <template v-slot:default="scope">
           <div>
             <div>
-              <!-- From <router-link :to="'/address/' + scope.row.from">
-                {{ scope.row.from.slice(0, 19) + "..." }}</router-link> -->
-              From {{ scope.row.from.slice(0, 19) + '...' }}
+              From
+              <router-link :to="'/address/' + scope.row.from"> {{ scope.row.from.slice(0, 19) + '...' }}</router-link>
             </div>
             <div>
-              <!-- To <router-link :to="'/address/' + scope.row.to">
-                {{ scope.row.to.slice(0, 19) + "..." }}</router-link> -->
-              To {{ scope.row.to.slice(0, 19) + '...' }}
+              To <router-link :to="'/address/' + scope.row.to"> {{ scope.row.to.slice(0, 19) + '...' }}</router-link>
             </div>
           </div>
         </template>
@@ -59,7 +56,7 @@ import { ethers } from 'ethers';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
-const res = await GetTransactions(0, 10, 'all');
+const res = await GetTransactions(0, 10, 'all', -1);
 const tableData = res.data.items;
 
 const moveToTxs = () => {

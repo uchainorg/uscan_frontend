@@ -22,17 +22,17 @@
         <template v-slot:default="scope">
           <div>
             Miner
-            <!-- <router-link :to="'/address/' + scope.row.miner"> -->
-            {{ scope.row.miner.slice(0, 15) + '...' }}
-            <!-- </router-link> -->
+            <router-link :to="'/address/' + scope.row.miner">
+              {{ scope.row.miner.slice(0, 15) + '...' }}
+            </router-link>
           </div>
           <div style="width: 60px">
             <el-tooltip effect="dark" content="Transactions in this block" placement="right">
               <div v-if="scope.row.transactionsTotal == 0">0 txns</div>
               <div v-else>
-                <!-- <router-link :to="'/block/txs/' + scope.row.blockNumber">{{ scope.row.txn }}
-                    txns</router-link> -->
-                {{ scope.row.transactionsTotal }} txns
+                <router-link :to="'/txs/all?block=' + parseInt(scope.row.number)">
+                  {{ scope.row.transactionsTotal }} txns
+                </router-link>
               </div>
             </el-tooltip>
           </div>

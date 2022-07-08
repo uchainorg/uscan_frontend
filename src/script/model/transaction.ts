@@ -16,13 +16,13 @@ export class TokensTransferred {
   addressSymbol: string;
   /**
    * Create a TokensTransferred.
-   * @param {string} from,
-   * @param {string} fromHex,
-   * @param {string} to:,
-   * @param {string} toHex:,
-   * @param {string} address,
-   * @param {string} addressName,
-   * @param {string} addressSymbol,
+   * @param {string} from
+   * @param {string} fromHex
+   * @param {string} to
+   * @param {string} toHex
+   * @param {string} address
+   * @param {string} addressName
+   * @param {string} addressSymbol
    */
   constructor(
     from: string,
@@ -40,6 +40,63 @@ export class TokensTransferred {
     this.address = address;
     this.addressName = addressName;
     this.addressSymbol = addressSymbol;
+  }
+}
+
+/**
+ * Transaction Logs
+ * @class
+ */
+export class TransactionLog {
+  id: string;
+  address: string;
+  topics: string[];
+  data: string;
+  blockNumber: string;
+  transactionHash: string;
+  transactionIndex: number;
+  blockHash: string;
+  logIndex: number;
+  removed: boolean;
+  createdTime: number;
+  /**
+   * Create a TransactionLog.
+   * @param {string} id
+   * @param {string} address
+   * @param {string[]} topics
+   * @param {string} data
+   * @param {string} blockNumber
+   * @param {string} transactionHash
+   * @param {number} transactionIndex
+   * @param {string} blockHash
+   * @param {number} logIndex
+   * @param {boolean} removed
+   * @param {number} createdTime
+   */
+  constructor(
+    id: string,
+    address: string,
+    topics: string[],
+    data: string,
+    blockNumber: string,
+    transactionHash: string,
+    transactionIndex: number,
+    blockHash: string,
+    logIndex: number,
+    removed: boolean,
+    createdTime: number
+  ) {
+    this.id = id;
+    this.address = address;
+    this.topics = topics;
+    this.data = data;
+    this.blockNumber = blockNumber;
+    this.transactionHash = transactionHash;
+    this.transactionIndex = transactionIndex;
+    this.blockHash = blockHash;
+    this.logIndex = logIndex;
+    this.removed = removed;
+    this.createdTime = createdTime;
   }
 }
 
@@ -253,7 +310,7 @@ export const getTxOverviews = function (tx: TransactionDetail): Overview[] {
     // eslint-disable-next-line max-len
     'Maximum amount of gas allocated for the transaction & the amount eventually used. Normal ETH transfers involve " + res.gasLimit + " gas units while contracts involve higher values.',
   ]);
-  txParameterMap.set('gasFess', ['Gas Fees', 'The amount eventually used.']);
+  txParameterMap.set('maxPriorityFeePerGas', ['Gas Fees', 'The amount eventually used.']);
   txParameterMap.set('tokensTransferred', ['Tokens Transferred', 'List of tokens transferred in the transaction.']);
   txParameterMap.set('input', [
     'Input Data',
@@ -263,6 +320,10 @@ export const getTxOverviews = function (tx: TransactionDetail): Overview[] {
   const resList: Overview[] = [];
   for (const [key, value] of txParameterMap) {
     let valueDisplay: any = tx[key as keyof TransactionDetail] as string;
+    if (valueDisplay === undefined || valueDisplay === null) {
+      continue;
+    }
+    // console.log('key', key, 'value', valueDisplay);
     if (key == 'from') {
       valueDisplay = {
         from: tx.from,
@@ -286,7 +347,7 @@ export const getTxOverviews = function (tx: TransactionDetail): Overview[] {
         gasUsed: formatNumber(BigInt(tx.gasUsed)),
         percent: Math.round((tx.gasUsed / tx.gasLimit) * 10000) / 100 + '%',
       };
-    } else if (key == 'gasFess') {
+    } else if (key == 'maxPriorityFeePerGas') {
       valueDisplay = {
         baseFeePerGas: tx.baseFeePerGas,
         maxFeePerGas: tx.maxFeePerGas,
@@ -295,6 +356,8 @@ export const getTxOverviews = function (tx: TransactionDetail): Overview[] {
     }
     resList.push(new Overview(key, value[0] + ':', valueDisplay, value[1]));
   }
+  // console.log('tx', tx);
+  // console.log('resList', resList);
   return resList;
 };
 
@@ -317,6 +380,7 @@ export const Erc20TransactionsHeaderList: TableHeader[] = [
   new TableHeader('From', 'from'),
   new TableHeader('To', 'to'),
   new TableHeader('Value(token)', 'value'),
+  new TableHeader('Token', 'contract'),
 ];
 
 export const Erc721TransactionsHeaderList: TableHeader[] = [
@@ -327,4 +391,34 @@ export const Erc721TransactionsHeaderList: TableHeader[] = [
   new TableHeader('From', 'from'),
   new TableHeader('To', 'to'),
   new TableHeader('TokenID', 'tokenID'),
+];
+
+export const TokenErc20TransactionsHeaderList: TableHeader[] = [
+  new TableHeader('Txn Hash', 'transactionHash'),
+  new TableHeader('Method', 'method'),
+  new TableHeader('Block', 'blockNumber'),
+  new TableHeader('Age', 'createdTime'),
+  new TableHeader('From', 'from'),
+  new TableHeader('To', 'to'),
+  new TableHeader('Quantity', 'value'),
+];
+
+export const TokenErcTransactionsHeaderList: TableHeader[] = [
+  new TableHeader('Txn Hash', 'transactionHash'),
+  new TableHeader('Method', 'method'),
+  new TableHeader('Block', 'blockNumber'),
+  new TableHeader('Age', 'createdTime'),
+  new TableHeader('From', 'from'),
+  new TableHeader('To', 'to'),
+  new TableHeader('TokenID', 'tokenID'),
+];
+
+export const TokeHolderHeaderList: TableHeader[] = [
+  new TableHeader('Address', 'owner'),
+  new TableHeader('Quantity', 'quantity'),
+];
+
+export const TokeErcHolderHeaderList: TableHeader[] = [
+  new TableHeader('Address', 'owner'),
+  new TableHeader('token', 'tokenID'),
 ];
