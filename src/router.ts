@@ -9,6 +9,8 @@ const routes: Array<RouteRecordRaw> = [
   { path: '/txs/:txsType', component: () => import('./components/ScanTransaction/TransactionsList.vue'), props: true },
   { path: '/address/:address', component: () => import('./components/ScanAddress/AddressIndex.vue'), props: true },
   { path: '/token/:address', component: () => import('./components/ScanToken/TokenAddress.vue'), props: true },
+  { path: '/verifyContract/input', component: () => import('./components/ScanContract/VerifyContractInput.vue') },
+  { path: '/verifyContract/submit', component: () => import('./components/ScanContract/VerifyContractSubmit.vue') },
 ];
 
 const router = createRouter({

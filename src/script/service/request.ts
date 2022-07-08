@@ -16,7 +16,7 @@ const request = async <T = any>(config: AxiosRequestConfig): Promise<ResponseTyp
     return {
       code: -1,
       msg,
-      data: null as any,
+      data: err as any,
     };
   }
 };
