@@ -9,6 +9,7 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AccountAddress: typeof import('./src/components/ScanAddress/AccountAddress.vue')['default']
     AddressIndex: typeof import('./src/components/ScanAddress/AddressIndex.vue')['default']
+    BaseTransactionInfo: typeof import('./src/components/ScanTransaction/BaseTransactionInfo.vue')['default']
     Block: typeof import('./src/components/ScanBlock/Block.vue')['default']
     BlockIndex: typeof import('./src/components/ScanBlock/BlockIndex.vue')['default']
     BlockInfo: typeof import('./src/components/ScanBlock/BlockInfo.vue')['default']
@@ -29,6 +30,7 @@ declare module '@vue/runtime-core' {
     ElIcon: typeof import('element-plus/es')['ElIcon']
     ElMain: typeof import('element-plus/es')['ElMain']
     ElPagination: typeof import('element-plus/es')['ElPagination']
+    ElPopover: typeof import('element-plus/es')['ElPopover']
     ElRow: typeof import('element-plus/es')['ElRow']
     ElTable: typeof import('element-plus/es')['ElTable']
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']

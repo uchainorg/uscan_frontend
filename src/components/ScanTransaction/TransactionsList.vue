@@ -49,7 +49,6 @@ const blockNumber: number = route.query.block === undefined ? -1 : (route.query.
 if (props.txsType === 'all' || props.txsType === 'erc20' || props.txsType === 'erc721' || props.txsType === 'erc1155') {
   const res = await GetTransactions(currentPageIndex.value - 1, pageSizeNumber.value, props.txsType, blockNumber);
   res.data.items.forEach((element) => {
-    console.log('element', element);
     txsData.push(element);
   });
   total.value = res.data.total;

@@ -1,14 +1,23 @@
 <template lang="">
   <el-table class="table-border" :data="props.txsData" empty-text="loading..." :row-style="{ height: '50px' }">
     <template #empty>{{ emptyText }}</template>
+    <el-table-column width="37px">
+      <template v-slot:default="scope">
+        <el-popover placement="right" title="Additional Info" :width="320" trigger="click">
+          <template #reference>
+            <el-button style="width: 5px" type="info" size="small" @click="scope.row.base = true">
+              <el-icon><View /></el-icon>
+            </el-button>
+          </template>
+          <div v-if="scope.row.base == true">
+            <base-transaction-info :txHash="scope.row.transactionHash"></base-transaction-info>
+          </div>
+        </el-popover>
+      </template>
+    </el-table-column>
     <el-table-column v-for="info in props.headerData" :key="info.key" :property="info.key" :label="info.label">
       <template v-slot:default="scope">
-        <div v-if="scope.column.property == 'hash'" style="width: 170px">
-          <router-link :to="'/tx/' + scope.row[scope.column.property]">{{
-            scope.row[scope.column.property].slice(0, 15) + '...'
-          }}</router-link>
-        </div>
-        <div v-else-if="scope.column.property == 'transactionHash'" style="width: 170px">
+        <div v-if="scope.column.property == 'transactionHash'" style="width: 170px">
           <router-link :to="'/tx/' + scope.row[scope.column.property]">{{
             scope.row[scope.column.property].slice(0, 15) + '...'
           }}</router-link>
@@ -55,6 +64,7 @@ import { TableHeader } from '../../script/model/index';
 import { getAge } from '../../script/utils';
 import { ethers } from 'ethers';
 import { ref } from 'vue';
+import { View } from '@element-plus/icons-vue';
 
 const emptyText = ref('loading...');
 const props = defineProps({

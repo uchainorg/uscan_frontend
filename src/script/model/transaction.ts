@@ -146,6 +146,7 @@ export class TransactionDetail {
   status: number;
   tokenID: number;
   transactionHash: string;
+  baseInfo: boolean = false;
   /**
    * Create a Transaction.
    * @param {string} hash
@@ -189,6 +190,7 @@ export class TransactionDetail {
    * @param {number} status
    * @param {number} tokenID
    * @param {string} transactionHash
+   * @param {boolean} baseInfo
    */
   constructor(
     hash: string,
@@ -231,7 +233,8 @@ export class TransactionDetail {
     root: string,
     status: number,
     tokenID: number,
-    transactionHash: string
+    transactionHash: string,
+    baseInfo: boolean
   ) {
     this.hash = hash;
     this.method = method;
@@ -274,6 +277,7 @@ export class TransactionDetail {
     this.status = status;
     this.tokenID = tokenID;
     this.transactionHash = transactionHash;
+    this.baseInfo = baseInfo;
   }
 }
 
@@ -357,7 +361,7 @@ export const getTxOverviews = function (tx: TransactionDetail): Overview[] {
     resList.push(new Overview(key, value[0] + ':', valueDisplay, value[1]));
   }
   // console.log('tx', tx);
-  // console.log('resList', resList);
+  console.log('resList', resList);
   return resList;
 };
 

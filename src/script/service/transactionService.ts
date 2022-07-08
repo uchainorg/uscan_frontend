@@ -51,6 +51,13 @@ export const GetTxByHash = function (txHash: string): Promise<ResponseType<Trans
   });
 };
 
+export const GetBaseTxByHash = function (txHash: string): Promise<ResponseType<TransactionDetail>> {
+  return request<TransactionDetail>({
+    url: '/v1/txs/' + txHash + '/base',
+    method: 'get',
+  });
+};
+
 export const GetTxLog = function (txHash: string): Promise<ResponseType<TransactionLogResponse>> {
   return request<TransactionLogResponse>({
     url: '/v1/txs/' + txHash + '/event-logs',
