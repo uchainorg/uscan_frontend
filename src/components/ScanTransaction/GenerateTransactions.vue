@@ -22,6 +22,11 @@
             scope.row[scope.column.property].slice(0, 15) + '...'
           }}</router-link>
         </div>
+        <div v-if="scope.column.property == 'hash'" style="width: 170px">
+          <router-link :to="'/tx/' + scope.row[scope.column.property]">{{
+            scope.row[scope.column.property].slice(0, 15) + '...'
+          }}</router-link>
+        </div>
         <div v-else-if="scope.column.property == 'blockNumber'">
           <router-link :to="'/block/' + parseInt(scope.row[scope.column.property])">{{
             parseInt(scope.row[scope.column.property])

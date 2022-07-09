@@ -1,20 +1,80 @@
 <template>
-  <div class="index">
+  <div>
     <el-container>
-      <el-header> el-header </el-header>
+      <el-header>
+        <div :class="isHome ? 'home-header' : 'info-header'">
+          <component :is="isHome ? HomeHeaderVue : InfoHeaderVue"></component>
+        </div>
+      </el-header>
       <el-main>
         <Suspense><router-view class="content"></router-view></Suspense>
       </el-main>
-      <el-footer> el-footer </el-footer>
+      <div style="background-color: #263258; margin-top: 5%">
+        <el-footer> <scan-tail></scan-tail> </el-footer>
+      </div>
     </el-container>
   </div>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { useRoute } from 'vue-router';
+import { watch, ref } from 'vue';
+import HomeHeaderVue from './components/ScanHeader/HomeHeader.vue';
+import InfoHeaderVue from './components/ScanHeader/InfoHeader.vue';
+
+const route = useRoute();
+const isHome = ref(false);
+console.log('index', route.path);
+if (route.path === '/') {
+  isHome.value = true;
+}
+
+watch(
+  () => route.path,
+  (val) => {
+    console.log('val', val);
+    if (val === '/') {
+      isHome.value = true;
+    } else {
+      isHome.value = false;
+    }
+  }
+);
+</script>
 
 <style lang="less">
 .content {
   max-width: 1350px;
+  margin: 0 auto;
+  margin-top: 40px;
+}
+.el-header {
+  padding: 0;
+  height: 100%;
+}
+
+.el-main {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+}
+
+.home-header {
+  background-color: #263258;
+  height: 300px;
+}
+
+.info-header {
+  background-color: white;
+  height: 125px;
+}
+
+.el-footer {
+  display: flex;
+  height: 290px;
+  max-width: 1350px;
+  background-color: transparent;
+  justify-content: center;
   margin: 0 auto;
 }
 </style>

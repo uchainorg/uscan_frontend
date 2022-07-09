@@ -28,7 +28,7 @@ import {
   Erc20TransactionsHeaderList,
 } from '../../script/model/transaction';
 import { TableHeader } from '../../script/model/index';
-import { reactive, ref } from 'vue';
+import { reactive, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
 const route = useRoute();
@@ -46,23 +46,40 @@ const headerData: TableHeader[] = reactive([]);
 const total = ref(0);
 const blockNumber: number = route.query.block === undefined ? -1 : (route.query.block as unknown as number);
 
-if (props.txsType === 'all' || props.txsType === 'erc20' || props.txsType === 'erc721' || props.txsType === 'erc1155') {
-  const res = await GetTransactions(currentPageIndex.value - 1, pageSizeNumber.value, props.txsType, blockNumber);
-  res.data.items.forEach((element) => {
-    txsData.push(element);
-  });
-  total.value = res.data.total;
-}
+const getTransactions = async () => {
+  if (
+    props.txsType === 'all' ||
+    props.txsType === 'erc20' ||
+    props.txsType === 'erc721' ||
+    props.txsType === 'erc1155'
+  ) {
+    if (props.txsType === 'all') {
+      headerData.push(...TransactionsHeaderList);
+    } else if (props.txsType === 'erc20') {
+      headerData.push(...Erc20TransactionsHeaderList);
+    } else if (props.txsType === 'erc721') {
+      headerData.push(...Erc721TransactionsHeaderList);
+    } else if (props.txsType === 'erc1155') {
+      headerData.push(...Erc721TransactionsHeaderList);
+    }
+    const res = await GetTransactions(currentPageIndex.value - 1, pageSizeNumber.value, props.txsType, blockNumber);
+    res.data.items.forEach((element) => {
+      txsData.push(element);
+    });
+    total.value = res.data.total;
+  }
+};
 
-if (props.txsType === 'all') {
-  headerData.push(...TransactionsHeaderList);
-} else if (props.txsType === 'erc20') {
-  headerData.push(...Erc20TransactionsHeaderList);
-} else if (props.txsType === 'erc721') {
-  headerData.push(...Erc721TransactionsHeaderList);
-} else if (props.txsType === 'erc1155') {
-  headerData.push(...Erc721TransactionsHeaderList);
-}
+getTransactions();
+
+watch(props, async () => {
+  console.log(props.txsType);
+  txsData.length = 0;
+  headerData.length = 0;
+  currentPageIndex.value = 1;
+  pageSizeNumber.value = 25;
+  getTransactions();
+});
 
 const handleSizeChange = async (pageSizeArg: number) => {
   txsData.length = 0;
