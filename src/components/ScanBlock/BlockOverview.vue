@@ -91,7 +91,7 @@ watchEffect(async () => {
   overviews.length = 0;
   const res = await GetBlockByNumber(props.blockNumber as number);
   getBlockOverviews(res.data).forEach((element) => overviews.push(element));
-  console.log('overviews', overviews);
+  // console.log('overviews', overviews);
 });
 </script>
 <style lang="less" scoped>

@@ -130,7 +130,7 @@ const erc721count = ref(0);
 const erc1155count = ref(0);
 
 watch(props, async () => {
-  console.log('update');
+  // console.log('update');
   if (props.addressInfo?.id !== undefined) {
     txsData.length = 0;
     if (activeName.value === 'txs') {
@@ -174,7 +174,7 @@ watch(props, async () => {
 });
 
 watch(activeName, async (currentValue) => {
-  console.log('switch', currentValue);
+  // console.log('switch', currentValue);
   txsData.length = 0;
   headerData.length = 0;
   if (activeName.value === 'txs') {

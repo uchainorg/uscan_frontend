@@ -76,7 +76,7 @@ const querySearch = async (queryString: string, cb: (arg: any) => void) => {
   if (queryString.trim() !== '') {
     if (queryString.trim().length == 42 || !isNaN(Number(queryString.trim()))) {
       const searchTypeRes = await SearchByType(1, queryString.trim());
-      console.log('queryResType.value', searchTypeRes.data.type);
+      // console.log('queryResType.value', searchTypeRes.data.type);
       if (searchTypeRes.data.type == 1 || searchTypeRes.data.type == 0) {
         resList.push({ value: 'Not Found', link: '404' });
         searchRes.value = {} as LinkItem;

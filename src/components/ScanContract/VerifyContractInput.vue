@@ -101,7 +101,7 @@ if (route.query.a) {
 }
 
 const metadataRes = await GetVerifyContractMetadata();
-console.log(metadataRes);
+// console.log(metadataRes);
 compilerTypeOptions.push(
   { value: 'solidity-single-file', label: 'Solidity (Single file)' } as Option,
   { value: 'solidity-standard-json-input', label: 'Solidity (Standard-Json-Input)' } as Option
@@ -146,9 +146,9 @@ const moveToSubmit = () => {
   compilerVersion.value === '' ? (compilerVersionRequired.value = true) : (compilerVersionRequired.value = false);
   license.value === '' ? (licenseRequired.value = true) : (licenseRequired.value = false);
   if (addressInput.value !== '' && compilerType.value !== '' && compilerVersion.value !== '' && license.value !== '') {
-    console.log('will push');
-    console.log('compilerVersion', compilerVersionOptionsNameMap.get(compilerVersion.value));
-    console.log('compilerVersion', compilerVersionOptionsFileMap.get(compilerVersion.value));
+    // console.log('will push');
+    // console.log('compilerVersion', compilerVersionOptionsNameMap.get(compilerVersion.value));
+    // console.log('compilerVersion', compilerVersionOptionsFileMap.get(compilerVersion.value));
     const url =
       '/verifyContract/submit?a=' +
       addressInput.value +

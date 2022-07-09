@@ -24,7 +24,7 @@ import InfoHeaderVue from './components/ScanHeader/InfoHeader.vue';
 
 const route = useRoute();
 const isHome = ref(false);
-console.log('index', route.path);
+// console.log('index', route.path);
 if (route.path === '/') {
   isHome.value = true;
 }
@@ -32,7 +32,7 @@ if (route.path === '/') {
 watch(
   () => route.path,
   (val) => {
-    console.log('val', val);
+    // console.log('val', val);
     if (val === '/') {
       isHome.value = true;
     } else {

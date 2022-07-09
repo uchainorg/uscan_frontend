@@ -73,7 +73,7 @@ const getTransactions = async () => {
 getTransactions();
 
 watch(props, async () => {
-  console.log(props.txsType);
+  // console.log(props.txsType);
   txsData.length = 0;
   headerData.length = 0;
   currentPageIndex.value = 1;

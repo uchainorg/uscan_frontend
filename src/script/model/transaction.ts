@@ -361,7 +361,7 @@ export const getTxOverviews = function (tx: TransactionDetail): Overview[] {
     resList.push(new Overview(key, value[0] + ':', valueDisplay, value[1]));
   }
   // console.log('tx', tx);
-  console.log('resList', resList);
+  // console.log('resList', resList);
   return resList;
 };
 

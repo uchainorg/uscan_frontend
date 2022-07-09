@@ -136,7 +136,7 @@ const headerDataHolder: TableHeader[] = reactive([]);
 let tokenType = '';
 
 const tokenTransfersRes = await GetTokenTransfersByAddress(props.address as string);
-console.log(tokenTransfersRes);
+// console.log(tokenTransfersRes);
 
 // eslint-disable-next-line guard-for-in
 for (const i in tokenTransfersRes.data) {
@@ -144,7 +144,7 @@ for (const i in tokenTransfersRes.data) {
     tokenType = i;
   }
 }
-console.log('tokenType', tokenType);
+// console.log('tokenType', tokenType);
 
 if (tokenType == 'erc20') {
   headerDataTx.push(...TokenErc20TransactionsHeaderList);
@@ -157,7 +157,7 @@ if (tokenType == 'erc20') {
 const addressInfoRes = await GetAddressInfo(props.address as string);
 const totalSupply = addressInfoRes.data.tokenTotalSupply;
 const decimals = addressInfoRes.data.decimals;
-console.log(addressInfoRes);
+// console.log(addressInfoRes);
 
 const tokenHoldersByAddressRes = await GetTokenHoldersByAddress(
   props.address as string,
@@ -166,7 +166,7 @@ const tokenHoldersByAddressRes = await GetTokenHoldersByAddress(
   pageSizeNumberHolder.value
 );
 const holdersTotal = tokenHoldersByAddressRes.data.total;
-console.log('tokenHoldersByAddressRes', tokenHoldersByAddressRes);
+// console.log('tokenHoldersByAddressRes', tokenHoldersByAddressRes);
 tokenHoldersByAddressRes.data.items.forEach((element) => holdersData.push(element));
 
 const tokenTransactionRes = await GetTransactionsByToken(
@@ -180,7 +180,7 @@ tokenTransactionRes.data.items.forEach((element) => {
   // console.log('element', element);
   txsData.push(element);
 });
-console.log('tokenTransactionRes', tokenTransactionRes);
+// console.log('tokenTransactionRes', tokenTransactionRes);
 
 const handleSizeChangeTx = async (pageSizeArg: number) => {
   txsData.length = 0;

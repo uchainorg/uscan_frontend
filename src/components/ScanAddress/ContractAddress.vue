@@ -98,7 +98,7 @@ const currentPageIndex = ref(1);
 const pageSizeNumber = ref(25);
 const total = ref(0);
 
-console.log('addressInfo', props.addressInfo);
+// console.log('addressInfo', props.addressInfo);
 const res = await GetTransactionsByAddress(
   currentPageIndex.value - 1,
   pageSizeNumber.value,

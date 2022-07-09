@@ -193,7 +193,7 @@ metadataRes.data.licenseTypes.forEach((element) => {
   } as Option);
 });
 
-console.log(route.query);
+// console.log(route.query);
 
 const submit = async () => {
   if (fileRequired.value || contractNameRequired.value) {
@@ -221,10 +221,10 @@ const submit = async () => {
     fileList.length == 0 ? (fileRequired.value = true) : (fileRequired.value = false);
   }
 
-  console.log('submittedStatus', submittedStatus);
+  // console.log('submittedStatus', submittedStatus);
 
   const submitRes = await SubmitVerifyContract(contractAddress as string, formdata);
-  console.log('submitRes', submitRes);
+  // console.log('submitRes', submitRes);
   submittedStatus.value = submitRes.code;
   if (submitRes.code == 200) {
     setTimeout(() => {
@@ -238,7 +238,7 @@ const submit = async () => {
 
 const CheckVerifyContractStatus = async (submitId: string) => {
   const contractStatusRes = await GetVerifyContractStatus(submitId);
-  console.log('contractStatusRes', contractStatusRes);
+  // console.log('contractStatusRes', contractStatusRes);
   verifyContractStatus.value = contractStatusRes.data.status;
   if (contractStatusRes.data.status == 1) {
     router.push(('/address/' + contractAddress) as string);
