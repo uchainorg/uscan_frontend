@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="index">
     <el-container>
       <el-header>
         <div :class="isHome ? 'home-header' : 'info-header'">
@@ -9,7 +9,7 @@
       <el-main>
         <Suspense><router-view class="content"></router-view></Suspense>
       </el-main>
-      <div style="background-color: #263258; margin-top: 5%">
+      <div class="footer">
         <el-footer> <scan-tail></scan-tail> </el-footer>
       </div>
     </el-container>
@@ -43,6 +43,14 @@ watch(
 </script>
 
 <style lang="less">
+.index {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 .content {
   max-width: 1350px;
   margin: 0 auto;
@@ -70,11 +78,19 @@ watch(
 }
 
 .el-footer {
-  display: flex;
   height: 290px;
-  max-width: 1350px;
   background-color: transparent;
   justify-content: center;
   margin: 0 auto;
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  bottom: 0;
+  background-color: #263258;
+  margin-top: 5%;
+  width: 100%;
 }
 </style>
