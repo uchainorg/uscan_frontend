@@ -1,6 +1,6 @@
 import { BlockDetail } from './block';
 import { TransactionDetail, TransactionLog } from './transaction';
-import { TokenHolder } from './token';
+import { TokenHolder, Token } from './token';
 
 export interface ResponseType<T = any> {
   code: number;
@@ -25,6 +25,11 @@ export interface TransactionsResponse {
 
 export interface TokenHoldersResponse {
   items: TokenHolder[];
+  total: number;
+}
+
+export interface TokenResponse {
+  items: Token[];
   total: number;
 }
 

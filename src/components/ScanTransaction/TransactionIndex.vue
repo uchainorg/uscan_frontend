@@ -12,7 +12,6 @@
           <span>Logs({{ logCount }})</span>
         </template>
         <transaction-logs :transactionLogs="transactionLogsData"></transaction-logs>
-        transaction-logs
       </el-tab-pane>
     </el-tabs>
   </div>

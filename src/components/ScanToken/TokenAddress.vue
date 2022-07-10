@@ -79,7 +79,7 @@
             />
           </div>
         </el-tab-pane>
-        <el-tab-pane label="Holders" name="Holders">
+        <el-tab-pane label="Holders" name="holders">
           <generate-holders :holdersData="holdersData" :headerData="headerDataHolder"></generate-holders>
           <div style="margin-top: 1%; display: flex; justify-content: center">
             <el-pagination
@@ -94,6 +94,9 @@
               @current-change="handleCurrentChangeHolder"
             />
           </div>
+        </el-tab-pane>
+        <el-tab-pane v-if="tokenType === 'erc721' || tokenType === 'erc1155'" label="Inventory" name="inventory">
+          <generate-Inventory :address="props.address" :ercType="tokenType"></generate-Inventory>
         </el-tab-pane>
       </el-tabs>
     </div>

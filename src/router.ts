@@ -11,6 +11,11 @@ const routes: Array<RouteRecordRaw> = [
   { path: '/token/:address', component: () => import('./components/ScanToken/TokenAddress.vue'), props: true },
   { path: '/verifyContract/input', component: () => import('./components/ScanContract/VerifyContractInput.vue') },
   { path: '/verifyContract/submit', component: () => import('./components/ScanContract/VerifyContractSubmit.vue') },
+  {
+    path: '/token/nfts/:address/:tokenID/:type',
+    component: () => import('./components/ScanToken/TokenOverview.vue'),
+    props: true,
+  },
 ];
 
 const router = createRouter({

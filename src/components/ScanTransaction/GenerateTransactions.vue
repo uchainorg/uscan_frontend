@@ -82,9 +82,6 @@ const props = defineProps({
     require: true,
   },
 });
-if (props.txsData?.length === 0) {
-  emptyText.value = 'No data found';
-}
 </script>
 <style lang="less" scoped>
 @import '../../css/style.css';

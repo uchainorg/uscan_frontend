@@ -44,6 +44,21 @@ export const GetTransactionsByAddress = function (
   });
 };
 
+export const GetTransactionsByToken = function (
+  pageNumber: number,
+  pageSize: number,
+  type: string,
+  address: string
+): Promise<ResponseType<TransactionsResponse>> {
+  const offset = pageNumber * pageSize;
+  const limit = pageSize;
+  const url = '/v1/tokens/txns/' + type + '?contract=' + address + '&offset=' + offset + '&limit=' + limit;
+  return request<TransactionsResponse>({
+    url: url,
+    method: 'get',
+  });
+};
+
 export const GetTxByHash = function (txHash: string): Promise<ResponseType<TransactionDetail>> {
   return request<TransactionDetail>({
     url: '/v1/txs/' + txHash,

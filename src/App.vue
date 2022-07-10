@@ -78,19 +78,25 @@ watch(
 }
 
 .el-footer {
+  display: flex;
   height: 290px;
+  max-width: 1350px;
   background-color: transparent;
   justify-content: center;
   margin: 0 auto;
 }
 
 .footer {
-  display: flex;
-  justify-content: center;
-  position: absolute;
-  bottom: 0;
   background-color: #263258;
-  margin-top: 5%;
+  margin-top: 2%;
+  bottom: 0;
+}
+
+.el-container {
   width: 100%;
+  min-height: 100%;
+  // display: flex;
+  // flex-direction: column;
+  // justify-content: space-between;
 }
 </style>

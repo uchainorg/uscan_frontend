@@ -20,6 +20,51 @@ export class TokenTransfers {
 }
 
 /**
+ * TokenInventory
+ * @class
+ */
+export class Token {
+  owner: string;
+  contract: string;
+  tokenID: number;
+  createdTime: number;
+  creator: string;
+  name: string;
+  symbol: string;
+  standard: string;
+  /**
+   * Create a block.
+   * @param {string} owner
+   * @param {string} contract
+   * @param {number} tokenID
+   * @param {number} createdTime
+   * @param {string} creator
+   * @param {string} name
+   * @param {string} symbol
+   * @param {string} standard
+   */
+  constructor(
+    owner: string,
+    contract: string,
+    tokenID: number,
+    createdTime: number,
+    creator: string,
+    name: string,
+    symbol: string,
+    standard: string
+  ) {
+    this.owner = owner;
+    this.contract = contract;
+    this.tokenID = tokenID;
+    this.createdTime = createdTime;
+    this.creator = creator;
+    this.name = name;
+    this.symbol = symbol;
+    this.standard = standard;
+  }
+}
+
+/**
  * TokenHolder
  * @class
  */
