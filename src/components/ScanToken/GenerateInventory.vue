@@ -7,7 +7,12 @@
             <el-card :body-style="{ padding: '10px' }">
               <div style="height: 100px; width: 100px; background-color: #598df6; border-radius: 0.35rem"></div>
               <div class="text-secondary">
-                TokenID:<span>{{ item.tokenID }}</span>
+                TokenID:
+                <span>
+                  <router-link :to="'/token/nfts/' + item.contract + '/' + item.tokenID + '/' + props.ercType">
+                    {{ item.tokenID }}
+                  </router-link>
+                </span>
               </div>
               <div class="text-secondary">
                 Owner:

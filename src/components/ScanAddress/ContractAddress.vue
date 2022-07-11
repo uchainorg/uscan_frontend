@@ -43,7 +43,7 @@
                     }}</router-link>
                     at txn
                     <router-link :to="'/tx/' + props.addressInfo.txHash">{{
-                      props.addressInfo.creator.slice(0, 15) + '...'
+                      props.addressInfo.txHash.slice(0, 15) + '...'
                     }}</router-link>
                   </el-col>
                 </el-row>
@@ -71,7 +71,10 @@
             />
           </div>
         </el-tab-pane>
-        <el-tab-pane label="Contract" name="contract">
+        <el-tab-pane v-if="contractContent" label="Contract(verified)" name="contract-verified">
+          <contract-verified-info :contractAddress="address" :contractInfo="contractContent"></contract-verified-info>
+        </el-tab-pane>
+        <el-tab-pane v-else label="Contract" name="contract">
           <contract-info :contractAddress="address" :codeContent="props.addressInfo.code"></contract-info>
         </el-tab-pane>
       </el-tabs>
@@ -79,11 +82,13 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, reactive } from 'vue';
+import { ref, reactive, watchEffect } from 'vue';
 import { AddressDetail } from '../../script/model/address';
 import { ethers } from 'ethers';
 import { TransactionDetail, TransactionsHeaderList } from '../../script/model/transaction';
 import { GetTransactionsByAddress } from '../../script/service/transactionService';
+import { GetVerifyContractContent } from '../../script/service/contractService';
+import { ContractContent } from '../../script/model/contract';
 
 const props = defineProps({
   address: String,
@@ -97,18 +102,7 @@ const txsData: TransactionDetail[] = reactive([]);
 const currentPageIndex = ref(1);
 const pageSizeNumber = ref(25);
 const total = ref(0);
-
-// console.log('addressInfo', props.addressInfo);
-const res = await GetTransactionsByAddress(
-  currentPageIndex.value - 1,
-  pageSizeNumber.value,
-  'txs',
-  props.address as string
-);
-res.data.items.forEach((element) => {
-  txsData.push(element);
-});
-total.value = res.data.total;
+const contractContent = ref({} as ContractContent);
 
 const handleSizeChange = async (pageSizeArg: number) => {
   txsData.length = 0;
@@ -140,6 +134,26 @@ const handleCurrentChange = async (currentPageArg: number) => {
   });
   total.value = res.data.total;
 };
+
+watchEffect(async () => {
+  // console.log(props.address);
+  txsData.length = 0;
+  const res = await GetTransactionsByAddress(
+    currentPageIndex.value - 1,
+    pageSizeNumber.value,
+    'txs',
+    props.address as string
+  );
+  // console.log(res);
+  res.data.items.forEach((element) => {
+    txsData.push(element);
+  });
+  total.value = res.data.total;
+
+  const contractContentRes = await GetVerifyContractContent(props.address as string);
+  contractContent.value = contractContentRes.data;
+  // console.log('contractContentRes', contractContentRes.data);
+});
 </script>
 <style lang="less" scoped>
 @import '../../css/style.css';

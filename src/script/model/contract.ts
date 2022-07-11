@@ -39,3 +39,16 @@ export class VerifyContractMetadata {
     this.licenseTypes = licenseTypes;
   }
 }
+
+export interface ContractContent {
+  id: number;
+  contractName: string;
+  compilerVersion: string;
+  optimization: number;
+  runs: number;
+  evmVersion: string;
+  licenseType: number;
+  abi: string;
+  metadata: any;
+  object: string;
+}

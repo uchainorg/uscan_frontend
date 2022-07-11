@@ -1,5 +1,5 @@
 import request from './request';
-import { VerifyContractMetadata } from '../model/contract';
+import { VerifyContractMetadata, ContractContent } from '../model/contract';
 import { ResponseType } from '../model/index';
 
 export const GetVerifyContractMetadata = function (): Promise<ResponseType<VerifyContractMetadata>> {
@@ -24,5 +24,12 @@ export const SubmitVerifyContract = function (address: string, params: any): Pro
     },
     method: 'post',
     data: params,
+  });
+};
+
+export const GetVerifyContractContent = function (address: string): Promise<ResponseType<ContractContent>> {
+  return request<ContractContent>({
+    url: '/v1/contracts/' + address + '/content',
+    method: 'get',
   });
 };

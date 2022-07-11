@@ -91,7 +91,7 @@ const GetTransactions = async () => {
     );
     // console.log('nftTransactions', nftTransactions);
     nftTransactions.data.items.forEach((element) => {
-      console.log('nftTransactions', element);
+      // console.log('nftTransactions', element);
       txsData.push(element);
     });
     total.value = nftTransactions.data.total;
@@ -100,7 +100,7 @@ const GetTransactions = async () => {
 
 await GetTransactions();
 
-console.log('txsData', txsData);
+// console.log('txsData', txsData);
 
 watch(props, async () => {
   if (props.address !== undefined && props.tokenID !== undefined && props.type !== undefined) {
