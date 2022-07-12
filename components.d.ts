@@ -54,6 +54,7 @@ declare module '@vue/runtime-core' {
     GenerateTransactions: typeof import('./src/components/ScanTransaction/GenerateTransactions.vue')['default']
     HomeHeader: typeof import('./src/components/ScanHeader/HomeHeader.vue')['default']
     InfoHeader: typeof import('./src/components/ScanHeader/InfoHeader.vue')['default']
+    ReadContract: typeof import('./src/components/ScanContract/ContractInfo/readContract.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     ScanHome: typeof import('./src/components/ScanHome/ScanHome.vue')['default']
@@ -69,6 +70,8 @@ declare module '@vue/runtime-core' {
     TransactionsList: typeof import('./src/components/ScanTransaction/TransactionsList.vue')['default']
     VerifyContractInput: typeof import('./src/components/ScanContract/VerifyContractInput.vue')['default']
     VerifyContractSubmit: typeof import('./src/components/ScanContract/VerifyContractSubmit.vue')['default']
+    WriteContract: typeof import('./src/components/ScanContract/ContractInfo/writeContract.vue')['default']
+    WritwContract: typeof import('./src/components/ScanContract/ContractInfo/writwContract.vue')['default']
   }
 
 }

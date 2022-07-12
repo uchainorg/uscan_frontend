@@ -136,7 +136,7 @@ const handleCurrentChange = async (currentPageArg: number) => {
 };
 
 watchEffect(async () => {
-  // console.log(props.address);
+  console.log('watch', props.address);
   txsData.length = 0;
   const res = await GetTransactionsByAddress(
     currentPageIndex.value - 1,
@@ -153,6 +153,7 @@ watchEffect(async () => {
   const contractContentRes = await GetVerifyContractContent(props.address as string);
   contractContent.value = contractContentRes.data;
   // console.log('contractContentRes', contractContentRes.data);
+  activeName.value = 'txs';
 });
 </script>
 <style lang="less" scoped>

@@ -202,3 +202,26 @@
   font-weight: bold;
   color: #4a4f55;
 }
+
+.method-content {
+  background-color: rgb(248, 247, 247);
+}
+
+.method-object {
+  padding-top: 10px;
+  background-color: rgb(248, 247, 247);
+}
+
+.method-output {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.arg-type {
+  display: flex;
+  align-items: center;
+  font-style: italic;
+  font-size: 13px;
+  color: grey;
+}

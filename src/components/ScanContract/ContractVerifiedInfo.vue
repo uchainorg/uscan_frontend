@@ -2,8 +2,8 @@
   <div>
     <el-row style="margin-top: 0.5%">
       <el-button type="info" plain @click="moveToCode">Code</el-button>
-      <el-button type="info" plain @click="moveToCode">Read Contract</el-button>
-      <el-button type="info" plain @click="moveToCode">Write Contract</el-button>
+      <el-button type="info" plain @click="moveToRead">Read Contract</el-button>
+      <el-button type="info" plain @click="moveToWrite">Write Contract</el-button>
     </el-row>
     <br />
     <component :is="comName" :contractAddress="props.contractAddress" :contractInfo="props.contractInfo"></component>
@@ -12,7 +12,9 @@
 <script lang="ts" setup>
 import { shallowRef } from 'vue';
 import { ContractContent } from '../../script/model/contract';
-import codeContent from './ContractInfo/codeContract.vue';
+import codeContractVue from './ContractInfo/codeContract.vue';
+import readContractVue from './ContractInfo/readContract.vue';
+import writeContractVue from './ContractInfo/writeContract.vue';
 
 const props = defineProps({
   contractAddress: String,
@@ -21,10 +23,18 @@ const props = defineProps({
   },
 });
 
-const comName = shallowRef(codeContent);
+const comName = shallowRef(codeContractVue);
 
 const moveToCode = () => {
-  comName.value = codeContent;
+  comName.value = codeContractVue;
+};
+
+const moveToRead = () => {
+  comName.value = readContractVue;
+};
+
+const moveToWrite = () => {
+  comName.value = writeContractVue;
 };
 </script>
 <style lang="less" scoped>
