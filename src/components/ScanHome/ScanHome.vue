@@ -1,30 +1,20 @@
 <template lang="">
-  <div class="container-display">
-    <scan-block></scan-block>
-    <scan-transaction></scan-transaction>
+  <div>
+    <el-row :gutter="20">
+      <el-col :span="12">
+        <Suspense>
+          <scan-home-blocks></scan-home-blocks>
+        </Suspense>
+      </el-col>
+      <el-col :span="12">
+        <Suspense>
+          <scan-home-transactions></scan-home-transactions>
+        </Suspense>
+      </el-col>
+    </el-row>
   </div>
 </template>
-<script>
-import { GetHomeInfo } from "../../js/request";
-import { defineComponent } from "vue";
-export default defineComponent({
-  name: "ScanHome",
-  created() {
-    this.getBlockListRes();
-  },
-  methods: {
-    async getBlockListRes() {
-      let res = await GetHomeInfo(this.$rpc_http);
-      this.$store.state.HomeBlockInfoList = res.blockList;
-      this.$store.state.HomeTransactionInfoList = res.txsList;
-    },
-  },
-});
+<script lang="ts" setup>
+document.title = 'Home | The Coq Explorer';
 </script>
-<style lang="less" scoped>
-.container-display {
-  display: flex;
-  justify-content: center;
-  margin-top: 5%;
-}
-</style>
+<style></style>
