@@ -103,10 +103,12 @@ const handleSelect = (item: LinkItem) => {
   }
 };
 const searchFilter = () => {
-  if (searchRes.value?.link) {
-    router.push(searchRes.value?.link);
-  } else {
-    router.push('search/' + inputValue.value.trim());
+  if (inputValue.value.trim() !== '') {
+    if (searchRes.value?.link) {
+      router.push(searchRes.value?.link);
+    } else {
+      router.push('search/' + inputValue.value.trim());
+    }
   }
 };
 
