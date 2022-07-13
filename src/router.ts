@@ -16,6 +16,8 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('./components/ScanToken/TokenOverview.vue'),
     props: true,
   },
+  { path: '/search/:searchText', component: () => import('./components/ScanHeader/SearchRes.vue'), props: true },
+  { path: '/search/not-found', component: () => import('./components/ScanHeader/SearchNotFound.vue') },
 ];
 
 const router = createRouter({
