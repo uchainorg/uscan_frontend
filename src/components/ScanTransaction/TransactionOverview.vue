@@ -66,7 +66,10 @@
             {{ ethers.utils.formatEther(scope.row.parameterValue) }} Eth
           </div>
           <div v-else-if="scope.row.parameterName == 'tokensTransferred'">
-            <tokens-transferred :tokensTransferData="scope.row.parameterValue"></tokens-transferred>
+            <!-- <tokens-transferred :tokensTransferData="scope.row.parameterValue"></tokens-transferred> -->
+            <div v-for="(trans, index) in scope.row.parameterValue" :key="index">
+              {{ trans }}
+            </div>
           </div>
           <div v-else-if="scope.row.parameterName == 'gas'">
             {{ scope.row.parameterValue.gasUsed }} Gwei | {{ scope.row.parameterValue.gasLimit }} Gwei({{
