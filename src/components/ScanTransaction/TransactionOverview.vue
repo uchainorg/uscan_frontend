@@ -136,11 +136,13 @@ import { QuestionFilled, Clock, SuccessFilled, Failed, VideoPause } from '@eleme
 import { getAge } from '../../script/utils';
 import { reactive, watch } from 'vue';
 import { ethers } from 'ethers';
-// import { onBeforeRouteUpdate } from 'vue-router';
+import { useRoute } from 'vue-router';
 
 const props = defineProps({
   txHash: String,
 });
+
+const route = useRoute();
 
 const overviews: any[] = reactive([]);
 
@@ -153,11 +155,18 @@ const initData = async () => {
 
 initData();
 
+// watch(
+//   () => props.txHash,
+//   async () => {
+//     console.log('watch', props.txHash);
+//     initData();
+//   }
+// );
+
 watch(
-  () => props.txHash,
-  async () => {
-    console.log('watch', props.txHash);
-    initData();
+  () => route.params,
+  (val, oval) => {
+    console.log('watchsssssss', val, oval);
   }
 );
 </script>
