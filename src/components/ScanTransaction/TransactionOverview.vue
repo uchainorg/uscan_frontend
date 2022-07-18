@@ -134,8 +134,11 @@ import { GetTxByHash } from '../../script/service/transactionService';
 import { getTxOverviews } from '../../script/model/transaction';
 import { QuestionFilled, Clock, SuccessFilled, Failed, VideoPause } from '@element-plus/icons-vue';
 import { getAge } from '../../script/utils';
-import { watchEffect, reactive } from 'vue';
+import { reactive, watch } from 'vue';
 import { ethers } from 'ethers';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 const props = defineProps({
   txHash: String,
@@ -143,11 +146,19 @@ const props = defineProps({
 
 const overviews: any[] = reactive([]);
 
-watchEffect(async () => {
+const initData = async () => {
   overviews.length = 0;
   const res = await GetTxByHash(props.txHash as string);
   getTxOverviews(res.data).forEach((element) => overviews.push(element));
   console.log('transaction overviews', overviews);
+};
+
+initData();
+
+watch(props, async () => {
+  console.log('watch', props);
+  router.go(0);
+  initData();
 });
 </script>
 <style lang="less" scoped>
