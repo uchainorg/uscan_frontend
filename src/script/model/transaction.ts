@@ -324,7 +324,7 @@ export const getTxOverviews = function (tx: TransactionDetail): Overview[] {
   const resList: Overview[] = [];
   for (const [key, value] of txParameterMap) {
     let valueDisplay: any = tx[key as keyof TransactionDetail] as string;
-    if (valueDisplay === undefined || valueDisplay === null || valueDisplay.length === 0) {
+    if (valueDisplay === undefined || valueDisplay === null) {
       continue;
     }
     // console.log('key', key, 'value', valueDisplay);
