@@ -127,7 +127,7 @@ watchEffect(async () => {
   overviews.length = 0;
   const res = await GetTxByHash(props.txHash as string);
   getTxOverviews(res.data).forEach((element) => overviews.push(element));
-  // console.log('transaction overviews', overviews);
+  console.log('transaction overviews', overviews);
 });
 </script>
 <style lang="less" scoped>

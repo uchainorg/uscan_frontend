@@ -1,6 +1,6 @@
 <template lang="">
   <div :class="isRolling ? 'rolling' : ''">
-    <div v-for="(trans, index) in this.tokensTransferData" :key="index">
+    <div v-for="(trans, index) in tokensTransferData" :key="index">
       <div class="center-row">
         <div style="font-weight: bold">From</div>
         &nbsp;&nbsp;&nbsp;
