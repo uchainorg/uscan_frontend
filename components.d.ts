@@ -73,7 +73,6 @@ declare module '@vue/runtime-core' {
     VerifyContractInput: typeof import('./src/components/ScanContract/VerifyContractInput.vue')['default']
     VerifyContractSubmit: typeof import('./src/components/ScanContract/VerifyContractSubmit.vue')['default']
     WriteContract: typeof import('./src/components/ScanContract/ContractInfo/writeContract.vue')['default']
-    WritwContract: typeof import('./src/components/ScanContract/ContractInfo/writwContract.vue')['default']
   }
 
 }
