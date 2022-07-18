@@ -168,7 +168,7 @@ watch(
   async (val) => {
     console.log('watchsssssss', val, 'props is', props.txHash);
     if (val) {
-      initData(val as unknown as string);
+      initData(val.txHash as unknown as string);
     }
   }
 );
