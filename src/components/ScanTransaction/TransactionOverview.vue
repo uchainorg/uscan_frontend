@@ -150,23 +150,15 @@ const initData = async (txHash: String) => {
   overviews.length = 0;
   const res = await GetTxByHash(txHash as string);
   getTxOverviews(res.data).forEach((element) => overviews.push(element));
-  console.log('transaction overviews', overviews);
+  // console.log('transaction overviews', overviews);
 };
 
 initData(props.txHash as string);
 
-// watch(
-//   () => props.txHash,
-//   async () => {
-//     console.log('watch', props.txHash);
-//     initData();
-//   }
-// );
-
 watch(
   () => route.params,
   async (val) => {
-    console.log('watchsssssss', val, 'props is', props.txHash);
+    // console.log('watchsssssss', val, 'props is', props.txHash);
     if (val) {
       initData(val.txHash as unknown as string);
     }
