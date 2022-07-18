@@ -146,14 +146,14 @@ const route = useRoute();
 
 const overviews: any[] = reactive([]);
 
-const initData = async () => {
+const initData = async (txHash: String) => {
   overviews.length = 0;
-  const res = await GetTxByHash(props.txHash as string);
+  const res = await GetTxByHash(txHash as string);
   getTxOverviews(res.data).forEach((element) => overviews.push(element));
   console.log('transaction overviews', overviews);
 };
 
-initData();
+initData(props.txHash as string);
 
 // watch(
 //   () => props.txHash,
@@ -165,8 +165,11 @@ initData();
 
 watch(
   () => route.params,
-  (val, oval) => {
-    console.log('watchsssssss', val, oval);
+  async (val) => {
+    console.log('watchsssssss', val, 'props is', props.txHash);
+    if (val) {
+      initData(val as unknown as string);
+    }
   }
 );
 </script>
