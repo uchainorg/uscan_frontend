@@ -22,7 +22,7 @@
 </template>
 <script lang="ts" setup>
 import { TokensTransferred } from '../../script/model/transaction';
-import { ref } from 'vue';
+import { ref, watchEffect } from 'vue';
 
 const isRolling = ref(false);
 
@@ -33,9 +33,13 @@ const props = defineProps({
   },
 });
 
-if ((props.tokensTransferData as TokensTransferred[]).length >= 3) {
-  isRolling.value = true;
-}
+watchEffect(() => {
+  if (props.tokensTransferData?.length != 0) {
+    if ((props.tokensTransferData as TokensTransferred[]).length >= 3) {
+      isRolling.value = true;
+    }
+  }
+});
 </script>
 <style lang="less" scoped>
 @import '../../css/style.css';
