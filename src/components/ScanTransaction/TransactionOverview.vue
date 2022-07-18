@@ -73,6 +73,17 @@
                   <div style="font-weight: bold">From</div>
                   &nbsp;&nbsp;&nbsp;
                   <router-link :to="'/address/' + trans.from">{{ trans.from.slice(0, 18) + '...' }}</router-link>
+                  &nbsp;&nbsp;&nbsp;
+                  <div style="font-weight: bold">To</div>
+                  &nbsp;&nbsp;&nbsp;
+                  <router-link :to="'/address/' + trans.to">{{ trans.to.slice(0, 18) + '...' }}</router-link>
+                  &nbsp;&nbsp;&nbsp;
+                  <router-link :to="'/address/' + trans.address">
+                    <div v-if="trans.addressName">{{ trans.addressName }}</div>
+                    <div v-else>
+                      {{ trans.address.slice(0, 18) + '...' }}
+                    </div>
+                  </router-link>
                 </div>
               </div>
             </div>
