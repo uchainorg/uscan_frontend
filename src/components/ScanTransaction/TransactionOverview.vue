@@ -136,9 +136,6 @@ import { QuestionFilled, Clock, SuccessFilled, Failed, VideoPause } from '@eleme
 import { getAge } from '../../script/utils';
 import { reactive, watch } from 'vue';
 import { ethers } from 'ethers';
-import { useRouter } from 'vue-router';
-
-const router = useRouter();
 
 const props = defineProps({
   txHash: String,
@@ -157,7 +154,6 @@ initData();
 
 watch(props, async () => {
   console.log('watch', props);
-  router.go(0);
   initData();
 });
 </script>
