@@ -48,9 +48,9 @@
             </div>
             <div class="center-row" v-else-if="scope.row.parameterValue.toCode != ''">
               Contract &nbsp;
-              <router-link :to="'/address/' + scope.row.parameterValue.to"
-                >{{ scope.row.parameterValue.to }} &nbsp; {{ scope.row.parameterValue.toName }}</router-link
-              >
+              <router-link :to="'/address/' + scope.row.parameterValue.to">
+                {{ scope.row.parameterValue.to }} &nbsp; {{ scope.row.parameterValue.toName }}
+              </router-link>
               &nbsp;
               <copy-icon :text="scope.row.parameterValue.to"></copy-icon>
             </div>
@@ -158,8 +158,8 @@ initData(props.txHash as string);
 watch(
   () => route.params,
   async (val) => {
-    // console.log('watchsssssss', val, 'props is', props.txHash);
-    if (val) {
+    // console.log('watchsssssss', val.txHash);
+    if (val.txHash) {
       initData(val.txHash as unknown as string);
     }
   }

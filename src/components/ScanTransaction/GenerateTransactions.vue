@@ -10,7 +10,7 @@
             </el-button>
           </template>
           <div v-if="scope.row.base == true">
-            <base-transaction-info :txHash="scope.row.transactionHash"></base-transaction-info>
+            <base-transaction-info :txHash="scope.row.hash"></base-transaction-info>
           </div>
         </el-popover>
       </template>

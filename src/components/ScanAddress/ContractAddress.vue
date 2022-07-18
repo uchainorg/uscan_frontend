@@ -137,7 +137,7 @@ const handleCurrentChange = async (currentPageArg: number) => {
 };
 
 watchEffect(async () => {
-  console.log('watch', props.address);
+  // console.log('watch', props.address);
   txsData.length = 0;
   const res = await GetTransactionsByAddress(
     currentPageIndex.value - 1,
