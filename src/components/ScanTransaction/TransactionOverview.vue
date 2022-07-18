@@ -154,13 +154,10 @@ const initData = async () => {
 initData();
 
 watch(
-  props,
+  () => props.txHash,
   async () => {
-    console.log('watch', props);
+    console.log('watch', props.txHash);
     initData();
-  },
-  {
-    immediate: true,
   }
 );
 </script>
