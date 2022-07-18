@@ -71,11 +71,11 @@
             />
           </div>
         </el-tab-pane>
-        <el-tab-pane v-if="contractContent" label="Contract(verified)" name="contract-verified">
-          <contract-verified-info :contractAddress="address" :contractInfo="contractContent"></contract-verified-info>
-        </el-tab-pane>
-        <el-tab-pane v-else label="Contract" name="contract">
+        <el-tab-pane v-if="!isVerify" label="Contract" name="contract">
           <contract-info :contractAddress="address" :codeContent="props.addressInfo.code"></contract-info>
+        </el-tab-pane>
+        <el-tab-pane v-else label="Contract(verified)" name="contract-verified">
+          <contract-verified-info :contractAddress="address" :contractInfo="contractContent"></contract-verified-info>
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -103,6 +103,7 @@ const currentPageIndex = ref(1);
 const pageSizeNumber = ref(25);
 const total = ref(0);
 const contractContent = ref({} as ContractContent);
+const isVerify = ref(false);
 
 const handleSizeChange = async (pageSizeArg: number) => {
   txsData.length = 0;
@@ -152,6 +153,9 @@ watchEffect(async () => {
 
   const contractContentRes = await GetVerifyContractContent(props.address as string);
   contractContent.value = contractContentRes.data;
+  if (contractContentRes.data) {
+    isVerify.value = true;
+  }
   // console.log('contractContentRes', contractContentRes.data);
   activeName.value = 'txs';
 });

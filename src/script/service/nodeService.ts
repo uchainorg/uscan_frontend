@@ -15,7 +15,7 @@ export const GetResByNode = async (requestList: any[]) => {
   });
   await requestNode.post('', reqs).then((res) => {
     res.data.forEach((element: any) => {
-      console.log(element);
+      // console.log(element);
       responseMap.set(element.id, element.result ? element.result : '');
     });
   });

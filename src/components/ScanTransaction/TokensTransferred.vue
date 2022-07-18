@@ -33,10 +33,10 @@ const props = defineProps({
   },
 });
 
-console.log('tokensTransferData init', props.tokensTransferData);
+// console.log('tokensTransferData init', props.tokensTransferData);
 
 if (props.tokensTransferData?.length != 0) {
-  console.log('tokensTransferData', props.tokensTransferData);
+  // console.log('tokensTransferData', props.tokensTransferData);
   if ((props.tokensTransferData as TokensTransferred[]).length >= 3) {
     isRolling.value = true;
   }

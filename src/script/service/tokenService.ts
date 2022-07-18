@@ -48,7 +48,7 @@ export const GetTokenInventory = function (
   const offset = pageNumber * pageSize;
   const limit = pageSize;
   const url = '/v1/tokens/' + address + '/inventory' + '?type=' + type + '&offset=' + offset + '&limit=' + limit;
-  console.log(url);
+  // console.log(url);
   return request<TokenResponse>({
     url: url,
     method: 'get',
