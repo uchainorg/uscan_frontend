@@ -3,7 +3,7 @@ import App from './App.vue';
 import router from './router';
 // import * as ElementPlusIconsVue from '@element-plus/icons-vue';
 
-console.log('import.meta.env', import.meta.env);
+// console.log('import.meta.env', import.meta.env);
 
 const app = createApp(App);
 app.use(router).mount('#app');
