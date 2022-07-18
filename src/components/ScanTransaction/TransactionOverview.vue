@@ -67,8 +67,14 @@
           </div>
           <div v-else-if="scope.row.parameterName == 'tokensTransferred'">
             <!-- <tokens-transferred :tokensTransferData="scope.row.parameterValue"></tokens-transferred> -->
-            <div v-for="(trans, index) in scope.row.parameterValue" :key="index">
-              {{ trans }}
+            <div :class="scope.row.parameterValue.length >= 3 ? 'rolling' : ''">
+              <div v-for="(trans, index) in scope.row.parameterValue" :key="index">
+                <div class="center-row">
+                  <div style="font-weight: bold">From</div>
+                  &nbsp;&nbsp;&nbsp;
+                  <router-link :to="'/address/' + trans.from">{{ trans.from.slice(0, 18) + '...' }}</router-link>
+                </div>
+              </div>
             </div>
           </div>
           <div v-else-if="scope.row.parameterName == 'gas'">
@@ -135,4 +141,8 @@ watchEffect(async () => {
 </script>
 <style lang="less" scoped>
 @import '../../css/style.css';
+.rolling {
+  height: 100px;
+  overflow: auto;
+}
 </style>
