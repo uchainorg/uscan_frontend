@@ -49,18 +49,18 @@
       </el-table-column>
     </el-table>
     <div class="center">
-      <el-button class="home-bottom-button" type="primary" plain @click="moveToTxs">View all Transaction</el-button>
+      <el-button class="home-bottom-button" type="primary" plain @click="moveToTxs">View all Transactions</el-button>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-import { GetTransactions } from '../../script/service/transactionService';
+import { GetHomeTransactions } from '../../script/service/transactionService';
 import { getAge } from '../../script/utils';
 import { ethers } from 'ethers';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
-const res = await GetTransactions(0, 10, 'all', -1);
+const res = await GetHomeTransactions();
 const tableData = res.data.items;
 
 const moveToTxs = () => {

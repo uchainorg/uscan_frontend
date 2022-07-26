@@ -60,7 +60,7 @@ import { ethers } from 'ethers';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
-const res = await GetBlocks(0, 10);
+const res = await GetBlocks(false, 0, 10);
 const tableData = res.data.items;
 
 const moveToBlocks = () => {

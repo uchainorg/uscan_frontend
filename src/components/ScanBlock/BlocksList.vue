@@ -27,7 +27,7 @@ document.title = 'Blocks | The Coq Explorer';
 const currentPageIndex = ref(1);
 const pageSizeNumber = ref(25);
 const blocksData: BlockDetail[] = reactive([]);
-const res = await GetBlocks(currentPageIndex.value - 1, pageSizeNumber.value);
+const res = await GetBlocks(true, currentPageIndex.value - 1, pageSizeNumber.value);
 res.data.items.forEach((element) => {
   blocksData.push(element);
 });
@@ -37,7 +37,7 @@ const handleSizeChange = async (pageSizeArg: number) => {
   blocksData.length = 0;
   currentPageIndex.value = 1;
   pageSizeNumber.value = pageSizeArg;
-  const res = await GetBlocks(currentPageIndex.value - 1, pageSizeNumber.value);
+  const res = await GetBlocks(true, currentPageIndex.value - 1, pageSizeNumber.value);
   res.data.items.forEach((element) => {
     blocksData.push(element);
   });
@@ -47,7 +47,7 @@ const handleSizeChange = async (pageSizeArg: number) => {
 const handleCurrentChange = async (currentPageArg: number) => {
   blocksData.length = 0;
   currentPageIndex.value = currentPageArg;
-  const res = await GetBlocks(currentPageIndex.value - 1, pageSizeNumber.value);
+  const res = await GetBlocks(true, currentPageIndex.value - 1, pageSizeNumber.value);
   res.data.items.forEach((element) => {
     blocksData.push(element);
   });

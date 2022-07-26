@@ -14,12 +14,19 @@ export const GetTransactions = function (
   if (blockNumber !== -1) {
     url = '/v1/txs?blockBegin=' + blockNumber + '&blockEnd=' + blockNumber + '&offset=' + offset + '&limit=' + limit;
   } else if (type === 'all') {
-    url = '/v1/txs?offset=' + offset + '&limit=' + limit;
+    url = '/v1/txs?offset=' + offset + '&limit=' + limit + '&allView=true';
   } else {
     url = '/v1/tokens/txns/' + type + '?offset=' + offset + '&limit=' + limit;
   }
   return request<TransactionsResponse>({
     url: url,
+    method: 'get',
+  });
+};
+
+export const GetHomeTransactions = function (): Promise<ResponseType<TransactionsResponse>> {
+  return request<TransactionsResponse>({
+    url: '/v1/txs?offset=0&limit=10',
     method: 'get',
   });
 };
