@@ -12,7 +12,16 @@ export const GetTransactions = function (
   const limit = pageSize;
   let url = '';
   if (blockNumber !== -1) {
-    url = '/v1/txs?blockBegin=' + blockNumber + '&blockEnd=' + blockNumber + '&offset=' + offset + '&limit=' + limit;
+    url =
+      '/v1/txs?blockBegin=' +
+      blockNumber +
+      '&blockEnd=' +
+      blockNumber +
+      '&offset=' +
+      offset +
+      '&limit=' +
+      limit +
+      '&allView=true';
   } else if (type === 'all') {
     url = '/v1/txs?offset=' + offset + '&limit=' + limit + '&allView=true';
   } else {
