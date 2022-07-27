@@ -1,9 +1,15 @@
 <template lang="">
   <div>
-    <h4 class="h4-title">
-      <!-- Transactions {{ 'for ' + props.txsType + (blockNumber === -1 ? '' : ' of block ' + blockNumber) }} -->
-      {{ tableTitle }}
-    </h4>
+    <div class="center-row">
+      <h4 class="h4-title">
+        {{ tableTitle }}
+      </h4>
+
+      <el-button v-if="txType !== ''" style="margin: 10px; font-weight: bold" color="#DEE1E4" size="small">
+        {{ txType }}
+      </el-button>
+    </div>
+
     <generate-transactions :txsData="txsData" :headerData="headerData"></generate-transactions>
     <div style="margin-top: 1%; display: flex; justify-content: center">
       <el-pagination
@@ -47,6 +53,7 @@ const headerData: TableHeader[] = reactive([]);
 const total = ref(0);
 const blockNumber: number = route.query.block === undefined ? -1 : (route.query.block as unknown as number);
 const tableTitle = ref('title');
+const txType = ref('');
 
 onMounted(() => {
   setTitle();
@@ -97,11 +104,14 @@ const setTitle = () => {
       tableTitle.value = 'Transactions';
     }
   } else if (props.txsType === 'erc20') {
-    tableTitle.value = 'Token Transfers ERC-20';
+    tableTitle.value = 'Token Transfers';
+    txType.value = 'ERC-20';
   } else if (props.txsType === 'erc721') {
-    tableTitle.value = 'Non-Fungible Token Transfers ERC-721';
+    tableTitle.value = 'Non-Fungible Token Transfers';
+    txType.value = 'ERC-721';
   } else if (props.txsType === 'erc1155') {
-    tableTitle.value = 'Multi-Token Token Tracker ERC-1155';
+    tableTitle.value = 'Multi-Token Token Tracker';
+    txType.value = 'ERC-1155';
   }
 };
 
