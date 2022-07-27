@@ -39,6 +39,25 @@
           />
         </div>
       </el-tab-pane>
+      <el-tab-pane name="internal">
+        <template #label>
+          <span>Internal Txns({{ erc20count }})</span>
+        </template>
+        <generate-transactions :txsData="txsData" :headerData="headerData"></generate-transactions>
+        <div style="margin-top: 1%; display: flex; justify-content: center">
+          <el-pagination
+            small
+            background
+            :currentPage="currentPageIndex"
+            :page-size="pageSizeNumber"
+            :page-sizes="[10, 25, 50, 100]"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="total"
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+          />
+        </div>
+      </el-tab-pane>
       <el-tab-pane v-if="erc20count != 0" name="erc20">
         <template #label>
           <span>Erc20 Token Txns({{ erc20count }})</span>
@@ -108,6 +127,7 @@ import {
   TransactionsHeaderList,
   Erc721TransactionsHeaderList,
   Erc20TransactionsHeaderList,
+  InternalTransactionsHeaderList,
 } from '../../script/model/transaction';
 import { TableHeader } from '../../script/model/index';
 import { GetTransactionsByAddress } from '../../script/service/transactionService';
@@ -185,6 +205,8 @@ watch(activeName, async (currentValue) => {
     headerData.push(...Erc721TransactionsHeaderList);
   } else if (activeName.value === 'erc1155') {
     headerData.push(...Erc721TransactionsHeaderList);
+  } else if (activeName.value === 'internal') {
+    headerData.push(...InternalTransactionsHeaderList);
   }
 
   const res = await GetTransactionsByAddress(

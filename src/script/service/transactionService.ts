@@ -40,6 +40,9 @@ export const GetTransactionsByAddress = function (
   const offset = pageNumber * pageSize;
   const limit = pageSize;
   let url = '';
+  if (type === 'internal') {
+    type = 'erc20';
+  }
   if (type === 'txs') {
     url = '/v1/accounts/' + address + '/txns?offset=' + offset + '&limit=' + limit;
   } else {

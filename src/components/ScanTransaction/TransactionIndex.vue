@@ -4,10 +4,10 @@
       <h4 class="h4-title">Transactions Details</h4>
     </div>
     <el-tabs v-model="activeName">
-      <el-tab-pane label="Overview" name="first">
+      <el-tab-pane label="Overview" name="txs">
         <transaction-overview :txHash="props.txHash"></transaction-overview>
       </el-tab-pane>
-      <el-tab-pane v-if="logCount != 0" name="second">
+      <el-tab-pane v-if="logCount != 0" name="logs">
         <template #label>
           <span>Logs({{ logCount }})</span>
         </template>
@@ -23,7 +23,7 @@ import { GetTxLog } from '../../script/service/transactionService';
 const props = defineProps({
   txHash: String,
 });
-const activeName = ref('first');
+const activeName = ref('txs');
 const logCount = ref(0);
 
 const res = await GetTxLog(props.txHash as string);
