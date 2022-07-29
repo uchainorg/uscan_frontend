@@ -281,6 +281,19 @@ export class TransactionDetail {
   }
 }
 
+export interface InternalTransactionDetail {
+  transactionHash: string;
+  blockNumber: string;
+  status: number;
+  callType: string;
+  depth: string;
+  from: string;
+  to: string;
+  amount: string;
+  gasLimit: string;
+  createdTime: number;
+}
+
 export const getTxOverviews = function (tx: TransactionDetail): Overview[] {
   const txParameterMap = new Map();
   txParameterMap.set('hash', [
@@ -405,7 +418,7 @@ export const InternalTransactionsHeaderList: TableHeader[] = [
   new TableHeader('Age', 'createdTime'),
   new TableHeader('From', 'from'),
   new TableHeader('To', 'to'),
-  new TableHeader('Value', 'value'),
+  new TableHeader('Value', 'amount'),
 ];
 
 export const TokenErc20TransactionsHeaderList: TableHeader[] = [

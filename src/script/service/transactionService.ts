@@ -1,5 +1,10 @@
 import request from './request';
-import { ResponseType, TransactionsResponse, TransactionLogResponse } from '../model/index';
+import {
+  ResponseType,
+  TransactionsResponse,
+  TransactionLogResponse,
+  InternalTransactionsResponse,
+} from '../model/index';
 import { TransactionDetail } from '../model/transaction';
 
 export const GetTransactions = function (
@@ -58,6 +63,20 @@ export const GetTransactionsByAddress = function (
     url = '/v1/accounts/' + address + '/txns-' + type + '?offset=' + offset + '&limit=' + limit;
   }
   return request<TransactionsResponse>({
+    url: url,
+    method: 'get',
+  });
+};
+
+export const GetInternalTransactionsByAddress = function (
+  pageNumber: number,
+  pageSize: number,
+  address: string
+): Promise<ResponseType<InternalTransactionsResponse>> {
+  const offset = pageNumber * pageSize;
+  const limit = pageSize;
+  const url = '/v1/accounts/' + address + '/txns-internal' + '?offset=' + offset + '&limit=' + limit;
+  return request<InternalTransactionsResponse>({
     url: url,
     method: 'get',
   });

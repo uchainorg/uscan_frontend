@@ -39,11 +39,14 @@
           />
         </div>
       </el-tab-pane>
-      <el-tab-pane name="internal">
+      <el-tab-pane v-if="internalCount != 0" name="internal">
         <template #label>
-          <span>Internal Txns({{ erc20count }})</span>
+          <span>Internal Txns({{ internalCount }})</span>
         </template>
-        <generate-transactions :txsData="txsData" :headerData="headerData"></generate-transactions>
+        <internal-transactions
+          :txsData="internalTxsData"
+          :headerData="InternalTransactionsHeaderList"
+        ></internal-transactions>
         <div style="margin-top: 1%; display: flex; justify-content: center">
           <el-pagination
             small
@@ -52,9 +55,9 @@
             :page-size="pageSizeNumber"
             :page-sizes="[10, 25, 50, 100]"
             layout="total, sizes, prev, pager, next, jumper"
-            :total="total"
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
+            :total="internalCount"
+            @size-change="handleInternalSizeChange"
+            @current-change="handleInternalCurrentChange"
           />
         </div>
       </el-tab-pane>
@@ -128,9 +131,10 @@ import {
   Erc721TransactionsHeaderList,
   Erc20TransactionsHeaderList,
   InternalTransactionsHeaderList,
+  InternalTransactionDetail,
 } from '../../script/model/transaction';
 import { TableHeader } from '../../script/model/index';
-import { GetTransactionsByAddress } from '../../script/service/transactionService';
+import { GetTransactionsByAddress, GetInternalTransactionsByAddress } from '../../script/service/transactionService';
 
 const props = defineProps({
   address: String,
@@ -141,6 +145,7 @@ const props = defineProps({
 
 const activeName = ref('txs');
 const txsData: TransactionDetail[] = reactive([]);
+const internalTxsData: InternalTransactionDetail[] = reactive([]);
 const headerData: TableHeader[] = reactive([]);
 const currentPageIndex = ref(1);
 const pageSizeNumber = ref(25);
@@ -148,9 +153,12 @@ const total = ref(0);
 const erc20count = ref(0);
 const erc721count = ref(0);
 const erc1155count = ref(0);
+const internalCount = ref(0);
 
 watch(props, async () => {
   // console.log('update');
+  currentPageIndex.value = 1;
+  pageSizeNumber.value = 25;
   if (props.addressInfo?.id !== undefined) {
     txsData.length = 0;
     if (activeName.value === 'txs') {
@@ -190,10 +198,21 @@ watch(props, async () => {
       props.address as string
     );
     erc1155count.value = resErc1155.data.total;
+
+    const resInternal = await GetInternalTransactionsByAddress(
+      currentPageIndex.value - 1,
+      pageSizeNumber.value,
+      props.address as string
+    );
+    internalCount.value = resInternal.data.total;
+    // console.log('resInternal', resInternal);
   }
 });
 
 watch(activeName, async (currentValue) => {
+  currentPageIndex.value = 1;
+  pageSizeNumber.value = 25;
+
   // console.log('switch', currentValue);
   txsData.length = 0;
   headerData.length = 0;
@@ -209,16 +228,28 @@ watch(activeName, async (currentValue) => {
     headerData.push(...InternalTransactionsHeaderList);
   }
 
-  const res = await GetTransactionsByAddress(
-    currentPageIndex.value - 1,
-    pageSizeNumber.value,
-    activeName.value,
-    props.address as string
-  );
-  res.data.items.forEach((element) => {
-    txsData.push(element);
-  });
-  total.value = res.data.total;
+  if (activeName.value == 'internal') {
+    const resInternal = await GetInternalTransactionsByAddress(
+      currentPageIndex.value - 1,
+      pageSizeNumber.value,
+      props.address as string
+    );
+    resInternal.data.items.forEach((element) => {
+      internalTxsData.push(element);
+    });
+    internalCount.value = resInternal.data.total;
+  } else {
+    const res = await GetTransactionsByAddress(
+      currentPageIndex.value - 1,
+      pageSizeNumber.value,
+      activeName.value,
+      props.address as string
+    );
+    res.data.items.forEach((element) => {
+      txsData.push(element);
+    });
+    total.value = res.data.total;
+  }
 });
 
 const handleSizeChange = async (pageSizeArg: number) => {
@@ -250,6 +281,35 @@ const handleCurrentChange = async (currentPageArg: number) => {
     txsData.push(element);
   });
   total.value = res.data.total;
+};
+
+const handleInternalSizeChange = async (pageSizeArg: number) => {
+  internalTxsData.length = 0;
+  currentPageIndex.value = 1;
+  pageSizeNumber.value = pageSizeArg;
+  const res = await GetInternalTransactionsByAddress(
+    currentPageIndex.value - 1,
+    pageSizeNumber.value,
+    props.address as string
+  );
+  res.data.items.forEach((element) => {
+    internalTxsData.push(element);
+  });
+  internalCount.value = res.data.total;
+};
+
+const handleInternalCurrentChange = async (currentPageArg: number) => {
+  internalTxsData.length = 0;
+  currentPageIndex.value = currentPageArg;
+  const res = await GetInternalTransactionsByAddress(
+    currentPageIndex.value - 1,
+    pageSizeNumber.value,
+    props.address as string
+  );
+  res.data.items.forEach((element) => {
+    internalTxsData.push(element);
+  });
+  internalCount.value = res.data.total;
 };
 </script>
 <style lang="less" scoped>

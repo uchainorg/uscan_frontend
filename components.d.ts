@@ -54,6 +54,7 @@ declare module '@vue/runtime-core' {
     GenerateTransactions: typeof import('./src/components/ScanTransaction/GenerateTransactions.vue')['default']
     HomeHeader: typeof import('./src/components/ScanHeader/HomeHeader.vue')['default']
     InfoHeader: typeof import('./src/components/ScanHeader/InfoHeader.vue')['default']
+    InternalTransactions: typeof import('./src/components/ScanTransaction/InternalTransactions.vue')['default']
     ReadContract: typeof import('./src/components/ScanContract/ContractInfo/readContract.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
