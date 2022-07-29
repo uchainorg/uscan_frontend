@@ -52,6 +52,7 @@ declare module '@vue/runtime-core' {
     GenerateHolders: typeof import('./src/components/ScanToken/GenerateHolders.vue')['default']
     GenerateInventory: typeof import('./src/components/ScanToken/GenerateInventory.vue')['default']
     GenerateTransactions: typeof import('./src/components/ScanTransaction/GenerateTransactions.vue')['default']
+    GethDebugTrace: typeof import('./src/components/ScanTransaction/GethDebugTrace.vue')['default']
     HomeHeader: typeof import('./src/components/ScanHeader/HomeHeader.vue')['default']
     InfoHeader: typeof import('./src/components/ScanHeader/InfoHeader.vue')['default']
     InternalTransactions: typeof import('./src/components/ScanTransaction/InternalTransactions.vue')['default']

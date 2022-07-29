@@ -33,6 +33,11 @@ export interface TokenHoldersResponse {
   total: number;
 }
 
+export interface GethDebugTraceResponse {
+  transactionHash: string;
+  res: string;
+}
+
 export interface TokenResponse {
   items: Token[];
   total: number;

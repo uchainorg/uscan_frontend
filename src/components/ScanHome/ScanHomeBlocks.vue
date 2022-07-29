@@ -12,7 +12,7 @@
             <el-col :span="18">
               <div>
                 <router-link :to="'/block/' + parseInt(scope.row.number)">{{ parseInt(scope.row.number) }}</router-link>
-                <div>{{ getAge(scope.row.createdTime) }}</div>
+                <div>{{ getAge(scope.row.timestamp) }}</div>
               </div>
             </el-col>
           </el-row>

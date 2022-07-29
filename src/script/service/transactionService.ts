@@ -4,6 +4,7 @@ import {
   TransactionsResponse,
   TransactionLogResponse,
   InternalTransactionsResponse,
+  GethDebugTraceResponse,
 } from '../model/index';
 import { TransactionDetail } from '../model/transaction';
 
@@ -114,6 +115,16 @@ export const GetBaseTxByHash = function (txHash: string): Promise<ResponseType<T
 export const GetTxLog = function (txHash: string): Promise<ResponseType<TransactionLogResponse>> {
   return request<TransactionLogResponse>({
     url: '/v1/txs/' + txHash + '/event-logs',
+    method: 'get',
+  });
+};
+
+export const GetGethDebugTrace = function (
+  txHash: string,
+  type: string
+): Promise<ResponseType<GethDebugTraceResponse>> {
+  return request<GethDebugTraceResponse>({
+    url: '/v1/txs/' + txHash + '/' + type,
     method: 'get',
   });
 };
