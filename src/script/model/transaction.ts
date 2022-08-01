@@ -143,6 +143,7 @@ export class TransactionDetail {
   effectiveGasPrice: string;
   gasUsed: number;
   root: string;
+  errorReturn: string;
   status: number;
   tokenID: number;
   transactionHash: string;
@@ -187,6 +188,7 @@ export class TransactionDetail {
    * @param {string} effectiveGasPrice
    * @param {number} gasUsed
    * @param {string} root
+   * @param {string} errorReturn
    * @param {number} status
    * @param {number} tokenID
    * @param {string} transactionHash
@@ -231,6 +233,7 @@ export class TransactionDetail {
     effectiveGasPrice: string,
     gasUsed: number,
     root: string,
+    errorReturn: string,
     status: number,
     tokenID: number,
     transactionHash: string,
@@ -274,6 +277,7 @@ export class TransactionDetail {
     this.effectiveGasPrice = effectiveGasPrice;
     this.gasUsed = gasUsed;
     this.root = root;
+    this.errorReturn = errorReturn;
     this.status = status;
     this.tokenID = tokenID;
     this.transactionHash = transactionHash;
@@ -379,6 +383,11 @@ export const getTxOverviews = function (tx: TransactionDetail): Overview[] {
         baseFeePerGas: tx.baseFeePerGas,
         maxFeePerGas: tx.maxFeePerGas,
         maxPriorityFeePerGas: tx.maxPriorityFeePerGas,
+      };
+    } else if (key == 'status') {
+      valueDisplay = {
+        status: tx.status,
+        errorMsg: tx.errorReturn,
       };
     }
     resList.push(new Overview(key, value[0] + ':', valueDisplay, value[1]));

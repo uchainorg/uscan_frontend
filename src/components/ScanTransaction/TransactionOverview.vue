@@ -106,17 +106,18 @@
             </textarea>
           </div>
           <div v-else-if="scope.row.parameterName == 'status'">
-            <div v-if="scope.row.parameterValue == 1">
+            <div v-if="scope.row.parameterValue.status == 1">
               <div class="success-status">
                 <el-icon color="green"><SuccessFilled /></el-icon> &nbsp; Success
               </div>
             </div>
-            <div v-if="scope.row.parameterValue == 0">
+            <div v-if="scope.row.parameterValue.status == 0">
               <div class="fail-status">
                 <el-icon color="red"><Failed /></el-icon> &nbsp; Fail
               </div>
+              Fail reason : {{ scope.row.parameterValue.errorMsg }}
             </div>
-            <div v-if="scope.row.parameterValue == 3">
+            <div v-if="scope.row.parameterValue.status == 3">
               <div class="pending-status">
                 <el-icon><VideoPause /></el-icon> &nbsp; Pending
               </div>
@@ -150,7 +151,7 @@ const initData = async (txHash: String) => {
   overviews.length = 0;
   const res = await GetTxByHash(txHash as string);
   getTxOverviews(res.data).forEach((element) => overviews.push(element));
-  // console.log('transaction overviews', overviews);
+  console.log('transaction overviews', overviews);
 };
 
 initData(props.txHash as string);
