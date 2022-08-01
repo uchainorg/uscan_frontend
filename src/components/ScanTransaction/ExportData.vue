@@ -23,6 +23,9 @@
           </div>
         </el-card>
       </div>
+      <div style="display: flex; justify-content: center">
+        <p style="color: #77838f; width: 50%">Tip: To avoid the 30 secs timeout, please select a small Date range</p>
+      </div>
     </div>
   </div>
 </template>
