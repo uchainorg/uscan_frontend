@@ -42,7 +42,7 @@
               </el-col>
             </el-row>
           </div>
-          <div v-if="this.$route.query.ct == 'solidity-single-file'" style="margin: 10px">
+          <div v-if="route.query.ct == 'solidity-single-file'" style="margin: 10px">
             <h4>Enter the Solidity Contract Code below</h4>
             <textarea
               class="byte-codes-text"
@@ -92,7 +92,7 @@
                       </div>
                     </el-col>
                     <el-col :span="8">
-                      <div v-if="this.$route.query.ct == 'solidity-single-file'" class="title-input">
+                      <div v-if="route.query.ct == 'solidity-single-file'" class="title-input">
                         <p>EVM Version to target</p>
                         <el-select v-model="evmVersionValue" size="large" style="width: 100%" disabled> </el-select>
                       </div>
