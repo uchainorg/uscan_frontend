@@ -92,7 +92,7 @@ const exportData = async () => {
       const a = document.createElement('a');
       a.style.display = 'none';
       a.href = url;
-      a.setAttribute('download', 'excel.xls');
+      a.setAttribute('download', 'exportData.xls');
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(a.href);
