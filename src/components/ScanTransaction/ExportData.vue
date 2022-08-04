@@ -36,7 +36,7 @@ import { useRoute } from 'vue-router';
 
 const route = useRoute();
 
-const value = ref([Date.now() - 7 * 24 * 60 * 60 * 1000, Date.now()]);
+const value = ref([0, 0]);
 const type = ref(route.query.type as string);
 const address = ref(route.query.a as string);
 const title = ref('Transactions');
@@ -62,6 +62,11 @@ watchEffect(() => {
 });
 
 const exportData = async () => {
+  if (value.value[0] == 0 || value.value[1] == 0) {
+    value.value[0] = Date.now() - 7 * 24 * 60 * 60 * 1000;
+    value.value[1] = Date.now();
+  }
+
   const beginTime = parseInt((value.value[0] / 1000) as any as string);
   const endTime = parseInt((value.value[1] / 1000) as any as string);
 
@@ -92,7 +97,7 @@ const exportData = async () => {
       const a = document.createElement('a');
       a.style.display = 'none';
       a.href = url;
-      a.setAttribute('download', 'exportData.xls');
+      a.setAttribute('download', 'export-' + address.value + '.xls');
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(a.href);
