@@ -70,6 +70,15 @@
               @current-change="handleCurrentChange"
             />
           </div>
+          <div style="float: right; margin-top: -25px">
+            <div class="download">[ Download</div>
+            <router-link class="download" :to="'/exportData?type=txns' + '&a=' + props.address">
+              excel Export
+            </router-link>
+            <div class="download">
+              <el-icon><Download /></el-icon>]
+            </div>
+          </div>
         </el-tab-pane>
         <el-tab-pane v-if="internalCount != 0" name="internal">
           <template #label>
@@ -91,6 +100,15 @@
               @size-change="handleInternalSizeChange"
               @current-change="handleInternalCurrentChange"
             />
+          </div>
+          <div style="float: right; margin-top: -25px">
+            <div class="download">[ Download</div>
+            <router-link class="download" :to="'/exportData?type=txns-internal' + '&a=' + props.address">
+              excel Export
+            </router-link>
+            <div class="download">
+              <el-icon><Download /></el-icon>]
+            </div>
           </div>
         </el-tab-pane>
         <el-tab-pane v-if="!isVerify" label="Contract" name="contract">

@@ -114,3 +114,7 @@ GET {{scanHost}}/chain-scan/v1/txs/0x276bc6ffe4ac99be64ba1f5b3c264e170d881c3be4b
 ###
 // tracetx2 geth debug trace2
 GET {{scanHost}}/chain-scan/v1/txs/0x276bc6ffe4ac99be64ba1f5b3c264e170d881c3be4b9e40d8d044988a2134872/tracetx2
+
+###
+// download
+GET {{scanHost}}/chain-scan/v1/accounts/0x20cD8eB93c50BDAc35d6A526f499c0104958e3F6/txns/download

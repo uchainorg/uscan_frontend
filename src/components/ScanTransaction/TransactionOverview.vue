@@ -66,7 +66,6 @@
             {{ ethers.utils.formatEther(scope.row.parameterValue) }} Eth
           </div>
           <div v-else-if="scope.row.parameterName == 'tokensTransferred'">
-            <!-- <tokens-transferred :tokensTransferData="scope.row.parameterValue"></tokens-transferred> -->
             <div :class="scope.row.parameterValue.length >= 3 ? 'rolling' : ''">
               <div v-for="(trans, index) in scope.row.parameterValue" :key="index">
                 <div class="center-row">

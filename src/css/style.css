@@ -291,3 +291,14 @@
   margin-top: 50px;
   margin-bottom: 30px;
 }
+
+.el-tabs {
+  margin-top: 20px;
+}
+
+.download {
+  display: inline;
+  font-size: 15px;
+  font-weight: bold;
+  color: #8c98a4;
+}
