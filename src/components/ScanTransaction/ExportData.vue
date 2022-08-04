@@ -65,7 +65,7 @@ const exportData = async () => {
   const beginTime = parseInt((value.value[0] / 1000) as any as string);
   const endTime = parseInt((value.value[1] / 1000) as any as string);
 
-  console.log('beginTime', beginTime, 'endTime', endTime, 'address', address.value, 'type', type.value);
+  // console.log('beginTime', beginTime, 'endTime', endTime, 'address', address.value, 'type', type.value);
 
   axios({
     method: 'get',
