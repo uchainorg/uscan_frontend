@@ -69,7 +69,7 @@
                   </el-upload>
                   <div style="color: red" v-if="fileRequired"><p>Required</p></div>
                 </div>
-                <div v-if="this.fileList.length == 0">
+                <div v-if="fileList.length == 0">
                   <p>No file selected</p>
                 </div>
               </div>
