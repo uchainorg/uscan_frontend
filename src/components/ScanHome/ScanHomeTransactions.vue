@@ -36,7 +36,11 @@
               <div style="text-align: right">
                 <!-- <el-tag type="info">{{ this.$wei2gwei(scope.row.gas) }} Gwei</el-tag> -->
                 <el-tag type="info">
-                  {{ ethers.utils.formatUnits(scope.row.gas * scope.row.gasPrice, 18) }} Eth
+                  {{
+                    ethers.utils.formatUnits((parseInt(scope.row.gas) * parseInt(scope.row.gasPrice)).toString(), 18)
+                  }}
+                  Eth
+                  <!-- {{ scope.row.gas }} Eth -->
                 </el-tag>
               </div>
             </el-tooltip>
@@ -45,18 +49,18 @@
       </el-table-column>
     </el-table>
     <div class="center">
-      <el-button class="home-bottom-button" type="primary" plain @click="moveToTxs">View all Blocks</el-button>
+      <el-button class="home-bottom-button" type="primary" plain @click="moveToTxs">View all Transactions</el-button>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-import { GetTransactions } from '../../script/service/transactionService';
+import { GetHomeTransactions } from '../../script/service/transactionService';
 import { getAge } from '../../script/utils';
 import { ethers } from 'ethers';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
-const res = await GetTransactions(0, 10, 'all', -1);
+const res = await GetHomeTransactions();
 const tableData = res.data.items;
 
 const moveToTxs = () => {

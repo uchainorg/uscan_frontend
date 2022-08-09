@@ -1,10 +1,5 @@
 <template lang="">
   <div>
-    <!-- <component
-      :is="addressInfo.code === '' || addressInfo.code === null ? AccountAddress : ContractAddress"
-      :address="address"
-      :addressInfo="addressInfo"
-    ></component> -->
     <div v-if="addressInfo.code === '' || addressInfo.code === null">
       <account-address :address="address" :addressInfo="addressInfo"> </account-address>
     </div>

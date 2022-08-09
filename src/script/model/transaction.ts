@@ -143,6 +143,7 @@ export class TransactionDetail {
   effectiveGasPrice: string;
   gasUsed: number;
   root: string;
+  errorReturn: string;
   status: number;
   tokenID: number;
   transactionHash: string;
@@ -187,6 +188,7 @@ export class TransactionDetail {
    * @param {string} effectiveGasPrice
    * @param {number} gasUsed
    * @param {string} root
+   * @param {string} errorReturn
    * @param {number} status
    * @param {number} tokenID
    * @param {string} transactionHash
@@ -231,6 +233,7 @@ export class TransactionDetail {
     effectiveGasPrice: string,
     gasUsed: number,
     root: string,
+    errorReturn: string,
     status: number,
     tokenID: number,
     transactionHash: string,
@@ -274,11 +277,33 @@ export class TransactionDetail {
     this.effectiveGasPrice = effectiveGasPrice;
     this.gasUsed = gasUsed;
     this.root = root;
+    this.errorReturn = errorReturn;
     this.status = status;
     this.tokenID = tokenID;
     this.transactionHash = transactionHash;
     this.baseInfo = baseInfo;
   }
+}
+
+export interface InternalTransactionDetail {
+  transactionHash: string;
+  blockNumber: string;
+  status: number;
+  callType: string;
+  depth: string;
+  from: string;
+  to: string;
+  amount: string;
+  gasLimit: string;
+  createdTime: number;
+}
+
+export interface GethDebugTrace {
+  pc: string;
+  op: string;
+  gas: string;
+  gasCost: number;
+  depth: number;
 }
 
 export const getTxOverviews = function (tx: TransactionDetail): Overview[] {
@@ -324,8 +349,10 @@ export const getTxOverviews = function (tx: TransactionDetail): Overview[] {
   const resList: Overview[] = [];
   for (const [key, value] of txParameterMap) {
     let valueDisplay: any = tx[key as keyof TransactionDetail] as string;
-    if (valueDisplay === undefined || valueDisplay === null) {
-      continue;
+    if (valueDisplay === undefined || valueDisplay === null || valueDisplay.length === 0) {
+      if (key !== 'to') {
+        continue;
+      }
     }
     // console.log('key', key, 'value', valueDisplay);
     if (key == 'from') {
@@ -356,6 +383,11 @@ export const getTxOverviews = function (tx: TransactionDetail): Overview[] {
         baseFeePerGas: tx.baseFeePerGas,
         maxFeePerGas: tx.maxFeePerGas,
         maxPriorityFeePerGas: tx.maxPriorityFeePerGas,
+      };
+    } else if (key == 'status') {
+      valueDisplay = {
+        status: tx.status,
+        errorMsg: tx.errorReturn,
       };
     }
     resList.push(new Overview(key, value[0] + ':', valueDisplay, value[1]));
@@ -395,6 +427,15 @@ export const Erc721TransactionsHeaderList: TableHeader[] = [
   new TableHeader('From', 'from'),
   new TableHeader('To', 'to'),
   new TableHeader('TokenID', 'tokenID'),
+];
+
+export const InternalTransactionsHeaderList: TableHeader[] = [
+  new TableHeader('Parent Txn Hash', 'transactionHash'),
+  new TableHeader('Block', 'blockNumber'),
+  new TableHeader('Age', 'createdTime'),
+  new TableHeader('From', 'from'),
+  new TableHeader('To', 'to'),
+  new TableHeader('Value', 'amount'),
 ];
 
 export const TokenErc20TransactionsHeaderList: TableHeader[] = [

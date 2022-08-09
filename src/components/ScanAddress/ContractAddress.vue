@@ -70,12 +70,52 @@
               @current-change="handleCurrentChange"
             />
           </div>
+          <div style="float: right; margin-top: -25px">
+            <div class="download">[ Download</div>
+            <router-link class="download" :to="'/exportData?type=txns' + '&a=' + props.address">
+              excel Export
+            </router-link>
+            <div class="download">
+              <el-icon><Download /></el-icon>]
+            </div>
+          </div>
         </el-tab-pane>
-        <el-tab-pane v-if="contractContent" label="Contract(verified)" name="contract-verified">
-          <contract-verified-info :contractAddress="address" :contractInfo="contractContent"></contract-verified-info>
+        <el-tab-pane v-if="internalCount != 0" name="internal">
+          <template #label>
+            <span>Internal Txns({{ internalCount }})</span>
+          </template>
+          <internal-transactions
+            :txsData="internalTxsData"
+            :headerData="InternalTransactionsHeaderList"
+          ></internal-transactions>
+          <div style="margin-top: 1%; display: flex; justify-content: center">
+            <el-pagination
+              small
+              background
+              :currentPage="currentPageIndexInternal"
+              :page-size="pageSizeNumberInternal"
+              :page-sizes="[10, 25, 50, 100]"
+              layout="total, sizes, prev, pager, next, jumper"
+              :total="internalCount"
+              @size-change="handleInternalSizeChange"
+              @current-change="handleInternalCurrentChange"
+            />
+          </div>
+          <div style="float: right; margin-top: -25px">
+            <div class="download">[ Download</div>
+            <router-link class="download" :to="'/exportData?type=txns-internal' + '&a=' + props.address">
+              excel Export
+            </router-link>
+            <div class="download">
+              <el-icon><Download /></el-icon>]
+            </div>
+          </div>
         </el-tab-pane>
-        <el-tab-pane v-else label="Contract" name="contract">
+        <el-tab-pane v-if="!isVerify" label="Contract" name="contract">
           <contract-info :contractAddress="address" :codeContent="props.addressInfo.code"></contract-info>
+        </el-tab-pane>
+        <el-tab-pane v-else label="Contract(verified)" name="contract-verified">
+          <contract-verified-info :contractAddress="address" :contractInfo="contractContent"></contract-verified-info>
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -85,10 +125,15 @@
 import { ref, reactive, watchEffect } from 'vue';
 import { AddressDetail } from '../../script/model/address';
 import { ethers } from 'ethers';
-import { TransactionDetail, TransactionsHeaderList } from '../../script/model/transaction';
-import { GetTransactionsByAddress } from '../../script/service/transactionService';
+import {
+  TransactionDetail,
+  InternalTransactionDetail,
+  TransactionsHeaderList,
+  InternalTransactionsHeaderList,
+} from '../../script/model/transaction';
 import { GetVerifyContractContent } from '../../script/service/contractService';
 import { ContractContent } from '../../script/model/contract';
+import { GetTransactionsByAddress, GetInternalTransactionsByAddress } from '../../script/service/transactionService';
 
 const props = defineProps({
   address: String,
@@ -99,10 +144,15 @@ const props = defineProps({
 
 const activeName = ref('txs');
 const txsData: TransactionDetail[] = reactive([]);
+const internalTxsData: InternalTransactionDetail[] = reactive([]);
 const currentPageIndex = ref(1);
 const pageSizeNumber = ref(25);
+const currentPageIndexInternal = ref(1);
+const pageSizeNumberInternal = ref(25);
 const total = ref(0);
 const contractContent = ref({} as ContractContent);
+const isVerify = ref(false);
+const internalCount = ref(0);
 
 const handleSizeChange = async (pageSizeArg: number) => {
   txsData.length = 0;
@@ -135,8 +185,40 @@ const handleCurrentChange = async (currentPageArg: number) => {
   total.value = res.data.total;
 };
 
+const handleInternalSizeChange = async (pageSizeArg: number) => {
+  internalTxsData.length = 0;
+  currentPageIndexInternal.value = 1;
+  pageSizeNumberInternal.value = pageSizeArg;
+  const res = await GetInternalTransactionsByAddress(
+    currentPageIndex.value - 1,
+    pageSizeNumber.value,
+    props.address as string
+  );
+  res.data.items.forEach((element) => {
+    internalTxsData.push(element);
+  });
+  internalCount.value = res.data.total;
+};
+
+const handleInternalCurrentChange = async (currentPageArg: number) => {
+  internalTxsData.length = 0;
+  currentPageIndexInternal.value = currentPageArg;
+  const res = await GetInternalTransactionsByAddress(
+    currentPageIndex.value - 1,
+    pageSizeNumber.value,
+    props.address as string
+  );
+  res.data.items.forEach((element) => {
+    internalTxsData.push(element);
+  });
+  internalCount.value = res.data.total;
+};
+
 watchEffect(async () => {
-  console.log('watch', props.address);
+  currentPageIndex.value = 1;
+  pageSizeNumber.value = 25;
+
+  // console.log('watch');
   txsData.length = 0;
   const res = await GetTransactionsByAddress(
     currentPageIndex.value - 1,
@@ -150,8 +232,23 @@ watchEffect(async () => {
   });
   total.value = res.data.total;
 
+  internalTxsData.length = 0;
+  const resInternal = await GetInternalTransactionsByAddress(
+    currentPageIndexInternal.value - 1,
+    pageSizeNumberInternal.value,
+    props.address as string
+  );
+  resInternal.data.items.forEach((element) => {
+    internalTxsData.push(element);
+  });
+  internalCount.value = resInternal.data.total;
+  // console.log('internalTxsData', internalTxsData);
+
   const contractContentRes = await GetVerifyContractContent(props.address as string);
   contractContent.value = contractContentRes.data;
+  if (contractContentRes.data) {
+    isVerify.value = true;
+  }
   // console.log('contractContentRes', contractContentRes.data);
   activeName.value = 'txs';
 });

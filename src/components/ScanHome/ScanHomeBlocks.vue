@@ -12,7 +12,7 @@
             <el-col :span="18">
               <div>
                 <router-link :to="'/block/' + parseInt(scope.row.number)">{{ parseInt(scope.row.number) }}</router-link>
-                <div>{{ getAge(scope.row.createdTime) }}</div>
+                <div>{{ getAge(scope.row.timestamp) }}</div>
               </div>
             </el-col>
           </el-row>
@@ -60,7 +60,7 @@ import { ethers } from 'ethers';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
-const res = await GetBlocks(0, 10);
+const res = await GetBlocks(false, 0, 10);
 const tableData = res.data.items;
 
 const moveToBlocks = () => {

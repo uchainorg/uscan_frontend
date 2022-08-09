@@ -63,7 +63,7 @@ const initData = () => {
     let index = 0;
     JSON.parse(abi).forEach((elementFunc: any) => {
       if (elementFunc.stateMutability == 'nonpayable' && elementFunc.type == 'function') {
-        console.log('elementFunc', elementFunc);
+        // console.log('elementFunc', elementFunc);
         const inputsArg: any[] = [];
         if (elementFunc.inputs) {
           if (elementFunc.inputs.length != 0) {
@@ -108,7 +108,7 @@ const initData = () => {
 initData();
 
 const write = async (functionObject: any) => {
-  console.log(functionObject);
+  // console.log(functionObject);
   if (JSON.parse(abi).length != 0) {
     const provider = new ethers.providers.Web3Provider((window as any).ethereum);
     if ((window as any).ethereum._state.accounts.length == 0) {

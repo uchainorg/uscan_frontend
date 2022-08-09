@@ -38,6 +38,46 @@
             @current-change="handleCurrentChange"
           />
         </div>
+        <div style="float: right; margin-top: -25px">
+          <div class="download">[ Download</div>
+          <router-link class="download" :to="'/exportData?type=txns' + '&a=' + props.address">
+            excel Export
+          </router-link>
+          <div class="download">
+            <el-icon><Download /></el-icon>]
+          </div>
+        </div>
+      </el-tab-pane>
+      <el-tab-pane v-if="internalCount != 0" name="internal">
+        <template #label>
+          <span>Internal Txns({{ internalCount }})</span>
+        </template>
+        <internal-transactions
+          :txsData="internalTxsData"
+          :headerData="InternalTransactionsHeaderList"
+        ></internal-transactions>
+        <div style="margin-top: 1%; display: flex; justify-content: center">
+          <el-pagination
+            small
+            background
+            :currentPage="currentPageIndex"
+            :page-size="pageSizeNumber"
+            :page-sizes="[10, 25, 50, 100]"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="internalCount"
+            @size-change="handleInternalSizeChange"
+            @current-change="handleInternalCurrentChange"
+          />
+        </div>
+        <div style="float: right; margin-top: -25px">
+          <div class="download">[ Download</div>
+          <router-link class="download" :to="'/exportData?type=txns-internal' + '&a=' + props.address">
+            excel Export
+          </router-link>
+          <div class="download">
+            <el-icon><Download /></el-icon>]
+          </div>
+        </div>
       </el-tab-pane>
       <el-tab-pane v-if="erc20count != 0" name="erc20">
         <template #label>
@@ -56,6 +96,16 @@
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
           />
+        </div>
+
+        <div style="float: right; margin-top: -25px">
+          <div class="download">[ Download</div>
+          <router-link class="download" :to="'/exportData?type=txns-erc20' + '&a=' + props.address">
+            excel Export
+          </router-link>
+          <div class="download">
+            <el-icon><Download /></el-icon>]
+          </div>
         </div>
       </el-tab-pane>
       <el-tab-pane v-if="erc721count != 0" name="erc721">
@@ -76,6 +126,15 @@
             @current-change="handleCurrentChange"
           />
         </div>
+        <div style="float: right; margin-top: -25px">
+          <div class="download">[ Download</div>
+          <router-link class="download" :to="'/exportData?type=txns-erc721' + '&a=' + props.address">
+            excel Export
+          </router-link>
+          <div class="download">
+            <el-icon><Download /></el-icon>]
+          </div>
+        </div>
       </el-tab-pane>
       <el-tab-pane v-if="erc1155count != 0" name="erc1155">
         <template #label>
@@ -95,6 +154,15 @@
             @current-change="handleCurrentChange"
           />
         </div>
+        <div style="float: right; margin-top: -25px">
+          <div class="download">[ Download</div>
+          <router-link class="download" :to="'/exportData?type=txns-erc1155' + '&a=' + props.address">
+            excel Export
+          </router-link>
+          <div class="download">
+            <el-icon><Download /></el-icon>]
+          </div>
+        </div>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -108,9 +176,12 @@ import {
   TransactionsHeaderList,
   Erc721TransactionsHeaderList,
   Erc20TransactionsHeaderList,
+  InternalTransactionsHeaderList,
+  InternalTransactionDetail,
 } from '../../script/model/transaction';
 import { TableHeader } from '../../script/model/index';
-import { GetTransactionsByAddress } from '../../script/service/transactionService';
+import { GetTransactionsByAddress, GetInternalTransactionsByAddress } from '../../script/service/transactionService';
+import { Download } from '@element-plus/icons-vue';
 
 const props = defineProps({
   address: String,
@@ -121,6 +192,7 @@ const props = defineProps({
 
 const activeName = ref('txs');
 const txsData: TransactionDetail[] = reactive([]);
+const internalTxsData: InternalTransactionDetail[] = reactive([]);
 const headerData: TableHeader[] = reactive([]);
 const currentPageIndex = ref(1);
 const pageSizeNumber = ref(25);
@@ -128,9 +200,12 @@ const total = ref(0);
 const erc20count = ref(0);
 const erc721count = ref(0);
 const erc1155count = ref(0);
+const internalCount = ref(0);
 
 watch(props, async () => {
   // console.log('update');
+  currentPageIndex.value = 1;
+  pageSizeNumber.value = 25;
   if (props.addressInfo?.id !== undefined) {
     txsData.length = 0;
     if (activeName.value === 'txs') {
@@ -170,10 +245,21 @@ watch(props, async () => {
       props.address as string
     );
     erc1155count.value = resErc1155.data.total;
+
+    const resInternal = await GetInternalTransactionsByAddress(
+      currentPageIndex.value - 1,
+      pageSizeNumber.value,
+      props.address as string
+    );
+    internalCount.value = resInternal.data.total;
+    // console.log('resInternal', resInternal);
   }
 });
 
 watch(activeName, async (currentValue) => {
+  currentPageIndex.value = 1;
+  pageSizeNumber.value = 25;
+
   // console.log('switch', currentValue);
   txsData.length = 0;
   headerData.length = 0;
@@ -185,18 +271,32 @@ watch(activeName, async (currentValue) => {
     headerData.push(...Erc721TransactionsHeaderList);
   } else if (activeName.value === 'erc1155') {
     headerData.push(...Erc721TransactionsHeaderList);
+  } else if (activeName.value === 'internal') {
+    headerData.push(...InternalTransactionsHeaderList);
   }
 
-  const res = await GetTransactionsByAddress(
-    currentPageIndex.value - 1,
-    pageSizeNumber.value,
-    activeName.value,
-    props.address as string
-  );
-  res.data.items.forEach((element) => {
-    txsData.push(element);
-  });
-  total.value = res.data.total;
+  if (activeName.value == 'internal') {
+    const resInternal = await GetInternalTransactionsByAddress(
+      currentPageIndex.value - 1,
+      pageSizeNumber.value,
+      props.address as string
+    );
+    resInternal.data.items.forEach((element) => {
+      internalTxsData.push(element);
+    });
+    internalCount.value = resInternal.data.total;
+  } else {
+    const res = await GetTransactionsByAddress(
+      currentPageIndex.value - 1,
+      pageSizeNumber.value,
+      activeName.value,
+      props.address as string
+    );
+    res.data.items.forEach((element) => {
+      txsData.push(element);
+    });
+    total.value = res.data.total;
+  }
 });
 
 const handleSizeChange = async (pageSizeArg: number) => {
@@ -228,6 +328,35 @@ const handleCurrentChange = async (currentPageArg: number) => {
     txsData.push(element);
   });
   total.value = res.data.total;
+};
+
+const handleInternalSizeChange = async (pageSizeArg: number) => {
+  internalTxsData.length = 0;
+  currentPageIndex.value = 1;
+  pageSizeNumber.value = pageSizeArg;
+  const res = await GetInternalTransactionsByAddress(
+    currentPageIndex.value - 1,
+    pageSizeNumber.value,
+    props.address as string
+  );
+  res.data.items.forEach((element) => {
+    internalTxsData.push(element);
+  });
+  internalCount.value = res.data.total;
+};
+
+const handleInternalCurrentChange = async (currentPageArg: number) => {
+  internalTxsData.length = 0;
+  currentPageIndex.value = currentPageArg;
+  const res = await GetInternalTransactionsByAddress(
+    currentPageIndex.value - 1,
+    pageSizeNumber.value,
+    props.address as string
+  );
+  res.data.items.forEach((element) => {
+    internalTxsData.push(element);
+  });
+  internalCount.value = res.data.total;
 };
 </script>
 <style lang="less" scoped>

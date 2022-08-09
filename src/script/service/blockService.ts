@@ -2,11 +2,19 @@ import request from './request';
 import { ResponseType, BlocksResponse } from '../model/index';
 import { BlockDetail } from '../model/block';
 
-export const GetBlocks = function (pageNumber: number, pageSize: number): Promise<ResponseType<BlocksResponse>> {
+export const GetBlocks = function (
+  allView: boolean,
+  pageNumber: number,
+  pageSize: number
+): Promise<ResponseType<BlocksResponse>> {
   const offset = pageNumber * pageSize;
   const limit = pageSize;
+  let url = '/v1/blocks?offset=' + offset + '&limit=' + limit;
+  if (allView) {
+    url = url + '&allView=true';
+  }
   return request<BlocksResponse>({
-    url: '/v1/blocks?offset=' + offset + '&limit=' + limit,
+    url: url,
     method: 'get',
   });
 };

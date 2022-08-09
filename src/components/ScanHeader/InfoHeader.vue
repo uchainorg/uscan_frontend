@@ -98,9 +98,12 @@ const handleSelect = (item: LinkItem) => {
   }
 };
 const searchFilter = () => {
-  inputValue.value = '';
-  if (searchRes.value?.link) {
-    router.push(searchRes.value?.link);
+  if (inputValue.value.trim() !== '') {
+    if (searchRes.value?.link) {
+      router.push(searchRes.value?.link);
+    } else {
+      router.push('search/' + inputValue.value.trim());
+    }
   }
 };
 

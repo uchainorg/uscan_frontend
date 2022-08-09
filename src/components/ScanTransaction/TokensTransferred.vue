@@ -1,6 +1,6 @@
 <template lang="">
   <div :class="isRolling ? 'rolling' : ''">
-    <div v-for="(trans, index) in this.tokensTransferData" :key="index">
+    <div v-for="(trans, index) in tokensTransferData" :key="index">
       <div class="center-row">
         <div style="font-weight: bold">From</div>
         &nbsp;&nbsp;&nbsp;
@@ -11,7 +11,7 @@
         <router-link :to="'/address/' + trans.to">{{ trans.to.slice(0, 18) + '...' }}</router-link>
         &nbsp;&nbsp;&nbsp;
         <router-link :to="'/address/' + trans.address">
-          <div v-if="trans.addressName.length != 0">{{ trans.addressName }}</div>
+          <div v-if="trans.addressName">{{ trans.addressName }}</div>
           <div v-else>
             {{ trans.address.slice(0, 18) + '...' }}
           </div>
@@ -33,8 +33,13 @@ const props = defineProps({
   },
 });
 
-if ((props.tokensTransferData as TokensTransferred[]).length >= 3) {
-  isRolling.value = true;
+// console.log('tokensTransferData init', props.tokensTransferData);
+
+if (props.tokensTransferData?.length != 0) {
+  // console.log('tokensTransferData', props.tokensTransferData);
+  if ((props.tokensTransferData as TokensTransferred[]).length >= 3) {
+    isRolling.value = true;
+  }
 }
 </script>
 <style lang="less" scoped>

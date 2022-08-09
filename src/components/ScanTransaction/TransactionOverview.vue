@@ -48,9 +48,9 @@
             </div>
             <div class="center-row" v-else-if="scope.row.parameterValue.toCode != ''">
               Contract &nbsp;
-              <router-link :to="'/address/' + scope.row.parameterValue.to"
-                >{{ scope.row.parameterValue.to }} &nbsp; {{ scope.row.parameterValue.toName }}</router-link
-              >
+              <router-link :to="'/address/' + scope.row.parameterValue.to">
+                {{ scope.row.parameterValue.to }} &nbsp; {{ scope.row.parameterValue.toName }}
+              </router-link>
               &nbsp;
               <copy-icon :text="scope.row.parameterValue.to"></copy-icon>
             </div>
@@ -66,7 +66,26 @@
             {{ ethers.utils.formatEther(scope.row.parameterValue) }} Eth
           </div>
           <div v-else-if="scope.row.parameterName == 'tokensTransferred'">
-            <tokens-transferred :tokensTransferData="scope.row.parameterValue"></tokens-transferred>
+            <div :class="scope.row.parameterValue.length >= 3 ? 'rolling' : ''">
+              <div v-for="(trans, index) in scope.row.parameterValue" :key="index">
+                <div class="center-row">
+                  <div style="font-weight: bold">From</div>
+                  &nbsp;&nbsp;&nbsp;
+                  <router-link :to="'/address/' + trans.from">{{ trans.from.slice(0, 18) + '...' }}</router-link>
+                  &nbsp;&nbsp;&nbsp;
+                  <div style="font-weight: bold">To</div>
+                  &nbsp;&nbsp;&nbsp;
+                  <router-link :to="'/address/' + trans.to">{{ trans.to.slice(0, 18) + '...' }}</router-link>
+                  &nbsp;&nbsp;&nbsp;
+                  <router-link :to="'/address/' + trans.address">
+                    <div v-if="trans.addressName">{{ trans.addressName }}</div>
+                    <div v-else>
+                      {{ trans.address.slice(0, 18) + '...' }}
+                    </div>
+                  </router-link>
+                </div>
+              </div>
+            </div>
           </div>
           <div v-else-if="scope.row.parameterName == 'gas'">
             {{ scope.row.parameterValue.gasUsed }} Gwei | {{ scope.row.parameterValue.gasLimit }} Gwei({{
@@ -86,17 +105,18 @@
             </textarea>
           </div>
           <div v-else-if="scope.row.parameterName == 'status'">
-            <div v-if="scope.row.parameterValue == 1">
+            <div v-if="scope.row.parameterValue.status == 1">
               <div class="success-status">
                 <el-icon color="green"><SuccessFilled /></el-icon> &nbsp; Success
               </div>
             </div>
-            <div v-if="scope.row.parameterValue == 0">
+            <div v-if="scope.row.parameterValue.status == 0">
               <div class="fail-status">
                 <el-icon color="red"><Failed /></el-icon> &nbsp; Fail
               </div>
+              Fail reason : {{ scope.row.parameterValue.errorMsg }}
             </div>
-            <div v-if="scope.row.parameterValue == 3">
+            <div v-if="scope.row.parameterValue.status == 3">
               <div class="pending-status">
                 <el-icon><VideoPause /></el-icon> &nbsp; Pending
               </div>
@@ -114,22 +134,41 @@ import { GetTxByHash } from '../../script/service/transactionService';
 import { getTxOverviews } from '../../script/model/transaction';
 import { QuestionFilled, Clock, SuccessFilled, Failed, VideoPause } from '@element-plus/icons-vue';
 import { getAge } from '../../script/utils';
-import { watchEffect, reactive } from 'vue';
+import { reactive, watch } from 'vue';
 import { ethers } from 'ethers';
+import { useRoute } from 'vue-router';
 
 const props = defineProps({
   txHash: String,
 });
 
+const route = useRoute();
+
 const overviews: any[] = reactive([]);
 
-watchEffect(async () => {
+const initData = async (txHash: String) => {
   overviews.length = 0;
-  const res = await GetTxByHash(props.txHash as string);
+  const res = await GetTxByHash(txHash as string);
   getTxOverviews(res.data).forEach((element) => overviews.push(element));
-  // console.log('transaction overviews', overviews);
-});
+  console.log('transaction overviews', overviews);
+};
+
+initData(props.txHash as string);
+
+watch(
+  () => route.params,
+  async (val) => {
+    // console.log('watchsssssss', val.txHash);
+    if (val.txHash) {
+      initData(val.txHash as unknown as string);
+    }
+  }
+);
 </script>
 <style lang="less" scoped>
 @import '../../css/style.css';
+.rolling {
+  height: 100px;
+  overflow: auto;
+}
 </style>

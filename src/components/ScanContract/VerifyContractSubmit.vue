@@ -42,7 +42,7 @@
               </el-col>
             </el-row>
           </div>
-          <div v-if="this.$route.query.ct == 'solidity-single-file'" style="margin: 10px">
+          <div v-if="route.query.ct == 'solidity-single-file'" style="margin: 10px">
             <h4>Enter the Solidity Contract Code below</h4>
             <textarea
               class="byte-codes-text"
@@ -69,7 +69,7 @@
                   </el-upload>
                   <div style="color: red" v-if="fileRequired"><p>Required</p></div>
                 </div>
-                <div v-if="this.fileList.length == 0">
+                <div v-if="fileList.length == 0">
                   <p>No file selected</p>
                 </div>
               </div>
@@ -92,7 +92,7 @@
                       </div>
                     </el-col>
                     <el-col :span="8">
-                      <div v-if="this.$route.query.ct == 'solidity-single-file'" class="title-input">
+                      <div v-if="route.query.ct == 'solidity-single-file'" class="title-input">
                         <p>EVM Version to target</p>
                         <el-select v-model="evmVersionValue" size="large" style="width: 100%" disabled> </el-select>
                       </div>
@@ -262,60 +262,4 @@ const returnMain = () => {
 </script>
 <style lang="less" scoped>
 @import '../../css/style.css';
-.subtitle1 {
-  font-size: 15px;
-  font-weight: bold;
-  margin-top: 0px;
-  margin-left: 10px;
-}
-
-.content-sub {
-  display: flex;
-  width: 100%;
-  background-color: white;
-  border-radius: 0.35rem;
-}
-.subtitle {
-  border-radius: 5rem;
-  padding-left: 15px;
-  padding-right: 15px;
-  background-color: #00c9a7;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 75%;
-  font-weight: 700;
-  color: white;
-  margin-top: 0px;
-}
-.title-input {
-  font-size: 13px;
-}
-.submit-result {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-  margin-bottom: 30px;
-}
-.sub-info {
-  width: 100%;
-  height: 120px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  text-align: center;
-}
-.h3-title {
-  font-size: 1.4rem;
-  font-weight: 400;
-  color: #4a4f55;
-}
-
-.button-content {
-  display: flex;
-  justify-content: center;
-  margin-top: 50px;
-  margin-bottom: 30px;
-}
 </style>
