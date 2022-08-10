@@ -15,6 +15,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-document.title = 'Home | The Coq Explorer';
+import { getTitle } from '../../script/utils';
+document.title = 'Home | The ' + getTitle + ' Explorer';
 </script>
 <style></style>

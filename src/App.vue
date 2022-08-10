@@ -21,6 +21,9 @@ import { useRoute } from 'vue-router';
 import { watch, ref } from 'vue';
 import HomeHeaderVue from './components/ScanHeader/HomeHeader.vue';
 import InfoHeaderVue from './components/ScanHeader/InfoHeader.vue';
+import { getTitle } from './script/utils';
+
+document.title = 'The ' + getTitle + ' Explorer';
 
 const route = useRoute();
 const isHome = ref(false);
@@ -79,7 +82,7 @@ watch(
 
 .el-footer {
   display: flex;
-  height: 290px;
+  height: 250px;
   max-width: 1350px;
   background-color: transparent;
   justify-content: center;

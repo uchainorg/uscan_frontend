@@ -6,7 +6,7 @@
           <div class="header-left-items" @click="moveToHome">
             <img src="../../assets/logo.png" width="33" height="33" />
             &nbsp;&nbsp;
-            <p style="font-size: 23px">Coq Chain Scan</p>
+            <p style="font-size: 23px">{{ getTitle }} Chain Scan</p>
           </div>
         </el-col>
         <el-col :span="4">
@@ -31,7 +31,7 @@
     </div>
     <div class="home-header-search">
       <div class="home-header-search-content">
-        <p style="font-size: 20px; color: white">The Coq Chain Explorer</p>
+        <p style="font-size: 20px; color: white">The {{ getTitle }} Chain Explorer</p>
         <div class="search">
           <el-autocomplete
             v-model="inputValue"
@@ -56,6 +56,7 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { ArrowDown, Search } from '@element-plus/icons-vue';
 import { SearchByType } from '../../script/service/searchService';
+import { getTitle } from '../../script/utils';
 
 const router = useRouter();
 

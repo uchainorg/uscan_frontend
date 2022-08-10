@@ -70,11 +70,12 @@
 import { ref } from 'vue';
 import { GetVerifyContractMetadata } from '../../script/service/contractService';
 import { useRoute, useRouter } from 'vue-router';
+import { getTitle } from '../../script/utils';
 
 const router = useRouter();
 const route = useRoute();
 
-document.title = 'Verify & Publish Contract Source Code | The Coq Explorer';
+document.title = 'Verify & Publish Contract Source Code | The ' + getTitle + ' Explorer';
 
 interface Option {
   value: any;

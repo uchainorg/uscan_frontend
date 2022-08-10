@@ -21,8 +21,9 @@
 import { GetBlocks } from '../../script/service/blockService';
 import { BlockDetail, BlocksHeaderList } from '../../script/model/block';
 import { reactive, ref } from 'vue';
+import { getTitle } from '../../script/utils';
 
-document.title = 'Blocks | The Coq Explorer';
+document.title = 'Blocks | The ' + getTitle + ' Explorer';
 
 const currentPageIndex = ref(1);
 const pageSizeNumber = ref(25);
