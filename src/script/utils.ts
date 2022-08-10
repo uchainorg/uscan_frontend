@@ -65,4 +65,6 @@ const formatNumber = (input: number | bigint): string => {
   return input.toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
 };
 
-export { getAge, formatNumber };
+const getTitle = import.meta.env.VITE_APP_TITLE;
+
+export { getAge, formatNumber, getTitle };

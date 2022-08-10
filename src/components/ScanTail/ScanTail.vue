@@ -4,8 +4,33 @@
       <div style="width: 340px">
         <p style="font-size: 20px; color: white">Powered by Ankr</p>
         <p style="font-size: 13px; color: white">
-          Coqscan is a Block Explorer and Analytics Platform for Coq, a decentralized smart contracts platform.
+          {{ getTitle }}scan is a Block Explorer and Analytics Platform for {{ getTitle }}, a decentralized smart
+          contracts platform.
         </p>
+      </div>
+    </div>
+    <div class="item">
+      <div style="width: 200px">
+        <p style="font-size: 14px; color: white">Products</p>
+        <el-divider border-style="dotted" />
+        <div class="item-content">
+          <p>RPC Service</p>
+          <p>Advanced APIs/SDKs</p>
+          <p>Gaming SDKs</p>
+          <p>App Chains</p>
+        </div>
+      </div>
+    </div>
+    <div class="item">
+      <div style="width: 200px">
+        <p style="font-size: 14px; color: white">Developers</p>
+        <el-divider border-style="dotted" />
+        <div class="item-content">
+          <p>Docs</p>
+          <p>Grants & Programs</p>
+          <p>Hash node</p>
+          <p>Github</p>
+        </div>
       </div>
     </div>
     <div class="item">
@@ -14,39 +39,17 @@
         <el-divider border-style="dotted" />
         <div class="item-content">
           <p>About Us</p>
-          <p>About Us</p>
-          <p>About Us</p>
-          <p>About Us</p>
-        </div>
-      </div>
-    </div>
-    <div class="item">
-      <div style="width: 200px">
-        <p style="font-size: 14px; color: white">Resources</p>
-        <el-divider border-style="dotted" />
-        <div class="item-content">
-          <p>About Us</p>
-          <p>About Us</p>
-          <p>About Us</p>
-          <p>About Us</p>
-        </div>
-      </div>
-    </div>
-    <div class="item">
-      <div style="width: 200px">
-        <p style="font-size: 14px; color: white">Products & Services</p>
-        <el-divider border-style="dotted" />
-        <div class="item-content">
-          <p>About Us</p>
-          <p>About Us</p>
-          <p>About Us</p>
-          <p>About Us</p>
+          <p>Blog</p>
+          <p>Careers</p>
+          <p>Brand Assets</p>
         </div>
       </div>
     </div>
   </div>
 </template>
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { getTitle } from '../../script/utils';
+</script>
 <style lang="less" scoped>
 @import '../../css/style.css';
 .footer-container {

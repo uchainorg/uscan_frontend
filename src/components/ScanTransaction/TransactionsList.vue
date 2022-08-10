@@ -37,10 +37,11 @@ import {
 import { TableHeader } from '../../script/model/index';
 import { reactive, ref, watch, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
+import { getTitle } from '../../script/utils';
 
 const route = useRoute();
 
-document.title = 'Transactions | The Coq Explorer';
+document.title = 'Transactions | The ' + getTitle + ' Explorer';
 
 const props = defineProps({
   txsType: String,

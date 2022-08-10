@@ -16,11 +16,12 @@
 </template>
 <script lang="ts" setup>
 import { ref } from 'vue';
+import { getTitle } from '../../script/utils';
 
 const props = defineProps({
   blockNumber: String,
 });
-document.title = 'Blocks #' + props.blockNumber + ' | The Coq Explorer';
+document.title = 'Blocks #' + props.blockNumber + ' | The ' + getTitle + ' Explorer';
 const activeName = ref('first');
 </script>
 <style lang="less" scoped>

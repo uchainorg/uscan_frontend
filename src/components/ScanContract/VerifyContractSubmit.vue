@@ -155,8 +155,9 @@ import {
   SubmitVerifyContract,
   GetVerifyContractStatus,
 } from '../../script/service/contractService';
+import { getTitle } from '../../script/utils';
 
-document.title = 'Verify & Publish Contract Source Code | The Coq Explorer';
+document.title = 'Verify & Publish Contract Source Code | The ' + getTitle + ' Explorer';
 
 const route = useRoute();
 const router = useRouter();
