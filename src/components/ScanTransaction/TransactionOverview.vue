@@ -137,6 +137,9 @@ import { getAge } from '../../script/utils';
 import { reactive, watch } from 'vue';
 import { ethers } from 'ethers';
 import { useRoute } from 'vue-router';
+import { getTitle } from '../../script/utils';
+
+document.title = 'Transaction overview | The ' + getTitle + ' Explorer';
 
 const props = defineProps({
   txHash: String,
@@ -150,7 +153,7 @@ const initData = async (txHash: String) => {
   overviews.length = 0;
   const res = await GetTxByHash(txHash as string);
   getTxOverviews(res.data).forEach((element) => overviews.push(element));
-  console.log('transaction overviews', overviews);
+  // console.log('transaction overviews', overviews);
 };
 
 initData(props.txHash as string);
