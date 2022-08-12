@@ -67,4 +67,13 @@ const formatNumber = (input: number | bigint): string => {
 
 const getTitle = import.meta.env.VITE_APP_TITLE;
 
-export { getAge, formatNumber, getTitle };
+const getParenthesesStr = (text: string): string[] => {
+  const reg = /(?<=\().*(?=\))/;
+  const res1 = text.match(reg)![0];
+  // console.log('res1', res1);
+
+  const arr = res1.split(/,(?![^\(]*?\))/);
+  return arr;
+};
+
+export { getAge, formatNumber, getTitle, getParenthesesStr };

@@ -57,6 +57,7 @@ declare module '@vue/runtime-core' {
     GethDebugTrace: typeof import('./src/components/ScanTransaction/GethDebugTrace.vue')['default']
     HomeHeader: typeof import('./src/components/ScanHeader/HomeHeader.vue')['default']
     InfoHeader: typeof import('./src/components/ScanHeader/InfoHeader.vue')['default']
+    InputDataInfo: typeof import('./src/components/ScanTransaction/InputDataInfo.vue')['default']
     InternalTransactions: typeof import('./src/components/ScanTransaction/InternalTransactions.vue')['default']
     ReadContract: typeof import('./src/components/ScanContract/ContractInfo/readContract.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

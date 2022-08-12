@@ -101,8 +101,17 @@
             {{ ethers.utils.formatEther(scope.row.parameterValue.maxPriorityFeePerGas, 'gwei') }} Gwei
           </div>
           <div v-else-if="scope.row.parameterName == 'input'">
-            <textarea class="byte-codes-text" style="margin: 0px" rows="6" v-model="scope.row.parameterValue">
-            </textarea>
+            <!-- <textarea
+              class="byte-codes-text"
+              style="margin: 0px"
+              rows="6"
+              v-model="scope.row.parameterValue.inputContent"
+            >
+            </textarea> -->
+            <Input-Data-Info
+              :inputData="scope.row.parameterValue.inputContent"
+              :methodName="scope.row.parameterValue.methodName"
+            ></Input-Data-Info>
           </div>
           <div v-else-if="scope.row.parameterName == 'status'">
             <div v-if="scope.row.parameterValue.status == 1">
@@ -151,9 +160,11 @@ const overviews: any[] = reactive([]);
 
 const initData = async (txHash: String) => {
   overviews.length = 0;
+
   const res = await GetTxByHash(txHash as string);
-  getTxOverviews(res.data).forEach((element) => overviews.push(element));
-  // console.log('transaction overviews', overviews);
+  getTxOverviews(res.data).forEach((element) => {
+    overviews.push(element);
+  });
 };
 
 initData(props.txHash as string);
