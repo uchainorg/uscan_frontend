@@ -95,6 +95,18 @@ watch(
   bottom: 0;
 }
 
+@media screen and (max-width: 500px) {
+  .el-footer {
+    height: 1000px;
+  }
+  .footer {
+    margin-top: 10%;
+  }
+  .info-header {
+    height: 170px;
+  }
+}
+
 .el-container {
   width: 100%;
   min-height: 100vh;
