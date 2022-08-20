@@ -1,7 +1,7 @@
 <template lang="">
   <div>
     <el-table class="table-border" :data="overviews" empty-text="loading..." :row-style="{ height: '50px' }">
-      <el-table-column width="200">
+      <el-table-column width="240">
         <template v-slot:default="scope">
           <div class="center-row">
             <el-tooltip effect="dark" placement="top">
