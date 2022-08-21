@@ -65,6 +65,8 @@ declare module '@vue/runtime-core' {
     ScanHome: typeof import('./src/components/ScanHome/ScanHome.vue')['default']
     ScanHomeBlocks: typeof import('./src/components/ScanHome/ScanHomeBlocks.vue')['default']
     ScanHomeTransactions: typeof import('./src/components/ScanHome/ScanHomeTransactions.vue')['default']
+    ScanStastic: typeof import('./src/components/ScanHome/ScanStastic.vue')['default']
+    ScanStatistic: typeof import('./src/components/ScanHome/ScanStatistic.vue')['default']
     ScanTail: typeof import('./src/components/ScanTail/ScanTail.vue')['default']
     SearchNotFound: typeof import('./src/components/ScanHeader/SearchNotFound.vue')['default']
     SearchRes: typeof import('./src/components/ScanHeader/SearchRes.vue')['default']

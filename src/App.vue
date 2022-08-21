@@ -57,7 +57,7 @@ watch(
 .content {
   max-width: 1350px;
   margin: 0 auto;
-  margin-top: 40px;
+  margin-top: 15px;
 }
 .el-header {
   padding: 0;
@@ -72,7 +72,7 @@ watch(
 
 .home-header {
   background-color: #263258;
-  height: 300px;
+  height: 250px;
 }
 
 .info-header {

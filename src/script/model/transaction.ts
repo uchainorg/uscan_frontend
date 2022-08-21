@@ -310,6 +310,16 @@ export interface GethDebugTrace {
   depth: number;
 }
 
+export interface TransactionCount {
+  TxCount: number;
+  Erc20Tx: number;
+  Erc721Tx: number;
+  AvgDifficulty: number;
+  Difficult: number;
+  BlockCount: number;
+  Date: string;
+}
+
 export const getTxOverviews = function (tx: TransactionDetail): Overview[] {
   const txParameterMap = new Map();
   txParameterMap.set('hash', [

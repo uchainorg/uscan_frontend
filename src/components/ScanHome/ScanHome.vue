@@ -1,5 +1,10 @@
 <template lang="">
+  <!-- <scan-statistic></scan-statistic> -->
   <div class="home-content">
+    <div class="statistic">
+      <scan-statistic></scan-statistic>
+    </div>
+
     <div class="home-left">
       <Suspense>
         <scan-home-blocks></scan-home-blocks>
@@ -40,5 +45,9 @@ document.title = 'Home | The ' + getTitle + ' Explorer';
   .home-left {
     min-width: 200px;
   }
+}
+
+.statistic {
+  margin-bottom: 15px;
 }
 </style>

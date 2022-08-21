@@ -1,5 +1,5 @@
 import { BlockDetail } from './block';
-import { TransactionDetail, TransactionLog, InternalTransactionDetail } from './transaction';
+import { TransactionDetail, TransactionLog, InternalTransactionDetail, TransactionCount } from './transaction';
 import { TokenHolder, Token } from './token';
 
 export interface ResponseType<T = any> {
@@ -41,6 +41,11 @@ export interface GethDebugTraceResponse {
 export interface TokenResponse {
   items: Token[];
   total: number;
+}
+
+export interface TotalResponse {
+  data: TransactionCount[];
+  type: any;
 }
 
 /**

@@ -5,6 +5,7 @@ import {
   TransactionLogResponse,
   InternalTransactionsResponse,
   GethDebugTraceResponse,
+  TotalResponse,
 } from '../model/index';
 import { TransactionDetail } from '../model/transaction';
 
@@ -126,5 +127,16 @@ export const GetGethDebugTrace = function (
   return request<GethDebugTraceResponse>({
     url: '/v1/txs/' + txHash + '/' + type,
     method: 'get',
+  });
+};
+
+export const GetTxTotal = function (beginTime: string, endTime: string): Promise<ResponseType<TotalResponse>> {
+  return request<TotalResponse>({
+    url: '/v1/daily/trend',
+    method: 'get',
+    params: {
+      beginTime: beginTime,
+      endTime: endTime,
+    },
   });
 };
