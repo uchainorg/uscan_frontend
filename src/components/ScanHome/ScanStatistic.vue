@@ -5,7 +5,7 @@
     </div>
     <div class="statistic-right">
       <div class="content-item-left">
-        <p class="chart-title">ETHEREUM TRANSACTION HISTORY IN 14 DAYS</p>
+        <p class="chart-title">TRANSACTION HISTORY IN 14 DAYS</p>
         <div id="char" style="width: 700px; height: 200px; margin-top: -60px"></div>
       </div>
     </div>
