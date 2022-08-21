@@ -26,7 +26,7 @@ onMounted(async () => {
     dataList.push(element.Date.slice(0, 10));
     totalList.push(element.TxCount);
   });
-  console.log('GetTxTotal', res.data.data);
+  // console.log('GetTxTotal', res.data.data);
   const charEle = document.getElementById('char') as HTMLElement;
   const charEch: ECharts = init(charEle);
   const option: EChartsOption = {
@@ -57,6 +57,7 @@ onMounted(async () => {
     ],
   };
   charEch.setOption(option);
+  document.getElementById('char')!.setAttribute('_echarts_instance_', '');
 });
 </script>
 <style lang="less" scoped>
