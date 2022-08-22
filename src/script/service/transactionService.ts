@@ -7,7 +7,7 @@ import {
   GethDebugTraceResponse,
   TotalResponse,
 } from '../model/index';
-import { TransactionDetail } from '../model/transaction';
+import { TransactionDetail, TransactionOverview } from '../model/transaction';
 
 export const GetTransactions = function (
   pageNumber: number,
@@ -138,5 +138,12 @@ export const GetTxTotal = function (beginTime: string, endTime: string): Promise
       beginTime: beginTime,
       endTime: endTime,
     },
+  });
+};
+
+export const GetTxOverview = function (): Promise<ResponseType<TransactionOverview>> {
+  return request<TransactionOverview>({
+    url: '/v1/overview',
+    method: 'get',
   });
 };

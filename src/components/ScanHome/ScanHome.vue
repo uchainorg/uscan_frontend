@@ -1,5 +1,4 @@
 <template lang="">
-  <!-- <scan-statistic></scan-statistic> -->
   <div class="home-content">
     <div class="statistic">
       <scan-statistic></scan-statistic>

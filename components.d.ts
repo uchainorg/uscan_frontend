@@ -73,6 +73,7 @@ declare module '@vue/runtime-core' {
     TokenAddress: typeof import('./src/components/ScanToken/TokenAddress.vue')['default']
     TokenOverview: typeof import('./src/components/ScanToken/TokenOverview.vue')['default']
     TokensTransferred: typeof import('./src/components/ScanTransaction/TokensTransferred.vue')['default']
+    TransactionChart: typeof import('./src/components/ScanTransaction/TransactionChart.vue')['default']
     TransactionIndex: typeof import('./src/components/ScanTransaction/TransactionIndex.vue')['default']
     TransactionLogs: typeof import('./src/components/ScanTransaction/TransactionLogs.vue')['default']
     TransactionOverview: typeof import('./src/components/ScanTransaction/TransactionOverview.vue')['default']

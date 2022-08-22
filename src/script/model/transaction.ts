@@ -320,6 +320,12 @@ export interface TransactionCount {
   Date: string;
 }
 
+export interface TransactionOverview {
+  diff: number;
+  tps: number;
+  tx: number;
+}
+
 export const getTxOverviews = function (tx: TransactionDetail): Overview[] {
   const txParameterMap = new Map();
   txParameterMap.set('hash', [
