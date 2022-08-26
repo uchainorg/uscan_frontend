@@ -321,6 +321,11 @@ export interface TransactionCount {
 }
 
 export interface TransactionOverview {
+  address: number;
+  avgBlockTime: number;
+  block: number;
+  blockHeight: number;
+  dailyTx: number;
   diff: number;
   tps: number;
   tx: number;

@@ -1,5 +1,5 @@
 <template lang="">
-  <div class="log" style="">
+  <div class="log">
     <div class="content">
       <p>Transaction Receipt Event Logs</p>
       <div class="log-content">
@@ -34,7 +34,7 @@
                       </el-row>
                     </div>
                   </div>
-                  <el-row class="log-row">
+                  <el-row class="log-data-row">
                     <el-col :span="2">Data</el-col>
                     <el-col :span="22" style="word-break: break-all">
                       <div class="center-row" style="background-color: #f8f9fa; width: 90%">
@@ -45,7 +45,7 @@
                 </div>
               </el-col>
             </el-row>
-            <div style="margin-top: 50px">
+            <div>
               <el-divider />
             </div>
           </div>
@@ -68,7 +68,7 @@ const props = defineProps({
 @import '../../css/style.css';
 .log {
   width: 100%;
-  padding-bottom: 60px;
+  margin-bottom: 60px;
   background-color: white;
   border-radius: 0.35rem;
 }
@@ -77,8 +77,8 @@ const props = defineProps({
   margin-left: 15px;
 }
 .content {
-  padding-top: 10px;
-  padding-bottom: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   margin-left: 17px;
 }
 .icon-circle {
@@ -95,6 +95,11 @@ const props = defineProps({
   display: flex;
   align-items: center;
   height: 42px;
+}
+
+.log-data-row {
+  display: flex;
+  align-items: center;
 }
 .topic-index {
   color: #77838f;

@@ -1,13 +1,115 @@
 <template lang="">
   <div class="statistic-content">
-    <div class="statistic" style="margin-top: 30px">
+    <div class="statistic">
       <div class="content-item-left">
-        <p class="chart-title">TRANSACTIONS</p>
-        <p class="item-display">{{ tx }} ({{ tps }} TPS)</p>
-      </div>
-      <div class="content-item-left">
-        <p class="chart-title">DIFFICULTY</p>
-        <p class="item-display">119</p>
+        <div style="height: 50%">
+          <el-row :gutter="20">
+            <el-col :span="6">
+              <div class="statistic-item">
+                <div class="center">
+                  <el-row>
+                    <el-col>
+                      <div class="show-item-title">Address total</div>
+                    </el-col>
+                    <el-col>
+                      <div class="show-item">{{ addressCount }}</div>
+                    </el-col>
+                  </el-row>
+                </div>
+              </div>
+            </el-col>
+            <el-col :span="6">
+              <div class="statistic-item">
+                <div class="center">
+                  <el-row>
+                    <el-col>
+                      <div class="show-item-title">Average block time</div>
+                    </el-col>
+                    <el-col>
+                      <div class="show-item">{{ avgBlockTime }} s</div>
+                    </el-col>
+                  </el-row>
+                </div>
+              </div>
+            </el-col>
+            <el-col :span="6"
+              ><div class="statistic-item">
+                <div class="center">
+                  <el-row>
+                    <el-col>
+                      <div class="show-item-title">Total blocks</div>
+                    </el-col>
+                    <el-col>
+                      <div class="show-item">{{ blockTotal }}</div>
+                    </el-col>
+                  </el-row>
+                </div>
+              </div></el-col
+            >
+            <el-col :span="6"
+              ><div class="statistic-item">
+                <div class="center">
+                  <el-row>
+                    <el-col>
+                      <div class="show-item-title">Block Height</div>
+                    </el-col>
+                    <el-col>
+                      <div class="show-item">{{ blockHeight }}</div>
+                    </el-col>
+                  </el-row>
+                </div>
+              </div></el-col
+            >
+          </el-row>
+        </div>
+
+        <div style="height: 50%">
+          <el-row :gutter="20">
+            <el-col :span="6"
+              ><div class="statistic-item">
+                <div class="center">
+                  <el-row>
+                    <el-col>
+                      <div class="show-item-title">Average daily txs</div>
+                    </el-col>
+                    <el-col>
+                      <div class="show-item">{{ AverageTxs }}</div>
+                    </el-col>
+                  </el-row>
+                </div>
+              </div></el-col
+            >
+            <el-col :span="6"
+              ><div class="statistic-item">
+                <div class="center">
+                  <el-row>
+                    <el-col>
+                      <div class="show-item-title">Difficulty</div>
+                    </el-col>
+                    <el-col>
+                      <div class="show-item">{{ diff }}</div>
+                    </el-col>
+                  </el-row>
+                </div>
+              </div></el-col
+            >
+            <el-col :span="6"
+              ><div class="statistic-item">
+                <div class="center">
+                  <el-row>
+                    <el-col>
+                      <div class="show-item-title">Transactions</div>
+                    </el-col>
+                    <el-col>
+                      <div class="show-item">{{ tx }} ({{ tps }} TPS)</div>
+                    </el-col>
+                  </el-row>
+                </div>
+              </div></el-col
+            >
+            <el-col :span="6"><div class="statistic-item" /></el-col>
+          </el-row>
+        </div>
       </div>
     </div>
     <div class="statistic">
@@ -30,12 +132,22 @@ const totalList: number[] = [];
 const diff = ref(0);
 const tps = ref(0);
 const tx = ref(0);
+const addressCount = ref(0);
+const avgBlockTime = ref(0);
+const blockTotal = ref(0);
+const blockHeight = ref(0);
+const AverageTxs = ref(0);
 
 onMounted(async () => {
   const overviewRes = await GetTxOverview();
   diff.value = overviewRes.data.diff;
   tps.value = overviewRes.data.tps;
   tx.value = overviewRes.data.tx;
+  addressCount.value = overviewRes.data.address;
+  avgBlockTime.value = overviewRes.data.avgBlockTime;
+  blockTotal.value = overviewRes.data.block;
+  blockHeight.value = overviewRes.data.blockHeight;
+  AverageTxs.value = overviewRes.data.dailyTx;
 
   const res = await GetTxTotal(moment().subtract(14, 'days').format('YYYYMMDD'), moment().format('YYYYMMDD'));
   res.data.data.forEach((element) => {
@@ -119,6 +231,15 @@ onMounted(async () => {
 .content-item-left {
   width: 100%;
   height: 80%;
+  margin-left: 30px;
+  margin-right: 30px;
+  margin-top: 20px;
+}
+
+.statistic-item {
+  height: 66px;
+  width: 100%;
+  // background-color: red;
 }
 
 .chart-title {
@@ -126,6 +247,25 @@ onMounted(async () => {
   justify-content: center;
   font-size: 0.76562rem;
   color: #77838f;
+}
+
+.show-item-title {
+  display: flex;
+  justify-content: center;
+  font-size: 1rem;
+  color: #77838f;
+}
+
+.show-item {
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .item-display {
