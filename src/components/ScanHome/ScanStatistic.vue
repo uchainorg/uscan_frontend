@@ -70,7 +70,7 @@
                 <div class="center">
                   <el-row>
                     <el-col>
-                      <div class="show-item-title">Average daily txs</div>
+                      <div class="show-item-title">Daily txs</div>
                     </el-col>
                     <el-col>
                       <div class="show-item">{{ AverageTxs }}</div>
