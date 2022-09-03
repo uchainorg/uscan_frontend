@@ -37,20 +37,6 @@
                 <div class="center">
                   <el-row>
                     <el-col>
-                      <div class="show-item-title">Total blocks</div>
-                    </el-col>
-                    <el-col>
-                      <div class="show-item">{{ blockTotal }}</div>
-                    </el-col>
-                  </el-row>
-                </div>
-              </div></el-col
-            >
-            <el-col :span="6"
-              ><div class="statistic-item">
-                <div class="center">
-                  <el-row>
-                    <el-col>
                       <div class="show-item-title">Block Height</div>
                     </el-col>
                     <el-col>
@@ -60,11 +46,6 @@
                 </div>
               </div></el-col
             >
-          </el-row>
-        </div>
-
-        <div style="height: 50%">
-          <el-row :gutter="20">
             <el-col :span="6"
               ><div class="statistic-item">
                 <div class="center">
@@ -79,6 +60,11 @@
                 </div>
               </div></el-col
             >
+          </el-row>
+        </div>
+
+        <div style="height: 50%">
+          <el-row :gutter="20">
             <el-col :span="6"
               ><div class="statistic-item">
                 <div class="center">
@@ -107,7 +93,34 @@
                 </div>
               </div></el-col
             >
-            <el-col :span="6"><div class="statistic-item" /></el-col>
+            <el-col :span="6"
+              ><div class="statistic-item">
+                <div class="center">
+                  <el-row>
+                    <el-col>
+                      <div class="show-item-title">ERC20 Txs</div>
+                    </el-col>
+                    <el-col>
+                      <div class="show-item">{{ erc20Txs }}</div>
+                    </el-col>
+                  </el-row>
+                </div>
+              </div></el-col
+            >
+            <el-col :span="6"
+              ><div class="statistic-item">
+                <div class="center">
+                  <el-row>
+                    <el-col>
+                      <div class="show-item-title">ERC721 Txs</div>
+                    </el-col>
+                    <el-col>
+                      <div class="show-item">{{ erc721Txs }}</div>
+                    </el-col>
+                  </el-row>
+                </div>
+              </div></el-col
+            >
           </el-row>
         </div>
       </div>
@@ -137,6 +150,8 @@ const avgBlockTime = ref(0);
 const blockTotal = ref(0);
 const blockHeight = ref(0);
 const AverageTxs = ref(0);
+const erc20Txs = ref(0);
+const erc721Txs = ref(0);
 
 onMounted(async () => {
   const overviewRes = await GetTxOverview();
@@ -148,6 +163,8 @@ onMounted(async () => {
   blockTotal.value = overviewRes.data.block;
   blockHeight.value = overviewRes.data.blockHeight;
   AverageTxs.value = overviewRes.data.dailyTx;
+  erc20Txs.value = overviewRes.data.erc20;
+  erc721Txs.value = overviewRes.data.erc721;
 
   const res = await GetTxTotal(moment().subtract(14, 'days').format('YYYYMMDD'), moment().format('YYYYMMDD'));
   res.data.data.forEach((element) => {
