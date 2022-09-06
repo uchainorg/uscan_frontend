@@ -1,6 +1,12 @@
 import { BlockDetail } from './block';
 import { TransactionDetail, TransactionLog, InternalTransactionDetail, TransactionCount } from './transaction';
 import { TokenHolder, Token } from './token';
+import { ContractContent } from './contract';
+
+export interface ContractsResponse {
+  items: ContractContent[];
+  total: number;
+}
 
 export interface ResponseType<T = any> {
   code: number;

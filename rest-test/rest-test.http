@@ -126,3 +126,7 @@ GET {{scanHost}}/chain-scan/v1/daily/trend?beginTime=20220801&endTime=20220818
 ###
 // overview
 GET {{scanHost}}/chain-scan/v1/overview
+
+###
+// overview
+GET {{scanHost}}/chain-scan/v1/accounts?type=1
