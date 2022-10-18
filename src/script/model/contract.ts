@@ -1,3 +1,5 @@
+import { TableHeader } from './index';
+
 /**
  * Metadata
  * @class
@@ -52,3 +54,10 @@ export interface ContractContent {
   metadata: any;
   object: string;
 }
+
+export const ContractsHeaderList: TableHeader[] = [
+  new TableHeader('Contract Address', 'owner'),
+  new TableHeader('Creator', 'creator'),
+  new TableHeader('Name', 'name'),
+  new TableHeader('Symbol', 'symbol'),
+];

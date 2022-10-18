@@ -1,6 +1,6 @@
 <template lang="">
   <div class="footer-container">
-    <div class="item" style="width: 600px">
+    <div class="item" style="width: 400px">
       <div style="width: 340px">
         <p style="font-size: 20px; color: white">Powered by Ankr</p>
         <p style="font-size: 13px; color: white">
@@ -56,6 +56,7 @@ import { getTitle } from '../../script/utils';
   margin-top: 13px;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
 }
 .item {
   width: 50px;

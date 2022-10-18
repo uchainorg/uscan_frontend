@@ -18,7 +18,7 @@
           </el-row>
         </template>
       </el-table-column>
-      <el-table-column>
+      <el-table-column width="250">
         <template v-slot:default="scope">
           <div>
             Miner

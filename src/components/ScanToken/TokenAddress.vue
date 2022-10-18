@@ -64,7 +64,11 @@
     <div>
       <el-tabs v-model="activeName">
         <el-tab-pane label="Transactions" name="transactions">
-          <generate-transactions :txsData="txsData" :headerData="headerDataTx"></generate-transactions>
+          <generate-transactions
+            :txsData="txsData"
+            :headerData="headerDataTx"
+            :loadStatus="isEmpty"
+          ></generate-transactions>
           <div style="margin-top: 1%; display: flex; justify-content: center">
             <el-pagination
               small
@@ -136,6 +140,7 @@ const headerDataTx: TableHeader[] = reactive([]);
 const txsData: TransactionDetail[] = reactive([]);
 const holdersData: TokenHolder[] = reactive([]);
 const headerDataHolder: TableHeader[] = reactive([]);
+const isEmpty = ref(true);
 
 let tokenType = '';
 
@@ -172,6 +177,9 @@ const tokenHoldersByAddressRes = await GetTokenHoldersByAddress(
 const holdersTotal = tokenHoldersByAddressRes.data.total;
 // console.log('tokenHoldersByAddressRes', tokenHoldersByAddressRes);
 tokenHoldersByAddressRes.data.items.forEach((element) => holdersData.push(element));
+if (tokenHoldersByAddressRes.data.total == 0) {
+  isEmpty.value = false;
+}
 
 const tokenTransactionRes = await GetTransactionsByToken(
   props.address as string,

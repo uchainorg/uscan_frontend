@@ -68,11 +68,12 @@ import { TransactionDetail } from '../../script/model/transaction';
 import { TableHeader } from '../../script/model/index';
 import { getAge } from '../../script/utils';
 import { ethers } from 'ethers';
-import { ref } from 'vue';
+import { ref, watchEffect } from 'vue';
 import { View } from '@element-plus/icons-vue';
 
 const emptyText = ref('loading...');
 const props = defineProps({
+  loadStatus: Boolean,
   txsData: {
     type: Array as () => Array<TransactionDetail>,
     require: true,
@@ -81,6 +82,12 @@ const props = defineProps({
     type: Array as () => Array<TableHeader>,
     require: true,
   },
+});
+watchEffect(() => {
+  console.log(props.loadStatus);
+  if (!props.loadStatus) {
+    emptyText.value = 'empty data';
+  }
 });
 
 // console.log('txsData', props.txsData);

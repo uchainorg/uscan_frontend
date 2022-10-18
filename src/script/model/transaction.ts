@@ -148,6 +148,7 @@ export class TransactionDetail {
   tokenID: number;
   transactionHash: string;
   baseInfo: boolean = false;
+  methodName: string;
   /**
    * Create a Transaction.
    * @param {string} hash
@@ -193,6 +194,7 @@ export class TransactionDetail {
    * @param {number} tokenID
    * @param {string} transactionHash
    * @param {boolean} baseInfo
+   * @param {string} methodName
    */
   constructor(
     hash: string,
@@ -237,7 +239,8 @@ export class TransactionDetail {
     status: number,
     tokenID: number,
     transactionHash: string,
-    baseInfo: boolean
+    baseInfo: boolean,
+    methodName: string
   ) {
     this.hash = hash;
     this.method = method;
@@ -282,6 +285,7 @@ export class TransactionDetail {
     this.tokenID = tokenID;
     this.transactionHash = transactionHash;
     this.baseInfo = baseInfo;
+    this.methodName = methodName;
   }
 }
 
@@ -304,6 +308,29 @@ export interface GethDebugTrace {
   gas: string;
   gasCost: number;
   depth: number;
+}
+
+export interface TransactionCount {
+  TxCount: number;
+  Erc20Tx: number;
+  Erc721Tx: number;
+  AvgDifficulty: number;
+  Difficult: number;
+  BlockCount: number;
+  Date: string;
+}
+
+export interface TransactionOverview {
+  address: number;
+  avgBlockTime: number;
+  block: number;
+  blockHeight: number;
+  dailyTx: number;
+  diff: number;
+  tps: number;
+  tx: number;
+  erc20: number;
+  erc721: number;
 }
 
 export const getTxOverviews = function (tx: TransactionDetail): Overview[] {
@@ -388,6 +415,11 @@ export const getTxOverviews = function (tx: TransactionDetail): Overview[] {
       valueDisplay = {
         status: tx.status,
         errorMsg: tx.errorReturn,
+      };
+    } else if (key == 'input') {
+      valueDisplay = {
+        inputContent: tx.input,
+        methodName: tx.methodName,
       };
     }
     resList.push(new Overview(key, value[0] + ':', valueDisplay, value[1]));

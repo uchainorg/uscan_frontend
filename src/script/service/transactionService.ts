@@ -5,8 +5,9 @@ import {
   TransactionLogResponse,
   InternalTransactionsResponse,
   GethDebugTraceResponse,
+  TotalResponse,
 } from '../model/index';
-import { TransactionDetail } from '../model/transaction';
+import { TransactionDetail, TransactionOverview } from '../model/transaction';
 
 export const GetTransactions = function (
   pageNumber: number,
@@ -125,6 +126,24 @@ export const GetGethDebugTrace = function (
 ): Promise<ResponseType<GethDebugTraceResponse>> {
   return request<GethDebugTraceResponse>({
     url: '/v1/txs/' + txHash + '/' + type,
+    method: 'get',
+  });
+};
+
+export const GetTxTotal = function (beginTime: string, endTime: string): Promise<ResponseType<TotalResponse>> {
+  return request<TotalResponse>({
+    url: '/v1/daily/trend',
+    method: 'get',
+    params: {
+      beginTime: beginTime,
+      endTime: endTime,
+    },
+  });
+};
+
+export const GetTxOverview = function (): Promise<ResponseType<TransactionOverview>> {
+  return request<TransactionOverview>({
+    url: '/v1/overview',
     method: 'get',
   });
 };

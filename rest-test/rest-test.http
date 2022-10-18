@@ -118,3 +118,15 @@ GET {{scanHost}}/chain-scan/v1/txs/0x276bc6ffe4ac99be64ba1f5b3c264e170d881c3be4b
 ###
 // download
 GET {{scanHost}}/chain-scan/v1/accounts/0x20cD8eB93c50BDAc35d6A526f499c0104958e3F6/txns/download
+
+###
+// total
+GET {{scanHost}}/chain-scan/v1/daily/trend?beginTime=20220801&endTime=20220818
+
+###
+// overview
+GET {{scanHost}}/chain-scan/v1/overview
+
+###
+// overview
+GET {{scanHost}}/chain-scan/v1/accounts?type=1

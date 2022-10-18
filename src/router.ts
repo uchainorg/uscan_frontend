@@ -20,6 +20,11 @@ const routes: Array<RouteRecordRaw> = [
   { path: '/search/not-found', component: () => import('./components/ScanHeader/SearchNotFound.vue') },
   { path: '/vmtrace', component: () => import('./components/ScanTransaction/GethDebugTrace.vue') },
   { path: '/exportData', component: () => import('./components/ScanTransaction/ExportData.vue') },
+  {
+    path: '/contracts/:contractType',
+    component: () => import('./components/ScanContract/ContractList.vue'),
+    props: true,
+  },
 ];
 
 const router = createRouter({
