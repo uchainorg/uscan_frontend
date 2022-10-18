@@ -10,7 +10,7 @@
       </el-button>
     </div>
 
-    <generate-transactions :txsData="txsData" :headerData="headerData"></generate-transactions>
+    <generate-transactions :txsData="txsData" :headerData="headerData" :loadStatus="isEmpty"></generate-transactions>
     <div style="margin-top: 1%; display: flex; justify-content: center">
       <el-pagination
         small
@@ -55,6 +55,7 @@ const total = ref(0);
 const blockNumber: number = route.query.block === undefined ? -1 : (route.query.block as unknown as number);
 const tableTitle = ref('title');
 const txType = ref('');
+const isEmpty = ref(true);
 
 onMounted(() => {
   setTitle();
@@ -82,6 +83,9 @@ const getTransactions = async () => {
       txsData.push(element);
     });
     total.value = res.data.total;
+    if (res.data.total == 0) {
+      isEmpty.value = false;
+    }
   }
 };
 

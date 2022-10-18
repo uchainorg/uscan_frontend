@@ -25,7 +25,11 @@
     <div>
       <el-tabs v-model="activeName">
         <el-tab-pane label="Transactions" name="txs">
-          <generate-transactions :txsData="txsData" :headerData="Erc721TransactionsHeaderList"></generate-transactions>
+          <generate-transactions
+            :txsData="txsData"
+            :headerData="Erc721TransactionsHeaderList"
+            :loadStatus="isEmpty"
+          ></generate-transactions>
           <div style="margin-top: 1%; display: flex; justify-content: center">
             <el-pagination
               small
@@ -68,6 +72,7 @@ const headerData: TableHeader[] = reactive([]);
 const currentPageIndex = ref(1);
 const pageSizeNumber = ref(25);
 const total = ref(0);
+const isEmpty = ref(true);
 
 const nftDetail = await GetNFTDetailByID(props.address as string, props.tokenID as string, props.type as string);
 // console.log('nftDetail', nftDetail.data);
@@ -95,6 +100,9 @@ const GetTransactions = async () => {
       txsData.push(element);
     });
     total.value = nftTransactions.data.total;
+    if (nftTransactions.data.total == 0) {
+      isEmpty.value = false;
+    }
   }
 };
 

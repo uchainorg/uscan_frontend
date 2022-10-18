@@ -19,6 +19,7 @@ declare module '@vue/runtime-core' {
     ContractInfo: typeof import('./src/components/ScanContract/ContractInfo.vue')['default']
     ContractList: typeof import('./src/components/ScanContract/ContractList.vue')['default']
     ContractVerifiedInfo: typeof import('./src/components/ScanContract/ContractVerifiedInfo.vue')['default']
+    copy: typeof import('./src/components/ScanAddress/ContractAddress copy.vue')['default']
     CopyIcon: typeof import('./src/components/Copy/CopyIcon.vue')['default']
     ElAutocomplete: typeof import('element-plus/es')['ElAutocomplete']
     ElButton: typeof import('element-plus/es')['ElButton']

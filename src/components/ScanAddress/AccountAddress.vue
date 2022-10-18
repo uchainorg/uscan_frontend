@@ -24,7 +24,11 @@
     </div>
     <el-tabs v-model="activeName">
       <el-tab-pane label="Transactions" name="txs">
-        <generate-transactions :txsData="txsData" :headerData="headerData"></generate-transactions>
+        <generate-transactions
+          :txsData="txsData"
+          :headerData="headerData"
+          :loadStatus="isEmpty"
+        ></generate-transactions>
         <div style="margin-top: 1%; display: flex; justify-content: center">
           <el-pagination
             small
@@ -83,7 +87,11 @@
         <template #label>
           <span>Erc20 Token Txns({{ erc20count }})</span>
         </template>
-        <generate-transactions :txsData="txsData" :headerData="headerData"></generate-transactions>
+        <generate-transactions
+          :txsData="txsData"
+          :headerData="headerData"
+          :loadStatus="isEmpty"
+        ></generate-transactions>
         <div style="margin-top: 1%; display: flex; justify-content: center">
           <el-pagination
             small
@@ -112,7 +120,11 @@
         <template #label>
           <span>Erc721 Token Txns({{ erc721count }})</span>
         </template>
-        <generate-transactions :txsData="txsData" :headerData="headerData"></generate-transactions>
+        <generate-transactions
+          :txsData="txsData"
+          :headerData="headerData"
+          :loadStatus="isEmpty"
+        ></generate-transactions>
         <div style="margin-top: 1%; display: flex; justify-content: center">
           <el-pagination
             small
@@ -138,9 +150,13 @@
       </el-tab-pane>
       <el-tab-pane v-if="erc1155count != 0" name="erc1155">
         <template #label>
-          <span>Erc1155 Token Txns({{ erc721count }})</span>
+          <span>Erc1155 Token Txns({{ erc1155count }})</span>
         </template>
-        <generate-transactions :txsData="txsData" :headerData="headerData"></generate-transactions>
+        <generate-transactions
+          :txsData="txsData"
+          :headerData="headerData"
+          :loadStatus="isEmpty"
+        ></generate-transactions>
         <div style="margin-top: 1%; display: flex; justify-content: center">
           <el-pagination
             small
@@ -201,9 +217,9 @@ const erc20count = ref(0);
 const erc721count = ref(0);
 const erc1155count = ref(0);
 const internalCount = ref(0);
+const isEmpty = ref(true);
 
 watch(props, async () => {
-  // console.log('update');
   currentPageIndex.value = 1;
   pageSizeNumber.value = 25;
   if (props.addressInfo?.id !== undefined) {
@@ -296,6 +312,9 @@ watch(activeName, async (currentValue) => {
       txsData.push(element);
     });
     total.value = res.data.total;
+    if (res.data.total == 0) {
+      isEmpty.value = false;
+    }
   }
 });
 
