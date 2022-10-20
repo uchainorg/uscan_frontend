@@ -1,7 +1,7 @@
 <template lang="">
   <div>
     <el-table class="table-border" :data="tableData" empty-text="loading..." :row-style="{ height: '75px' }">
-      <el-table-column label="Latest Blocks" width="250">
+      <el-table-column label="Latest Blocks" width="225">
         <template v-slot:default="scope">
           <el-row>
             <el-col :span="6">
