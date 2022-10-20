@@ -30,11 +30,11 @@ document.title = 'Home | The ' + getTitle + ' Explorer';
 .home-right {
   justify-content: flex-end;
   margin-left: auto;
-  width: 665px;
+  min-width: 665px;
 }
 
 .home-left {
-  width: 665px;
+  min-width: 665px;
 }
 
 @media screen and (max-width: 500px) {
