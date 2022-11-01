@@ -15,9 +15,9 @@ const totalList: number[] = [];
 
 onMounted(async () => {
   const res = await GetTxTotal(moment().subtract(14, 'days').format('YYYYMMDD'), moment().format('YYYYMMDD'));
-  res.data.data.forEach((element) => {
-    dataList.push(element.Date.slice(0, 10));
-    totalList.push(element.TxCount);
+  res.data.forEach((element) => {
+    dataList.push(element.date.slice(0, 10));
+    totalList.push(element.txCount);
   });
   // console.log('GetTxTotal', res.data.data);
   const charEle = document.getElementById('char') as HTMLElement;
