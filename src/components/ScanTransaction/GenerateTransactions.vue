@@ -84,7 +84,6 @@ const props = defineProps({
   },
 });
 watchEffect(() => {
-  console.log(props.loadStatus);
   if (!props.loadStatus) {
     emptyText.value = 'empty data';
   }

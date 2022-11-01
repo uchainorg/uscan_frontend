@@ -40,6 +40,7 @@ export interface TokenHoldersResponse {
 }
 
 export interface GethDebugTraceResponse {
+  logNum: number;
   transactionHash: string;
   res: string;
 }

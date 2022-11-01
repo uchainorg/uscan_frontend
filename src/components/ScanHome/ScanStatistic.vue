@@ -70,60 +70,10 @@
                 <div class="center">
                   <el-row>
                     <el-col>
-                      <div class="show-item-title">Difficulty</div>
-                    </el-col>
-                    <el-col>
-                      <div class="show-item">{{ diff }}</div>
-                    </el-col>
-                  </el-row>
-                </div>
-              </div></el-col
-            >
-            <el-col :span="6"
-              ><div class="statistic-item">
-                <div class="center">
-                  <el-row>
-                    <el-col>
                       <div class="show-item-title">Transactions</div>
                     </el-col>
                     <el-col>
                       <div class="show-item">{{ tx }} ({{ tps }} TPS)</div>
-                    </el-col>
-                  </el-row>
-                </div>
-              </div></el-col
-            >
-            <el-col :span="6"
-              ><div class="statistic-item">
-                <div class="center">
-                  <el-row>
-                    <el-col>
-                      <div class="show-item-title">ERC20 total</div>
-                    </el-col>
-                    <el-col>
-                      <div class="show-item">
-                        <router-link :to="'/contracts/erc20'">
-                          {{ erc20Total }}
-                        </router-link>
-                      </div>
-                    </el-col>
-                  </el-row>
-                </div>
-              </div></el-col
-            >
-            <el-col :span="6"
-              ><div class="statistic-item">
-                <div class="center">
-                  <el-row>
-                    <el-col>
-                      <div class="show-item-title">ERC721 total</div>
-                    </el-col>
-                    <el-col>
-                      <div class="show-item">
-                        <router-link :to="'/contracts/erc721'">
-                          {{ erc721Total }}
-                        </router-link>
-                      </div>
                     </el-col>
                   </el-row>
                 </div>
@@ -169,15 +119,16 @@ onMounted(async () => {
   addressCount.value = overviewRes.data.address;
   avgBlockTime.value = overviewRes.data.avgBlockTime;
   blockTotal.value = overviewRes.data.block;
-  blockHeight.value = overviewRes.data.blockHeight;
+  blockHeight.value = parseInt(overviewRes.data.block.toString(10));
   AverageTxs.value = overviewRes.data.dailyTx;
   erc20Total.value = overviewRes.data.erc20;
   erc721Total.value = overviewRes.data.erc721;
 
   const res = await GetTxTotal(moment().subtract(14, 'days').format('YYYYMMDD'), moment().format('YYYYMMDD'));
-  res.data.data.forEach((element) => {
-    dataList.push(element.Date.slice(0, 10));
-    totalList.push(element.TxCount);
+  res.data.forEach((element) => {
+    // console.log(element);
+    dataList.push(element.date.slice(0, 10));
+    totalList.push(element.txCount);
   });
   // console.log('GetTxTotal', res.data.data);
   const charEle = document.getElementById('char') as HTMLElement;

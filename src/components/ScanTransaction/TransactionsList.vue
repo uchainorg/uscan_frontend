@@ -10,6 +10,10 @@
       </el-button>
     </div>
 
+    <div>
+      <h4 class="tx-sub-title">(Showing the last {{ total }} records only)</h4>
+    </div>
+
     <generate-transactions :txsData="txsData" :headerData="headerData" :loadStatus="isEmpty"></generate-transactions>
     <div style="margin-top: 1%; display: flex; justify-content: center">
       <el-pagination

@@ -5,9 +5,8 @@ import {
   TransactionLogResponse,
   InternalTransactionsResponse,
   GethDebugTraceResponse,
-  TotalResponse,
 } from '../model/index';
-import { TransactionDetail, TransactionOverview } from '../model/transaction';
+import { TransactionDetail, TransactionOverview, DailyTransactionCount } from '../model/transaction';
 
 export const GetTransactions = function (
   pageNumber: number,
@@ -130,8 +129,11 @@ export const GetGethDebugTrace = function (
   });
 };
 
-export const GetTxTotal = function (beginTime: string, endTime: string): Promise<ResponseType<TotalResponse>> {
-  return request<TotalResponse>({
+export const GetTxTotal = function (
+  beginTime: string,
+  endTime: string
+): Promise<ResponseType<DailyTransactionCount[]>> {
+  return request<DailyTransactionCount[]>({
     url: '/v1/daily/trend',
     method: 'get',
     params: {

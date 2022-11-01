@@ -320,6 +320,11 @@ export interface TransactionCount {
   Date: string;
 }
 
+export interface DailyTransactionCount {
+  date: string;
+  txCount: number;
+}
+
 export interface TransactionOverview {
   address: number;
   avgBlockTime: number;
