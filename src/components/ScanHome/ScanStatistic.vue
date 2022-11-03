@@ -129,8 +129,11 @@ onMounted(async () => {
     // console.log(element);
     dataList.push(element.date.slice(0, 10));
     totalList.push(element.txCount);
+    // totalList.push(35555);
   });
-  // console.log('GetTxTotal', res.data.data);
+  const maxVal = Number(Math.max(...totalList));
+  const minVal = Number(Math.min(...totalList));
+  const interval = (maxVal - minVal) / 5;
   const charEle = document.getElementById('char') as HTMLElement;
   const charEch: ECharts = init(charEle);
   const option: EChartsOption = {
@@ -147,7 +150,7 @@ onMounted(async () => {
     },
     yAxis: {
       type: 'value',
-      interval: 100,
+      interval: interval,
       splitLine: {
         show: false,
       },
