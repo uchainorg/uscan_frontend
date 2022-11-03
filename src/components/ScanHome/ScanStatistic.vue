@@ -125,15 +125,14 @@ onMounted(async () => {
   erc721Total.value = overviewRes.data.erc721;
 
   const res = await GetTxTotal(moment().subtract(14, 'days').format('YYYYMMDD'), moment().format('YYYYMMDD'));
-  res.data.forEach((element) => {
+  res.data.forEach((element, index) => {
     // console.log(element);
     dataList.push(element.date.slice(0, 10));
-    totalList.push(element.txCount);
-    // totalList.push(35555);
+    // totalList.push(element.txCount);
+    totalList.push(35555 + index * 1000);
   });
   const maxVal = Number(Math.max(...totalList));
-  const minVal = Number(Math.min(...totalList));
-  const interval = (maxVal - minVal) / 5;
+  const interval = 10 ** (maxVal.toString().length - 1);
   const charEle = document.getElementById('char') as HTMLElement;
   const charEch: ECharts = init(charEle);
   const option: EChartsOption = {
@@ -151,7 +150,6 @@ onMounted(async () => {
     yAxis: {
       type: 'value',
       interval: interval,
-      minInterval: 1,
       splitLine: {
         show: false,
       },
