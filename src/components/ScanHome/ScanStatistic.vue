@@ -128,8 +128,8 @@ onMounted(async () => {
   res.data.forEach((element, index) => {
     // console.log(element);
     dataList.push(element.date.slice(0, 10));
-    // totalList.push(element.txCount);
-    totalList.push(35555 + index * 1000);
+    totalList.push(element.txCount);
+    // totalList.push(35555 + index * 1000);
   });
   const maxVal = Number(Math.max(...totalList));
   const interval = 10 ** (maxVal.toString().length - 1);
