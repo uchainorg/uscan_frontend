@@ -151,6 +151,7 @@ onMounted(async () => {
     yAxis: {
       type: 'value',
       interval: interval,
+      minInterval: 1,
       splitLine: {
         show: false,
       },
