@@ -1,23 +1,26 @@
 <template lang="">
   <div class="home-content">
     <div class="statistic">
-      <scan-statistic></scan-statistic>
+      <scan-statistic :overview="res.data.metrics" :dailyTransaction="res.data.dateTxs"></scan-statistic>
     </div>
 
     <div class="home-left">
-      <Suspense>
-        <scan-home-blocks></scan-home-blocks>
-      </Suspense>
+      <scan-home-blocks :blocksData="res.data.blocks"></scan-home-blocks>
     </div>
     <div class="home-right">
       <Suspense>
-        <scan-home-transactions></scan-home-transactions>
+        <scan-home-transactions :txsData="res.data.txs"></scan-home-transactions>
       </Suspense>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
 import { getTitle } from '../../script/utils';
+import { GetHome } from '../../script/service/homeService';
+
+const res = await GetHome();
+// console.log('homePage', res.data);
+
 document.title = 'Home | The ' + getTitle + ' Explorer';
 </script>
 <style>

@@ -1,10 +1,19 @@
 ###
 @scanHost = http://120.133.222.86/
 
+
+###
+// get home
+GET http://0.0.0.0:4322/uscan/v1/home
+
+### 
+// get block
+GET http://0.0.0.0:4322/uscan/v1/home
+
+
 ###
 // get block list
 GET {{scanHost}}chain-scan/v1/blocks?offset=0&limit=10
-
 
 ###
 // get txs list

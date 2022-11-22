@@ -12,7 +12,7 @@
                       <div class="show-item-title">Address total</div>
                     </el-col>
                     <el-col>
-                      <div class="show-item">{{ addressCount }}</div>
+                      <div class="show-item">{{ parseInt(props.overview.address) }}</div>
                     </el-col>
                   </el-row>
                 </div>
@@ -26,7 +26,7 @@
                       <div class="show-item-title">Average block time</div>
                     </el-col>
                     <el-col>
-                      <div class="show-item">{{ avgBlockTime }} s</div>
+                      <div class="show-item">{{ parseInt(props.overview.avgBlockTime) }} s</div>
                     </el-col>
                   </el-row>
                 </div>
@@ -40,7 +40,7 @@
                       <div class="show-item-title">Block Height</div>
                     </el-col>
                     <el-col>
-                      <div class="show-item">{{ blockHeight }}</div>
+                      <div class="show-item">{{ parseInt(props.overview.block) }}</div>
                     </el-col>
                   </el-row>
                 </div>
@@ -54,7 +54,7 @@
                       <div class="show-item-title">Daily txs</div>
                     </el-col>
                     <el-col>
-                      <div class="show-item">{{ AverageTxs }}</div>
+                      <div class="show-item">{{ parseInt(props.overview.dailyTx) }}</div>
                     </el-col>
                   </el-row>
                 </div>
@@ -73,7 +73,9 @@
                       <div class="show-item-title">Transactions</div>
                     </el-col>
                     <el-col>
-                      <div class="show-item">{{ tx }} ({{ tps }} TPS)</div>
+                      <div class="show-item">
+                        {{ parseInt(props.overview.tx) }} ({{ parseInt(props.overview.tps) }} TPS)
+                      </div>
                     </el-col>
                   </el-row>
                 </div>
@@ -92,40 +94,25 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue';
-import { GetTxTotal, GetTxOverview } from '../../script/service/transactionService';
-import moment from 'moment';
+import { onMounted } from 'vue';
 import { ECharts, EChartsOption, init } from 'echarts';
+import { TransactionOverview, DailyTransactionCount } from '../../script/model/transaction';
+
+const props = defineProps({
+  overview: {
+    type: Object as () => TransactionOverview,
+  },
+  dailyTransaction: {
+    type: Array as () => Array<DailyTransactionCount>,
+    require: true,
+  },
+});
 
 const dataList: string[] = [];
 const totalList: number[] = [];
 
-const diff = ref(0);
-const tps = ref(0);
-const tx = ref(0);
-const addressCount = ref(0);
-const avgBlockTime = ref(0);
-const blockTotal = ref(0);
-const blockHeight = ref(0);
-const AverageTxs = ref(0);
-const erc20Total = ref(0);
-const erc721Total = ref(0);
-
 onMounted(async () => {
-  const overviewRes = await GetTxOverview();
-  diff.value = overviewRes.data.diff;
-  tps.value = overviewRes.data.tps;
-  tx.value = overviewRes.data.tx;
-  addressCount.value = overviewRes.data.address;
-  avgBlockTime.value = overviewRes.data.avgBlockTime;
-  blockTotal.value = overviewRes.data.block;
-  blockHeight.value = parseInt(overviewRes.data.block.toString(10));
-  AverageTxs.value = overviewRes.data.dailyTx;
-  erc20Total.value = overviewRes.data.erc20;
-  erc721Total.value = overviewRes.data.erc721;
-
-  const res = await GetTxTotal(moment().subtract(14, 'days').format('YYYYMMDD'), moment().format('YYYYMMDD'));
-  res.data.forEach((element, index) => {
+  (props.dailyTransaction as DailyTransactionCount[]).forEach((element, index) => {
     // console.log(element);
     dataList.push(element.date.slice(0, 10));
     totalList.push(element.txCount);

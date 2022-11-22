@@ -1,6 +1,6 @@
 <template lang="">
   <div>
-    <el-table class="table-border" :data="tableData" empty-text="loading..." :row-style="{ height: '75px' }">
+    <el-table class="table-border" :data="props.txsData" empty-text="loading..." :row-style="{ height: '75px' }">
       <el-table-column label="Latest Transactions" width="250">
         <template v-slot:default="scope">
           <el-row>
@@ -54,15 +54,19 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { GetHomeTransactions } from '../../script/service/transactionService';
 import { getAge } from '../../script/utils';
 import { ethers } from 'ethers';
 import { useRouter } from 'vue-router';
+import { TransactionDetail } from '../../script/model/transaction';
+
+const props = defineProps({
+  txsData: {
+    type: Array as () => Array<TransactionDetail>,
+    require: true,
+  },
+});
 
 const router = useRouter();
-const res = await GetHomeTransactions();
-const tableData = res.data.items;
-
 const moveToTxs = () => {
   router.push('/txs/all');
 };

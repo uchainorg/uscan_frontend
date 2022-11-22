@@ -1,6 +1,6 @@
 <template lang="">
   <div>
-    <el-table class="table-border" :data="tableData" empty-text="loading..." :row-style="{ height: '75px' }">
+    <el-table class="table-border" :data="props.blocksData" empty-text="loading..." :row-style="{ height: '75px' }">
       <el-table-column label="Latest Blocks" width="225">
         <template v-slot:default="scope">
           <el-row>
@@ -54,15 +54,19 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { GetBlocks } from '../../script/service/blockService';
 import { getAge } from '../../script/utils';
 import { ethers } from 'ethers';
 import { useRouter } from 'vue-router';
+import { BlockDetail } from '../../script/model/block';
+
+const props = defineProps({
+  blocksData: {
+    type: Array as () => Array<BlockDetail>,
+    require: true,
+  },
+});
 
 const router = useRouter();
-const res = await GetBlocks(false, 0, 10);
-const tableData = res.data.items;
-
 const moveToBlocks = () => {
   router.push('/blocks');
 };

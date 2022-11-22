@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import { ResponseType } from '../model/index';
 
-const originUrl = window.location.origin + '/chain-scan';
+const originUrl = window.location.origin + '/uscan/v1';
 
 const instance = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL == '' ? originUrl : import.meta.env.VITE_BASE_URL,
