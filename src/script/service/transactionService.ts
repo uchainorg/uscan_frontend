@@ -19,7 +19,7 @@ export const GetTransactions = function (
   let url = '';
   if (blockNumber !== -1) {
     url =
-      '/v1/txs?blockBegin=' +
+      '/txs?blockBegin=' +
       blockNumber +
       '&blockEnd=' +
       blockNumber +

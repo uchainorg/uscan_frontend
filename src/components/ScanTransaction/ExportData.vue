@@ -77,7 +77,7 @@ const exportData = async () => {
     method: 'get',
     url:
       import.meta.env.VITE_BASE_URL +
-      '/v1/accounts/' +
+      '/accounts/' +
       address.value +
       '/' +
       type.value +
