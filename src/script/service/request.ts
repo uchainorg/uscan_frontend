@@ -1,11 +1,10 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import { ResponseType } from '../model/index';
 
-
-const originUrl = window.location.protocol + '//' + window.location.host + ':4322' + '/uscan/v1';
+const originUrl = window.location.origin + '/uscan/v1';
 
 const instance = axios.create({
-  baseURL: import.meta.env.VITE_BASE_URL == '' ? originUrl : import.meta.env.VITE_BASE_URL,
+  baseURL: import.meta.env.VITE_BASE_URL == undefined ? originUrl : import.meta.env.VITE_BASE_URL,
 });
 
 const request = async <T = any>(config: AxiosRequestConfig): Promise<ResponseType<T>> => {
