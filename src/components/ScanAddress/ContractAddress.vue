@@ -216,7 +216,11 @@
         <contract-info :contractAddress="address" :codeContent="props.addressInfo.code"></contract-info>
       </el-tab-pane>
       <el-tab-pane v-else label="Contract(verified)" name="contract-verified">
-        <contract-verified-info :contractAddress="address" :contractInfo="contractContent"></contract-verified-info>
+        <contract-verified-info
+          :contractAddress="address"
+          :contractInfo="contractContent"
+          :proxyContractAddress="proxyContractAddress"
+        ></contract-verified-info>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -260,113 +264,114 @@ const erc20count = ref(0);
 const erc721count = ref(0);
 const erc1155count = ref(0);
 const isEmpty = ref(true);
+const proxyContractAddress = ref('');
 
 watchEffect(async () => {
-  console.log(activeName.value);
   currentPageIndex.value = 1;
   pageSizeNumber.value = 25;
-  if (props.addressInfo?.id !== undefined) {
-    // tx
-    txsData.length = 0;
-    headerData.length = 0;
-    isEmpty.value = true;
+  // if (props.addressInfo?.id !== undefined) {
+  // tx
+  txsData.length = 0;
+  headerData.length = 0;
+  isEmpty.value = true;
 
-    // tx data
-    if (activeName.value === 'txs') {
-      headerData.push(...TransactionsHeaderList);
-      const res = await GetTransactionsByAddress(
-        currentPageIndex.value - 1,
-        pageSizeNumber.value,
-        'txs',
-        props.address as string
-      );
-      res.data.items.forEach((element) => {
-        txsData.push(element);
-      });
-      total.value = res.data.total;
-      if (res.data.total == 0) {
-        isEmpty.value = false;
-      }
-    }
-
-    // internal tx data
-    const resInternal = await GetInternalTransactionsByAddress(
+  // tx data
+  if (activeName.value === 'txs') {
+    headerData.push(...TransactionsHeaderList);
+    const res = await GetTransactionsByAddress(
       currentPageIndex.value - 1,
       pageSizeNumber.value,
+      'txs',
       props.address as string
     );
-    internalCount.value = resInternal.data.total;
-    if (activeName.value == 'internal' && resInternal.data.total != 0) {
-      headerData.push(...InternalTransactionsHeaderList);
-      resInternal.data.items.forEach((element) => {
-        internalTxsData.push(element);
-      });
-    }
-
-    // erc20 tx data
-    const resErc20 = await GetTransactionsByAddress(
-      currentPageIndex.value - 1,
-      pageSizeNumber.value,
-      'erc20',
-      props.address as string
-    );
-    erc20count.value = resErc20.data.total;
-    if (activeName.value == 'erc20') {
-      if (resErc20.data.total != 0) {
-        headerData.push(...Erc20TransactionsHeaderList);
-        resErc20.data.items.forEach((element) => {
-          txsData.push(element);
-        });
-      } else {
-        isEmpty.value = false;
-      }
-    }
-
-    // erc721 tx data
-    const resErc721 = await GetTransactionsByAddress(
-      currentPageIndex.value - 1,
-      pageSizeNumber.value,
-      'erc721',
-      props.address as string
-    );
-    erc721count.value = resErc721.data.total;
-    if (activeName.value == 'erc721') {
-      if (resErc721.data.total != 0) {
-        headerData.push(...Erc721TransactionsHeaderList);
-        resErc20.data.items.forEach((element) => {
-          txsData.push(element);
-        });
-      } else {
-        isEmpty.value = false;
-      }
-    }
-
-    // erc1155 tx data
-    const resErc1155 = await GetTransactionsByAddress(
-      currentPageIndex.value - 1,
-      pageSizeNumber.value,
-      'erc1155',
-      props.address as string
-    );
-    erc1155count.value = resErc1155.data.total;
-    if (activeName.value == 'erc1155') {
-      if (resErc1155.data.total != 0) {
-        headerData.push(...Erc721TransactionsHeaderList);
-        resErc20.data.items.forEach((element) => {
-          txsData.push(element);
-        });
-      } else {
-        isEmpty.value = false;
-      }
-    }
-
-    // contract
-    const contractContentRes = await GetVerifyContractContent(props.address as string);
-    contractContent.value = contractContentRes.data;
-    if (contractContentRes.data) {
-      isVerify.value = true;
+    res.data.items.forEach((element) => {
+      txsData.push(element);
+    });
+    total.value = res.data.total;
+    if (res.data.total == 0) {
+      isEmpty.value = false;
     }
   }
+
+  // internal tx data
+  const resInternal = await GetInternalTransactionsByAddress(
+    currentPageIndex.value - 1,
+    pageSizeNumber.value,
+    props.address as string
+  );
+  internalCount.value = resInternal.data.total;
+  if (activeName.value == 'internal' && resInternal.data.total != 0) {
+    headerData.push(...InternalTransactionsHeaderList);
+    resInternal.data.items.forEach((element) => {
+      internalTxsData.push(element);
+    });
+  }
+
+  // erc20 tx data
+  const resErc20 = await GetTransactionsByAddress(
+    currentPageIndex.value - 1,
+    pageSizeNumber.value,
+    'erc20',
+    props.address as string
+  );
+  erc20count.value = resErc20.data.total;
+  if (activeName.value == 'erc20') {
+    if (resErc20.data.total != 0) {
+      headerData.push(...Erc20TransactionsHeaderList);
+      resErc20.data.items.forEach((element) => {
+        txsData.push(element);
+      });
+    } else {
+      isEmpty.value = false;
+    }
+  }
+
+  // erc721 tx data
+  const resErc721 = await GetTransactionsByAddress(
+    currentPageIndex.value - 1,
+    pageSizeNumber.value,
+    'erc721',
+    props.address as string
+  );
+  erc721count.value = resErc721.data.total;
+  if (activeName.value == 'erc721') {
+    if (resErc721.data.total != 0) {
+      headerData.push(...Erc721TransactionsHeaderList);
+      resErc20.data.items.forEach((element) => {
+        txsData.push(element);
+      });
+    } else {
+      isEmpty.value = false;
+    }
+  }
+
+  // erc1155 tx data
+  const resErc1155 = await GetTransactionsByAddress(
+    currentPageIndex.value - 1,
+    pageSizeNumber.value,
+    'erc1155',
+    props.address as string
+  );
+  erc1155count.value = resErc1155.data.total;
+  if (activeName.value == 'erc1155') {
+    if (resErc1155.data.total != 0) {
+      headerData.push(...Erc721TransactionsHeaderList);
+      resErc20.data.items.forEach((element) => {
+        txsData.push(element);
+      });
+    } else {
+      isEmpty.value = false;
+    }
+  }
+
+  // contract
+  const contractContentRes = await GetVerifyContractContent(props.address as string);
+  contractContent.value = contractContentRes.data.contract;
+  proxyContractAddress.value = contractContentRes.data.proxyContractAddress;
+  if (contractContentRes.data.contract) {
+    isVerify.value = true;
+  }
+  // }
 });
 
 const handleSizeChange = async (pageSizeArg: number) => {

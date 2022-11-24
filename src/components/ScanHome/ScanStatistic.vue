@@ -115,7 +115,7 @@ onMounted(async () => {
   (props.dailyTransaction as DailyTransactionCount[]).forEach((element, index) => {
     // console.log(element);
     dataList.push(element.date.slice(0, 10));
-    totalList.push(element.txCount);
+    totalList.push(parseInt(element.txCount, 16));
     // totalList.push(35555 + index * 1000);
   });
   const maxVal = Number(Math.max(...totalList));

@@ -1,5 +1,15 @@
 <template lang="">
   <div>
+    <el-row v-if="props.proxyContractAddress !== ''" style="margin-top: 0.5%">
+      <el-col>
+        <div style="margin-bottom: 0.5%">
+          Implementation address :
+          <router-link :to="'/address/' + props.proxyContractAddress">
+            {{ props.proxyContractAddress }}
+          </router-link>
+        </div>
+      </el-col>
+    </el-row>
     <el-row style="margin-top: 0.5%">
       <el-button :type="codeFlag ? 'primary' : 'info'" @click="moveToCode">Code</el-button>
       <el-button :type="readFlag ? 'primary' : 'info'" @click="moveToRead">Read Contract</el-button>
@@ -18,6 +28,7 @@ import writeContractVue from './ContractInfo/writeContract.vue';
 
 const props = defineProps({
   contractAddress: String,
+  proxyContractAddress: String,
   contractInfo: {
     type: Object as () => ContractContent,
   },

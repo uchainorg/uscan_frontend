@@ -1,6 +1,6 @@
 <template lang="">
   <div>
-    <el-table class="table-border" :data="overviews" empty-text="loading..." :row-style="{ height: '50px' }">
+    <el-table class="table-border" :data="props.txOverviews" empty-text="loading..." :row-style="{ height: '50px' }">
       <el-table-column width="240">
         <template v-slot:default="scope">
           <div class="center-row">
@@ -31,11 +31,21 @@
             <copy-icon :text="scope.row.parameterValue"></copy-icon>
           </div>
           <div class="center-row" v-else-if="scope.row.parameterName == 'from'">
-            <router-link :to="'/address/' + scope.row.parameterValue.from">
-              {{ scope.row.parameterValue.from }}
-            </router-link>
-            &nbsp;
-            <copy-icon :text="scope.row.parameterValue.from"></copy-icon>
+            <div class="center-row" v-if="scope.row.parameterValue.fromContract">
+              Contract &nbsp;
+              <router-link :to="'/address/' + scope.row.parameterValue.from">
+                {{ scope.row.parameterValue.from }} &nbsp; {{ scope.row.parameterValue.fromName }}
+              </router-link>
+              &nbsp;
+              <copy-icon :text="scope.row.parameterValue.from"></copy-icon>
+            </div>
+            <div class="center-row" v-else>
+              <router-link :to="'/address/' + scope.row.parameterValue.from">
+                {{ scope.row.parameterValue.from }}
+              </router-link>
+              &nbsp;
+              <copy-icon :text="scope.row.parameterValue.from"></copy-icon>
+            </div>
           </div>
           <div v-else-if="scope.row.parameterName == 'to'">
             <div class="center-row" v-if="scope.row.parameterValue.to == ''">
@@ -46,7 +56,7 @@
               Created &nbsp;
               <copy-icon :text="scope.row.parameterValue.contractAddress"></copy-icon>
             </div>
-            <div class="center-row" v-else-if="scope.row.parameterValue.toCode != ''">
+            <div class="center-row" v-else-if="scope.row.parameterValue.toContract">
               Contract &nbsp;
               <router-link :to="'/address/' + scope.row.parameterValue.to">
                 {{ scope.row.parameterValue.to }} &nbsp; {{ scope.row.parameterValue.toName }}
@@ -139,45 +149,20 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { GetTxByHash } from '../../script/service/transactionService';
-import { getTxOverviews } from '../../script/model/transaction';
 import { QuestionFilled, Clock, SuccessFilled, Failed, VideoPause } from '@element-plus/icons-vue';
 import { getAge } from '../../script/utils';
-import { reactive, watch } from 'vue';
 import { ethers } from 'ethers';
-import { useRoute } from 'vue-router';
 import { getTitle } from '../../script/utils';
+import { Overview } from '../../script/model';
 
 document.title = 'Transaction overview | The ' + getTitle + ' Explorer';
 
 const props = defineProps({
-  txHash: String,
+  txOverviews: {
+    type: Array as () => Array<Overview>,
+    require: true,
+  },
 });
-
-const route = useRoute();
-
-const overviews: any[] = reactive([]);
-
-const initData = async (txHash: String) => {
-  overviews.length = 0;
-
-  const res = await GetTxByHash(txHash as string);
-  getTxOverviews(res.data).forEach((element) => {
-    overviews.push(element);
-  });
-};
-
-initData(props.txHash as string);
-
-watch(
-  () => route.params,
-  async (val) => {
-    // console.log('watchsssssss', val.txHash);
-    if (val.txHash) {
-      initData(val.txHash as unknown as string);
-    }
-  }
-);
 </script>
 <style lang="less" scoped>
 @import '../../css/style.css';

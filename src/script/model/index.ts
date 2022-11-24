@@ -96,3 +96,9 @@ export class Overview {
     this.parameterExplain = parameterExplain;
   }
 }
+
+export interface ContractContentRes{
+  contract: ContractContent;
+  proxyContract: ContractContent;
+  proxyContractAddress: string
+}

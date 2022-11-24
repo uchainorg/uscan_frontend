@@ -222,54 +222,55 @@ const isEmpty = ref(true);
 watch(props, async () => {
   currentPageIndex.value = 1;
   pageSizeNumber.value = 25;
-  if (props.addressInfo?.id !== undefined) {
-    txsData.length = 0;
-    if (activeName.value === 'txs') {
-      headerData.push(...TransactionsHeaderList);
-    }
-    const res = await GetTransactionsByAddress(
-      currentPageIndex.value - 1,
-      pageSizeNumber.value,
-      'txs',
-      props.address as string
-    );
-    res.data.items.forEach((element) => {
-      txsData.push(element);
-    });
-    total.value = res.data.total;
-
-    const resErc20 = await GetTransactionsByAddress(
-      currentPageIndex.value - 1,
-      pageSizeNumber.value,
-      'erc20',
-      props.address as string
-    );
-    erc20count.value = resErc20.data.total;
-
-    const resErc721 = await GetTransactionsByAddress(
-      currentPageIndex.value - 1,
-      pageSizeNumber.value,
-      'erc721',
-      props.address as string
-    );
-    erc721count.value = resErc721.data.total;
-
-    const resErc1155 = await GetTransactionsByAddress(
-      currentPageIndex.value - 1,
-      pageSizeNumber.value,
-      'erc1155',
-      props.address as string
-    );
-    erc1155count.value = resErc1155.data.total;
-
-    const resInternal = await GetInternalTransactionsByAddress(
-      currentPageIndex.value - 1,
-      pageSizeNumber.value,
-      props.address as string
-    );
-    internalCount.value = resInternal.data.total;
-    // console.log('resInternal', resInternal);
+  // console.log('This', props.addressInfo);
+  // if (props.addressInfo?.id !== undefined) {
+  txsData.length = 0;
+  if (activeName.value === 'txs') {
+    headerData.push(...TransactionsHeaderList);
   }
+  const res = await GetTransactionsByAddress(
+    currentPageIndex.value - 1,
+    pageSizeNumber.value,
+    'txs',
+    props.address as string
+  );
+  res.data.items.forEach((element) => {
+    txsData.push(element);
+  });
+  total.value = res.data.total;
+
+  const resErc20 = await GetTransactionsByAddress(
+    currentPageIndex.value - 1,
+    pageSizeNumber.value,
+    'erc20',
+    props.address as string
+  );
+  erc20count.value = resErc20.data.total;
+
+  const resErc721 = await GetTransactionsByAddress(
+    currentPageIndex.value - 1,
+    pageSizeNumber.value,
+    'erc721',
+    props.address as string
+  );
+  erc721count.value = resErc721.data.total;
+
+  const resErc1155 = await GetTransactionsByAddress(
+    currentPageIndex.value - 1,
+    pageSizeNumber.value,
+    'erc1155',
+    props.address as string
+  );
+  erc1155count.value = resErc1155.data.total;
+
+  const resInternal = await GetInternalTransactionsByAddress(
+    currentPageIndex.value - 1,
+    pageSizeNumber.value,
+    props.address as string
+  );
+  internalCount.value = resInternal.data.total;
+  // console.log('resInternal', resInternal);
+  // }
 });
 
 watch(activeName, async (currentValue) => {

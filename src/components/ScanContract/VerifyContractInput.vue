@@ -111,7 +111,7 @@ const compilerVersionOptionsNameMap = new Map();
 const compilerVersionOptionsFileMap = new Map();
 
 metadataRes.data.compilerVersions.forEach((element) => {
-  // console.log(element);
+  console.log(element);
   compilerVersionOptionsNameMap.set(element.id, element.name);
   compilerVersionOptionsFileMap.set(element.id, element.fileName);
   compilerVersionOptions.push({
@@ -119,6 +119,8 @@ metadataRes.data.compilerVersions.forEach((element) => {
     label: element.name,
   } as Option);
 });
+
+console.log('compilerVersionOptions', compilerVersionOptions);
 
 metadataRes.data.licenseTypes.forEach((element) => {
   licenseOptions.push({

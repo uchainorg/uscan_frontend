@@ -32,7 +32,7 @@ export const GetTransactionsByToken = function (
 ): Promise<ResponseType<TransactionsResponse>> {
   const offset = pageNumber * pageSize;
   const limit = pageSize;
-  const url = '//tokens/' + address + '/transfers' + '?type=' + type + '&offset=' + offset + '&limit=' + limit;
+  const url = '/tokens/' + address + '/transfers' + '?type=' + type + '&offset=' + offset + '&limit=' + limit;
   return request<TransactionsResponse>({
     url: url,
     method: 'get',
@@ -47,7 +47,7 @@ export const GetTokenInventory = function (
 ): Promise<ResponseType<TokenResponse>> {
   const offset = pageNumber * pageSize;
   const limit = pageSize;
-  const url = '//tokens/' + address + '/inventory' + '?type=' + type + '&offset=' + offset + '&limit=' + limit;
+  const url = '/tokens/' + address + '/inventory' + '?type=' + type + '&offset=' + offset + '&limit=' + limit;
   // console.log(url);
   return request<TokenResponse>({
     url: url,

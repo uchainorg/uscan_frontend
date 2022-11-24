@@ -29,9 +29,9 @@ export const GetTransactions = function (
       limit +
       '&allView=true';
   } else if (type === 'all') {
-    url = '//txs?offset=' + offset + '&limit=' + limit + '&allView=true';
+    url = '/txs?offset=' + offset + '&limit=' + limit + '&allView=true';
   } else {
-    url = '//tokens/txns/' + type + '?offset=' + offset + '&limit=' + limit;
+    url = '/tokens/txns/' + type + '?offset=' + offset + '&limit=' + limit;
   }
   return request<TransactionsResponse>({
     url: url,
@@ -59,9 +59,9 @@ export const GetTransactionsByAddress = function (
     type = 'erc20';
   }
   if (type === 'txs') {
-    url = '//accounts/' + address + '/txns?offset=' + offset + '&limit=' + limit;
+    url = '/accounts/' + address + '/txns?offset=' + offset + '&limit=' + limit;
   } else {
-    url = '//accounts/' + address + '/txns-' + type + '?offset=' + offset + '&limit=' + limit;
+    url = '/accounts/' + address + '/txns-' + type + '?offset=' + offset + '&limit=' + limit;
   }
   return request<TransactionsResponse>({
     url: url,
@@ -76,7 +76,7 @@ export const GetInternalTransactionsByAddress = function (
 ): Promise<ResponseType<InternalTransactionsResponse>> {
   const offset = pageNumber * pageSize;
   const limit = pageSize;
-  const url = '//accounts/' + address + '/txns-internal' + '?offset=' + offset + '&limit=' + limit;
+  const url = '/accounts/' + address + '/txns-internal' + '?offset=' + offset + '&limit=' + limit;
   return request<InternalTransactionsResponse>({
     url: url,
     method: 'get',
@@ -91,7 +91,7 @@ export const GetTransactionsByToken = function (
 ): Promise<ResponseType<TransactionsResponse>> {
   const offset = pageNumber * pageSize;
   const limit = pageSize;
-  const url = '//tokens/txns/' + type + '?contract=' + address + '&offset=' + offset + '&limit=' + limit;
+  const url = '/tokens/txns/' + type + '?contract=' + address + '&offset=' + offset + '&limit=' + limit;
   return request<TransactionsResponse>({
     url: url,
     method: 'get',

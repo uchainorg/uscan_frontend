@@ -1,6 +1,6 @@
 import request from './request';
-import { VerifyContractMetadata, ContractContent } from '../model/contract';
-import { ResponseType, ContractsResponse } from '../model/index';
+import { VerifyContractMetadata } from '../model/contract';
+import { ResponseType, ContractsResponse, ContractContentRes } from '../model/index';
 
 export const GetVerifyContractMetadata = function (): Promise<ResponseType<VerifyContractMetadata>> {
   return request<VerifyContractMetadata>({
@@ -27,8 +27,8 @@ export const SubmitVerifyContract = function (address: string, params: any): Pro
   });
 };
 
-export const GetVerifyContractContent = function (address: string): Promise<ResponseType<ContractContent>> {
-  return request<ContractContent>({
+export const GetVerifyContractContent = function (address: string): Promise<ResponseType<ContractContentRes>> {
+  return request<ContractContentRes>({
     url: '/contracts/' + address + '/content',
     method: 'get',
   });
@@ -50,7 +50,7 @@ export const GetContracts = function (
   }
   const offset = pageNumber * pageSize;
   const limit = pageSize;
-  const url = '//accounts?type=' + typeInt + '&offset=' + offset + '&limit=' + limit;
+  const url = '/accounts?type=' + typeInt + '&offset=' + offset + '&limit=' + limit;
   return request<ContractsResponse>({
     url: url,
     method: 'get',

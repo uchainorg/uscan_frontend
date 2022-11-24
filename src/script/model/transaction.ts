@@ -149,6 +149,10 @@ export class TransactionDetail {
   transactionHash: string;
   baseInfo: boolean = false;
   methodName: string;
+  logs: TransactionLog[];
+  fromContract: boolean;
+  toContract: boolean;
+
   /**
    * Create a Transaction.
    * @param {string} hash
@@ -195,6 +199,9 @@ export class TransactionDetail {
    * @param {string} transactionHash
    * @param {boolean} baseInfo
    * @param {string} methodName
+   * @param {TransactionLog} logs
+   * @param {boolean} fromContract
+   * @param {boolean} toContract
    */
   constructor(
     hash: string,
@@ -240,7 +247,10 @@ export class TransactionDetail {
     tokenID: number,
     transactionHash: string,
     baseInfo: boolean,
-    methodName: string
+    methodName: string,
+    logs: TransactionLog[],
+    fromContract: boolean,
+    toContract: boolean,
   ) {
     this.hash = hash;
     this.method = method;
@@ -286,6 +296,9 @@ export class TransactionDetail {
     this.transactionHash = transactionHash;
     this.baseInfo = baseInfo;
     this.methodName = methodName;
+    this.logs = logs;
+    this.fromContract = fromContract;
+    this.toContract = toContract;
   }
 }
 
@@ -322,7 +335,7 @@ export interface TransactionCount {
 
 export interface DailyTransactionCount {
   date: string;
-  txCount: number;
+  txCount: string;
 }
 
 export interface TransactionOverview {
@@ -393,6 +406,7 @@ export const getTxOverviews = function (tx: TransactionDetail): Overview[] {
         fromCode: tx.fromCode,
         fromName: tx.fromName,
         fromSymbol: tx.fromSymbol,
+        fromContract: tx.fromContract
       };
     } else if (key == 'to') {
       valueDisplay = {
@@ -403,6 +417,7 @@ export const getTxOverviews = function (tx: TransactionDetail): Overview[] {
         contractAddress: tx.contractAddress,
         contractAddressName: tx.contractAddressName,
         contractAddressSymbol: tx.contractAddressSymbol,
+        toContract: tx.toContract
       };
     } else if (key == 'gas') {
       valueDisplay = {

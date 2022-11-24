@@ -6,7 +6,7 @@
     </div>
     <div class="code-content-overview">
       <div style="width: 50%">
-        <el-row>
+        <el-row type="flex" style="word-break: break-all">
           <el-col :span="8">Contract Name:</el-col>
           <el-col :span="16" class="bolder">{{ props.contractInfo.contractName }}</el-col>
         </el-row>

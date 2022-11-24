@@ -230,7 +230,7 @@ const submit = async () => {
   if (submitRes.code == 200) {
     setTimeout(() => {
       CheckVerifyContractStatus(submitRes.data.id);
-    }, 3 * 1000);
+    }, 5 * 1000);
   } else {
     submittedError.value = submitRes.msg;
     submitLoading.value = false;
@@ -240,8 +240,8 @@ const submit = async () => {
 const CheckVerifyContractStatus = async (submitId: string) => {
   const contractStatusRes = await GetVerifyContractStatus(submitId);
   // console.log('contractStatusRes', contractStatusRes);
-  verifyContractStatus.value = contractStatusRes.data.status;
-  if (contractStatusRes.data.status == 1) {
+  verifyContractStatus.value = contractStatusRes.data.data;
+  if (contractStatusRes.data.data == 1) {
     router.push(('/address/' + contractAddress) as string);
   }
   submitLoading.value = false;
