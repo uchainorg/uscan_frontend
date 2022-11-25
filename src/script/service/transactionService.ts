@@ -14,13 +14,18 @@ export const GetTransactions = function (
   type: string,
   blockNumber: number
 ): Promise<ResponseType<TransactionsResponse>> {
+  console.log('type', type, 'blockNumber', blockNumber);
   const offset = pageNumber * pageSize;
   const limit = pageSize;
   let url = '';
   if (blockNumber !== -1) {
     url = '/blocks/'+ blockNumber +'/txs?offset=' + offset + '&limit=' + limit;
+  }
+
+  if (type === 'all') {
+    url = '/txs?offset=' + offset + '&limit=' + limit;
   } else {
-    url = '/txs/?offset=' + offset + '&limit=' + limit;
+    url = '/tokens/txns/' + type + '?offset=' + offset + '&limit=' + limit;
   }
   return request<TransactionsResponse>({
     url: url,
