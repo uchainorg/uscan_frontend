@@ -20,7 +20,7 @@ export const GetTransactions = function (
   if (blockNumber !== -1) {
     url = '/blocks/'+ blockNumber +'/txs?offset=' + offset + '&limit=' + limit;
   } else {
-    url = '/tokens/txns/' + type + '?offset=' + offset + '&limit=' + limit;
+    url = '/txs/?offset=' + offset + '&limit=' + limit;
   }
   return request<TransactionsResponse>({
     url: url,
