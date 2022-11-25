@@ -82,7 +82,6 @@ const getTransactions = async () => {
       headerData.push(...Erc721TransactionsHeaderList);
     }
     const res = await GetTransactions(currentPageIndex.value - 1, pageSizeNumber.value, props.txsType, blockNumber);
-    // console.log(res);
     res.data.items.forEach((element) => {
       txsData.push(element);
     });
@@ -108,7 +107,7 @@ watch(props, async () => {
 const setTitle = () => {
   if (props.txsType === 'all') {
     if (blockNumber !== -1) {
-      tableTitle.value = 'Transactions For Block' + blockNumber;
+      tableTitle.value = 'Transactions For Block ' + blockNumber;
     } else {
       tableTitle.value = 'Transactions';
     }

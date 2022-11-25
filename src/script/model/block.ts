@@ -171,7 +171,7 @@ export const getBlockOverviews = function (block: BlockDetail): Overview[] {
 
 export const BlocksHeaderList: TableHeader[] = [
   new TableHeader('Block', 'number'),
-  new TableHeader('Age', 'createdTime'),
+  new TableHeader('Age', 'timestamp'),
   new TableHeader('Txn', 'transactionsTotal'),
   new TableHeader('Miner', 'miner'),
   new TableHeader('Gas Used', 'gasUsed'),

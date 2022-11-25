@@ -18,18 +18,7 @@ export const GetTransactions = function (
   const limit = pageSize;
   let url = '';
   if (blockNumber !== -1) {
-    url =
-      '/txs?blockBegin=' +
-      blockNumber +
-      '&blockEnd=' +
-      blockNumber +
-      '&offset=' +
-      offset +
-      '&limit=' +
-      limit +
-      '&allView=true';
-  } else if (type === 'all') {
-    url = '/txs?offset=' + offset + '&limit=' + limit + '&allView=true';
+    url = '/blocks/'+ blockNumber +'/txs?offset=' + offset + '&limit=' + limit;
   } else {
     url = '/tokens/txns/' + type + '?offset=' + offset + '&limit=' + limit;
   }

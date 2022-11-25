@@ -7,10 +7,11 @@
             {{ parseInt(scope.row[scope.column.property]) }}
           </router-link>
         </div>
+        <div v-if="scope.column.property == 'timestamp'">
+          {{ getAge(scope.row[scope.column.property]) }}
+        </div>
         <div v-else-if="scope.column.property == 'miner'" style="width: 180px">
-          <!-- <router-link :to="'/address/' + scope.row.miner">
-             {{ scope.row.miner.slice(0, 18) + '...' }} </router-link> -->
-          {{ scope.row.miner.slice(0, 18) + '...' }}
+          <router-link :to="'/address/' + scope.row.miner"> {{ scope.row.miner.slice(0, 18) + '...' }} </router-link>
         </div>
       </template>
     </el-table-column>
@@ -19,6 +20,7 @@
 <script lang="ts" setup>
 import { BlockDetail } from '../../script/model/block';
 import { TableHeader } from '../../script/model/index';
+import { getAge } from '../../script/utils';
 
 const props = defineProps({
   blocksData: {
