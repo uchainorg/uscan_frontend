@@ -349,6 +349,7 @@ export interface TransactionOverview {
   tx: number;
   erc20: number;
   erc721: number;
+  erc1155: number;
 }
 
 export const getTxOverviews = function (tx: TransactionDetail): Overview[] {

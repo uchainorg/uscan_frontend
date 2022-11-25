@@ -65,8 +65,8 @@
 
         <div style="height: 50%">
           <el-row :gutter="20">
-            <el-col :span="6"
-              ><div class="statistic-item">
+            <el-col :span="6">
+              <div class="statistic-item">
                 <div class="center">
                   <el-row>
                     <el-col>
@@ -75,6 +75,54 @@
                     <el-col>
                       <div class="show-item">
                         {{ parseInt(props.overview.tx) }} ({{ parseInt(props.overview.tps) }} TPS)
+                      </div>
+                    </el-col>
+                  </el-row>
+                </div>
+              </div>
+            </el-col>
+            <el-col :span="6"
+              ><div class="statistic-item">
+                <div class="center">
+                  <el-row>
+                    <el-col>
+                      <div class="show-item-title">ERC20 total</div>
+                    </el-col>
+                    <el-col>
+                      <div class="show-item">
+                        {{ parseInt(props.overview.erc20) }}
+                      </div>
+                    </el-col>
+                  </el-row>
+                </div>
+              </div></el-col
+            >
+            <el-col :span="6"
+              ><div class="statistic-item">
+                <div class="center">
+                  <el-row>
+                    <el-col>
+                      <div class="show-item-title">ERC721 total</div>
+                    </el-col>
+                    <el-col>
+                      <div class="show-item">
+                        {{ parseInt(props.overview.erc721) }}
+                      </div>
+                    </el-col>
+                  </el-row>
+                </div>
+              </div></el-col
+            >
+            <el-col :span="6"
+              ><div class="statistic-item">
+                <div class="center">
+                  <el-row>
+                    <el-col>
+                      <div class="show-item-title">ERC1155 total</div>
+                    </el-col>
+                    <el-col>
+                      <div class="show-item">
+                        {{ parseInt(props.overview.erc1155) }}
                       </div>
                     </el-col>
                   </el-row>
