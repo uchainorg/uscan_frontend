@@ -175,11 +175,12 @@ const tokenHoldersByAddressRes = await GetTokenHoldersByAddress(
   pageSizeNumberHolder.value
 );
 const holdersTotal = tokenHoldersByAddressRes.data.total;
-// console.log('tokenHoldersByAddressRes', tokenHoldersByAddressRes);
-tokenHoldersByAddressRes.data.items.forEach((element) => holdersData.push(element));
-if (tokenHoldersByAddressRes.data.total == 0) {
+if (tokenHoldersByAddressRes.data.total !== 0) {
+  tokenHoldersByAddressRes.data.items.forEach((element) => holdersData.push(element));
+} else {
   isEmpty.value = false;
 }
+// console.log('tokenHoldersByAddressRes', tokenHoldersByAddressRes);
 
 const tokenTransactionRes = await GetTransactionsByToken(
   props.address as string,
@@ -187,11 +188,15 @@ const tokenTransactionRes = await GetTransactionsByToken(
   currentPageIndexTx.value - 1,
   pageSizeNumberTx.value
 );
+
 const transfersTotal = tokenTransactionRes.data.total;
-tokenTransactionRes.data.items.forEach((element) => {
-  // console.log('element', element);
-  txsData.push(element);
-});
+if (tokenTransactionRes.data.total !== 0) {
+  tokenTransactionRes.data.items.forEach((element) => {
+    // console.log('element', element);
+    txsData.push(element);
+  });
+}
+
 // console.log('tokenTransactionRes', tokenTransactionRes);
 
 const handleSizeChangeTx = async (pageSizeArg: number) => {
