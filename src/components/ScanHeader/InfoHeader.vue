@@ -76,7 +76,7 @@ onMounted(async () => {
   screenWidth.value = document.body.clientWidth;
   window.onresize = () => {
     return (() => {
-      console.log('document.body.clientWidth', document.body.clientWidth);
+      // console.log('document.body.clientWidth', document.body.clientWidth);
       screenWidth.value = document.body.clientWidth;
     })();
   };

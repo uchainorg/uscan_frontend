@@ -1,11 +1,14 @@
 <template lang="">
   <div>
-    <div class="center-row">
+    <div v-if="props.resCode !== -1" class="center-row">
       <h4 class="h4-title">
         Address <span class="small text-secondary">&nbsp;&nbsp;{{ props.address }}</span>
       </h4>
       &nbsp;
       <copy-icon :text="props.address"></copy-icon>
+    </div>
+    <div v-else class="center-row">
+      <h4 class="h4-title">Address <span class="small text-secondary">&nbsp;&nbsp;(invalid address)</span></h4>
     </div>
     <div>
       <el-card class="box-card">
@@ -22,7 +25,7 @@
         </div>
       </el-card>
     </div>
-    <el-tabs v-model="activeName">
+    <el-tabs v-if="props.resCode !== -1" v-model="activeName">
       <el-tab-pane label="Transactions" name="txs">
         <generate-transactions
           :txsData="txsData"
@@ -201,6 +204,7 @@ import { Download } from '@element-plus/icons-vue';
 
 const props = defineProps({
   address: String,
+  resCode: Number,
   addressInfo: {
     type: Object as () => AddressDetail,
   },
