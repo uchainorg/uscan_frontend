@@ -40,7 +40,7 @@
               </el-button>
             </el-button-group>
           </div>
-          <div class="center-row" v-else-if="scope.row.parameterName == 'createdTime'">
+          <div class="center-row" v-else-if="scope.row.parameterName == 'timestamp'">
             <el-icon><Clock /></el-icon>&nbsp;{{ getAge(scope.row.parameterValue) }}
           </div>
           <div v-else-if="scope.row.parameterName == 'transactionsTotal'">
