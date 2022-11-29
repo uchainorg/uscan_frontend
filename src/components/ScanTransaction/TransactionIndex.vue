@@ -14,8 +14,8 @@
             </el-button>
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item command="tracetx">Geth Debug Trace</el-dropdown-item>
-                <!-- <el-dropdown-item command="tracetx2">Geth Debug Trace_2</el-dropdown-item> -->
+                <!-- <el-dropdown-item command="tracetx">Geth Debug Trace</el-dropdown-item> -->
+                <el-dropdown-item command="tracetx2">Geth Debug Trace_2</el-dropdown-item>
               </el-dropdown-menu>
             </template>
           </el-dropdown>
