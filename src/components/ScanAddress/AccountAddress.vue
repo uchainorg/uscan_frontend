@@ -201,6 +201,7 @@ import {
 import { TableHeader } from '../../script/model/index';
 import { GetTransactionsByAddress, GetInternalTransactionsByAddress } from '../../script/service/transactionService';
 import { Download } from '@element-plus/icons-vue';
+import { GetAddressTxsTotal } from '../../script/service/addressService';
 
 const props = defineProps({
   address: String,
@@ -226,8 +227,10 @@ const isEmpty = ref(true);
 watch(props, async () => {
   currentPageIndex.value = 1;
   pageSizeNumber.value = 25;
-  // console.log('This', props.addressInfo);
-  // if (props.addressInfo?.id !== undefined) {
+
+  const resTotal = await GetAddressTxsTotal(props.address as string);
+  // console.log('totalRes', resTotal);
+
   txsData.length = 0;
   if (activeName.value === 'txs') {
     headerData.push(...TransactionsHeaderList);
@@ -243,38 +246,40 @@ watch(props, async () => {
   });
   total.value = res.data.total;
 
-  const resErc20 = await GetTransactionsByAddress(
-    currentPageIndex.value - 1,
-    pageSizeNumber.value,
-    'erc20',
-    props.address as string
-  );
-  erc20count.value = resErc20.data.total;
+  // const resErc20 = await GetTransactionsByAddress(
+  //   currentPageIndex.value - 1,
+  //   pageSizeNumber.value,
+  //   'erc20',
+  //   props.address as string
+  // );
+  // erc20count.value = resErc20.data.total;
+  erc20count.value = resTotal.data.erc20Total;
 
-  const resErc721 = await GetTransactionsByAddress(
-    currentPageIndex.value - 1,
-    pageSizeNumber.value,
-    'erc721',
-    props.address as string
-  );
-  erc721count.value = resErc721.data.total;
+  // const resErc721 = await GetTransactionsByAddress(
+  //   currentPageIndex.value - 1,
+  //   pageSizeNumber.value,
+  //   'erc721',
+  //   props.address as string
+  // );
+  // erc721count.value = resErc721.data.total;
+  erc721count.value = resTotal.data.erc721Total;
 
-  const resErc1155 = await GetTransactionsByAddress(
-    currentPageIndex.value - 1,
-    pageSizeNumber.value,
-    'erc1155',
-    props.address as string
-  );
-  erc1155count.value = resErc1155.data.total;
+  // const resErc1155 = await GetTransactionsByAddress(
+  //   currentPageIndex.value - 1,
+  //   pageSizeNumber.value,
+  //   'erc1155',
+  //   props.address as string
+  // );
+  // erc1155count.value = resErc1155.data.total;
+  erc1155count.value = resTotal.data.erc1155Total;
 
-  const resInternal = await GetInternalTransactionsByAddress(
-    currentPageIndex.value - 1,
-    pageSizeNumber.value,
-    props.address as string
-  );
-  internalCount.value = resInternal.data.total;
-  // console.log('resInternal', resInternal);
-  // }
+  // const resInternal = await GetInternalTransactionsByAddress(
+  //   currentPageIndex.value - 1,
+  //   pageSizeNumber.value,
+  //   props.address as string
+  // );
+  // internalCount.value = resInternal.data.total;
+  internalCount.value = resTotal.data.internalTotal;
 });
 
 watch(activeName, async (currentValue) => {

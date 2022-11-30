@@ -242,6 +242,7 @@ import {
 } from '../../script/model/transaction';
 import { ContractContent } from '../../script/model/contract';
 import { GetVerifyContractContent } from '../../script/service/contractService';
+import { GetAddressTxsTotal } from '../../script/service/addressService';
 
 const props = defineProps({
   address: String,
@@ -267,6 +268,9 @@ const isEmpty = ref(true);
 const proxyContractAddress = ref('');
 
 const initPageContent = async () => {
+  const resTotal = await GetAddressTxsTotal(props.address as string);
+  console.log('totalRes', resTotal);
+
   // tx data
   if (activeName.value === 'txs') {
     headerData.push(...TransactionsHeaderList);
@@ -286,13 +290,13 @@ const initPageContent = async () => {
   }
 
   // internal tx data
-  const resInternal = await GetInternalTransactionsByAddress(
-    currentPageIndex.value - 1,
-    pageSizeNumber.value,
-    props.address as string
-  );
-  internalCount.value = resInternal.data.total;
-  if (activeName.value == 'internal' && resInternal.data.total != 0) {
+  internalCount.value = resTotal.data.internalTotal;
+  if (activeName.value == 'internal' && resTotal.data.internalTotal != 0) {
+    const resInternal = await GetInternalTransactionsByAddress(
+      currentPageIndex.value - 1,
+      pageSizeNumber.value,
+      props.address as string
+    );
     headerData.push(...InternalTransactionsHeaderList);
     resInternal.data.items.forEach((element) => {
       internalTxsData.push(element);
@@ -300,15 +304,15 @@ const initPageContent = async () => {
   }
 
   // erc20 tx data
-  const resErc20 = await GetTransactionsByAddress(
-    currentPageIndex.value - 1,
-    pageSizeNumber.value,
-    'erc20',
-    props.address as string
-  );
-  erc20count.value = resErc20.data.total;
+  erc20count.value = resTotal.data.erc20Total;
   if (activeName.value == 'erc20') {
-    if (resErc20.data.total != 0) {
+    if (resTotal.data.erc20Total != 0) {
+      const resErc20 = await GetTransactionsByAddress(
+        currentPageIndex.value - 1,
+        pageSizeNumber.value,
+        'erc20',
+        props.address as string
+      );
       headerData.push(...Erc20TransactionsHeaderList);
       resErc20.data.items.forEach((element) => {
         txsData.push(element);
@@ -319,17 +323,17 @@ const initPageContent = async () => {
   }
 
   // erc721 tx data
-  const resErc721 = await GetTransactionsByAddress(
-    currentPageIndex.value - 1,
-    pageSizeNumber.value,
-    'erc721',
-    props.address as string
-  );
-  erc721count.value = resErc721.data.total;
+  erc721count.value = resTotal.data.erc721Total;
   if (activeName.value == 'erc721') {
-    if (resErc721.data.total != 0) {
+    if (resTotal.data.erc721Total) {
+      const resErc721 = await GetTransactionsByAddress(
+        currentPageIndex.value - 1,
+        pageSizeNumber.value,
+        'erc721',
+        props.address as string
+      );
       headerData.push(...Erc721TransactionsHeaderList);
-      resErc20.data.items.forEach((element) => {
+      resErc721.data.items.forEach((element) => {
         txsData.push(element);
       });
     } else {
@@ -338,17 +342,17 @@ const initPageContent = async () => {
   }
 
   // erc1155 tx data
-  const resErc1155 = await GetTransactionsByAddress(
-    currentPageIndex.value - 1,
-    pageSizeNumber.value,
-    'erc1155',
-    props.address as string
-  );
-  erc1155count.value = resErc1155.data.total;
+  erc1155count.value = resTotal.data.erc1155Total;
   if (activeName.value == 'erc1155') {
-    if (resErc1155.data.total != 0) {
+    if (resTotal.data.erc1155Total != 0) {
+      const resErc1155 = await GetTransactionsByAddress(
+        currentPageIndex.value - 1,
+        pageSizeNumber.value,
+        'erc1155',
+        props.address as string
+      );
       headerData.push(...Erc721TransactionsHeaderList);
-      resErc20.data.items.forEach((element) => {
+      resErc1155.data.items.forEach((element) => {
         txsData.push(element);
       });
     } else {

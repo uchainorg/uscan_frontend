@@ -62,3 +62,11 @@ export class AddressDetail {
     this.createdTime = createdTime;
   }
 }
+
+export interface AddressTxsTotal {
+  erc1155Total: number;
+  erc20Total: number;
+  erc721Total: number;
+  internalTotal: number;
+  txTotal: number;
+}
