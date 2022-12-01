@@ -28,7 +28,7 @@ onMounted(async () => {
   const addressRes = await GetAddressInfo(props.address as string);
   addressInfo.value = addressRes.data;
   resCode.value = addressRes.code;
-  console.log('Code', addressInfo);
+  // console.log('Code', addressInfo);
 });
 
 watch(props, async () => {

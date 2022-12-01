@@ -202,6 +202,7 @@ import { TableHeader } from '../../script/model/index';
 import { GetTransactionsByAddress, GetInternalTransactionsByAddress } from '../../script/service/transactionService';
 import { Download } from '@element-plus/icons-vue';
 import { GetAddressTxsTotal } from '../../script/service/addressService';
+import { getTitle } from '../../script/utils';
 
 const props = defineProps({
   address: String,
@@ -225,6 +226,8 @@ const internalCount = ref(0);
 const isEmpty = ref(true);
 
 watch(props, async () => {
+  document.title = 'Address ' + props.address + ' | The ' + getTitle + ' Explorer';
+
   currentPageIndex.value = 1;
   pageSizeNumber.value = 25;
 

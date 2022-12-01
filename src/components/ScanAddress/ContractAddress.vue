@@ -243,6 +243,7 @@ import {
 import { ContractContent } from '../../script/model/contract';
 import { GetVerifyContractContent } from '../../script/service/contractService';
 import { GetAddressTxsTotal } from '../../script/service/addressService';
+import { getTitle } from '../../script/utils';
 
 const props = defineProps({
   address: String,
@@ -268,6 +269,8 @@ const isEmpty = ref(true);
 const proxyContractAddress = ref('');
 
 const initPageContent = async () => {
+  document.title = 'Contract ' + props.address + ' | The ' + getTitle + ' Explorer';
+
   const resTotal = await GetAddressTxsTotal(props.address as string);
   console.log('totalRes', resTotal);
 
@@ -382,47 +385,49 @@ watch(props, async () => {
 });
 
 watch(activeName, async (currentValue) => {
-  currentPageIndex.value = 1;
-  pageSizeNumber.value = 25;
+  if (currentValue !== 'contract') {
+    currentPageIndex.value = 1;
+    pageSizeNumber.value = 25;
 
-  console.log('switch', currentValue);
-  txsData.length = 0;
-  headerData.length = 0;
-  if (activeName.value === 'txs') {
-    headerData.push(...TransactionsHeaderList);
-  } else if (activeName.value === 'erc20') {
-    headerData.push(...Erc20TransactionsHeaderList);
-  } else if (activeName.value === 'erc721') {
-    headerData.push(...Erc721TransactionsHeaderList);
-  } else if (activeName.value === 'erc1155') {
-    headerData.push(...Erc721TransactionsHeaderList);
-  } else if (activeName.value === 'internal') {
-    headerData.push(...InternalTransactionsHeaderList);
-  }
+    console.log('switch', currentValue);
+    txsData.length = 0;
+    headerData.length = 0;
+    if (activeName.value === 'txs') {
+      headerData.push(...TransactionsHeaderList);
+    } else if (activeName.value === 'erc20') {
+      headerData.push(...Erc20TransactionsHeaderList);
+    } else if (activeName.value === 'erc721') {
+      headerData.push(...Erc721TransactionsHeaderList);
+    } else if (activeName.value === 'erc1155') {
+      headerData.push(...Erc721TransactionsHeaderList);
+    } else if (activeName.value === 'internal') {
+      headerData.push(...InternalTransactionsHeaderList);
+    }
 
-  if (activeName.value == 'internal') {
-    const resInternal = await GetInternalTransactionsByAddress(
-      currentPageIndex.value - 1,
-      pageSizeNumber.value,
-      props.address as string
-    );
-    resInternal.data.items.forEach((element) => {
-      internalTxsData.push(element);
-    });
-    internalCount.value = resInternal.data.total;
-  } else {
-    const res = await GetTransactionsByAddress(
-      currentPageIndex.value - 1,
-      pageSizeNumber.value,
-      activeName.value,
-      props.address as string
-    );
-    res.data.items.forEach((element) => {
-      txsData.push(element);
-    });
-    total.value = res.data.total;
-    if (res.data.total == 0) {
-      isEmpty.value = false;
+    if (activeName.value == 'internal') {
+      const resInternal = await GetInternalTransactionsByAddress(
+        currentPageIndex.value - 1,
+        pageSizeNumber.value,
+        props.address as string
+      );
+      resInternal.data.items.forEach((element) => {
+        internalTxsData.push(element);
+      });
+      internalCount.value = resInternal.data.total;
+    } else {
+      const res = await GetTransactionsByAddress(
+        currentPageIndex.value - 1,
+        pageSizeNumber.value,
+        activeName.value,
+        props.address as string
+      );
+      res.data.items.forEach((element) => {
+        txsData.push(element);
+      });
+      total.value = res.data.total;
+      if (res.data.total == 0) {
+        isEmpty.value = false;
+      }
     }
   }
 });
