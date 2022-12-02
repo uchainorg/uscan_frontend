@@ -228,9 +228,9 @@ const submit = async () => {
   // console.log('submitRes', submitRes);
   submittedStatus.value = submitRes.code;
   if (submitRes.code == 200) {
-    setTimeout(() => {
+    setInterval(() => {
       CheckVerifyContractStatus(submitRes.data.id);
-    }, 5 * 1000);
+    }, 8 * 1000);
   } else {
     submittedError.value = submitRes.msg;
     submitLoading.value = false;
