@@ -139,7 +139,6 @@
                   click this back contract {{ contractAddress }} page
                 </router-link>
               </div>
-              <div class="subtitle" v-else-if="submitRes == 0">Verify handling!</div>
             </div>
           </div>
         </el-tab-pane>
@@ -225,26 +224,31 @@ const submit = async () => {
   // console.log('submittedStatus', submittedStatus);
 
   const submitRes = await SubmitVerifyContract(contractAddress as string, formdata);
-  // console.log('submitRes', submitRes);
+  console.log('submitRes', submitRes);
   submittedStatus.value = submitRes.code;
   if (submitRes.code == 200) {
-    setInterval(() => {
-      CheckVerifyContractStatus(submitRes.data.id);
-    }, 8 * 1000);
+    const interval = setInterval(() => {
+      CheckVerifyContractStatus(submitRes.data.id, interval);
+    }, 5 * 1000);
   } else {
     submittedError.value = submitRes.msg;
     submitLoading.value = false;
   }
 };
 
-const CheckVerifyContractStatus = async (submitId: string) => {
+const CheckVerifyContractStatus = async (submitId: string, interval: any) => {
   const contractStatusRes = await GetVerifyContractStatus(submitId);
-  // console.log('contractStatusRes', contractStatusRes);
-  verifyContractStatus.value = contractStatusRes.data.data;
-  if (contractStatusRes.data.data == 1) {
+  console.log('contractStatusRes', contractStatusRes);
+  verifyContractStatus.value = contractStatusRes.data;
+  if (contractStatusRes.data == 1) {
     router.push(('/address/' + contractAddress) as string);
+    submitLoading.value = false;
+    clearInterval(interval);
+  } else if (contractStatusRes.data == 2) {
+    submittedError.value = 'Validation failed';
+    submitLoading.value = false;
+    clearInterval(interval);
   }
-  submitLoading.value = false;
 };
 
 const handleUploadChange = (fileList: any[]) => {
