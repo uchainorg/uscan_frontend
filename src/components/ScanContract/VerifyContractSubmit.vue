@@ -154,9 +154,9 @@ import {
   SubmitVerifyContract,
   GetVerifyContractStatus,
 } from '../../script/service/contractService';
-import { getTitle } from '../../script/utils';
+import { getTitle } from '../../script/global';
 
-document.title = 'Verify & Publish Contract Source Code | The ' + getTitle + ' Explorer';
+document.title = 'Verify & Publish Contract Source Code | The ' + getTitle() + ' Explorer';
 
 const route = useRoute();
 const router = useRouter();

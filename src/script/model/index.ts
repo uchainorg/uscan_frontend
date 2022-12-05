@@ -102,3 +102,9 @@ export interface ContractContentRes{
   proxyContract: ContractContent;
   proxyContractAddress: string
 }
+
+export interface CustomParams {
+  appTitle: string,
+  nodeUrl: string,
+  unitDisplay: string
+}

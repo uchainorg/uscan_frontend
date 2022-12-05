@@ -15,13 +15,13 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { getTitle } from '../../script/utils';
+import { getTitle } from '../../script/global';
 import { GetHome } from '../../script/service/homeService';
 
 const res = await GetHome();
 // console.log('homePage', res.data);
 
-document.title = 'Home | The ' + getTitle + ' Explorer';
+document.title = 'Home | The ' + getTitle() + ' Explorer';
 </script>
 <style>
 .home-content {

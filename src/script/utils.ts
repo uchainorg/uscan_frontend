@@ -65,7 +65,7 @@ const formatNumber = (input: number | bigint): string => {
   return input.toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
 };
 
-const getTitle = import.meta.env.VITE_APP_TITLE == undefined ? 'Uscan' : import.meta.env.VITE_APP_TITLE;
+// const getTitle() = import.meta.env.VITE_APP_TITLE == undefined ? 'Uscan' : import.meta.env.VITE_APP_TITLE;
 
 const getParenthesesStr = (text: string): string[] => {
   const reg = /(?<=\().*(?=\))/;
@@ -76,4 +76,4 @@ const getParenthesesStr = (text: string): string[] => {
   return arr;
 };
 
-export { getAge, formatNumber, getTitle, getParenthesesStr };
+export { getAge, formatNumber, getParenthesesStr };

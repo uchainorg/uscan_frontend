@@ -20,7 +20,9 @@
               <div class="card-content">
                 <el-row>
                   <el-col :span="10">Balance:</el-col>
-                  <el-col :span="14">{{ ethers.utils.formatUnits(props.addressInfo.balance, 18) }} Eth</el-col>
+                  <el-col :span="14"
+                    >{{ ethers.utils.formatUnits(props.addressInfo.balance, 18) }} {{ getUnitDisplay() }}</el-col
+                  >
                 </el-row>
               </div>
             </el-card>
@@ -243,7 +245,7 @@ import {
 import { ContractContent } from '../../script/model/contract';
 import { GetVerifyContractContent } from '../../script/service/contractService';
 import { GetAddressTxsTotal } from '../../script/service/addressService';
-import { getTitle } from '../../script/utils';
+import { getUnitDisplay } from '../../script/global';
 
 const props = defineProps({
   address: String,
@@ -269,7 +271,7 @@ const isEmpty = ref(true);
 const proxyContractAddress = ref('');
 
 const initPageContent = async () => {
-  document.title = 'Contract ' + props.address + ' | The ' + getTitle + ' Explorer';
+  document.title = 'Contract ' + props.address;
 
   const resTotal = await GetAddressTxsTotal(props.address as string);
   console.log('totalRes', resTotal);

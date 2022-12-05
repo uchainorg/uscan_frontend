@@ -52,7 +52,12 @@
           {{ ethers.utils.formatUnits(scope.row[scope.column.property], 18) }}
         </div>
         <div v-else-if="scope.column.property == 'gas'" style="font-size: 11px">
-          {{ ethers.utils.formatUnits(scope.row[scope.column.property], 18) }}
+          {{
+            ethers.utils.formatUnits(
+              (parseInt(scope.row[scope.column.property], 10) * parseInt(scope.row['gasPrice'], 10)).toString(),
+              18
+            )
+          }}
         </div>
         <div v-else-if="scope.column.property == 'contract'" style="width: 170px; font-size: 11px">
           <router-link :to="'/token/' + scope.row[scope.column.property]">{{

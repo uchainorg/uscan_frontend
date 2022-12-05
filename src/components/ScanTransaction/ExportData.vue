@@ -33,7 +33,7 @@
 import { ref, watchEffect } from 'vue';
 import axios from 'axios';
 import { useRoute } from 'vue-router';
-import { getTitle } from '../../script/utils';
+import { getTitle } from '../../script/global';
 
 const route = useRoute();
 
@@ -42,7 +42,7 @@ const type = ref(route.query.type as string);
 const address = ref(route.query.a as string);
 const title = ref('Transactions');
 
-document.title = 'Export Data | The ' + getTitle + ' Explorer';
+document.title = 'Export Data | The ' + getTitle() + ' Explorer';
 
 watchEffect(() => {
   console.log(type.value);

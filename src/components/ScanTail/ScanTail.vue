@@ -4,7 +4,7 @@
       <div style="width: 340px">
         <p style="font-size: 20px; color: white">Powered by Ankr</p>
         <p style="font-size: 13px; color: white">
-          {{ getTitle }}scan is a Block Explorer and Analytics Platform for {{ getTitle }}, a decentralized smart
+          {{ getTitle() }}scan is a Block Explorer and Analytics Platform for {{ getTitle() }}, a decentralized smart
           contracts platform.
         </p>
       </div>
@@ -48,7 +48,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { getTitle } from '../../script/utils';
+import { getTitle } from '../../script/global';
 </script>
 <style lang="less" scoped>
 @import '../../css/style.css';

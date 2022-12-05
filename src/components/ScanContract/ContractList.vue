@@ -27,12 +27,12 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { getTitle } from '../../script/utils';
+import { getTitle } from '../../script/global';
 import { ref, reactive, watchEffect } from 'vue';
 import { ContractsHeaderList, ContractContent } from '../../script/model/contract';
 import { GetContracts } from '../../script/service/contractService';
 
-document.title = 'Contracts | The ' + getTitle + ' Explorer';
+document.title = 'Contracts | The ' + getTitle() + ' Explorer';
 
 const props = defineProps({
   contractType: String,

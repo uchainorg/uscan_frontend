@@ -20,7 +20,9 @@
         <div class="card-content">
           <el-row>
             <el-col :span="10">Balance:</el-col>
-            <el-col :span="14">{{ ethers.utils.formatUnits(props.addressInfo.balance, 18) }} Eth</el-col>
+            <el-col :span="14"
+              >{{ ethers.utils.formatUnits(props.addressInfo.balance, 18) }} {{ getUnitDisplay() }}</el-col
+            >
           </el-row>
         </div>
       </el-card>
@@ -202,7 +204,7 @@ import { TableHeader } from '../../script/model/index';
 import { GetTransactionsByAddress, GetInternalTransactionsByAddress } from '../../script/service/transactionService';
 import { Download } from '@element-plus/icons-vue';
 import { GetAddressTxsTotal } from '../../script/service/addressService';
-import { getTitle } from '../../script/utils';
+import { getUnitDisplay } from '../../script/global';
 
 const props = defineProps({
   address: String,
@@ -226,7 +228,7 @@ const internalCount = ref(0);
 const isEmpty = ref(true);
 
 watch(props, async () => {
-  document.title = 'Address ' + props.address + ' | The ' + getTitle + ' Explorer';
+  document.title = 'Address ' + props.address;
 
   currentPageIndex.value = 1;
   pageSizeNumber.value = 25;

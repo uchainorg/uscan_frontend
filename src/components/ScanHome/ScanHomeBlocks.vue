@@ -42,7 +42,9 @@
         <template v-slot:default="scope">
           <el-tooltip effect="dark" content="gasUsed" placement="right">
             <div style="text-align: right">
-              <el-tag type="info">{{ ethers.utils.formatUnits(scope.row.gasUsed.toString(), 18) }} Eth</el-tag>
+              <el-tag type="info"
+                >{{ ethers.utils.formatUnits(scope.row.gasUsed.toString(), 18) }} {{ getUnitDisplay() }}</el-tag
+              >
             </div>
           </el-tooltip>
         </template>
@@ -58,6 +60,7 @@ import { getAge } from '../../script/utils';
 import { ethers } from 'ethers';
 import { useRouter } from 'vue-router';
 import { BlockDetail } from '../../script/model/block';
+import { getUnitDisplay } from '../../script/global';
 
 const props = defineProps({
   blocksData: {

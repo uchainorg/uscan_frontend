@@ -8,10 +8,10 @@
 </template>
 <script lang="ts" setup>
 import { useRouter } from 'vue-router';
-import { getTitle } from '../../script/utils';
+import { getTitle } from '../../script/global';
 const router = useRouter();
 
-document.title = 'Not Found | The ' + getTitle + ' Explorer';
+document.title = 'Not Found | The ' + getTitle() + ' Explorer';
 const moveToHome = () => {
   router.push('/');
 };

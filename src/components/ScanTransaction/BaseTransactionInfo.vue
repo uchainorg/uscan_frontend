@@ -12,7 +12,7 @@
     </div>
     <el-divider />
     <h4>Transaction Fee:</h4>
-    {{ ethers.utils.formatEther(baseInfo.gasLimit * baseInfo.gasUsed) }} Eth
+    {{ ethers.utils.formatEther(baseInfo.gasLimit * baseInfo.gasUsed) }} {{ getUnitDisplay() }}
     <el-divider />
     <h4>Gas Info:</h4>
     {{ baseInfo.gasUsed }} Used From {{ baseInfo.gasLimit }} GasLimit
@@ -30,6 +30,7 @@
 import { GetBaseTxByHash } from '../../script/service/transactionService';
 import { Link, SuccessFilled, Failed, VideoPause } from '@element-plus/icons-vue';
 import { ethers } from 'ethers';
+import { getUnitDisplay } from '../../script/global';
 
 const props = defineProps({
   txHash: String,

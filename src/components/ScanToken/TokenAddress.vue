@@ -123,9 +123,9 @@ import { TokenTransfers, TokenHolder } from '../../script/model/token';
 import { TableHeader } from '../../script/model/index';
 import { GetAddressInfo } from '../../script/service/addressService';
 import { ref, reactive } from 'vue';
-import { getTitle } from '../../script/utils';
+import { getTitle } from '../../script/global';
 
-document.title = 'Token | The ' + getTitle + ' Explorer';
+document.title = 'Token | The ' + getTitle() + ' Explorer';
 
 const props = defineProps({
   address: String,

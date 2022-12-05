@@ -10,7 +10,7 @@
     <div style="display: flex; justify-content: center">
       <p style="color: #77838f; width: 80%">
         &nbsp; &nbsp; Source code verification provides transparency for users interacting with smart contracts. By
-        uploading the source code, Etherscan will match the compiled code with that on the blockchain. Just like
+        uploading the source code, Ethscan will match the compiled code with that on the blockchain. Just like
         contracts, a "smart contract" should provide end users with more information on what they are "digitally
         signing" for and give users an opportunity to audit the code to independently verify that it actually does what
         it is supposed to do.
@@ -70,12 +70,12 @@
 import { ref } from 'vue';
 import { GetVerifyContractMetadata } from '../../script/service/contractService';
 import { useRoute, useRouter } from 'vue-router';
-import { getTitle } from '../../script/utils';
+import { getTitle } from '../../script/global';
 
 const router = useRouter();
 const route = useRoute();
 
-document.title = 'Verify & Publish Contract Source Code | The ' + getTitle + ' Explorer';
+document.title = 'Verify & Publish Contract Source Code | The ' + getTitle() + ' Explorer';
 
 interface Option {
   value: any;

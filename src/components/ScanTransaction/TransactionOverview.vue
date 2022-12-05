@@ -73,7 +73,7 @@
             </div>
           </div>
           <div v-else-if="scope.row.parameterName == 'value'">
-            {{ ethers.utils.formatEther(scope.row.parameterValue) }} Eth
+            {{ ethers.utils.formatEther(scope.row.parameterValue) }} {{ getUnitDisplay() }}
           </div>
           <div v-else-if="scope.row.parameterName == 'tokensTransferred'">
             <div :class="scope.row.parameterValue.length >= 3 ? 'rolling' : ''">
@@ -103,7 +103,7 @@
             }})
           </div>
           <div v-else-if="scope.row.parameterName == 'gasPrice'">
-            {{ ethers.utils.formatEther(scope.row.parameterValue) }} Eth
+            {{ ethers.utils.formatEther(scope.row.parameterValue) }} {{ getUnitDisplay() }}
           </div>
           <div v-else-if="scope.row.parameterName == 'maxPriorityFeePerGas'">
             Base: {{ ethers.utils.formatEther(scope.row.parameterValue.baseFeePerGas, 'gwei') }} Gwei | Max:
@@ -152,10 +152,11 @@
 import { QuestionFilled, Clock, SuccessFilled, Failed, VideoPause } from '@element-plus/icons-vue';
 import { getAge } from '../../script/utils';
 import { ethers } from 'ethers';
-import { getTitle } from '../../script/utils';
+import { getTitle } from '../../script/global';
 import { Overview } from '../../script/model';
+import { getUnitDisplay } from '../../script/global';
 
-document.title = 'Transaction overview | The ' + getTitle + ' Explorer';
+document.title = 'Transaction overview | The ' + getTitle() + ' Explorer';
 
 const props = defineProps({
   txOverviews: {

@@ -39,8 +39,8 @@
                   {{
                     ethers.utils.formatUnits((parseInt(scope.row.gas) * parseInt(scope.row.gasPrice)).toString(), 18)
                   }}
-                  Eth
-                  <!-- {{ scope.row.gas }} Eth -->
+                  {{ getUnitDisplay() }}
+                  <!-- {{ scope.row.gas }} {{getUnitDisplay()}} -->
                 </el-tag>
               </div>
             </el-tooltip>
@@ -58,6 +58,7 @@ import { getAge } from '../../script/utils';
 import { ethers } from 'ethers';
 import { useRouter } from 'vue-router';
 import { TransactionDetail } from '../../script/model/transaction';
+import { getUnitDisplay } from '../../script/global';
 
 const props = defineProps({
   txsData: {
