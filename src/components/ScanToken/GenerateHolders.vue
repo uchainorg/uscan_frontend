@@ -3,12 +3,12 @@
     <el-table class="table-border" :data="props.holdersData" empty-text="loading..." :row-style="{ height: '50px' }">
       <el-table-column v-for="info in props.headerData" :key="info.key" :property="info.key" :label="info.label">
         <template v-slot:default="scope">
-          <div v-if="scope.column.property == 'owner'">
+          <div v-if="scope.column.property == 'Address'">
             <router-link :to="'/address/' + scope.row[scope.column.property]">{{
               scope.row[scope.column.property]
             }}</router-link>
           </div>
-          <div v-else-if="scope.column.property == 'quantity'" style="width: 180px">
+          <div v-else-if="scope.column.property == 'Quantity'" style="width: 380px">
             {{ BigInt(parseInt(scope.row[scope.column.property])) }}
           </div>
         </template>

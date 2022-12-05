@@ -512,8 +512,8 @@ export const TokenErcTransactionsHeaderList: TableHeader[] = [
 ];
 
 export const TokeHolderHeaderList: TableHeader[] = [
-  new TableHeader('Address', 'owner'),
-  new TableHeader('Quantity', 'quantity'),
+  new TableHeader('Address', 'Address'),
+  new TableHeader('Quantity', 'Quantity'),
 ];
 
 export const TokeErcHolderHeaderList: TableHeader[] = [

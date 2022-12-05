@@ -20,7 +20,7 @@
               <div class="card-content">
                 <el-row>
                   <el-col :span="9">Max Total Supply:</el-col>
-                  <el-col :span="15">{{ totalSupply }}</el-col>
+                  <el-col :span="15">{{ parseInt(totalSupply) }}</el-col>
                 </el-row>
                 <el-row>
                   <el-col :span="9">Holders:</el-col>
@@ -53,6 +53,10 @@
                   <el-row>
                     <el-col :span="9">Decimals:</el-col>
                     <el-col :span="15">{{ decimals }}</el-col>
+                  </el-row>
+                  <el-row>
+                    <el-col :span="9">Symbol:</el-col>
+                    <el-col :span="15">{{ symbol }}</el-col>
                   </el-row>
                 </div>
               </div>
@@ -166,6 +170,7 @@ if (tokenType == 'erc20') {
 const addressInfoRes = await GetAddressInfo(props.address as string);
 const totalSupply = addressInfoRes.data.tokenTotalSupply;
 const decimals = addressInfoRes.data.decimals;
+const symbol = addressInfoRes.data.symbol;
 // console.log(addressInfoRes);
 
 const tokenHoldersByAddressRes = await GetTokenHoldersByAddress(
@@ -180,7 +185,7 @@ if (tokenHoldersByAddressRes.data.total !== 0) {
 } else {
   isEmpty.value = false;
 }
-// console.log('tokenHoldersByAddressRes', tokenHoldersByAddressRes);
+// console.log('tokenHoldersByAddressRes', holdersData);
 
 const tokenTransactionRes = await GetTransactionsByToken(
   props.address as string,
