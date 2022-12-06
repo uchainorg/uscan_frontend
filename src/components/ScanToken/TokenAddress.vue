@@ -250,7 +250,7 @@ const handleSizeChangeHolder = async (pageSizeArg: number) => {
 
 const handleCurrentChangeHolder = async (currentPageArg: number) => {
   holdersData.length = 0;
-  currentPageIndexTx.value = currentPageArg;
+  currentPageIndexHolder.value = currentPageArg;
   const res = await GetTokenHoldersByAddress(
     props.address as string,
     tokenType,
