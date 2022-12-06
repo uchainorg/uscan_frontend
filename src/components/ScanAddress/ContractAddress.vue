@@ -37,7 +37,7 @@
                 </div>
               </template>
               <div class="card-content">
-                <el-row>
+                <el-row class="el-row">
                   <el-col :span="10">Creator:</el-col>
                   <el-col :span="14">
                     <router-link :to="'/address/' + props.addressInfo.creator">{{
@@ -47,6 +47,12 @@
                     <router-link :to="'/tx/' + props.addressInfo.txHash">{{
                       props.addressInfo.txHash.slice(0, 15) + '...'
                     }}</router-link>
+                  </el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="10">Token Tracker:</el-col>
+                  <el-col :span="14">
+                    {{ props.addressInfo.symbol }}
                   </el-col>
                 </el-row>
               </div>
