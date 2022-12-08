@@ -1,6 +1,7 @@
 <template lang="">
   <div>
     <el-table class="table-border" :data="props.holdersData" empty-text="loading..." :row-style="{ height: '50px' }">
+      <template #empty>{{ emptyText }}</template>
       <el-table-column v-for="info in props.headerData" :key="info.key" :property="info.key" :label="info.label">
         <template v-slot:default="scope">
           <div v-if="scope.column.property == 'Address'">
@@ -19,8 +20,11 @@
 <script lang="ts" setup>
 import { TokenHolder } from '../../script/model/token';
 import { TableHeader } from '../../script/model/index';
+import { ref, watchEffect } from 'vue';
 
+const emptyText = ref('loading...');
 const props = defineProps({
+  loadStatus: Boolean,
   holdersData: {
     type: Array as () => Array<TokenHolder>,
     require: true,
@@ -29,6 +33,12 @@ const props = defineProps({
     type: Array as () => Array<TableHeader>,
     require: true,
   },
+});
+
+watchEffect(() => {
+  if (!props.loadStatus) {
+    emptyText.value = 'empty data';
+  }
 });
 </script>
 <style lang=""></style>

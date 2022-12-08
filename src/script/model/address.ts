@@ -14,7 +14,7 @@ export class AddressDetail {
   symbol: string;
   tokenTotalSupply: number;
   nftTotalSupply: number;
-  decimals: string;
+  decimals: number;
   createdTime: number;
   /**
    * Create a AddressDetail.
@@ -29,7 +29,7 @@ export class AddressDetail {
    * @param {string} symbol
    * @param {number} tokenTotalSupply
    * @param {number} nftTotalSupply
-   * @param {string} decimals
+   * @param {number} decimals
    * @param {string} createdTime
    */
   constructor(
@@ -44,7 +44,7 @@ export class AddressDetail {
     symbol: string,
     tokenTotalSupply: number,
     nftTotalSupply: number,
-    decimals: string,
+    decimals: number,
     createdTime: number
   ) {
     this.id = id;

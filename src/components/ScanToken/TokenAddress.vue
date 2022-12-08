@@ -20,7 +20,10 @@
               <div class="card-content">
                 <el-row>
                   <el-col :span="9">Max Total Supply:</el-col>
-                  <el-col :span="15">{{ parseInt(totalSupply) }}</el-col>
+                  <el-col v-if="tokenType == 'erc20'" :span="15">{{
+                    parseInt(totalSupply) * Math.pow(10, -decimals)
+                  }}</el-col>
+                  <el-col v-else :span="15">{{ parseInt(totalSupply) }}</el-col>
                 </el-row>
                 <el-row>
                   <el-col :span="9">Holders:</el-col>
@@ -88,7 +91,11 @@
           </div>
         </el-tab-pane>
         <el-tab-pane label="Holders" name="holders">
-          <generate-holders :holdersData="holdersData" :headerData="headerDataHolder"></generate-holders>
+          <generate-holders
+            :holdersData="holdersData"
+            :headerData="headerDataHolder"
+            :loadStatus="isEmpty"
+          ></generate-holders>
           <div style="margin-top: 1%; display: flex; justify-content: center">
             <el-pagination
               small
@@ -126,7 +133,7 @@ import {
 import { TokenTransfers, TokenHolder } from '../../script/model/token';
 import { TableHeader } from '../../script/model/index';
 import { GetAddressInfo } from '../../script/service/addressService';
-import { ref, reactive } from 'vue';
+import { ref, reactive, watch } from 'vue';
 import { getTitle } from '../../script/global';
 
 document.title = 'Token | The ' + getTitle() + ' Explorer';
@@ -145,64 +152,85 @@ const txsData: TransactionDetail[] = reactive([]);
 const holdersData: TokenHolder[] = reactive([]);
 const headerDataHolder: TableHeader[] = reactive([]);
 const isEmpty = ref(true);
+const addressInfoRes = ref();
+const totalSupply = ref(0);
+const decimals = ref(0);
+const symbol = ref('');
+const transfersTotal = ref(0);
+const holdersTotal = ref(0);
+const tokenType = ref('');
+const isHoldersEmpty = ref(true);
 
-let tokenType = '';
+const initPageContent = async () => {
+  const tokenTransfersRes = await GetTokenTransfersByAddress(props.address as string);
+  // console.log(tokenTransfersRes);
 
-const tokenTransfersRes = await GetTokenTransfersByAddress(props.address as string);
-// console.log(tokenTransfersRes);
-
-// eslint-disable-next-line guard-for-in
-for (const i in tokenTransfersRes.data) {
-  if (tokenTransfersRes.data[i as keyof TokenTransfers] != 0) {
-    tokenType = i;
+  // eslint-disable-next-line guard-for-in
+  for (const i in tokenTransfersRes.data) {
+    if (tokenTransfersRes.data[i as keyof TokenTransfers] != 0) {
+      tokenType.value = i;
+    }
   }
-}
-// console.log('tokenType', tokenType);
+  console.log('tokenType', tokenTransfersRes.data);
 
-if (tokenType == 'erc20') {
-  headerDataTx.push(...TokenErc20TransactionsHeaderList);
-  headerDataHolder.push(...TokeHolderHeaderList);
-} else {
-  headerDataTx.push(...TokenErcTransactionsHeaderList);
-  headerDataHolder.push(...TokeErcHolderHeaderList);
-}
+  if (tokenType.value == 'erc20') {
+    headerDataTx.push(...TokenErc20TransactionsHeaderList);
+    headerDataHolder.push(...TokeHolderHeaderList);
+  } else {
+    headerDataTx.push(...TokenErcTransactionsHeaderList);
+    headerDataHolder.push(...TokeErcHolderHeaderList);
+  }
 
-const addressInfoRes = await GetAddressInfo(props.address as string);
-const totalSupply = addressInfoRes.data.tokenTotalSupply;
-const decimals = addressInfoRes.data.decimals;
-const symbol = addressInfoRes.data.symbol;
-// console.log(addressInfoRes);
+  addressInfoRes.value = await GetAddressInfo(props.address as string);
+  totalSupply.value = addressInfoRes.value.data.tokenTotalSupply;
+  decimals.value = addressInfoRes.value.data.decimals;
+  symbol.value = addressInfoRes.value.data.symbol;
+  // console.log(addressInfoRes);
 
-const tokenHoldersByAddressRes = await GetTokenHoldersByAddress(
-  props.address as string,
-  tokenType,
-  currentPageIndexHolder.value - 1,
-  pageSizeNumberHolder.value
-);
-const holdersTotal = tokenHoldersByAddressRes.data.total;
-if (tokenHoldersByAddressRes.data.total !== 0) {
-  tokenHoldersByAddressRes.data.items.forEach((element) => holdersData.push(element));
-} else {
-  isEmpty.value = false;
-}
-// console.log('tokenHoldersByAddressRes', holdersData);
+  const tokenHoldersByAddressRes = await GetTokenHoldersByAddress(
+    props.address as string,
+    tokenType.value,
+    currentPageIndexHolder.value - 1,
+    pageSizeNumberHolder.value
+  );
+  holdersTotal.value = tokenHoldersByAddressRes.data.total;
+  if (tokenHoldersByAddressRes.data.total !== 0) {
+    tokenHoldersByAddressRes.data.items.forEach((element) => holdersData.push(element));
+  } else {
+    isHoldersEmpty.value = false;
+  }
+  // console.log('tokenHoldersByAddressRes', holdersData);
 
-const tokenTransactionRes = await GetTransactionsByToken(
-  props.address as string,
-  tokenType,
-  currentPageIndexTx.value - 1,
-  pageSizeNumberTx.value
-);
+  const tokenTransactionRes = await GetTransactionsByToken(
+    props.address as string,
+    tokenType.value,
+    currentPageIndexTx.value - 1,
+    pageSizeNumberTx.value
+  );
 
-const transfersTotal = tokenTransactionRes.data.total;
-if (tokenTransactionRes.data.total !== 0) {
-  tokenTransactionRes.data.items.forEach((element) => {
-    // console.log('element', element);
-    txsData.push(element);
-  });
-}
+  transfersTotal.value = tokenTransactionRes.data.total;
+  if (tokenTransactionRes.data.total !== 0) {
+    tokenTransactionRes.data.items.forEach((element) => {
+      // console.log('element', element);
+      txsData.push(element);
+    });
+  } else {
+    isEmpty.value = false;
+  }
+};
 
-// console.log('tokenTransactionRes', tokenTransactionRes);
+initPageContent();
+
+watch(props, async () => {
+  txsData.length = 0;
+  currentPageIndexTx.value = 1;
+  pageSizeNumberTx.value = 25;
+  holdersData.length = 0;
+  currentPageIndexHolder.value = 1;
+  pageSizeNumberHolder.value = 25;
+
+  initPageContent();
+});
 
 const handleSizeChangeTx = async (pageSizeArg: number) => {
   txsData.length = 0;
@@ -210,7 +238,7 @@ const handleSizeChangeTx = async (pageSizeArg: number) => {
   pageSizeNumberTx.value = pageSizeArg;
   const res = await GetTransactionsByToken(
     props.address as string,
-    tokenType,
+    tokenType.value,
     currentPageIndexTx.value - 1,
     pageSizeNumberTx.value
   );
@@ -224,7 +252,7 @@ const handleCurrentChangeTx = async (currentPageArg: number) => {
   currentPageIndexTx.value = currentPageArg;
   const res = await GetTransactionsByToken(
     props.address as string,
-    tokenType,
+    tokenType.value,
     currentPageIndexTx.value - 1,
     pageSizeNumberTx.value
   );
@@ -239,7 +267,7 @@ const handleSizeChangeHolder = async (pageSizeArg: number) => {
   pageSizeNumberHolder.value = pageSizeArg;
   const res = await GetTokenHoldersByAddress(
     props.address as string,
-    tokenType,
+    tokenType.value,
     currentPageIndexHolder.value - 1,
     pageSizeNumberHolder.value
   );
@@ -253,7 +281,7 @@ const handleCurrentChangeHolder = async (currentPageArg: number) => {
   currentPageIndexHolder.value = currentPageArg;
   const res = await GetTokenHoldersByAddress(
     props.address as string,
-    tokenType,
+    tokenType.value,
     currentPageIndexHolder.value - 1,
     pageSizeNumberHolder.value
   );

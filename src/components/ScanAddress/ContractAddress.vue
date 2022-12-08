@@ -49,7 +49,7 @@
                     }}</router-link>
                   </el-col>
                 </el-row>
-                <el-row>
+                <el-row v-if="props.addressInfo.symbol !== ''">
                   <el-col :span="10">Token Tracker:</el-col>
                   <el-col :span="14">
                     {{ props.addressInfo.symbol }}
@@ -413,6 +413,7 @@ watch(activeName, async (currentValue) => {
     }
 
     if (activeName.value == 'internal') {
+      internalTxsData.length = 0;
       const resInternal = await GetInternalTransactionsByAddress(
         currentPageIndex.value - 1,
         pageSizeNumber.value,
