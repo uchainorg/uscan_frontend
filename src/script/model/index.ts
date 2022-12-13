@@ -97,14 +97,14 @@ export class Overview {
   }
 }
 
-export interface ContractContentRes{
+export interface ContractContentRes {
   contract: ContractContent;
   proxyContract: ContractContent;
-  proxyContractAddress: string
+  proxyContractAddress: string;
 }
 
 export interface CustomParams {
-  appTitle: string,
-  nodeUrl: string,
-  unitDisplay: string
+  appTitle: string;
+  nodeUrl: string;
+  unitDisplay: string;
 }

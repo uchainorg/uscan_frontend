@@ -1,14 +1,12 @@
 import axios from 'axios';
-import { getNodeUrl } from '../../script/global';
 
-
-export const GetResByNode = async (requestList: any[]) => {
-  console.log('getNodeUrl', getNodeUrl());
-  if (getNodeUrl() !== '') {
+export const GetResByNode = async (requestList: any[], nodeUrl: String) => {
+  // console.log('getNodeUrl', getNodeUrl());
+  if (nodeUrl === '') {
     alert('Please set the node address at startup');
   }
   const requestNode = axios.create({
-    baseURL: getNodeUrl() as string,
+    baseURL: nodeUrl as string,
   });
   const reqs: any = [];
   const responseMap = new Map();

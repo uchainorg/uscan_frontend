@@ -39,6 +39,7 @@ import { ContractContent } from '../../../script/model/contract';
 import { GetResByNode } from '../../../script/service/nodeService';
 import { Document } from '@element-plus/icons-vue';
 import { ethers } from 'ethers';
+import { getNodeUrl } from '../../../script/global';
 
 const props = defineProps({
   contractAddress: String,
@@ -52,6 +53,7 @@ const functionObjectList = reactive([] as any[]);
 // const functionObjectList = ref([] as any[]);
 
 const activeNames = ref([] as number[]);
+const nodeUrl = ref('');
 
 const resDisplayMap = reactive({
   map: new Map(),
@@ -81,6 +83,8 @@ watch(activeNames, (newVal, oldVal) => {
 });
 
 const initData = () => {
+  console.log('node url is', getNodeUrl());
+  nodeUrl.value = getNodeUrl();
   if (Object.keys(props.contractInfo as ContractContent).length !== 0) {
     activeNames.value = [];
     let index = 0;
@@ -166,7 +170,7 @@ const query = async (functionList: any[]) => {
       });
     });
     // console.log('requests', requests);
-    const resMap = await GetResByNode(requests);
+    const resMap = await GetResByNode(requests, nodeUrl.value);
     // console.log('resMap', resMap);
     resMap.forEach((value, key) => {
       const functionObject = functionList[key];

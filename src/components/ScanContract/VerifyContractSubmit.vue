@@ -134,7 +134,7 @@
             <div v-else class="submit-result">
               <div class="subtitle" v-if="verifyContractStatus == 1">Verify success!</div>
               <div class="subtitle" v-else-if="verifyContractStatus == 2">
-                Verify fail!
+                Verify success!
                 <router-link :to="'/address/' + contractAddress">
                   click this back contract {{ contractAddress }} page
                 </router-link>

@@ -423,7 +423,7 @@ watch(activeName, async (currentValue) => {
         internalTxsData.push(element);
       });
       internalCount.value = resInternal.data.total;
-    } else {
+    } else if (activeName.value == 'txs') {
       const res = await GetTransactionsByAddress(
         currentPageIndex.value - 1,
         pageSizeNumber.value,
