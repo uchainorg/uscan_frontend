@@ -134,10 +134,11 @@
             <div v-else class="submit-result">
               <div class="subtitle" v-if="verifyContractStatus == 1">Verify success!</div>
               <div class="subtitle" v-else-if="verifyContractStatus == 2">
-                Verify success!
-                <router-link :to="'/address/' + contractAddress">
+                Verify fail!
+                <!-- <router-link :to="'/address/' + contractAddress">
                   click this back contract {{ contractAddress }} page
-                </router-link>
+                </router-link> -->
+                {{ verifyContractReason }}
               </div>
             </div>
           </div>
@@ -179,6 +180,7 @@ const submittedError = ref('');
 const fileList = reactive([]);
 const fileRequired = ref(false);
 const licenseOptions: Option[] = [];
+const verifyContractReason = ref('');
 
 interface Option {
   value: any;
@@ -239,14 +241,15 @@ const submit = async () => {
 const CheckVerifyContractStatus = async (submitId: string, interval: any) => {
   const contractStatusRes = await GetVerifyContractStatus(submitId);
   console.log('contractStatusRes', contractStatusRes);
-  verifyContractStatus.value = contractStatusRes.data;
-  if (contractStatusRes.data == 1) {
+  verifyContractStatus.value = contractStatusRes.data.status;
+  if (contractStatusRes.data.status == 1) {
     router.push(('/address/' + contractAddress) as string);
     submitLoading.value = false;
     clearInterval(interval);
-  } else if (contractStatusRes.data == 2) {
+  } else if (contractStatusRes.data.status == 2) {
     submittedError.value = 'Validation failed';
     submitLoading.value = false;
+    verifyContractReason.value = contractStatusRes.data.errReason;
     clearInterval(interval);
   }
 };
