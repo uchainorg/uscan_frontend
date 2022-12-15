@@ -52,7 +52,9 @@
                 <el-row v-if="props.addressInfo.symbol !== ''">
                   <el-col :span="10">Token Tracker:</el-col>
                   <el-col :span="14">
-                    {{ props.addressInfo.symbol }}
+                    <router-link :to="'/token/' + props.address">
+                      {{ props.addressInfo.symbol }}
+                    </router-link>
                   </el-col>
                 </el-row>
               </div>

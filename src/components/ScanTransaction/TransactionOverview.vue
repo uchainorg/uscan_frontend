@@ -98,17 +98,21 @@
             </div>
           </div>
           <div v-else-if="scope.row.parameterName == 'gas'">
-            {{ scope.row.parameterValue.gasUsed }} Gwei | {{ scope.row.parameterValue.gasLimit }} Gwei({{
+            {{ scope.row.parameterValue.gasLimit }} | {{ scope.row.parameterValue.gasUsed }} ({{
               scope.row.parameterValue.percent
             }})
           </div>
           <div v-else-if="scope.row.parameterName == 'gasPrice'">
             {{ ethers.utils.formatEther(scope.row.parameterValue) }} {{ getUnitDisplay() }}
           </div>
-          <div v-else-if="scope.row.parameterName == 'maxPriorityFeePerGas'">
-            Base: {{ ethers.utils.formatEther(scope.row.parameterValue.baseFeePerGas, 'gwei') }} Gwei | Max:
-            {{ ethers.utils.formatEther(scope.row.parameterValue.maxFeePerGas, 'gwei') }} Gwei | MaxPriority:
-            {{ ethers.utils.formatEther(scope.row.parameterValue.maxPriorityFeePerGas, 'gwei') }} Gwei
+          <div
+            v-else-if="
+              scope.row.parameterName == 'maxPriorityFeePerGas' && scope.row.parameterValue.baseFeePerGas === 0
+            "
+          >
+            Base: {{ ethers.utils.formatEther(scope.row.parameterValue.baseFeePerGas, 'gwei') }} | Max:
+            {{ ethers.utils.formatEther(scope.row.parameterValue.maxFeePerGas, 'gwei') }} | MaxPriority:
+            {{ ethers.utils.formatEther(scope.row.parameterValue.maxPriorityFeePerGas, 'gwei') }}
           </div>
           <div v-else-if="scope.row.parameterName == 'input'">
             <!-- <textarea

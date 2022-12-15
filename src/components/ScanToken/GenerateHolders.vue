@@ -10,7 +10,8 @@
             }}</router-link>
           </div>
           <div v-else-if="scope.column.property == 'Quantity'" style="width: 380px">
-            {{ BigInt(parseInt(scope.row[scope.column.property])) }}
+            {{ ethers.utils.formatUnits(scope.row[scope.column.property], 18) }}
+            <!-- {{  BigInt(parseInt(scope.row[scope.column.property])) }} -->
           </div>
         </template>
       </el-table-column>
@@ -21,6 +22,7 @@
 import { TokenHolder } from '../../script/model/token';
 import { TableHeader } from '../../script/model/index';
 import { ref, watchEffect } from 'vue';
+import { ethers } from 'ethers';
 
 const emptyText = ref('loading...');
 const props = defineProps({

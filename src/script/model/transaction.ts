@@ -250,7 +250,7 @@ export class TransactionDetail {
     methodName: string,
     logs: TransactionLog[],
     fromContract: boolean,
-    toContract: boolean,
+    toContract: boolean
   ) {
     this.hash = hash;
     this.method = method;
@@ -407,7 +407,7 @@ export const getTxOverviews = function (tx: TransactionDetail): Overview[] {
         fromCode: tx.fromCode,
         fromName: tx.fromName,
         fromSymbol: tx.fromSymbol,
-        fromContract: tx.fromContract
+        fromContract: tx.fromContract,
       };
     } else if (key == 'to') {
       valueDisplay = {
@@ -418,7 +418,7 @@ export const getTxOverviews = function (tx: TransactionDetail): Overview[] {
         contractAddress: tx.contractAddress,
         contractAddressName: tx.contractAddressName,
         contractAddressSymbol: tx.contractAddressSymbol,
-        toContract: tx.toContract
+        toContract: tx.toContract,
       };
     } else if (key == 'gas') {
       valueDisplay = {
