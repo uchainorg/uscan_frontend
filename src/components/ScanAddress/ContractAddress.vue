@@ -21,7 +21,8 @@
                 <el-row>
                   <el-col :span="10">Balance:</el-col>
                   <el-col :span="14"
-                    >{{ ethers.utils.formatUnits(props.addressInfo.balance, 18) }} {{ getUnitDisplay() }}</el-col
+                    >{{ ethers.utils.formatUnits(props.addressInfo.balance, props.addressInfo.decimals) }}
+                    {{ getUnitDisplay() }}</el-col
                   >
                 </el-row>
               </div>
@@ -425,7 +426,7 @@ watch(activeName, async (currentValue) => {
         internalTxsData.push(element);
       });
       internalCount.value = resInternal.data.total;
-    } else {
+    } else if (activeName.value !== 'contract-verified') {
       const res = await GetTransactionsByAddress(
         currentPageIndex.value - 1,
         pageSizeNumber.value,
