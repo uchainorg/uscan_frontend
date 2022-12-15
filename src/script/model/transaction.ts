@@ -480,6 +480,7 @@ export const Erc721TransactionsHeaderList: TableHeader[] = [
   new TableHeader('From', 'from'),
   new TableHeader('To', 'to'),
   new TableHeader('TokenID', 'tokenID'),
+  new TableHeader('Token', 'contract'),
 ];
 
 export const InternalTransactionsHeaderList: TableHeader[] = [

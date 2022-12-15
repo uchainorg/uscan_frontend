@@ -1,6 +1,6 @@
 import { BlockDetail } from './block';
 import { TransactionDetail, TransactionLog, InternalTransactionDetail, TransactionCount } from './transaction';
-import { TokenHolder, Token } from './token';
+import { TokenHolder, Token, TokenInventoryHolder } from './token';
 import { ContractContent } from './contract';
 
 export interface ContractsResponse {
@@ -46,7 +46,7 @@ export interface GethDebugTraceResponse {
 }
 
 export interface TokenResponse {
-  items: Token[];
+  items: TokenInventoryHolder[];
   total: number;
 }
 

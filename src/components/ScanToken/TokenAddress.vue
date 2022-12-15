@@ -70,7 +70,7 @@
     </div>
     <div>
       <el-tabs v-model="activeName">
-        <el-tab-pane label="Transactions" name="transactions">
+        <el-tab-pane label="Transfers" name="transactions">
           <generate-transactions
             :txsData="txsData"
             :headerData="headerDataTx"
@@ -95,6 +95,7 @@
             :holdersData="holdersData"
             :headerData="headerDataHolder"
             :loadStatus="isEmpty"
+            :decimals="decimals"
           ></generate-holders>
           <div style="margin-top: 1%; display: flex; justify-content: center">
             <el-pagination
@@ -127,7 +128,6 @@ import {
   TokenErc20TransactionsHeaderList,
   TokenErcTransactionsHeaderList,
   TokeHolderHeaderList,
-  TokeErcHolderHeaderList,
   TransactionDetail,
 } from '../../script/model/transaction';
 import { TokenTransfers, TokenHolder } from '../../script/model/token';
@@ -178,7 +178,7 @@ const initPageContent = async () => {
     headerDataHolder.push(...TokeHolderHeaderList);
   } else {
     headerDataTx.push(...TokenErcTransactionsHeaderList);
-    headerDataHolder.push(...TokeErcHolderHeaderList);
+    headerDataHolder.push(...TokeHolderHeaderList);
   }
 
   addressInfoRes.value = await GetAddressInfo(props.address as string);

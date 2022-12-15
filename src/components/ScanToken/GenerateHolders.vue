@@ -10,7 +10,7 @@
             }}</router-link>
           </div>
           <div v-else-if="scope.column.property == 'Quantity'" style="width: 380px">
-            {{ ethers.utils.formatUnits(scope.row[scope.column.property], 18) }}
+            {{ ethers.utils.formatUnits(scope.row[scope.column.property], props.decimals) }}
             <!-- {{  BigInt(parseInt(scope.row[scope.column.property])) }} -->
           </div>
         </template>
@@ -27,6 +27,7 @@ import { ethers } from 'ethers';
 const emptyText = ref('loading...');
 const props = defineProps({
   loadStatus: Boolean,
+  decimals: Number,
   holdersData: {
     type: Array as () => Array<TokenHolder>,
     require: true,
