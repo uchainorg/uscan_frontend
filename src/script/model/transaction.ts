@@ -469,7 +469,7 @@ export const Erc20TransactionsHeaderList: TableHeader[] = [
   new TableHeader('Age', 'createdTime'),
   new TableHeader('From', 'from'),
   new TableHeader('To', 'to'),
-  new TableHeader('Value(token)', 'value'),
+  new TableHeader('Value', 'value'),
   new TableHeader('Token', 'contract'),
 ];
 
@@ -482,6 +482,18 @@ export const Erc721TransactionsHeaderList: TableHeader[] = [
   new TableHeader('To', 'to'),
   new TableHeader('TokenID', 'tokenID'),
   new TableHeader('Token', 'contract'),
+];
+
+export const Erc1155TransactionsHeaderList: TableHeader[] = [
+  new TableHeader('Txn Hash', 'transactionHash'),
+  new TableHeader('Method', 'method'),
+  new TableHeader('Block', 'blockNumber'),
+  new TableHeader('Age', 'createdTime'),
+  new TableHeader('From', 'from'),
+  new TableHeader('To', 'to'),
+  new TableHeader('TokenID', 'tokenID'),
+  new TableHeader('Token', 'contract'),
+  new TableHeader('Quantity', 'value'),
 ];
 
 export const InternalTransactionsHeaderList: TableHeader[] = [

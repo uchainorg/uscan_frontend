@@ -36,6 +36,7 @@ import {
   TransactionDetail,
   TransactionsHeaderList,
   Erc721TransactionsHeaderList,
+  Erc1155TransactionsHeaderList,
   Erc20TransactionsHeaderList,
 } from '../../script/model/transaction';
 import { TableHeader } from '../../script/model/index';
@@ -79,7 +80,7 @@ const getTransactions = async () => {
     } else if (props.txsType === 'erc721') {
       headerData.push(...Erc721TransactionsHeaderList);
     } else if (props.txsType === 'erc1155') {
-      headerData.push(...Erc721TransactionsHeaderList);
+      headerData.push(...Erc1155TransactionsHeaderList);
     }
     const res = await GetTransactions(currentPageIndex.value - 1, pageSizeNumber.value, props.txsType, blockNumber);
     res.data.items.forEach((element) => {

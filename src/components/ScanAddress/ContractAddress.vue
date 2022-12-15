@@ -53,7 +53,7 @@
                   <el-col :span="10">Token Tracker:</el-col>
                   <el-col :span="14">
                     <router-link :to="'/token/' + props.address">
-                      {{ props.addressInfo.symbol }}
+                      {{ props.addressInfo.name }} ({{ props.addressInfo.symbol }})
                     </router-link>
                   </el-col>
                 </el-row>

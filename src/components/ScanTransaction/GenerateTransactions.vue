@@ -49,7 +49,8 @@
           }}</router-link>
         </div>
         <div v-else-if="scope.column.property == 'value'">
-          {{ ethers.utils.formatUnits(scope.row[scope.column.property], 18) }}
+          {{ scope.row.contractDecimals }}
+          {{ ethers.utils.formatUnits(scope.row[scope.column.property], scope.row.contractDecimals) }}
         </div>
         <div v-else-if="scope.column.property == 'tokenID'">
           {{ parseInt(scope.row[scope.column.property]) }}
