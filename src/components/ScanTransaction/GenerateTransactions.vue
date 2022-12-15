@@ -51,6 +51,9 @@
         <div v-else-if="scope.column.property == 'value'">
           {{ ethers.utils.formatUnits(scope.row[scope.column.property], 18) }}
         </div>
+        <div v-else-if="scope.column.property == 'tokenID'">
+          {{ parseInt(scope.row[scope.column.property]) }}
+        </div>
         <div v-else-if="scope.column.property == 'gas'" style="font-size: 11px">
           {{
             ethers.utils.formatUnits(
