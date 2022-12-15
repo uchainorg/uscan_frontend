@@ -98,9 +98,10 @@
             </div>
           </div>
           <div v-else-if="scope.row.parameterName == 'gas'">
-            {{ scope.row.parameterValue.gasLimit }} | {{ scope.row.parameterValue.gasUsed }} ({{
+            {{ scope.row.parameterValue.gas }} | {{ scope.row.parameterValue.gasUsed }}
+            <!-- {{ scope.row.parameterValue.gas }} | {{ scope.row.parameterValue.gasUsed }} ({{
               scope.row.parameterValue.percent
-            }})
+            }}) -->
           </div>
           <div v-else-if="scope.row.parameterName == 'gasPrice'">
             {{ ethers.utils.formatEther(scope.row.parameterValue) }} {{ getUnitDisplay() }}

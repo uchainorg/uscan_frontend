@@ -424,9 +424,8 @@ export const getTxOverviews = function (tx: TransactionDetail): Overview[] {
       };
     } else if (key == 'gas') {
       valueDisplay = {
-        gasLimit: formatNumber(BigInt(tx.gasLimit)),
+        gas: formatNumber(BigInt(tx.gas)),
         gasUsed: formatNumber(BigInt(tx.gasUsed)),
-        percent: Math.round((tx.gasUsed / tx.gasLimit) * 10000) / 100 + '%',
       };
     } else if (key == 'maxPriorityFeePerGas') {
       valueDisplay = {
