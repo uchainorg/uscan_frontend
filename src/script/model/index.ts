@@ -1,6 +1,6 @@
 import { BlockDetail } from './block';
 import { TransactionDetail, TransactionLog, InternalTransactionDetail, TransactionCount } from './transaction';
-import { TokenHolder, Token, TokenInventoryHolder } from './token';
+import { TokenHolder, TokenInventoryHolder } from './token';
 import { ContractContent } from './contract';
 
 export interface ContractsResponse {
