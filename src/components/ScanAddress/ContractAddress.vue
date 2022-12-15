@@ -303,8 +303,8 @@ const initPageContent = async () => {
   }
 
   // internal tx data
-  internalCount.value = resTotal.data.internalTotal;
-  if (activeName.value == 'internal' && resTotal.data.internalTotal != 0) {
+  internalCount.value = parseInt(resTotal.data.internalTotal);
+  if (activeName.value == 'internal' && parseInt(resTotal.data.internalTotal) != 0) {
     const resInternal = await GetInternalTransactionsByAddress(
       currentPageIndex.value - 1,
       pageSizeNumber.value,
@@ -317,9 +317,9 @@ const initPageContent = async () => {
   }
 
   // erc20 tx data
-  erc20count.value = resTotal.data.erc20Total;
+  erc20count.value = parseInt(resTotal.data.erc20Total);
   if (activeName.value == 'erc20') {
-    if (resTotal.data.erc20Total != 0) {
+    if (parseInt(resTotal.data.erc20Total) != 0) {
       const resErc20 = await GetTransactionsByAddress(
         currentPageIndex.value - 1,
         pageSizeNumber.value,
@@ -336,7 +336,7 @@ const initPageContent = async () => {
   }
 
   // erc721 tx data
-  erc721count.value = resTotal.data.erc721Total;
+  erc721count.value = parseInt(resTotal.data.erc721Total);
   if (activeName.value == 'erc721') {
     if (resTotal.data.erc721Total) {
       const resErc721 = await GetTransactionsByAddress(
@@ -355,9 +355,9 @@ const initPageContent = async () => {
   }
 
   // erc1155 tx data
-  erc1155count.value = resTotal.data.erc1155Total;
+  erc1155count.value = parseInt(resTotal.data.erc1155Total);
   if (activeName.value == 'erc1155') {
-    if (resTotal.data.erc1155Total != 0) {
+    if (parseInt(resTotal.data.erc1155Total) != 0) {
       const resErc1155 = await GetTransactionsByAddress(
         currentPageIndex.value - 1,
         pageSizeNumber.value,

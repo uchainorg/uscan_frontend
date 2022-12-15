@@ -64,9 +64,9 @@ export class AddressDetail {
 }
 
 export interface AddressTxsTotal {
-  erc1155Total: number;
-  erc20Total: number;
-  erc721Total: number;
-  internalTotal: number;
-  txTotal: number;
+  erc1155Total: string;
+  erc20Total: string;
+  erc721Total: string;
+  internalTotal: string;
+  txTotal: string;
 }

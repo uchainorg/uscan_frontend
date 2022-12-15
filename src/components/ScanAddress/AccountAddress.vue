@@ -258,7 +258,7 @@ watch(props, async () => {
   //   props.address as string
   // );
   // erc20count.value = resErc20.data.total;
-  erc20count.value = resTotal.data.erc20Total;
+  erc20count.value = parseInt(resTotal.data.erc20Total);
 
   // const resErc721 = await GetTransactionsByAddress(
   //   currentPageIndex.value - 1,
@@ -267,7 +267,7 @@ watch(props, async () => {
   //   props.address as string
   // );
   // erc721count.value = resErc721.data.total;
-  erc721count.value = resTotal.data.erc721Total;
+  erc721count.value = parseInt(resTotal.data.erc721Total);
 
   // const resErc1155 = await GetTransactionsByAddress(
   //   currentPageIndex.value - 1,
@@ -276,7 +276,7 @@ watch(props, async () => {
   //   props.address as string
   // );
   // erc1155count.value = resErc1155.data.total;
-  erc1155count.value = resTotal.data.erc1155Total;
+  erc1155count.value = parseInt(resTotal.data.erc1155Total);
 
   // const resInternal = await GetInternalTransactionsByAddress(
   //   currentPageIndex.value - 1,
@@ -284,7 +284,7 @@ watch(props, async () => {
   //   props.address as string
   // );
   // internalCount.value = resInternal.data.total;
-  internalCount.value = resTotal.data.internalTotal;
+  internalCount.value = parseInt(resTotal.data.internalTotal);
 });
 
 watch(activeName, async (currentValue) => {
