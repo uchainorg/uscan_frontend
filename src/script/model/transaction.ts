@@ -385,7 +385,9 @@ export const getTxOverviews = function (tx: TransactionDetail): Overview[] {
     // eslint-disable-next-line max-len
     'Maximum amount of gas allocated for the transaction & the amount eventually used. Normal ETH transfers involve " + res.gasLimit + " gas units while contracts involve higher values.',
   ]);
-  txParameterMap.set('maxPriorityFeePerGas', ['Gas Fees', 'The amount eventually used.']);
+  if (parseInt(tx.baseFeePerGas) !== 0) {
+    txParameterMap.set('maxPriorityFeePerGas', ['Gas Fees', 'The amount eventually used.']);
+  }
   txParameterMap.set('tokensTransferred', ['Tokens Transferred', 'List of tokens transferred in the transaction.']);
   txParameterMap.set('input', [
     'Input Data',

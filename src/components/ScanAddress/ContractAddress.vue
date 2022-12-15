@@ -425,7 +425,7 @@ watch(activeName, async (currentValue) => {
         internalTxsData.push(element);
       });
       internalCount.value = resInternal.data.total;
-    } else if (activeName.value == 'txs') {
+    } else {
       const res = await GetTransactionsByAddress(
         currentPageIndex.value - 1,
         pageSizeNumber.value,
