@@ -391,6 +391,7 @@ watch(props, async () => {
   txsData.length = 0;
   headerData.length = 0;
   isEmpty.value = true;
+  internalTxsData.length = 0;
 
   initPageContent();
 });

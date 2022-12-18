@@ -291,9 +291,10 @@ watch(activeName, async (currentValue) => {
   currentPageIndex.value = 1;
   pageSizeNumber.value = 25;
 
-  // console.log('switch', currentValue);
+  console.log('switch', currentValue);
   txsData.length = 0;
   headerData.length = 0;
+  internalTxsData.length = 0;
   if (activeName.value === 'txs') {
     headerData.push(...TransactionsHeaderList);
   } else if (activeName.value === 'erc20') {
