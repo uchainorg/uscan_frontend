@@ -58,13 +58,13 @@
                   </el-col>
                 </el-row>
 
-                <el-row>
+                <el-row v-if="tokenType == 'erc20'">
                   <el-col :span="9">Decimals:</el-col>
                   <el-col :span="15">{{ decimals }}</el-col>
                 </el-row>
                 <el-row>
                   <el-col :span="9">Token Tracker:</el-col>
-                  <el-col :span="15">{{ symbol }} ({{ name }})</el-col>
+                  <el-col :span="15">{{ name }} ({{ symbol }})</el-col>
                 </el-row>
               </div>
             </el-card>
