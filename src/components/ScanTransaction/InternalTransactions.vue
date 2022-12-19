@@ -27,7 +27,7 @@
           }}</router-link>
         </div>
         <div v-else-if="scope.column.property == 'amount'">
-          {{ ethers.utils.formatUnits(scope.row[scope.column.property], scope.row.contractDecimals) }}
+          {{ ethers.utils.formatUnits(scope.row[scope.column.property], 18) }}
         </div>
       </template>
     </el-table-column>

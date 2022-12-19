@@ -14,7 +14,12 @@
             <el-card class="box-card-address">
               <template #header>
                 <div class="card-header">
-                  <span>Overview</span>
+                  <span>
+                    Overview&nbsp;&nbsp;&nbsp;&nbsp;<span
+                      style="font-size: 0.96rem; color: #9ba2aa; font-weight: bold"
+                      >{{ tokenType }}</span
+                    >
+                  </span>
                 </div>
               </template>
               <div class="card-content">
@@ -52,16 +57,15 @@
                     <router-link :to="'/address/' + address">{{ address }}</router-link>
                   </el-col>
                 </el-row>
-                <div v-if="tokenType == 'erc20'">
-                  <el-row>
-                    <el-col :span="9">Decimals:</el-col>
-                    <el-col :span="15">{{ decimals }}</el-col>
-                  </el-row>
-                  <el-row>
-                    <el-col :span="9">Symbol:</el-col>
-                    <el-col :span="15">{{ symbol }}</el-col>
-                  </el-row>
-                </div>
+
+                <el-row>
+                  <el-col :span="9">Decimals:</el-col>
+                  <el-col :span="15">{{ decimals }}</el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="9">Token Tracker:</el-col>
+                  <el-col :span="15">{{ symbol }} ({{ name }})</el-col>
+                </el-row>
               </div>
             </el-card>
           </div>
@@ -156,6 +160,7 @@ const addressInfoRes = ref();
 const totalSupply = ref(0);
 const decimals = ref(0);
 const symbol = ref('');
+const name = ref('');
 const transfersTotal = ref(0);
 const holdersTotal = ref(0);
 const tokenType = ref('');
@@ -185,7 +190,7 @@ const initPageContent = async () => {
   totalSupply.value = addressInfoRes.value.data.tokenTotalSupply;
   decimals.value = addressInfoRes.value.data.decimals;
   symbol.value = addressInfoRes.value.data.symbol;
-  // console.log(addressInfoRes);
+  name.value = addressInfoRes.value.data.name;
 
   const tokenHoldersByAddressRes = await GetTokenHoldersByAddress(
     props.address as string,

@@ -13,9 +13,11 @@
           <div>
             <el-card class="box-card-address">
               <template #header>
-                <div class="card-header">
-                  <span>Overview</span>
-                </div>
+                <span>
+                  Overview&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size: 0.96rem; color: #9ba2aa; font-weight: bold">{{
+                    type
+                  }}</span>
+                </span>
               </template>
               <div class="card-content">
                 <el-row>
@@ -278,9 +280,18 @@ const erc721count = ref(0);
 const erc1155count = ref(0);
 const isEmpty = ref(true);
 const proxyContractAddress = ref('');
+const type = ref('');
 
 const initPageContent = async () => {
   document.title = 'Contract ' + props.address;
+
+  if (props.addressInfo?.erc20) {
+    type.value = 'erc20';
+  } else if (props.addressInfo?.erc721) {
+    type.value = 'erc721';
+  } else if (props.addressInfo?.erc1155) {
+    type.value = 'erc1155';
+  }
 
   const resTotal = await GetAddressTxsTotal(props.address as string);
   console.log('totalRes', resTotal);
