@@ -94,6 +94,16 @@
             />
           </div>
         </el-tab-pane>
+        <el-tab-pane v-if="!isVerify" label="Contract" name="contract">
+          <contract-info :contractAddress="address" :codeContent="codeContent"></contract-info>
+        </el-tab-pane>
+        <el-tab-pane v-else label="Contract(verified)" name="contract-verified">
+          <contract-verified-info
+            :contractAddress="address"
+            :contractInfo="contractContent"
+            :proxyContractAddress="proxyContractAddress"
+          ></contract-verified-info>
+        </el-tab-pane>
         <el-tab-pane label="Holders" name="holders">
           <generate-holders
             :holdersData="holdersData"
@@ -137,8 +147,10 @@ import {
 import { TokenTransfers, TokenHolder } from '../../script/model/token';
 import { TableHeader } from '../../script/model/index';
 import { GetAddressInfo } from '../../script/service/addressService';
-import { ref, reactive, watch } from 'vue';
+import { ref, reactive, watch, onMounted } from 'vue';
 import { getTitle } from '../../script/global';
+import { ContractContent } from '../../script/model/contract';
+import { GetVerifyContractContent } from '../../script/service/contractService';
 
 document.title = 'Token | The ' + getTitle() + ' Explorer';
 
@@ -165,6 +177,14 @@ const transfersTotal = ref(0);
 const holdersTotal = ref(0);
 const tokenType = ref('');
 const isHoldersEmpty = ref(true);
+const isVerify = ref(false);
+const contractContent = ref({} as ContractContent);
+const proxyContractAddress = ref('');
+const codeContent = ref();
+
+onMounted(async () => {
+  initPageContent();
+});
 
 const initPageContent = async () => {
   const tokenTransfersRes = await GetTokenTransfersByAddress(props.address as string);
@@ -191,6 +211,7 @@ const initPageContent = async () => {
   decimals.value = addressInfoRes.value.data.decimals;
   symbol.value = addressInfoRes.value.data.symbol;
   name.value = addressInfoRes.value.data.name;
+  codeContent.value = addressInfoRes.value.data.code;
 
   const tokenHoldersByAddressRes = await GetTokenHoldersByAddress(
     props.address as string,
@@ -222,9 +243,15 @@ const initPageContent = async () => {
   } else {
     isEmpty.value = false;
   }
-};
 
-initPageContent();
+  // contract
+  const contractContentRes = await GetVerifyContractContent(props.address as string);
+  contractContent.value = contractContentRes.data.contract;
+  proxyContractAddress.value = contractContentRes.data.proxyContractAddress;
+  if (contractContentRes.data.contract) {
+    isVerify.value = true;
+  }
+};
 
 watch(props, async () => {
   txsData.length = 0;

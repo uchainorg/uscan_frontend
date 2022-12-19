@@ -9,7 +9,7 @@
     </div>
     <br />
 
-    <textarea class="byte-codes-text" rows="15" v-model="code"> </textarea>
+    <textarea class="byte-codes-text" rows="15" v-model="props.codeContent"> </textarea>
   </div>
 </template>
 <script lang="ts" setup>
@@ -21,7 +21,7 @@ const props = defineProps({
 });
 
 // eslint-disable-next-line vue/no-setup-props-destructure
-const code = props.codeContent;
+// const code = props.codeContent;
 
 // console.log(props.codeContent);
 </script>

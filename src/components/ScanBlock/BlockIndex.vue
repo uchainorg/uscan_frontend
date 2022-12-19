@@ -16,7 +16,6 @@
 </template>
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { getTitle } from '../../script/global';
 
 const props = defineProps({
   blockNumber: String,
