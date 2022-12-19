@@ -388,6 +388,11 @@ export const getTxOverviews = function (tx: TransactionDetail): Overview[] {
   if (parseInt(tx.baseFeePerGas) !== 0) {
     txParameterMap.set('maxPriorityFeePerGas', ['Gas Fees', 'The amount eventually used.']);
   }
+  txParameterMap.set('nonce', [
+    'Nonce',
+    // eslint-disable-next-line max-len
+    'Sequential running number for an address, beginning with 0 for the first transaction. For example, if the nonce of a transaction is 10, it would be the 11th transaction sent from the senders address.',
+  ]);
   txParameterMap.set('tokensTransferred', ['Tokens Transferred', 'List of tokens transferred in the transaction.']);
   txParameterMap.set('input', [
     'Input Data',

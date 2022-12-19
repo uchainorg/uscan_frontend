@@ -75,6 +75,9 @@
           <div v-else-if="scope.row.parameterName == 'value'">
             {{ ethers.utils.formatEther(scope.row.parameterValue) }} {{ getUnitDisplay() }}
           </div>
+          <div v-else-if="scope.row.parameterName == 'nonce'">
+            {{ parseInt(scope.row.parameterValue) }}
+          </div>
           <div v-else-if="scope.row.parameterName == 'tokensTransferred'">
             <div :class="scope.row.parameterValue.length >= 3 ? 'rolling' : ''">
               <div v-for="(trans, index) in scope.row.parameterValue" :key="index">

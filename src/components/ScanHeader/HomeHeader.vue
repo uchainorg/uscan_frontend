@@ -8,19 +8,21 @@
       </div>
       <div class="header-link">
         <router-link :to="'/'" style="font-size: 15px; font-weight: bold" @click="moveToHome"> Home </router-link>
-        <div style="width: 10px"></div>
-        <el-dropdown>
-          <span style="font-size: 15px; font-weight: bold">
-            Token Transfers<el-icon><ArrowDown /></el-icon>
-          </span>
-          <template #dropdown>
-            <el-dropdown-menu>
-              <el-dropdown-item @click.native="moveToErc('erc20')">View ERC20 Transfers</el-dropdown-item>
-              <el-dropdown-item @click.native="moveToErc('erc721')">View ERC721 Transfers</el-dropdown-item>
-              <el-dropdown-item @click.native="moveToErc('erc1155')">View ERC1155 Transfers</el-dropdown-item>
-            </el-dropdown-menu>
-          </template>
-        </el-dropdown>
+        <div style="width: 13px"></div>
+        <div style="margin-bottom: 1px">
+          <el-dropdown>
+            <span style="font-size: 15px; font-weight: bold">
+              Token Transfers<el-icon><ArrowDown /></el-icon>
+            </span>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item @click.native="moveToErc('erc20')">View ERC20 Transfers</el-dropdown-item>
+                <el-dropdown-item @click.native="moveToErc('erc721')">View ERC721 Transfers</el-dropdown-item>
+                <el-dropdown-item @click.native="moveToErc('erc1155')">View ERC1155 Transfers</el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
+        </div>
       </div>
     </div>
     <div class="home-header-search">
@@ -110,6 +112,7 @@ const searchFilter = () => {
 };
 
 const moveToHome = () => {
+  router.go(0);
   router.push('/');
 };
 
