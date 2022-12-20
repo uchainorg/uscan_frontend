@@ -16,7 +16,12 @@
       <el-button :type="writeFlag ? 'primary' : 'info'" @click="moveToWrite">Write Contract</el-button>
     </el-row>
     <br />
-    <component :is="comName" :contractAddress="props.contractAddress" :contractInfo="props.contractInfo"></component>
+    <component
+      :is="comName"
+      :contractAddress="props.contractAddress"
+      :contractInfo="props.contractInfo"
+      :codeIndex="props.codeIndex"
+    ></component>
   </div>
 </template>
 <script lang="ts" setup>
@@ -27,6 +32,7 @@ import readContractVue from './ContractInfo/readContract.vue';
 import writeContractVue from './ContractInfo/writeContract.vue';
 
 const props = defineProps({
+  codeIndex: Number,
   contractAddress: String,
   proxyContractAddress: String,
   contractInfo: {

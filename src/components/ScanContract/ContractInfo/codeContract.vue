@@ -19,8 +19,8 @@
       <div style="width: 50%; margin-left: 3%">
         <el-row>
           <el-col :span="8">Optimization Enabled:</el-col>
-          <el-col :span="16" class="bolder"
-            >{{ props.contractInfo.runs === 0 ? 'No' : 'Yes' }} with {{ props.contractInfo.optimization }} runs</el-col
+          <el-col :span="16" class="bolder">
+            {{ props.contractInfo.optimization === 0 ? 'No' : 'Yes' }} with {{ props.contractInfo.runs }} runs</el-col
           >
         </el-row>
         <el-divider />
@@ -34,7 +34,7 @@
     </div>
 
     <div style="margin-top: 20px">
-      <div v-for="(code, index) in contractSourceList" :key="index">
+      <div v-for="(code, index) in contractSourceList" :key="index" :ref="setRef">
         <div class="center-row">
           <el-icon><Document /></el-icon> &nbsp;
           <h4>Contract Source Code (Solidity)</h4>
@@ -44,12 +44,8 @@
             File {{ index + 1 }} of {{ contractSourceList.length }} : {{ code.filename }}
           </div>
           <div class="more-button-code">
-            <el-button type="info">
-              <copy-link :text="pageUrl"></copy-link>
-            </el-button>
-            <el-button type="info">
-              <copy-icon-light :text="code.codeContent"></copy-icon-light>
-            </el-button>
+            <copy-link :text="code.copyUrl"></copy-link>&nbsp;&nbsp;
+            <copy-icon-light :text="code.codeContent"></copy-icon-light>&nbsp;&nbsp;
             <el-button v-if="code.isFull" type="info" @click="code.isFull = false">
               <el-icon><Minus /></el-icon>
             </el-button>
@@ -66,7 +62,7 @@
       <div class="center-row">
         <el-icon><Document /></el-icon> &nbsp;
         <h4>Contract ABI</h4>
-        <div class="more-button">
+        <div class="more-button-code">
           <el-dropdown @command="handleCommand">
             <el-button type="info">
               Export ABI &nbsp;
@@ -81,9 +77,9 @@
           </el-dropdown>
 
           &nbsp;
-          <el-button type="info">
-            <copy-icon-light :text="props.contractInfo.abi"></copy-icon-light>
-          </el-button>
+
+          <copy-icon-light :text="props.contractInfo.abi"></copy-icon-light> &nbsp;
+
           <el-button v-if="abiFull" type="info" @click="switchFullScreen">
             <el-icon><Minus /></el-icon>
           </el-button>
@@ -105,13 +101,14 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, watchEffect } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { ContractContent } from '../../../script/model/contract';
 import { CircleCheckFilled, Document } from '@element-plus/icons-vue';
 import { GetVerifyContractMetadata } from '../../../script/service/contractService';
 import { ArrowDownBold, FullScreen, Minus } from '@element-plus/icons-vue';
 
 const props = defineProps({
+  codeIndex: Number,
   contractAddress: String,
   contractInfo: {
     type: Object as () => ContractContent,
@@ -123,6 +120,7 @@ const creationCode = ref('');
 const textareaRef = ref<any>(null);
 const abiFull = ref<Boolean>(false);
 const pageUrl = ref('');
+const codeRef = ref<any>([]);
 
 const metadataRes = await GetVerifyContractMetadata();
 const licenseTypeMap = new Map();
@@ -134,7 +132,25 @@ const handleCommand = (command: string | number | object) => {
   console.log('command', command);
 };
 
-watchEffect(async () => {
+const setRef = (el: any) => {
+  // codeRef.value.length = 0;
+  codeRef.value.push(el);
+};
+
+onMounted(async () => {
+  // console.log('codeRef', codeRef.value);
+  initPageContent();
+});
+
+const initPageContent = async () => {
+  // codeRef.value[2].scrollIntoView(true);
+  // console.log('codeRef', codeRef.value[props.codeIndex as number]);
+  if (codeRef.value[props.codeIndex as number]) {
+    codeRef.value[props.codeIndex as number].scrollIntoView(true);
+  }
+
+  contractSourceList.value.length = 0;
+
   pageUrl.value = window.location.href;
 
   if (Object.keys(props.contractInfo as ContractContent).length !== 0) {
@@ -144,16 +160,55 @@ watchEffect(async () => {
       (props.contractInfo?.abi as string)) as string;
     // abi.value = props.contractInfo?.abi as string;
     creationCode.value = props.contractInfo?.object as string;
-    Object.keys(props.contractInfo?.metadata).forEach((key) => {
+    Object.keys(props.contractInfo?.metadata).forEach((key, index) => {
       contractSourceList.value.push({
         filename: key,
         codeContent: props.contractInfo?.metadata[key],
         isFull: false,
+        copyUrl:
+          window.location.protocol +
+          '//' +
+          window.location.host +
+          '/#/address/' +
+          props.contractAddress +
+          '?codeIndex=' +
+          index,
       });
     });
     // console.log('contractSourceList', contractSourceList);
   }
+};
+
+initPageContent();
+
+watch(props, async () => {
+  initPageContent();
 });
+
+// watchEffect(async () => {
+//   console.log('This is index!!!!!!!!!!!!!!!', codeRef.value);
+
+//   // codeRef.value[2].scrollIntoView(true);
+
+//   pageUrl.value = window.location.href;
+
+//   if (Object.keys(props.contractInfo as ContractContent).length !== 0) {
+//     // console.log('code', props.contractInfo);
+//     abi.value = ((((props.contractInfo?.abi as string) + props.contractInfo?.abi) as string) +
+//       props.contractInfo?.abi +
+//       (props.contractInfo?.abi as string)) as string;
+//     // abi.value = props.contractInfo?.abi as string;
+//     creationCode.value = props.contractInfo?.object as string;
+//     Object.keys(props.contractInfo?.metadata).forEach((key) => {
+//       contractSourceList.value.push({
+//         filename: key,
+//         codeContent: props.contractInfo?.metadata[key],
+//         isFull: false,
+//       });
+//     });
+//     // console.log('contractSourceList', contractSourceList);
+//   }
+// });
 
 const switchFullScreen = () => {
   abiFull.value = !abiFull.value;

@@ -230,6 +230,7 @@
       </el-tab-pane>
       <el-tab-pane v-else label="Contract(verified)" name="contract-verified">
         <contract-verified-info
+          :codeIndex="codeIndex"
           :contractAddress="address"
           :contractInfo="contractContent"
           :proxyContractAddress="proxyContractAddress"
@@ -240,6 +241,7 @@
 </template>
 <script lang="ts" setup>
 import { watch, ref, reactive } from 'vue';
+import { useRoute } from 'vue-router';
 import { AddressDetail } from '../../script/model/address';
 import { ethers } from 'ethers';
 import { Download } from '@element-plus/icons-vue';
@@ -265,6 +267,8 @@ const props = defineProps({
   },
 });
 
+const route = useRoute();
+
 const activeName = ref('txs');
 const txsData: TransactionDetail[] = reactive([]);
 const internalTxsData: InternalTransactionDetail[] = reactive([]);
@@ -281,9 +285,20 @@ const erc1155count = ref(0);
 const isEmpty = ref(true);
 const proxyContractAddress = ref('');
 const type = ref('');
+const codeIndex = ref<Number>(0);
+
+const showCodeIndex = (index: Number) => {
+  console.log('activeName.value', activeName.value);
+  activeName.value = 'contract-verified';
+  codeIndex.value = index;
+};
 
 const initPageContent = async () => {
   document.title = 'Contract ' + props.address;
+
+  if (route.query.codeIndex) {
+    showCodeIndex(Number(route.query.codeIndex));
+  }
 
   if (props.addressInfo?.erc20) {
     type.value = 'erc20';
@@ -294,7 +309,6 @@ const initPageContent = async () => {
   }
 
   const resTotal = await GetAddressTxsTotal(props.address as string);
-  console.log('totalRes', resTotal);
 
   // tx data
   if (activeName.value === 'txs') {
@@ -405,6 +419,10 @@ watch(props, async () => {
   internalTxsData.length = 0;
 
   initPageContent();
+});
+
+watch(route, () => {
+  showCodeIndex(Number(route.query.codeIndex));
 });
 
 watch(activeName, async (currentValue) => {

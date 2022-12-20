@@ -248,6 +248,8 @@
 
 .more-button-code {
   margin-left: auto;
+  display: flex;
+  flex-direction: row;
 }
 
 .subtitle1 {

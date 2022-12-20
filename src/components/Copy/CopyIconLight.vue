@@ -2,7 +2,8 @@
   <div class="copy-content">
     <el-tooltip placement="right" :visible="visible">
       <template #content>{{ copyTip }} </template>
-      <el-icon
+      <el-button
+        type="info"
         class="copy-icon"
         @click="copyContent"
         @mouseenter="visible = true"
@@ -10,8 +11,9 @@
           visible = false;
           leave();
         "
-        ><DocumentCopy
-      /></el-icon>
+      >
+        <el-icon><DocumentCopy /></el-icon>
+      </el-button>
     </el-tooltip>
   </div>
 </template>
