@@ -531,8 +531,10 @@ export const TokenErcTransactionsHeaderList: TableHeader[] = [
 ];
 
 export const TokeHolderHeaderList: TableHeader[] = [
+  new TableHeader('Rank', 'rank'),
   new TableHeader('Address', 'Address'),
   new TableHeader('Quantity', 'Quantity'),
+  new TableHeader('Percentage', 'percentage'),
 ];
 
 export const TokeErcHolderHeaderList: TableHeader[] = [

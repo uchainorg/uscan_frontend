@@ -7,7 +7,11 @@
 
     <div v-for="(functionObject, index) in functionObjectList" :key="index">
       <el-collapse class="method-content" v-model="activeNames">
-        <el-collapse-item class="method-object" :title="index + 1 + '.' + functionObject.name" :name="index">
+        <el-collapse-item
+          class="method-object"
+          :title="'&nbsp;&nbsp;' + (index + 1) + '.' + functionObject.name"
+          :name="index"
+        >
           <div style="padding-right: 0.5rem; padding-left: 0.5rem">
             <div v-for="(input, inputIndex) in functionObject.inputsArg" :key="inputIndex">
               <div style="margin-top: 0.8rem">

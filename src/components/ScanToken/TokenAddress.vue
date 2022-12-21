@@ -110,6 +110,9 @@
             :headerData="headerDataHolder"
             :loadStatus="isEmpty"
             :decimals="decimals"
+            :totalSupply="parseInt(totalSupply)"
+            :pageSize="pageSizeNumberHolder"
+            :pageIndex="currentPageIndexHolder"
           ></generate-holders>
           <div style="margin-top: 1%; display: flex; justify-content: center">
             <el-pagination

@@ -107,7 +107,7 @@ watchEffect(() => {
 <style lang="less" scoped>
 @import '../../css/style.css';
 .span {
-  padding: 15px;
+  padding: 7px;
   background: #f4f4f4;
   border-radius: 6rem;
 }

@@ -2,16 +2,33 @@
   <div>
     <el-table class="table-border" :data="props.holdersData" empty-text="loading..." :row-style="{ height: '50px' }">
       <template #empty>{{ emptyText }}</template>
-      <el-table-column v-for="info in props.headerData" :key="info.key" :property="info.key" :label="info.label">
+      <el-table-column
+        v-for="info in props.headerData"
+        :key="info.key"
+        :property="info.key"
+        :label="info.label"
+        :min-width="columnWidth(info.label)"
+      >
         <template v-slot:default="scope">
-          <div v-if="scope.column.property == 'Address'">
+          <div v-if="scope.column.property == 'rank'">
+            {{ (props.pageIndex - 1) * props.pageSize + (scope.$index + 1) }}
+          </div>
+          <div v-else-if="scope.column.property == 'Address'">
             <router-link :to="'/address/' + scope.row[scope.column.property]">{{
               scope.row[scope.column.property]
             }}</router-link>
           </div>
-          <div v-else-if="scope.column.property == 'Quantity'" style="width: 380px">
+          <div v-else-if="scope.column.property == 'Quantity'">
             {{ ethers.utils.formatUnits(scope.row[scope.column.property], props.decimals) }}
             <!-- {{  BigInt(parseInt(scope.row[scope.column.property])) }} -->
+          </div>
+          <div v-else-if="scope.column.property == 'percentage'">
+            {{
+              (
+                (parseFloat(ethers.utils.formatUnits(scope.row.Quantity, props.decimals)) / parseFloat(totalSupply)) *
+                100
+              ).toFixed(4) + '%'
+            }}
           </div>
         </template>
       </el-table-column>
@@ -36,9 +53,26 @@ const props = defineProps({
     type: Array as () => Array<TableHeader>,
     require: true,
   },
+  totalSupply: Number,
+  pageSize: Number,
+  pageIndex: Number,
 });
 
+const totalSupply = ref(0);
+
+const columnWidth = (item: any) => {
+  console.log(item);
+  let widthStr = '20%';
+  switch (item) {
+    case 'Address':
+      widthStr = '40%';
+  }
+  return widthStr;
+};
+
 watchEffect(() => {
+  console.log('totalSupply', (props.totalSupply as number) * Math.pow(10, -(props.decimals as number)));
+  totalSupply.value = (props.totalSupply as number) * Math.pow(10, -(props.decimals as number));
   if (!props.loadStatus) {
     emptyText.value = 'empty data';
   }
