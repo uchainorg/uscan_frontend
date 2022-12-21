@@ -15,10 +15,11 @@
     {{ ethers.utils.formatEther(baseInfo.gasLimit * baseInfo.gasUsed) }} {{ getUnitDisplay() }}
     <el-divider />
     <h4>Gas Info:</h4>
-    {{ baseInfo.gasUsed }} Used From {{ baseInfo.gasLimit }} GasLimit
+    {{ ethers.utils.formatEther(baseInfo.gasUsed) }} {{ getUnitDisplay() }} Used From
+    {{ ethers.utils.formatEther(baseInfo.gasLimit) }} {{ getUnitDisplay() }} GasLimit
     <el-divider />
     <h4>Nonce:</h4>
-    {{ baseInfo.nonce }}
+    {{ parseInt(baseInfo.nonce) }}
     <el-divider />
 
     <router-link class="center-row" :to="'/tx/' + txHash">

@@ -10,7 +10,9 @@
             </el-button>
           </template>
           <div v-if="scope.row.base == true">
-            <base-transaction-info :txHash="scope.row.hash"></base-transaction-info>
+            <base-transaction-info
+              :txHash="scope.row.transactionHash ? scope.row.transactionHash : scope.row.hash"
+            ></base-transaction-info>
           </div>
         </el-popover>
       </template>
@@ -21,6 +23,9 @@
           <router-link :to="'/tx/' + scope.row[scope.column.property]">{{
             scope.row[scope.column.property].slice(0, 15) + '...'
           }}</router-link>
+        </div>
+        <div v-if="scope.column.property == 'method'" style="width: 170px">
+          <span class="span">{{ scope.row[scope.column.property] }}</span>
         </div>
         <div v-if="scope.column.property == 'hash'" style="width: 170px">
           <router-link :to="'/tx/' + scope.row[scope.column.property]">{{
@@ -101,4 +106,9 @@ watchEffect(() => {
 </script>
 <style lang="less" scoped>
 @import '../../css/style.css';
+.span {
+  padding: 15px;
+  background: #f4f4f4;
+  border-radius: 6rem;
+}
 </style>
