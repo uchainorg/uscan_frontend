@@ -109,6 +109,9 @@
           <div v-else-if="scope.row.parameterName == 'gasPrice'">
             {{ ethers.utils.formatEther(scope.row.parameterValue) }} {{ getUnitDisplay() }}
           </div>
+          <div v-else-if="scope.row.parameterName == 'transactionFee'">
+            {{ ethers.utils.formatEther(scope.row.parameterValue) }} {{ getUnitDisplay() }}
+          </div>
           <div v-else-if="scope.row.parameterName == 'maxPriorityFeePerGas'">
             Base: {{ ethers.utils.formatEther(scope.row.parameterValue.baseFeePerGas, 'gwei') }} | Max:
             {{ ethers.utils.formatEther(scope.row.parameterValue.maxFeePerGas, 'gwei') }} | MaxPriority:

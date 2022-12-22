@@ -12,7 +12,7 @@
     </div>
     <el-divider />
     <h4>Transaction Fee:</h4>
-    {{ ethers.utils.formatEther(baseInfo.gasLimit * baseInfo.gasUsed) }} {{ getUnitDisplay() }}
+    {{ ethers.utils.formatEther(baseInfo.gasPrice * baseInfo.gasUsed) }} {{ getUnitDisplay() }}
     <el-divider />
     <h4>Gas Info:</h4>
     {{ ethers.utils.formatEther(baseInfo.gasUsed) }} {{ getUnitDisplay() }} Used From

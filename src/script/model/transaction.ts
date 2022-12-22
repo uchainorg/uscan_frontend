@@ -374,7 +374,6 @@ export const getTxOverviews = function (tx: TransactionDetail): Overview[] {
     // eslint-disable-next-line max-len
     'The value being transacted in Ether and fiat value. Note: You can click the fiat value (if available) to see historical value at the time of transaction.',
   ]);
-  txParameterMap.set('gas', ['Transaction Fee', 'Amount paid to the miner for processing the transaction.']);
   txParameterMap.set('gasPrice', [
     'Gas Price',
     // eslint-disable-next-line max-len
@@ -451,6 +450,17 @@ export const getTxOverviews = function (tx: TransactionDetail): Overview[] {
     }
     resList.push(new Overview(key, value[0] + ':', valueDisplay, value[1]));
   }
+
+  resList.splice(
+    7,
+    0,
+    new Overview(
+      'transactionFee',
+      'Transaction Fee:',
+      (tx.gasPrice * tx.gasUsed) as unknown as string,
+      'Amount paid to the miner for processing the transaction'
+    )
+  );
   // console.log('tx', tx);
   // console.log('resList', resList);
   return resList;
