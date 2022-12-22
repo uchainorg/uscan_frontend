@@ -122,7 +122,7 @@
               :page-size="pageSizeNumberHolder"
               :page-sizes="[10, 25, 50, 100]"
               layout="total, sizes, prev, pager, next, jumper"
-              :total="transfersTotal"
+              :total="holdersTotal"
               @size-change="handleSizeChangeHolder"
               @current-change="handleCurrentChangeHolder"
             />
@@ -257,15 +257,34 @@ const initPageContent = async () => {
 };
 
 watch(props, async () => {
+  console.log('watch props');
   txsData.length = 0;
   currentPageIndexTx.value = 1;
   pageSizeNumberTx.value = 25;
+  transfersTotal.value = 0;
+  holdersTotal.value = 0;
+  headerDataTx.length = 0;
   holdersData.length = 0;
   currentPageIndexHolder.value = 1;
   pageSizeNumberHolder.value = 25;
+  headerDataHolder.length = 0;
 
   initPageContent();
 });
+
+// watch(activeName, async () => {
+//   console.log('watch activeName');
+//   txsData.length = 0;
+//   headerDataTx.length = 0;
+//   currentPageIndexTx.value = 1;
+//   pageSizeNumberTx.value = 25;
+//   holdersData.length = 0;
+//   headerDataHolder.length = 0;
+//   currentPageIndexHolder.value = 1;
+//   pageSizeNumberHolder.value = 25;
+
+//   initPageContent();
+// });
 
 const handleSizeChangeTx = async (pageSizeArg: number) => {
   txsData.length = 0;

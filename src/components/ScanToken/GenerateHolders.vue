@@ -61,7 +61,6 @@ const props = defineProps({
 const totalSupply = ref(0);
 
 const columnWidth = (item: any) => {
-  console.log(item);
   let widthStr = '20%';
   switch (item) {
     case 'Address':

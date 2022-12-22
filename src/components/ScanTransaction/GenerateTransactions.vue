@@ -49,12 +49,16 @@
           }}</router-link>
         </div>
         <div v-else-if="scope.column.property == 'to'" style="width: 170px">
-          <router-link :to="'/address/' + scope.row[scope.column.property]">{{
+          <span v-if="scope.row.method == '0x60806040'">
+            <router-link :to="'/address/' + scope.row[scope.column.property]">Contract Creation</router-link>
+          </span>
+          <router-link v-else :to="'/address/' + scope.row[scope.column.property]">{{
             scope.row[scope.column.property].slice(0, 15) + '...'
           }}</router-link>
         </div>
         <div v-else-if="scope.column.property == 'value'">
           {{ ethers.utils.formatUnits(scope.row[scope.column.property], scope.row.contractDecimals) }}
+          {{ getUnitDisplay() }}
         </div>
         <div v-else-if="scope.column.property == 'tokenID'">
           {{ parseInt(scope.row[scope.column.property]) }}
@@ -83,6 +87,7 @@ import { getAge } from '../../script/utils';
 import { ethers } from 'ethers';
 import { ref, watchEffect } from 'vue';
 import { View } from '@element-plus/icons-vue';
+import { getUnitDisplay } from '../../script/global';
 
 const emptyText = ref('loading...');
 const props = defineProps({
