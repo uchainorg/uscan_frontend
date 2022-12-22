@@ -182,7 +182,7 @@ const query = async (functionList: any[]) => {
       const typeListResponse: any[] = [];
       let decodeRes: any[] = [];
       functionObject.outputs.forEach((element: any) => {
-        typeListResponse.push(element.internalType);
+        typeListResponse.push(element.type);
       });
       if (value != '') {
         decodeRes = abiCoder.decode(typeListResponse, value) as any[];
