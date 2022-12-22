@@ -48,12 +48,12 @@
             </div>
           </div>
           <div v-else-if="scope.row.parameterName == 'to'">
-            <div class="center-row" v-if="scope.row.parameterValue.to == ''">
+            <div class="center-row" v-if="scope.row.parameterValue.method == '0x60806040'">
               Contract &nbsp;
               <router-link :to="'/address/' + scope.row.parameterValue.contractAddress">{{
                 scope.row.parameterValue.contractAddress
               }}</router-link>
-              Created &nbsp;
+              &nbsp; Created &nbsp;
               <copy-icon :text="scope.row.parameterValue.contractAddress"></copy-icon>
             </div>
             <div class="center-row" v-else-if="scope.row.parameterValue.toContract">

@@ -425,6 +425,7 @@ export const getTxOverviews = function (tx: TransactionDetail): Overview[] {
         contractAddressName: tx.contractAddressName,
         contractAddressSymbol: tx.contractAddressSymbol,
         toContract: tx.toContract,
+        method: tx.method,
       };
     } else if (key == 'gas') {
       valueDisplay = {

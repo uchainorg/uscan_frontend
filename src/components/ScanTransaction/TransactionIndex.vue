@@ -66,6 +66,7 @@ const initData = async (txHash: String) => {
   const res = await GetTxByHash(txHash as string);
   logCount.value = res.data.logs.length;
   getTxOverviews(res.data).forEach((element) => {
+    // console.log(element);
     overviews.push(element);
   });
   res.data.logs.forEach((element) => {
