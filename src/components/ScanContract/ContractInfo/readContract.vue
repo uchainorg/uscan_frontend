@@ -9,10 +9,10 @@
       <el-collapse class="method-content" v-model="activeNames">
         <el-collapse-item
           class="method-object"
-          :title="'&nbsp;&nbsp;' + (index + 1) + '.' + functionObject.name"
+          :title="'&nbsp;&nbsp;&nbsp;&nbsp;' + (index + 1) + '.' + functionObject.name"
           :name="index"
         >
-          <div style="padding-right: 0.5rem; padding-left: 0.5rem">
+          <div style="padding-right: 1rem; padding-left: 1rem">
             <div v-for="(input, inputIndex) in functionObject.inputsArg" :key="inputIndex">
               <div style="margin-top: 0.8rem">
                 <div style="font-size: 9px">{{ input.name + '(' + input.internalType + ')' }}</div>

@@ -26,7 +26,7 @@
                 <el-row>
                   <el-col :span="9">Max Total Supply:</el-col>
                   <el-col v-if="tokenType == 'erc20'" :span="15">{{
-                    parseInt(totalSupply) * Math.pow(10, -decimals)
+                    thousandsFormat(parseInt(totalSupply) * Math.pow(10, -decimals))
                   }}</el-col>
                   <el-col v-else :span="15">{{ parseInt(totalSupply) }}</el-col>
                 </el-row>
@@ -150,6 +150,7 @@ import { ref, reactive, watch, onMounted } from 'vue';
 import { getTitle } from '../../script/global';
 import { ContractContent } from '../../script/model/contract';
 import { GetVerifyContractContent } from '../../script/service/contractService';
+import { thousandsFormat } from '../../script/utils';
 
 document.title = 'Token | The ' + getTitle() + ' Explorer';
 

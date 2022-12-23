@@ -19,7 +19,7 @@
             }}</router-link>
           </div>
           <div v-else-if="scope.column.property == 'Quantity'">
-            {{ ethers.utils.formatUnits(scope.row[scope.column.property], props.decimals) }}
+            {{ thousandsFormat(ethers.utils.formatUnits(scope.row[scope.column.property], props.decimals)) }}
             <!-- {{  BigInt(parseInt(scope.row[scope.column.property])) }} -->
           </div>
           <div v-else-if="scope.column.property == 'percentage'">
@@ -40,6 +40,7 @@ import { TokenHolder } from '../../script/model/token';
 import { TableHeader } from '../../script/model/index';
 import { ref, watchEffect } from 'vue';
 import { ethers } from 'ethers';
+import { thousandsFormat } from '../../script/utils';
 
 const emptyText = ref('loading...');
 const props = defineProps({

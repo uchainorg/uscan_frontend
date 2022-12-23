@@ -57,7 +57,6 @@ declare module '@vue/runtime-core' {
     GenerateContracts: typeof import('./src/components/ScanContract/GenerateContracts.vue')['default']
     GenerateHolders: typeof import('./src/components/ScanToken/GenerateHolders.vue')['default']
     GenerateInventory: typeof import('./src/components/ScanToken/GenerateInventory.vue')['default']
-    GenerateTranfers: typeof import('./src/components/ScanTransaction/GenerateTranfers.vue')['default']
     GenerateTransactions: typeof import('./src/components/ScanTransaction/GenerateTransactions.vue')['default']
     GenerateTransfers: typeof import('./src/components/ScanTransaction/GenerateTransfers.vue')['default']
     GethDebugTrace: typeof import('./src/components/ScanTransaction/GethDebugTrace.vue')['default']

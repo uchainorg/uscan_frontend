@@ -76,4 +76,10 @@ const getParenthesesStr = (text: string): string[] => {
   return arr;
 };
 
-export { getAge, formatNumber, getParenthesesStr };
+const thousandsFormat = (num: string): string => {
+  const str = num.toString();
+  const reg = str.indexOf('.') > -1 ? /(\d)(?=(\d{3})+\.)/g : /(\d)(?=(?:\d{3})+$)/g;
+  return str.replace(reg, '$1,');
+};
+
+export { getAge, formatNumber, getParenthesesStr, thousandsFormat };

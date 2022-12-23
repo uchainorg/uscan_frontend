@@ -49,16 +49,18 @@
           }}</router-link>
         </div>
         <div v-else-if="scope.column.property == 'to'" style="width: 170px">
-          <div v-if="scope.row.method == '0x60806040'">
+          <div v-if="scope.row.method == '0x60806040'" style="display: flex; align-items: center">
             <el-icon><Notebook /></el-icon>
             <el-tooltip effect="dark" placement="top" content="New Contract">
-              <router-link :to="'/address/' + scope.row[scope.column.property]">Contract Creation</router-link>
+              <router-link style="margin-left: 1.5px" :to="'/address/' + scope.row[scope.column.property]"
+                >Contract Creation</router-link
+              >
             </el-tooltip>
           </div>
-          <div v-else-if="scope.row.toContract" style="">
+          <div v-else-if="scope.row.toContract" style="display: flex; align-items: center">
             <el-icon><Tickets /></el-icon>
             <el-tooltip effect="dark" placement="top" content="Contract">
-              <router-link :to="'/address/' + scope.row[scope.column.property]">{{
+              <router-link style="margin-left: 1.5px" :to="'/address/' + scope.row[scope.column.property]">{{
                 scope.row[scope.column.property].slice(0, 15) + '...'
               }}</router-link>
             </el-tooltip>
