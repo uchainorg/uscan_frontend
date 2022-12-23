@@ -23,7 +23,7 @@
       </el-col>
     </el-row>
 
-    <el-tabs v-model="activeName">
+    <el-tabs v-model="activeName" style="margin-top: -17px">
       <el-tab-pane label="Overview" name="txs">
         <transaction-overview :txOverviews="overviews"></transaction-overview>
       </el-tab-pane>

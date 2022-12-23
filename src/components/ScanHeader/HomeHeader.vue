@@ -8,11 +8,12 @@
       </div>
       <div class="header-link">
         <router-link :to="'/'" style="font-size: 15px; font-weight: bold" @click="moveToHome"> Home </router-link>
+        &nbsp; &nbsp;
         <div style="width: 13px"></div>
         <div style="margin-bottom: 1px">
           <el-dropdown>
             <span style="font-size: 15px; font-weight: bold">
-              Token Transfers<el-icon><ArrowDown /></el-icon>
+              Token Transfers &nbsp;<el-icon><ArrowDown /></el-icon>
             </span>
             <template #dropdown>
               <el-dropdown-menu>

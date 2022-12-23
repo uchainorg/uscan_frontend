@@ -46,7 +46,7 @@ watchEffect(async () => {
 
   if (route.query.txhash as string) {
     const getGethDebugTraceRes = await GetGethDebugTrace(route.query.txhash as string, route.query.type as string);
-    // console.log('getGethDebugTrace', getGethDebugTraceRes.data);
+    console.log('getGethDebugTrace', getGethDebugTraceRes.data.res);
 
     total.value = getGethDebugTraceRes.data.logNum;
 
@@ -56,7 +56,7 @@ watchEffect(async () => {
         resTraceList.push(element);
       });
     } else {
-      resTrace2.value = JSON.stringify(getGethDebugTraceRes.data.res, null, 2);
+      resTrace2.value = JSON.stringify(JSON.parse(getGethDebugTraceRes.data.res), null, 4);
     }
   }
   // resTrace2.value = 'hahahahah';

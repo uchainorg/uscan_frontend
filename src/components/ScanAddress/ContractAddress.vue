@@ -88,7 +88,7 @@
             @current-change="handleCurrentChange"
           />
         </div>
-        <div style="float: right; margin-top: -25px">
+        <!-- <div style="float: right; margin-top: -25px">
           <div class="download">[ Download</div>
           <router-link class="download" :to="'/exportData?type=txns' + '&a=' + props.address">
             excel Export
@@ -96,7 +96,7 @@
           <div class="download">
             <el-icon><Download /></el-icon>]
           </div>
-        </div>
+        </div> -->
       </el-tab-pane>
       <el-tab-pane v-if="internalCount != 0" name="internal">
         <template #label>
@@ -119,7 +119,7 @@
             @current-change="handleInternalCurrentChange"
           />
         </div>
-        <div style="float: right; margin-top: -25px">
+        <!-- <div style="float: right; margin-top: -25px">
           <div class="download">[ Download</div>
           <router-link class="download" :to="'/exportData?type=txns-internal' + '&a=' + props.address">
             excel Export
@@ -127,7 +127,7 @@
           <div class="download">
             <el-icon><Download /></el-icon>]
           </div>
-        </div>
+        </div> -->
       </el-tab-pane>
       <el-tab-pane v-if="erc20count != 0" name="erc20">
         <template #label>
@@ -151,7 +151,7 @@
             @current-change="handleCurrentChange"
           />
         </div>
-        <div style="float: right; margin-top: -25px">
+        <!-- <div style="float: right; margin-top: -25px">
           <div class="download">[ Download</div>
           <router-link class="download" :to="'/exportData?type=txns-erc20' + '&a=' + props.address">
             excel Export
@@ -159,7 +159,7 @@
           <div class="download">
             <el-icon><Download /></el-icon>]
           </div>
-        </div>
+        </div> -->
       </el-tab-pane>
       <el-tab-pane v-if="erc721count != 0" name="erc721">
         <template #label>
@@ -183,7 +183,7 @@
             @current-change="handleCurrentChange"
           />
         </div>
-        <div style="float: right; margin-top: -25px">
+        <!-- <div style="float: right; margin-top: -25px">
           <div class="download">[ Download</div>
           <router-link class="download" :to="'/exportData?type=txns-erc721' + '&a=' + props.address">
             excel Export
@@ -191,7 +191,7 @@
           <div class="download">
             <el-icon><Download /></el-icon>]
           </div>
-        </div>
+        </div> -->
       </el-tab-pane>
       <el-tab-pane v-if="erc1155count != 0" name="erc1155">
         <template #label>
@@ -215,7 +215,7 @@
             @current-change="handleCurrentChange"
           />
         </div>
-        <div style="float: right; margin-top: -25px">
+        <!-- <div style="float: right; margin-top: -25px">
           <div class="download">[ Download</div>
           <router-link class="download" :to="'/exportData?type=txns-erc1155' + '&a=' + props.address">
             excel Export
@@ -223,7 +223,7 @@
           <div class="download">
             <el-icon><Download /></el-icon>]
           </div>
-        </div>
+        </div> -->
       </el-tab-pane>
       <el-tab-pane v-if="!isVerify" label="Contract" name="contract">
         <contract-info :contractAddress="address" :codeContent="props.addressInfo.code"></contract-info>
@@ -244,7 +244,6 @@ import { watch, ref, reactive } from 'vue';
 import { useRoute } from 'vue-router';
 import { AddressDetail } from '../../script/model/address';
 import { ethers } from 'ethers';
-import { Download } from '@element-plus/icons-vue';
 import { TableHeader } from '../../script/model/index';
 import { GetTransactionsByAddress, GetInternalTransactionsByAddress } from '../../script/service/transactionService';
 import {
