@@ -1,7 +1,8 @@
 <template lang="">
+  <p>Transaction Receipt Event Logs</p>
   <div class="log">
     <div class="content">
-      <p>Transaction Receipt Event Logs</p>
+      &nbsp;
       <div class="log-content">
         <div v-for="(log, index) in props.transactionLogs" :key="index">
           <div>

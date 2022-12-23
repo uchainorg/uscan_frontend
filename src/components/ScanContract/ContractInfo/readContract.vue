@@ -31,6 +31,9 @@
                 </div>
               </div>
             </div>
+            <div v-if="functionObject.resMsg != ''">
+              <p style="color: red">{{ functionObject.resMsg }}</p>
+            </div>
           </div>
         </el-collapse-item>
       </el-collapse>
@@ -122,6 +125,7 @@ const initData = () => {
           inputsArg: inputsArg,
           outputs: elementFunc.outputs,
           outputsRes: outputsRes,
+          resMsg: '',
         };
         functionObjectList.push(functionObject);
         functionResMap.set(index, functionObject);
@@ -158,7 +162,13 @@ const query = async (functionList: any[]) => {
         element.inputsArg.forEach((element: any) => {
           argList.push(element.arg);
         });
-        requestHash = abiCoder.encode(typeList, argList).slice(2);
+        try {
+          requestHash = abiCoder.encode(typeList, argList).slice(2);
+        } catch (err: any) {
+          console.log('err', err.reason);
+          element.resMsg = err.reason;
+        }
+        console.log('requestHash', requestHash);
         data = functionSelect + requestHash;
       }
       requests.push({
@@ -175,7 +185,6 @@ const query = async (functionList: any[]) => {
     });
     // console.log('requests', requests);
     const resMap = await GetResByNode(requests, nodeUrl.value);
-    // console.log('resMap', resMap);
     resMap.forEach((value, key) => {
       const functionObject = functionList[key];
       // console.log('functionObject ooo', functionObject);

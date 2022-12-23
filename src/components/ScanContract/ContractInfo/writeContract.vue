@@ -118,6 +118,8 @@ const write = async (functionObject: any) => {
     if ((window as any).ethereum._state.accounts.length == 0) {
       await provider.send('eth_requestAccounts', []);
     }
+    // const chainId = (window as any).ethereum.networkVersion;
+    // console.log('chainId', chainId);
     const signer = provider.getSigner();
     const contract = new ethers.Contract(props.contractAddress as string, abi, provider);
     const contractWithSigner = contract.connect(signer);
@@ -129,10 +131,10 @@ const write = async (functionObject: any) => {
         });
         try {
           const tx = await contractWithSigner.functions[key as string](...requestArgList);
-          functionObject.resMsg = 'Write succeeded, please wait for confirmation';
+          functionObject.resMsg = 'Write success, please wait for confirmation';
           console.log(tx);
         } catch (err: any) {
-          // console.log("err", err.reason);
+          console.log('err', err.reason);
           functionObject.resMsg = err.reason;
         }
       }
