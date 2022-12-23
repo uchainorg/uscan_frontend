@@ -75,11 +75,7 @@
     <div>
       <el-tabs v-model="activeName">
         <el-tab-pane label="Transfers" name="transactions">
-          <generate-transactions
-            :txsData="txsData"
-            :headerData="headerDataTx"
-            :loadStatus="isEmpty"
-          ></generate-transactions>
+          <generate-transfers :txsData="txsData" :headerData="headerDataTx" :loadStatus="isEmpty"></generate-transfers>
           <div style="margin-top: 1%; display: flex; justify-content: center">
             <el-pagination
               small

@@ -14,7 +14,13 @@
       <h4 class="tx-sub-title">(Showing the last {{ total }} records only)</h4>
     </div>
 
-    <generate-transactions :txsData="txsData" :headerData="headerData" :loadStatus="isEmpty"></generate-transactions>
+    <generate-transactions
+      v-if="props.txsType === 'all'"
+      :txsData="txsData"
+      :headerData="headerData"
+      :loadStatus="isEmpty"
+    ></generate-transactions>
+    <generate-transfers v-else :txsData="txsData" :headerData="headerData" :loadStatus="isEmpty"></generate-transfers>
     <div style="margin-top: 1%; display: flex; justify-content: center">
       <el-pagination
         small

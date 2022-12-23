@@ -49,21 +49,7 @@
           }}</router-link>
         </div>
         <div v-else-if="scope.column.property == 'to'" style="width: 170px">
-          <div v-if="scope.row.method == '0x60806040'">
-            <el-icon><Notebook /></el-icon>
-            <el-tooltip effect="dark" placement="top" content="New Contract">
-              <router-link :to="'/address/' + scope.row[scope.column.property]">Contract Creation</router-link>
-            </el-tooltip>
-          </div>
-          <div v-else-if="scope.row.toContract" style="">
-            <el-icon><Tickets /></el-icon>
-            <el-tooltip effect="dark" placement="top" content="Contract">
-              <router-link :to="'/address/' + scope.row[scope.column.property]">{{
-                scope.row[scope.column.property].slice(0, 15) + '...'
-              }}</router-link>
-            </el-tooltip>
-          </div>
-          <router-link v-else :to="'/address/' + scope.row[scope.column.property]">{{
+          <router-link :to="'/address/' + scope.row[scope.column.property]">{{
             scope.row[scope.column.property].slice(0, 15) + '...'
           }}</router-link>
         </div>
@@ -97,7 +83,7 @@ import { TableHeader } from '../../script/model/index';
 import { getAge } from '../../script/utils';
 import { ethers } from 'ethers';
 import { ref, watchEffect } from 'vue';
-import { View, Notebook, Tickets } from '@element-plus/icons-vue';
+import { View } from '@element-plus/icons-vue';
 import { getUnitDisplay } from '../../script/global';
 
 const emptyText = ref('loading...');

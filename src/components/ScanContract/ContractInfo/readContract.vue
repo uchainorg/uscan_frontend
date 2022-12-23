@@ -153,7 +153,7 @@ const query = async (functionList: any[]) => {
         const typeList: any[] = [];
         const argList: any[] = [];
         element.inputs.forEach((element: any) => {
-          typeList.push(element.internalType);
+          typeList.push(element.type);
         });
         element.inputsArg.forEach((element: any) => {
           argList.push(element.arg);
