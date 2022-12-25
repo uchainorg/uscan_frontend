@@ -32,7 +32,7 @@
               </div>
             </div>
             <div v-if="functionObject.resMsg != ''">
-              <p>{{ functionObject.resMsg }}</p>
+              <p style="color: red">{{ functionObject.resMsg }}</p>
             </div>
           </div>
         </el-collapse-item>
