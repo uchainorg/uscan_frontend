@@ -49,6 +49,7 @@
               rows="10"
               style="margin-top: 0px; background-color: white"
               v-model="sourceCode"
+              readonly="readonly"
             >
             </textarea>
           </div>

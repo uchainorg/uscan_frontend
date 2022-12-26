@@ -24,7 +24,8 @@
           </el-table>
         </div>
         <div v-if="route.query.type == 'tracetx2'">
-          <textarea class="byte-codes-text" style="margin: 0px" rows="12" v-model="resTrace2"> </textarea>
+          <textarea class="byte-codes-text" style="margin: 0px" rows="12" v-model="resTrace2" readonly="readonly">
+          </textarea>
         </div>
       </el-tab-pane>
     </el-tabs>

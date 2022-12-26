@@ -9,7 +9,7 @@
     </div>
     <br />
 
-    <textarea class="byte-codes-text" rows="15" v-model="props.codeContent"> </textarea>
+    <textarea class="byte-codes-text" rows="15" v-model="props.codeContent" readonly="readonly"> </textarea>
   </div>
 </template>
 <script lang="ts" setup>
