@@ -171,7 +171,7 @@ const write = async (functionObject: any) => {
           return;
         })
         .catch((e: any) => {
-          alert('Switch Chain error:', e);
+          alert('Switch Chain error ' + e);
           console.log('wallet_switchEthereumChain error: ', e);
           return;
         })
