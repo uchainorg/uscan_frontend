@@ -147,6 +147,7 @@ const sendTx = async (functionObject: any) => {
         console.log(tx);
       } catch (err: any) {
         console.log('err', err.reason);
+        functionObject.resMsg = '';
         functionObject.errMsg = err.reason;
       }
     }
@@ -154,6 +155,8 @@ const sendTx = async (functionObject: any) => {
 };
 
 const write = async (functionObject: any) => {
+  functionObject.errMsg = '';
+  functionObject.resMsg = '';
   // console.log(functionObject);
   if (JSON.parse(abi).length != 0) {
     const chainIdFromWallet = (window as any).ethereum.networkVersion;
@@ -176,6 +179,7 @@ const write = async (functionObject: any) => {
         })
         .catch((e: any) => {
           functionObject.errMsg = e.message;
+          functionObject.resMsg = '';
           console.log('wallet_switchEthereumChain error: ', e);
           return;
         });
