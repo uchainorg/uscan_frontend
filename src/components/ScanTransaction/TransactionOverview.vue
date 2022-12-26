@@ -96,7 +96,10 @@
                   &nbsp;&nbsp;&nbsp;
                   <router-link :to="'/address/' + trans.to">{{ trans.to.slice(0, 18) + '...' }}</router-link>
                   &nbsp;&nbsp;&nbsp;
-                  <span>{{
+                  <span v-if="trans.addressValue === '0x'">{{
+                    thousandsFormat(ethers.utils.formatUnits(0, trans.addressDecimals))
+                  }}</span>
+                  <span v-else>{{
                     thousandsFormat(ethers.utils.formatUnits(trans.addressValue, trans.addressDecimals))
                   }}</span>
                   &nbsp;&nbsp;&nbsp;
