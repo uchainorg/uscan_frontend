@@ -20,3 +20,10 @@ export const getNodeUrl = function (): string {
   const $nodeUrl = proxy.$nodeUrl as string;
   return $nodeUrl;
 };
+
+export const getChainID = function (): number {
+  const { appContext } = getCurrentInstance() as ComponentInternalInstance;
+  const proxy = appContext.config.globalProperties;
+  const $chainID = proxy.$chainID as number;
+  return $chainID;
+};

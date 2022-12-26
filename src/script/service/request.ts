@@ -1,7 +1,13 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import { ResponseType } from '../model/index';
 
-const originUrl = window.location.origin + '/uscan/v1';
+// const originUrl = window.location.origin + '/uscan/v1';
+
+const originUrl = window.location.protocol + '//' + window.location.hostname + ':4322' + '/uscan/v1';
+
+console.log('window.location', window.location);
+
+console.log('window.location!!!', window.location.protocol + '//' + window.location.hostname + ':4322');
 
 const instance = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL == undefined ? originUrl : import.meta.env.VITE_BASE_URL,

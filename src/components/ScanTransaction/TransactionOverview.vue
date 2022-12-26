@@ -1,6 +1,12 @@
 <template lang="">
   <div>
-    <el-table class="table-border" :data="props.txOverviews" empty-text="loading..." :row-style="{ height: '50px' }">
+    <el-table
+      class="table-border"
+      :data="props.txOverviews"
+      :show-header="false"
+      empty-text="loading..."
+      :row-style="{ height: '50px' }"
+    >
       <el-table-column width="240">
         <template v-slot:default="scope">
           <div class="center-row">
@@ -90,7 +96,9 @@
                   &nbsp;&nbsp;&nbsp;
                   <router-link :to="'/address/' + trans.to">{{ trans.to.slice(0, 18) + '...' }}</router-link>
                   &nbsp;&nbsp;&nbsp;
-                  <span>{{ ethers.utils.formatUnits(trans.addressValue, trans.addressDecimals) }}</span>
+                  <span>{{
+                    thousandsFormat(ethers.utils.formatUnits(trans.addressValue, trans.addressDecimals))
+                  }}</span>
                   &nbsp;&nbsp;&nbsp;
                   <router-link :to="'/address/' + trans.address">
                     <div v-if="trans.addressName">{{ trans.addressName }}</div>
@@ -164,6 +172,7 @@ import { ethers } from 'ethers';
 import { getTitle } from '../../script/global';
 import { Overview } from '../../script/model';
 import { getUnitDisplay } from '../../script/global';
+import { thousandsFormat } from '../../script/utils';
 
 document.title = 'Transaction overview | The ' + getTitle() + ' Explorer';
 

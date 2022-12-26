@@ -18,6 +18,7 @@ console.log('GetCustomParams', res);
 app.config.globalProperties.$title = res.data.appTitle == '' ? 'Uscan' : res.data.appTitle;
 app.config.globalProperties.$nodeUrl = res.data.nodeUrl == '' ? 'https://testnet.ankr.com' : res.data.nodeUrl;
 app.config.globalProperties.$unitDisplay = res.data.unitDisplay == '' ? 'Eth' : res.data.unitDisplay;
+app.config.globalProperties.$chainID = res.data.chainID == 0 ? 123 : res.data.chainID;
 
 app.use(router).mount('#app');
 // for (const [key, component] of Object.entries(ElementPlusIconsVue)) {

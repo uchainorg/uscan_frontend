@@ -1,6 +1,12 @@
 <template lang="">
   <div>
-    <el-table class="table-border" :data="overviews" empty-text="loading..." :row-style="{ height: '50px' }">
+    <el-table
+      class="table-border"
+      :data="overviews"
+      :show-header="false"
+      empty-text="loading..."
+      :row-style="{ height: '50px' }"
+    >
       <el-table-column width="240">
         <template v-slot:default="scope">
           <div class="center-row">

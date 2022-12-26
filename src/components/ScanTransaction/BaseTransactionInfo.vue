@@ -12,11 +12,12 @@
     </div>
     <el-divider />
     <h4>Transaction Fee:</h4>
-    {{ ethers.utils.formatEther(baseInfo.gasPrice * baseInfo.gasUsed) }} {{ getUnitDisplay() }}
+    {{ ethers.utils.formatEther(BigInt(parseInt(baseInfo.gasPrice)) * BigInt(parseInt(baseInfo.gasUsed))) }}
+    {{ getUnitDisplay() }}
     <el-divider />
     <h4>Gas Info:</h4>
-    {{ ethers.utils.formatEther(baseInfo.gasUsed) }} {{ getUnitDisplay() }} Used From
-    {{ ethers.utils.formatEther(baseInfo.gasLimit) }} {{ getUnitDisplay() }} GasLimit
+    {{ ethers.utils.formatEther(parseInt(baseInfo.gasUsed)) }} {{ getUnitDisplay() }} Used From
+    {{ ethers.utils.formatEther(parseInt(baseInfo.gasLimit)) }} {{ getUnitDisplay() }} GasLimit
     <el-divider />
     <h4>Nonce:</h4>
     {{ parseInt(baseInfo.nonce) }}
@@ -39,6 +40,7 @@ const props = defineProps({
 
 const res = await GetBaseTxByHash(props.txHash as string);
 const baseInfo = res.data;
+console.log('baseInfo', baseInfo);
 </script>
 <style lang="less" scoped>
 @import '../../css/style.css';

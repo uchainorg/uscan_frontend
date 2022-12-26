@@ -4,15 +4,17 @@
       <el-icon><Document /></el-icon>&nbsp;
       <p>Write Contract Information</p>
     </div>
-    <p>Please make sure the metamask is installed.</p>
+    <p>
+      The MetaMask wallet will be automatically connected, please make sure it is installed and in the correct network.
+    </p>
     <div v-for="(functionObject, index) in functionObjectList" :key="index">
       <el-collapse class="method-content" v-model="activeNames">
         <el-collapse-item
           class="method-object"
-          :title="'&nbsp;&nbsp;' + (index + 1) + '.' + functionObject.name"
+          :title="'&nbsp;&nbsp;&nbsp;&nbsp;' + (index + 1) + '.' + functionObject.name"
           :name="index"
         >
-          <div style="padding-right: 0.5rem; padding-left: 0.5rem">
+          <div style="padding-right: 1rem; padding-left: 1rem">
             <div v-for="(input, inputIndex) in functionObject.inputsArg" :key="inputIndex">
               <div style="margin-top: 0.8rem">
                 <div style="font-size: 9px">{{ input.name + '(' + input.internalType + ')' }}</div>
@@ -41,10 +43,11 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, reactive } from 'vue';
+import { ref, reactive, onMounted } from 'vue';
 import { ContractContent } from '../../../script/model/contract';
 import { Document } from '@element-plus/icons-vue';
 import { ethers } from 'ethers';
+import { getChainID } from '../../../script/global';
 
 const props = defineProps({
   contractAddress: String,
@@ -56,6 +59,8 @@ const props = defineProps({
 const functionObjectList = reactive([] as any[]);
 
 const activeNames = ref([] as number[]);
+
+const chainId = getChainID();
 
 const functionResMap = new Map();
 
@@ -109,17 +114,24 @@ const initData = () => {
   }
 };
 
-initData();
+onMounted(async () => {
+  initData();
+});
 
 const write = async (functionObject: any) => {
   // console.log(functionObject);
   if (JSON.parse(abi).length != 0) {
+    const chainIdFromWallet = (window as any).ethereum.networkVersion;
+    console.log('chainIdFromWallet', chainIdFromWallet);
+    console.log('chainId', chainId);
+    if (chainIdFromWallet != chainId) {
+      alert('Please switch to the correct network in your wallet(Metamask)');
+      return;
+    }
     const provider = new ethers.providers.Web3Provider((window as any).ethereum);
     if ((window as any).ethereum._state.accounts.length == 0) {
       await provider.send('eth_requestAccounts', []);
     }
-    // const chainId = (window as any).ethereum.networkVersion;
-    // console.log('chainId', chainId);
     const signer = provider.getSigner();
     const contract = new ethers.Contract(props.contractAddress as string, abi, provider);
     const contractWithSigner = contract.connect(signer);
