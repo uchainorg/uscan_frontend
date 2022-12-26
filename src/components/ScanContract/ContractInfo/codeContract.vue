@@ -88,7 +88,15 @@
           </el-button>
         </div>
       </div>
-      <textarea ref="textareaRef" class="byte-codes-text" style="margin: 0px" rows="10" v-model="abi"> </textarea>
+      <textarea
+        ref="textareaRef"
+        class="byte-codes-text"
+        style="margin: 0px"
+        rows="10"
+        v-model="abi"
+        readonly="readonly"
+      >
+      </textarea>
     </div>
 
     <div>
@@ -96,7 +104,8 @@
         <el-icon><Document /></el-icon> &nbsp;
         <h4>Contract Creation Code</h4>
       </div>
-      <textarea class="byte-codes-text" style="margin: 0px" rows="10" v-model="creationCode"> </textarea>
+      <textarea class="byte-codes-text" style="margin: 0px" rows="10" v-model="creationCode" readonly="readonly">
+      </textarea>
     </div>
   </div>
 </template>

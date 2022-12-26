@@ -138,25 +138,25 @@ const write = async (functionObject: any) => {
 
       console.log('params', chainName, symbol, decimals, nodeUrl);
 
-      (window as any).ethereum
-        .request({
-          method: 'wallet_addEthereumChain',
-          params: [
-            {
-              chainId: '0x' + chainId.toString(16),
-              chainName: chainName,
-              nativeCurrency: {
-                name: chainName,
-                symbol: symbol,
-                decimals: decimals,
-              },
-              rpcUrls: [nodeUrl],
-            },
-          ],
-        })
-        .catch((error: any) => {
-          console.log(error);
-        });
+      // (window as any).ethereum
+      //   .request({
+      //     method: 'wallet_addEthereumChain',
+      //     params: [
+      //       {
+      //         chainId: '0x' + chainId.toString(16),
+      //         chainName: chainName,
+      //         nativeCurrency: {
+      //           name: chainName,
+      //           symbol: symbol,
+      //           decimals: decimals,
+      //         },
+      //         rpcUrls: [nodeUrl],
+      //       },
+      //     ],
+      //   })
+      //   .catch((error: any) => {
+      //     console.log(error);
+      //   });
 
       await (window as any).ethereum
         .request({
@@ -171,6 +171,7 @@ const write = async (functionObject: any) => {
           return;
         })
         .catch((e: any) => {
+          alert('Switch Chain error:', e);
           console.log('wallet_switchEthereumChain error: ', e);
           return;
         })
