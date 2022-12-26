@@ -63,7 +63,7 @@
         <el-icon><Document /></el-icon> &nbsp;
         <h4>Contract ABI</h4>
         <div class="more-button-code">
-          <el-dropdown @command="handleCommand">
+          <!-- <el-dropdown @command="handleCommand">
             <el-button type="info">
               Export ABI &nbsp;
               <el-icon><ArrowDownBold /></el-icon>
@@ -74,7 +74,7 @@
                 <el-dropdown-item command="raw">Raw/Text Format</el-dropdown-item>
               </el-dropdown-menu>
             </template>
-          </el-dropdown>
+          </el-dropdown> -->
 
           &nbsp;
 
@@ -105,7 +105,7 @@ import { ref, onMounted, watch } from 'vue';
 import { ContractContent } from '../../../script/model/contract';
 import { CircleCheckFilled, Document } from '@element-plus/icons-vue';
 import { GetVerifyContractMetadata } from '../../../script/service/contractService';
-import { ArrowDownBold, FullScreen, Minus } from '@element-plus/icons-vue';
+import { FullScreen, Minus } from '@element-plus/icons-vue';
 
 const props = defineProps({
   codeIndex: Number,
@@ -128,9 +128,9 @@ metadataRes.data.licenseTypes.forEach((element) => {
   licenseTypeMap.set(element.id, element.name);
 });
 
-const handleCommand = (command: string | number | object) => {
-  console.log('command', command);
-};
+// const handleCommand = (command: string | number | object) => {
+//   console.log('command', command);
+// };
 
 const setRef = (el: any) => {
   // codeRef.value.length = 0;

@@ -34,7 +34,10 @@
               </div>
             </div>
             <div v-if="functionObject.resMsg != ''">
-              <p style="color: red">{{ functionObject.resMsg }}</p>
+              <p>{{ functionObject.resMsg }}</p>
+            </div>
+            <div v-if="functionObject.errMsg != ''">
+              <p style="color: red">{{ functionObject.errMsg }}</p>
             </div>
           </div>
         </el-collapse-item>
@@ -104,6 +107,7 @@ const initData = () => {
           outputs: elementFunc.outputs,
           outputsRes: outputsRes,
           resMsg: '',
+          errMsg: '',
         };
         functionObjectList.push(functionObject);
         functionResMap.set(index, functionObject);
@@ -147,7 +151,7 @@ const write = async (functionObject: any) => {
           console.log(tx);
         } catch (err: any) {
           console.log('err', err.reason);
-          functionObject.resMsg = err.reason;
+          functionObject.errMsg = err.reason;
         }
       }
     });

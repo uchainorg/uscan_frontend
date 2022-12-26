@@ -65,7 +65,7 @@
             <div class="center-row" v-else-if="scope.row.parameterValue.toContract">
               Contract &nbsp;
               <router-link :to="'/address/' + scope.row.parameterValue.to">
-                {{ scope.row.parameterValue.to }} &nbsp; {{ scope.row.parameterValue.toName }}
+                {{ scope.row.parameterValue.to }}
               </router-link>
               &nbsp;
               <copy-icon :text="scope.row.parameterValue.to"></copy-icon>
@@ -101,7 +101,7 @@
                   }}</span>
                   &nbsp;&nbsp;&nbsp;
                   <router-link :to="'/address/' + trans.address">
-                    <div v-if="trans.addressName">{{ trans.addressName }}</div>
+                    <div v-if="trans.addressName">{{ trans.addressName }} ({{ trans.addressSymbol }})</div>
                     <div v-else>
                       {{ trans.address.slice(0, 18) + '...' }}
                     </div>
