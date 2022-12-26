@@ -169,6 +169,7 @@ const write = async (functionObject: any) => {
           try {
             const tx = await contractWithSigner.functions[key as string](...requestArgList);
             functionObject.resMsg = 'Write success, please wait for confirmation';
+            functionObject.errMsg = '';
             console.log(tx);
           } catch (err: any) {
             console.log('err', err.reason);
