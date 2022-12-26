@@ -87,7 +87,8 @@
           <div v-else-if="scope.row.parameterName == 'tokensTransferred'">
             <div :class="scope.row.parameterValue.length >= 3 ? 'rolling' : ''">
               <div v-for="(trans, index) in scope.row.parameterValue" :key="index">
-                <div class="center-row">
+                <div v-if="trans.contractType == 1" class="center-row">
+                  <el-icon><CaretRight /></el-icon>
                   <div style="font-weight: bold">From</div>
                   &nbsp;&nbsp;&nbsp;
                   <router-link :to="'/address/' + trans.from">{{ trans.from.slice(0, 18) + '...' }}</router-link>
@@ -96,19 +97,63 @@
                   &nbsp;&nbsp;&nbsp;
                   <router-link :to="'/address/' + trans.to">{{ trans.to.slice(0, 18) + '...' }}</router-link>
                   &nbsp;&nbsp;&nbsp;
-                  <span v-if="trans.addressValue === '0x'">{{
-                    thousandsFormat(ethers.utils.formatUnits(0, trans.addressDecimals))
-                  }}</span>
-                  <span v-else>{{
-                    thousandsFormat(ethers.utils.formatUnits(trans.addressValue, trans.addressDecimals))
-                  }}</span>
+                  <span>{{ thousandsFormat(ethers.utils.formatUnits(trans.value, trans.contractDecimals)) }}</span>
                   &nbsp;&nbsp;&nbsp;
-                  <router-link :to="'/address/' + trans.address">
-                    <div v-if="trans.addressName">{{ trans.addressName }} ({{ trans.addressSymbol }})</div>
+                  <router-link :to="'/address/' + trans.contract">
+                    <div v-if="trans.contractName">{{ trans.contractName }} ({{ trans.contractSymbol }})</div>
                     <div v-else>
-                      {{ trans.address.slice(0, 18) + '...' }}
+                      {{ trans.contract.slice(0, 18) + '...' }}
                     </div>
                   </router-link>
+                </div>
+                <div v-else-if="trans.contractType == 2" class="center-row">
+                  <el-icon><CaretRight /></el-icon>
+                  <div style="font-weight: bold">From</div>
+                  &nbsp;&nbsp;&nbsp;
+                  <router-link :to="'/address/' + trans.from">{{ trans.from.slice(0, 18) + '...' }}</router-link>
+                  &nbsp;&nbsp;&nbsp;
+                  <div style="font-weight: bold">To</div>
+                  &nbsp;&nbsp;&nbsp;
+                  <router-link :to="'/address/' + trans.to">{{ trans.to.slice(0, 18) + '...' }}</router-link>
+                  &nbsp;&nbsp;&nbsp;
+                  <span style="font-weight: bold">For</span>
+                  &nbsp;&nbsp;&nbsp;
+                  <span>FRC721 TokenID[{{ parseInt(trans.tokenIDToNums[0].tokenID) }}]</span>
+                  &nbsp;&nbsp;&nbsp;
+                  <router-link :to="'/address/' + trans.contract">
+                    <div v-if="trans.contractName">{{ trans.contractName }} ({{ trans.contractSymbol }})</div>
+                    <div v-else>
+                      {{ trans.contract.slice(0, 18) + '...' }}
+                    </div>
+                  </router-link>
+                </div>
+                <div v-else-if="trans.contractType == 3" class="center-row-erc1155">
+                  <div class="center-row-item">
+                    <el-icon><CaretRight /></el-icon>
+                    <div style="font-weight: bold">From</div>
+                    &nbsp;&nbsp;&nbsp;
+                    <router-link :to="'/address/' + trans.from">{{ trans.from.slice(0, 18) + '...' }}</router-link>
+                    &nbsp;&nbsp;&nbsp;
+                    <div style="font-weight: bold">To</div>
+                    &nbsp;&nbsp;&nbsp;
+                    <router-link :to="'/address/' + trans.to">{{ trans.to.slice(0, 18) + '...' }}</router-link>
+                  </div>
+                  <div class="center-row-item" v-for="(tokenIDToNum, index) in trans.tokenIDToNums" :key="index">
+                    &nbsp;&nbsp;&nbsp;
+                    <span>ERC-1155</span>
+                    &nbsp;&nbsp;
+                    <span style="font-weight: bold">For</span>&nbsp;
+                    <span>{{ parseInt(tokenIDToNum.num) }} of Token ID [{{ parseInt(tokenIDToNum.tokenID) }}]</span>
+                    &nbsp;&nbsp;
+                    <router-link :to="'/address/' + trans.contract">
+                      <div v-if="trans.contractName.length != 0">
+                        {{ trans.contractName }} ({{ trans.contractSymbol }})
+                      </div>
+                      <div v-else>
+                        {{ trans.contract.slice(0, 18) + '...' }}
+                      </div>
+                    </router-link>
+                  </div>
                 </div>
               </div>
             </div>
@@ -176,6 +221,7 @@ import { getTitle } from '../../script/global';
 import { Overview } from '../../script/model';
 import { getUnitDisplay } from '../../script/global';
 import { thousandsFormat } from '../../script/utils';
+import { CaretRight } from '@element-plus/icons-vue';
 
 document.title = 'Transaction overview | The ' + getTitle() + ' Explorer';
 
@@ -191,5 +237,13 @@ const props = defineProps({
 .rolling {
   height: 100px;
   overflow: auto;
+}
+.center-row-erc1155 {
+  display: flex;
+  flex-direction: column;
+}
+.center-row-item {
+  display: flex;
+  align-items: center;
 }
 </style>
