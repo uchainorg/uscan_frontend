@@ -27,3 +27,10 @@ export const getChainID = function (): number {
   const $chainID = proxy.$chainID as number;
   return $chainID;
 };
+
+export const getDecimals = function (): number {
+  const { appContext } = getCurrentInstance() as ComponentInternalInstance;
+  const proxy = appContext.config.globalProperties;
+  const $decimal = proxy.$decimal as number;
+  return $decimal;
+};

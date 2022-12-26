@@ -50,7 +50,7 @@ import { ref, reactive, onMounted } from 'vue';
 import { ContractContent } from '../../../script/model/contract';
 import { Document } from '@element-plus/icons-vue';
 import { ethers } from 'ethers';
-import { getChainID } from '../../../script/global';
+import { getChainID, getTitle, getUnitDisplay, getNodeUrl, getDecimals } from '../../../script/global';
 
 const props = defineProps({
   contractAddress: String,
@@ -64,6 +64,10 @@ const functionObjectList = reactive([] as any[]);
 const activeNames = ref([] as number[]);
 
 const chainId = getChainID();
+const chainName = getTitle();
+const symbol = getUnitDisplay();
+const decimals = getDecimals();
+const nodeUrl = getNodeUrl();
 
 const functionResMap = new Map();
 
@@ -129,9 +133,50 @@ const write = async (functionObject: any) => {
     console.log('chainIdFromWallet', chainIdFromWallet);
     console.log('chainId', chainId);
     if (chainIdFromWallet != chainId) {
-      alert('Please switch to the correct network in your wallet(Metamask)');
-      return;
+      // alert('Please switch to the correct network in your wallet(Metamask)');
+      // return;
+
+      console.log('params', chainName, symbol, decimals, nodeUrl);
+
+      (window as any).ethereum
+        .request({
+          method: 'wallet_addEthereumChain',
+          params: [
+            {
+              chainId: '0x' + chainId.toString(16),
+              chainName: chainName,
+              nativeCurrency: {
+                name: chainName,
+                symbol: symbol,
+                decimals: decimals,
+              },
+              rpcUrls: [nodeUrl],
+            },
+          ],
+        })
+        .catch((error: any) => {
+          console.log(error);
+        });
+
+      await (window as any).ethereum
+        .request({
+          method: 'wallet_switchEthereumChain',
+          params: [
+            {
+              chainId: '0x' + chainId.toString(16),
+            },
+          ],
+        })
+        .then(() => {
+          return;
+        })
+        .catch((e: any) => {
+          console.log('wallet_switchEthereumChain error: ', e);
+          return;
+        })
+        .finally(() => {});
     }
+
     const provider = new ethers.providers.Web3Provider((window as any).ethereum);
     if ((window as any).ethereum._state.accounts.length == 0) {
       await provider.send('eth_requestAccounts', []);

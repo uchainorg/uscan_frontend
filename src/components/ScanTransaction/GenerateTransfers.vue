@@ -55,7 +55,6 @@
         </div>
         <div v-else-if="scope.column.property == 'value'">
           {{ ethers.utils.formatUnits(scope.row[scope.column.property], scope.row.contractDecimals) }}
-          {{ getUnitDisplay() }}
         </div>
         <div v-else-if="scope.column.property == 'tokenID'">
           {{ parseInt(scope.row[scope.column.property]) }}
@@ -84,7 +83,6 @@ import { getAge } from '../../script/utils';
 import { ethers } from 'ethers';
 import { ref, watchEffect } from 'vue';
 import { View } from '@element-plus/icons-vue';
-import { getUnitDisplay } from '../../script/global';
 
 const emptyText = ref('loading...');
 const props = defineProps({

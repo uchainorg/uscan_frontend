@@ -108,4 +108,5 @@ export interface CustomParams {
   nodeUrl: string;
   unitDisplay: string;
   chainID: number;
+  decimal: number;
 }

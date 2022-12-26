@@ -5,6 +5,7 @@
       placeholder="Code here..."
       :style="{ height: height }"
       :autofocus="true"
+      :disabled="true"
       :indent-with-tab="true"
       :tabSize="2"
       :extensions="extensions"

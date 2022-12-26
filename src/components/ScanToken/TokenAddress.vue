@@ -32,7 +32,7 @@
                 </el-row>
                 <el-row>
                   <el-col :span="9">Holders:</el-col>
-                  <el-col :span="15">{{ holdersTotal }}</el-col>
+                  <el-col :span="15">{{ holdersTotal }} {{ holdersTotal == 1 ? 'address' : 'addresses' }}</el-col>
                 </el-row>
                 <el-row>
                   <el-col :span="9">Transfers:</el-col>
