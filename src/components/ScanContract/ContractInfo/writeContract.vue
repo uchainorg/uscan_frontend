@@ -126,6 +126,33 @@ onMounted(async () => {
   initData();
 });
 
+const sendTx = async (functionObject: any) => {
+  const provider = new ethers.providers.Web3Provider((window as any).ethereum);
+  if ((window as any).ethereum._state.accounts.length == 0) {
+    await provider.send('eth_requestAccounts', []);
+  }
+  const signer = provider.getSigner();
+  const contract = new ethers.Contract(props.contractAddress as string, abi, provider);
+  const contractWithSigner = contract.connect(signer);
+  Reflect.ownKeys(contractWithSigner.functions).forEach(async function (key) {
+    if (key == functionObject.name) {
+      const requestArgList: any[] = [];
+      functionObject.inputsArg.forEach((element: any) => {
+        requestArgList.push(element.arg);
+      });
+      try {
+        const tx = await contractWithSigner.functions[key as string](...requestArgList);
+        functionObject.resMsg = 'Write success, please wait for confirmation';
+        functionObject.errMsg = '';
+        console.log(tx);
+      } catch (err: any) {
+        console.log('err', err.reason);
+        functionObject.errMsg = err.reason;
+      }
+    }
+  });
+};
+
 const write = async (functionObject: any) => {
   // console.log(functionObject);
   if (JSON.parse(abi).length != 0) {
@@ -143,7 +170,8 @@ const write = async (functionObject: any) => {
             },
           ],
         })
-        .then(() => {
+        .then(async () => {
+          await sendTx(functionObject);
           return;
         })
         .catch((e: any) => {
@@ -151,32 +179,32 @@ const write = async (functionObject: any) => {
           console.log('wallet_switchEthereumChain error: ', e);
           return;
         });
-    }
-    if (chainIdFromWallet == chainId) {
-      const provider = new ethers.providers.Web3Provider((window as any).ethereum);
-      if ((window as any).ethereum._state.accounts.length == 0) {
-        await provider.send('eth_requestAccounts', []);
-      }
-      const signer = provider.getSigner();
-      const contract = new ethers.Contract(props.contractAddress as string, abi, provider);
-      const contractWithSigner = contract.connect(signer);
-      Reflect.ownKeys(contractWithSigner.functions).forEach(async function (key) {
-        if (key == functionObject.name) {
-          const requestArgList: any[] = [];
-          functionObject.inputsArg.forEach((element: any) => {
-            requestArgList.push(element.arg);
-          });
-          try {
-            const tx = await contractWithSigner.functions[key as string](...requestArgList);
-            functionObject.resMsg = 'Write success, please wait for confirmation';
-            functionObject.errMsg = '';
-            console.log(tx);
-          } catch (err: any) {
-            console.log('err', err.reason);
-            functionObject.errMsg = err.reason;
-          }
-        }
-      });
+    } else {
+      // const provider = new ethers.providers.Web3Provider((window as any).ethereum);
+      // if ((window as any).ethereum._state.accounts.length == 0) {
+      //   await provider.send('eth_requestAccounts', []);
+      // }
+      // const signer = provider.getSigner();
+      // const contract = new ethers.Contract(props.contractAddress as string, abi, provider);
+      // const contractWithSigner = contract.connect(signer);
+      // Reflect.ownKeys(contractWithSigner.functions).forEach(async function (key) {
+      //   if (key == functionObject.name) {
+      //     const requestArgList: any[] = [];
+      //     functionObject.inputsArg.forEach((element: any) => {
+      //       requestArgList.push(element.arg);
+      //     });
+      //     try {
+      //       const tx = await contractWithSigner.functions[key as string](...requestArgList);
+      //       functionObject.resMsg = 'Write success, please wait for confirmation';
+      //       functionObject.errMsg = '';
+      //       console.log(tx);
+      //     } catch (err: any) {
+      //       console.log('err', err.reason);
+      //       functionObject.errMsg = err.reason;
+      //     }
+      //   }
+      // });
+      await sendTx(functionObject);
     }
   }
 };
