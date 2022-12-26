@@ -133,31 +133,7 @@ const write = async (functionObject: any) => {
     console.log('chainIdFromWallet', chainIdFromWallet);
     console.log('chainId', chainId);
     if (chainIdFromWallet != chainId) {
-      // alert('Please switch to the correct network in your wallet(Metamask)');
-      // return;
-
       console.log('params', chainName, symbol, decimals, nodeUrl);
-
-      // (window as any).ethereum
-      //   .request({
-      //     method: 'wallet_addEthereumChain',
-      //     params: [
-      //       {
-      //         chainId: '0x' + chainId.toString(16),
-      //         chainName: chainName,
-      //         nativeCurrency: {
-      //           name: chainName,
-      //           symbol: symbol,
-      //           decimals: decimals,
-      //         },
-      //         rpcUrls: [nodeUrl],
-      //       },
-      //     ],
-      //   })
-      //   .catch((error: any) => {
-      //     console.log(error);
-      //   });
-
       await (window as any).ethereum
         .request({
           method: 'wallet_switchEthereumChain',
@@ -171,36 +147,36 @@ const write = async (functionObject: any) => {
           return;
         })
         .catch((e: any) => {
-          alert('Switch Chain error ' + e);
+          functionObject.errMsg = e.message;
           console.log('wallet_switchEthereumChain error: ', e);
           return;
-        })
-        .finally(() => {});
-    }
-
-    const provider = new ethers.providers.Web3Provider((window as any).ethereum);
-    if ((window as any).ethereum._state.accounts.length == 0) {
-      await provider.send('eth_requestAccounts', []);
-    }
-    const signer = provider.getSigner();
-    const contract = new ethers.Contract(props.contractAddress as string, abi, provider);
-    const contractWithSigner = contract.connect(signer);
-    Reflect.ownKeys(contractWithSigner.functions).forEach(async function (key) {
-      if (key == functionObject.name) {
-        const requestArgList: any[] = [];
-        functionObject.inputsArg.forEach((element: any) => {
-          requestArgList.push(element.arg);
         });
-        try {
-          const tx = await contractWithSigner.functions[key as string](...requestArgList);
-          functionObject.resMsg = 'Write success, please wait for confirmation';
-          console.log(tx);
-        } catch (err: any) {
-          console.log('err', err.reason);
-          functionObject.errMsg = err.reason;
-        }
+    }
+    if (chainIdFromWallet == chainId) {
+      const provider = new ethers.providers.Web3Provider((window as any).ethereum);
+      if ((window as any).ethereum._state.accounts.length == 0) {
+        await provider.send('eth_requestAccounts', []);
       }
-    });
+      const signer = provider.getSigner();
+      const contract = new ethers.Contract(props.contractAddress as string, abi, provider);
+      const contractWithSigner = contract.connect(signer);
+      Reflect.ownKeys(contractWithSigner.functions).forEach(async function (key) {
+        if (key == functionObject.name) {
+          const requestArgList: any[] = [];
+          functionObject.inputsArg.forEach((element: any) => {
+            requestArgList.push(element.arg);
+          });
+          try {
+            const tx = await contractWithSigner.functions[key as string](...requestArgList);
+            functionObject.resMsg = 'Write success, please wait for confirmation';
+            console.log(tx);
+          } catch (err: any) {
+            console.log('err', err.reason);
+            functionObject.errMsg = err.reason;
+          }
+        }
+      });
+    }
   }
 };
 </script>
