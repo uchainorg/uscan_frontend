@@ -249,6 +249,9 @@ watch(props, async () => {
     txsData.push(element);
   });
   total.value = res.data.total;
+  if (res.data.total == 0) {
+    isEmpty.value = false;
+  }
 
   // const resErc20 = await GetTransactionsByAddress(
   //   currentPageIndex.value - 1,
