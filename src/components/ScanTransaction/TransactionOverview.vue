@@ -85,7 +85,7 @@
             {{ parseInt(scope.row.parameterValue) }}
           </div>
           <div v-else-if="scope.row.parameterName == 'tokensTransferred'">
-            <div :class="scope.row.parameterValue.length >= 3 ? 'rolling' : ''">
+            <div :class="scope.row.parameterValue.length >= 6 ? 'rolling' : ''">
               <div v-for="(trans, index) in scope.row.parameterValue" :key="index">
                 <div v-if="trans.contractType == 1" class="center-row">
                   <el-icon><CaretRight /></el-icon>
