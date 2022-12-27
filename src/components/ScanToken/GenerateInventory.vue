@@ -9,9 +9,10 @@
               <div class="text-secondary">
                 TokenID:
                 <span>
-                  <router-link :to="'/token/nfts/' + props.address + '/' + item.TokenID + '/' + props.ercType">
+                  <!-- <router-link :to="'/token/nfts/' + props.address + '/' + item.TokenID + '/' + props.ercType">
                     {{ parseInt(item.TokenID) }}
-                  </router-link>
+                  </router-link> -->
+                  {{ parseInt(item.TokenID) }}
                 </span>
               </div>
               <div class="text-secondary">
