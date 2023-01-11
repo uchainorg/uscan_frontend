@@ -7,7 +7,10 @@
         </div>
       </el-header>
       <el-main>
-        <Suspense><router-view class="content"></router-view></Suspense>
+        <Suspense>
+          <router-view class="content"></router-view>
+          <template #fallback> Loading... </template>
+        </Suspense>
       </el-main>
       <div class="footer">
         <el-footer> <scan-tail></scan-tail> </el-footer>
@@ -18,16 +21,15 @@
 
 <script lang="ts" setup>
 import { useRoute } from 'vue-router';
-import { watch, ref } from 'vue';
-import HomeHeaderVue from './components/ScanHeader/HomeHeader.vue';
-import InfoHeaderVue from './components/ScanHeader/InfoHeader.vue';
-import { getTitle } from './script/global';
+import { watch, ref, Ref } from 'vue';
+import HomeHeaderVue from '@/views/Header/HomeHeader.vue';
+import InfoHeaderVue from '@/views/Header/InfoHeader.vue';
+import { useCustomizationParametersStore } from '@/store/customizationParameters';
 
-document.title = 'The ' + getTitle() + ' Explorer';
-
+const customizationParametersStore = useCustomizationParametersStore();
+document.title = 'The ' + customizationParametersStore.appTitle + ' Explorer';
 const route = useRoute();
-const isHome = ref(false);
-// console.log('index', route.path);
+const isHome: Ref<boolean> = ref(false);
 if (route.path === '/') {
   isHome.value = true;
 }
@@ -45,20 +47,15 @@ watch(
 );
 </script>
 
-<style lang="less">
-.index {
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
+<style lang="less" scoped>
+@import './style/mixin.less';
 
 .content {
-  max-width: 1350px;
+  max-width: @max-width;
   margin: 0 auto;
   margin-top: 15px;
 }
+
 .el-header {
   padding: 0;
   height: 100%;
@@ -71,47 +68,46 @@ watch(
 }
 
 .home-header {
-  background-color: #263258;
-  height: 250px;
+  background-color: @home-item-bc;
+  height: @home-height;
 }
 
 .info-header {
   background-color: white;
-  height: 125px;
+  height: @info-header-height;
 }
 
 .el-footer {
   display: flex;
-  height: 250px;
-  max-width: 1350px;
+  height: @home-height;
+  max-width: @max-width;
   background-color: transparent;
   justify-content: center;
   margin: 0 auto;
 }
 
 .footer {
-  background-color: #263258;
+  background-color: @home-item-bc;
   margin-top: 2%;
   bottom: 0;
 }
 
-@media screen and (max-width: 500px) {
-  .el-footer {
-    height: 1000px;
-  }
-  .footer {
-    margin-top: 10%;
-  }
-  .info-header {
-    height: 170px;
+@media screen {
+  @media (max-width: 500px) {
+    .el-footer {
+      height: 1000px;
+    }
+    .footer {
+      margin-top: 10%;
+    }
+    .info-header {
+      height: 170px;
+    }
   }
 }
 
 .el-container {
   width: 100%;
   min-height: 100vh;
-  // display: flex;
-  // flex-direction: column;
-  // justify-content: space-between;
 }
 </style>

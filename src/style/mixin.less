@@ -1,0 +1,74 @@
+@import './bass.less';
+
+@max-width: 1350px;
+@home-item-bc: #263258;
+@home-height: 250px;
+
+@info-header-bc: white;
+@info-header-height: 125px;
+
+//font size & color
+.sc(@size, @color){
+    font-size: @size;
+    color: @color;
+}
+
+// flex-direction: row | row-reverse | column | column-reverse;
+// 水平 type: flex-start | flex-end | center | space-between | space-around;
+.fj(@type: space-between, @direction: flex-direction){
+    display: flex;
+    justify-content: @type;
+    flex-direction: @direction;
+}
+// 垂直 type: flex-start | flex-end | center | baseline | stretch;
+.fa(@type: space-between, @direction: flex-direction){
+    display: flex;
+    flex-direction: @direction;
+    align-items: @type;
+}
+
+// width & height
+.wh(@width, @height){
+    width: @width;
+    height: @height;
+}
+
+.header-title{
+    .sc(@size: 23px, @color: black)
+}
+
+.header-click-text{
+    .sc(@size: 15px, @color: black);
+    font-weight: bold
+}
+
+.header-tail-text{
+    .sc(@size: 20px, @color: black);
+}
+
+.header-search-title{
+    .sc(@size: 20px, @color: white);
+}
+
+.row-center{
+    .fa(@type: center, @direction: row);
+}
+
+.header-button{
+    height: 42px; 
+    width: 42px; 
+    background-color: #5296d5 !important
+}
+
+.header-left-items {
+    .fa(@type: center, @direction: row);
+    cursor: pointer;
+    height: 60px;
+}
+
+.header-link {
+    .fa(@type: center, @direction: row);
+    justify-content: flex-end;
+    height: 60px;
+    margin-left: auto;
+}

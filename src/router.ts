@@ -2,7 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router';
 import { RouteRecordRaw } from 'vue-router';
 
 const routes: Array<RouteRecordRaw> = [
-  { path: '/', component: () => import('./components/ScanHome/ScanHome.vue') },
+  { path: '/', component: () => import('./views/index/ScanHome.vue') },
   { path: '/block/:blockNumber', component: () => import('./components/ScanBlock/BlockIndex.vue'), props: true },
   { path: '/blocks', component: () => import('./components/ScanBlock/BlocksList.vue') },
   { path: '/tx/:txHash', component: () => import('./components/ScanTransaction/TransactionIndex.vue'), props: true },

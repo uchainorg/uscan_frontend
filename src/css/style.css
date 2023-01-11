@@ -140,20 +140,6 @@
   height: 60px;
 }
 
-.header-menu {
-  background-color: white;
-  height: 60px;
-}
-
-.home-header {
-  display: flex;
-  flex-direction: row;
-  background-color: transparent;
-  height: 80px;
-  margin: 0 auto;
-  max-width: 1350px;
-}
-
 .home-header-search {
   margin: 0 auto;
   max-width: 1350px;
