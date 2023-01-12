@@ -133,10 +133,10 @@
         </div>
       </div>
     </div>
-    <div class="statistic">
+    <div class="statistic-chart">
       <div class="content-item-right">
         <p class="chart-title">TRANSACTION HISTORY IN 14 DAYS</p>
-        <div id="char" style="width: 700px; height: 200px; margin-top: -60px"></div>
+        <div id="char" class="char-canvas"></div>
       </div>
     </div>
   </div>
@@ -225,6 +225,14 @@ onMounted(async () => {
   height: 100%;
   // background-color: blue;
 }
+
+.statistic-chart {
+  display: flex;
+  align-items: center;
+  width: 50%;
+  height: 100%;
+  // background-color: blue;
+}
 .content-item {
   width: 100%;
   height: 80%;
@@ -286,5 +294,44 @@ onMounted(async () => {
   justify-content: center;
   font-size: 0.96562rem;
   // color: #77838f;
+}
+
+.char-canvas {
+  width: 700px;
+  height: 200px;
+  margin-top: -60px;
+}
+
+@media screen and (max-width: 500px) {
+  .statistic-chart {
+    // display: none;
+    margin-top: -60px;
+  }
+  .statistic {
+    width: 100%;
+    height: 50%;
+  }
+  .statistic-content {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 350px;
+    background-color: white;
+    border-radius: 0.35rem;
+    flex-wrap: wrap;
+    font-size: smaller;
+  }
+  .show-item-title {
+    font-size: 0.8rem;
+  }
+  .char-canvas {
+    width: 210%;
+    height: 200px;
+    margin-top: -70px;
+  }
+  .chart-title {
+    margin-left: 10px;
+    width: 140%;
+  }
 }
 </style>

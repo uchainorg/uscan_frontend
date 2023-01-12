@@ -48,14 +48,7 @@ document.title = 'Home | The ' + getTitle() + ' Explorer';
     min-width: 200px;
   } */
   .statistic {
-    display: none;
-  }
-
-  .el-table__header,
-  .el-table__body,
-  .el-table__footer {
-    width: 100% !important;
-    table-layout: fixed !important;
+    /* display: none; */
   }
 }
 
