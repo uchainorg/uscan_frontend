@@ -50,6 +50,13 @@ document.title = 'Home | The ' + getTitle() + ' Explorer';
   .statistic {
     display: none;
   }
+
+  .el-table__header,
+  .el-table__body,
+  .el-table__footer {
+    width: 100% !important;
+    table-layout: fixed !important;
+  }
 }
 
 .statistic {
