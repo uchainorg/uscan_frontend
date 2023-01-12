@@ -68,9 +68,9 @@ const formatNumber = (input: number | bigint): string => {
 // const getTitle() = import.meta.env.VITE_APP_TITLE == undefined ? 'Uscan' : import.meta.env.VITE_APP_TITLE;
 
 const getParenthesesStr = (text: string): string[] => {
-  const reg = new RegExp('/(?<=().*(?=))/');
+  const reg = new RegExp(/(?<=().*(?=))/);
+  // console.log('res1', text.match(/\((.+?)\)/g));
   const res1 = text.match(reg)![0];
-  // console.log('res1', res1);
 
   const arr = res1.split(/,(?![^\(]*?\))/);
   return arr;

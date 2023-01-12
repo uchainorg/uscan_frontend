@@ -40,7 +40,7 @@
                 </div>
               </template>
               <div class="card-content">
-                <el-row class="el-row">
+                <el-row class="el-row" style="word-break: break-all">
                   <el-col :span="10">Creator:</el-col>
                   <el-col :span="14">
                     <router-link :to="'/address/' + props.addressInfo.creator">{{
@@ -52,7 +52,7 @@
                     }}</router-link>
                   </el-col>
                 </el-row>
-                <el-row v-if="props.addressInfo.symbol !== ''">
+                <el-row v-if="props.addressInfo.symbol !== ''" style="word-break: break-all">
                   <el-col :span="10">Token Tracker:</el-col>
                   <el-col :span="14">
                     <router-link :to="'/token/' + props.address">

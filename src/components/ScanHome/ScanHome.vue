@@ -41,11 +41,14 @@ document.title = 'Home | The ' + getTitle() + ' Explorer';
 }
 
 @media screen and (max-width: 500px) {
-  .home-right {
+  /* .home-right {
     min-width: 200px;
   }
   .home-left {
     min-width: 200px;
+  } */
+  .statistic {
+    display: none;
   }
 }
 
