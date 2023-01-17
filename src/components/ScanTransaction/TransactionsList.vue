@@ -10,7 +10,17 @@
       </el-button>
     </div>
 
-    <generate-transactions :txsData="txsData" :headerData="headerData" :loadStatus="isEmpty"></generate-transactions>
+    <div>
+      <h4 class="tx-sub-title">(Showing the last {{ total }} records only)</h4>
+    </div>
+
+    <generate-transactions
+      v-if="props.txsType === 'all'"
+      :txsData="txsData"
+      :headerData="headerData"
+      :loadStatus="isEmpty"
+    ></generate-transactions>
+    <generate-transfers v-else :txsData="txsData" :headerData="headerData" :loadStatus="isEmpty"></generate-transfers>
     <div style="margin-top: 1%; display: flex; justify-content: center">
       <el-pagination
         small
@@ -32,16 +42,17 @@ import {
   TransactionDetail,
   TransactionsHeaderList,
   Erc721TransactionsHeaderList,
+  Erc1155TransactionsHeaderList,
   Erc20TransactionsHeaderList,
 } from '../../script/model/transaction';
 import { TableHeader } from '../../script/model/index';
 import { reactive, ref, watch, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-import { getTitle } from '../../script/utils';
+import { getTitle } from '../../script/global';
 
 const route = useRoute();
 
-document.title = 'Transactions | The ' + getTitle + ' Explorer';
+document.title = 'Transactions | The ' + getTitle() + ' Explorer';
 
 const props = defineProps({
   txsType: String,
@@ -75,10 +86,9 @@ const getTransactions = async () => {
     } else if (props.txsType === 'erc721') {
       headerData.push(...Erc721TransactionsHeaderList);
     } else if (props.txsType === 'erc1155') {
-      headerData.push(...Erc721TransactionsHeaderList);
+      headerData.push(...Erc1155TransactionsHeaderList);
     }
     const res = await GetTransactions(currentPageIndex.value - 1, pageSizeNumber.value, props.txsType, blockNumber);
-    // console.log(res);
     res.data.items.forEach((element) => {
       txsData.push(element);
     });
@@ -104,7 +114,7 @@ watch(props, async () => {
 const setTitle = () => {
   if (props.txsType === 'all') {
     if (blockNumber !== -1) {
-      tableTitle.value = 'Transactions For Block' + blockNumber;
+      tableTitle.value = 'Transactions For Block ' + blockNumber;
     } else {
       tableTitle.value = 'Transactions';
     }

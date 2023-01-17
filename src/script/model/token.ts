@@ -87,3 +87,8 @@ export class TokenHolder {
     this.createdTime = createdTime;
   }
 }
+
+export interface TokenInventoryHolder {
+  Address: string;
+  TokenID: string;
+}

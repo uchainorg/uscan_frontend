@@ -1,7 +1,7 @@
 <template lang="">
   <div>
-    <el-table class="table-border" :data="tableData" empty-text="loading..." :row-style="{ height: '75px' }">
-      <el-table-column label="Latest Blocks" width="250">
+    <el-table class="table-border" :data="props.blocksData" empty-text="loading..." :row-style="{ height: '75px' }">
+      <el-table-column label="Latest Blocks" width="225">
         <template v-slot:default="scope">
           <el-row>
             <el-col :span="6">
@@ -42,7 +42,9 @@
         <template v-slot:default="scope">
           <el-tooltip effect="dark" content="gasUsed" placement="right">
             <div style="text-align: right">
-              <el-tag type="info">{{ ethers.utils.formatUnits(scope.row.gasUsed.toString(), 18) }} Eth</el-tag>
+              <el-tag type="info"
+                >{{ ethers.utils.formatUnits(scope.row.gasUsed.toString(), 18) }} {{ getUnitDisplay() }}</el-tag
+              >
             </div>
           </el-tooltip>
         </template>
@@ -54,15 +56,20 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { GetBlocks } from '../../script/service/blockService';
 import { getAge } from '../../script/utils';
 import { ethers } from 'ethers';
 import { useRouter } from 'vue-router';
+import { BlockDetail } from '../../script/model/block';
+import { getUnitDisplay } from '../../script/global';
+
+const props = defineProps({
+  blocksData: {
+    type: Array as () => Array<BlockDetail>,
+    require: true,
+  },
+});
 
 const router = useRouter();
-const res = await GetBlocks(false, 0, 10);
-const tableData = res.data.items;
-
 const moveToBlocks = () => {
   router.push('/blocks');
 };

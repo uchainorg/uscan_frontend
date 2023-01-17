@@ -49,6 +49,7 @@
               rows="10"
               style="margin-top: 0px; background-color: white"
               v-model="sourceCode"
+              readonly="readonly"
             >
             </textarea>
           </div>
@@ -135,11 +136,11 @@
               <div class="subtitle" v-if="verifyContractStatus == 1">Verify success!</div>
               <div class="subtitle" v-else-if="verifyContractStatus == 2">
                 Verify fail!
-                <router-link :to="'/address/' + contractAddress">
+                <!-- <router-link :to="'/address/' + contractAddress">
                   click this back contract {{ contractAddress }} page
-                </router-link>
+                </router-link> -->
+                {{ verifyContractReason }}
               </div>
-              <div class="subtitle" v-else-if="submitRes == 0">Verify handling!</div>
             </div>
           </div>
         </el-tab-pane>
@@ -155,9 +156,9 @@ import {
   SubmitVerifyContract,
   GetVerifyContractStatus,
 } from '../../script/service/contractService';
-import { getTitle } from '../../script/utils';
+import { getTitle } from '../../script/global';
 
-document.title = 'Verify & Publish Contract Source Code | The ' + getTitle + ' Explorer';
+document.title = 'Verify & Publish Contract Source Code | The ' + getTitle() + ' Explorer';
 
 const route = useRoute();
 const router = useRouter();
@@ -180,6 +181,7 @@ const submittedError = ref('');
 const fileList = reactive([]);
 const fileRequired = ref(false);
 const licenseOptions: Option[] = [];
+const verifyContractReason = ref('');
 
 interface Option {
   value: any;
@@ -225,26 +227,32 @@ const submit = async () => {
   // console.log('submittedStatus', submittedStatus);
 
   const submitRes = await SubmitVerifyContract(contractAddress as string, formdata);
-  // console.log('submitRes', submitRes);
+  console.log('submitRes', submitRes);
   submittedStatus.value = submitRes.code;
   if (submitRes.code == 200) {
-    setTimeout(() => {
-      CheckVerifyContractStatus(submitRes.data.id);
-    }, 3 * 1000);
+    const interval = setInterval(() => {
+      CheckVerifyContractStatus(submitRes.data.id, interval);
+    }, 5 * 1000);
   } else {
     submittedError.value = submitRes.msg;
     submitLoading.value = false;
   }
 };
 
-const CheckVerifyContractStatus = async (submitId: string) => {
+const CheckVerifyContractStatus = async (submitId: string, interval: any) => {
   const contractStatusRes = await GetVerifyContractStatus(submitId);
-  // console.log('contractStatusRes', contractStatusRes);
+  console.log('contractStatusRes', contractStatusRes);
   verifyContractStatus.value = contractStatusRes.data.status;
   if (contractStatusRes.data.status == 1) {
     router.push(('/address/' + contractAddress) as string);
+    submitLoading.value = false;
+    clearInterval(interval);
+  } else if (contractStatusRes.data.status == 2) {
+    submittedError.value = 'Validation failed';
+    submitLoading.value = false;
+    verifyContractReason.value = contractStatusRes.data.errReason;
+    clearInterval(interval);
   }
-  submitLoading.value = false;
 };
 
 const handleUploadChange = (fileList: any[]) => {

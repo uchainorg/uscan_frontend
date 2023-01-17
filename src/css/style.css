@@ -117,6 +117,12 @@
   height: 10px;
 }
 
+.el-row {
+  margin-bottom: 12px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .card-content {
   font-size: 15px;
 }
@@ -240,6 +246,12 @@
   margin-left: auto;
 }
 
+.more-button-code {
+  margin-left: auto;
+  display: flex;
+  flex-direction: row;
+}
+
 .subtitle1 {
   font-size: 15px;
   font-weight: bold;
@@ -306,4 +318,9 @@
   font-size: 15px;
   font-weight: bold;
   color: #8c98a4;
+}
+
+.tx-sub-title {
+  font-size: 0.5rem;
+  color: #4a4f55;
 }

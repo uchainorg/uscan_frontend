@@ -12,7 +12,7 @@
                       <div class="show-item-title">Address total</div>
                     </el-col>
                     <el-col>
-                      <div class="show-item">{{ addressCount }}</div>
+                      <div class="show-item">{{ parseInt(props.overview.address) }}</div>
                     </el-col>
                   </el-row>
                 </div>
@@ -26,7 +26,7 @@
                       <div class="show-item-title">Average block time</div>
                     </el-col>
                     <el-col>
-                      <div class="show-item">{{ avgBlockTime }} s</div>
+                      <div class="show-item">{{ parseInt(props.overview.avgBlockTime) }} s</div>
                     </el-col>
                   </el-row>
                 </div>
@@ -40,7 +40,7 @@
                       <div class="show-item-title">Block Height</div>
                     </el-col>
                     <el-col>
-                      <div class="show-item">{{ blockHeight }}</div>
+                      <div class="show-item">{{ parseInt(props.overview.block) }}</div>
                     </el-col>
                   </el-row>
                 </div>
@@ -54,7 +54,7 @@
                       <div class="show-item-title">Daily txs</div>
                     </el-col>
                     <el-col>
-                      <div class="show-item">{{ AverageTxs }}</div>
+                      <div class="show-item">{{ parseInt(props.overview.dailyTx) }}</div>
                     </el-col>
                   </el-row>
                 </div>
@@ -65,34 +65,22 @@
 
         <div style="height: 50%">
           <el-row :gutter="20">
-            <el-col :span="6"
-              ><div class="statistic-item">
-                <div class="center">
-                  <el-row>
-                    <el-col>
-                      <div class="show-item-title">Difficulty</div>
-                    </el-col>
-                    <el-col>
-                      <div class="show-item">{{ diff }}</div>
-                    </el-col>
-                  </el-row>
-                </div>
-              </div></el-col
-            >
-            <el-col :span="6"
-              ><div class="statistic-item">
+            <el-col :span="6">
+              <div class="statistic-item">
                 <div class="center">
                   <el-row>
                     <el-col>
                       <div class="show-item-title">Transactions</div>
                     </el-col>
                     <el-col>
-                      <div class="show-item">{{ tx }} ({{ tps }} TPS)</div>
+                      <div class="show-item">
+                        {{ parseInt(props.overview.tx) }} ({{ parseInt(props.overview.tps) }} TPS)
+                      </div>
                     </el-col>
                   </el-row>
                 </div>
-              </div></el-col
-            >
+              </div>
+            </el-col>
             <el-col :span="6"
               ><div class="statistic-item">
                 <div class="center">
@@ -102,9 +90,7 @@
                     </el-col>
                     <el-col>
                       <div class="show-item">
-                        <router-link :to="'/contracts/erc20'">
-                          {{ erc20Total }}
-                        </router-link>
+                        {{ parseInt(props.overview.erc20) }}
                       </div>
                     </el-col>
                   </el-row>
@@ -120,9 +106,23 @@
                     </el-col>
                     <el-col>
                       <div class="show-item">
-                        <router-link :to="'/contracts/erc721'">
-                          {{ erc721Total }}
-                        </router-link>
+                        {{ parseInt(props.overview.erc721) }}
+                      </div>
+                    </el-col>
+                  </el-row>
+                </div>
+              </div></el-col
+            >
+            <el-col :span="6"
+              ><div class="statistic-item">
+                <div class="center">
+                  <el-row>
+                    <el-col>
+                      <div class="show-item-title">ERC1155 total</div>
+                    </el-col>
+                    <el-col>
+                      <div class="show-item">
+                        {{ parseInt(props.overview.erc1155) }}
                       </div>
                     </el-col>
                   </el-row>
@@ -133,53 +133,41 @@
         </div>
       </div>
     </div>
-    <div class="statistic">
+    <div class="statistic-chart">
       <div class="content-item-right">
         <p class="chart-title">TRANSACTION HISTORY IN 14 DAYS</p>
-        <div id="char" style="width: 700px; height: 200px; margin-top: -60px"></div>
+        <div id="char" class="char-canvas"></div>
       </div>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue';
-import { GetTxTotal, GetTxOverview } from '../../script/service/transactionService';
-import moment from 'moment';
+import { onMounted } from 'vue';
 import { ECharts, EChartsOption, init } from 'echarts';
+import { TransactionOverview, DailyTransactionCount } from '../../script/model/transaction';
+
+const props = defineProps({
+  overview: {
+    type: Object as () => TransactionOverview,
+  },
+  dailyTransaction: {
+    type: Array as () => Array<DailyTransactionCount>,
+    require: true,
+  },
+});
 
 const dataList: string[] = [];
 const totalList: number[] = [];
 
-const diff = ref(0);
-const tps = ref(0);
-const tx = ref(0);
-const addressCount = ref(0);
-const avgBlockTime = ref(0);
-const blockTotal = ref(0);
-const blockHeight = ref(0);
-const AverageTxs = ref(0);
-const erc20Total = ref(0);
-const erc721Total = ref(0);
-
 onMounted(async () => {
-  const overviewRes = await GetTxOverview();
-  diff.value = overviewRes.data.diff;
-  tps.value = overviewRes.data.tps;
-  tx.value = overviewRes.data.tx;
-  addressCount.value = overviewRes.data.address;
-  avgBlockTime.value = overviewRes.data.avgBlockTime;
-  blockTotal.value = overviewRes.data.block;
-  blockHeight.value = overviewRes.data.blockHeight;
-  AverageTxs.value = overviewRes.data.dailyTx;
-  erc20Total.value = overviewRes.data.erc20;
-  erc721Total.value = overviewRes.data.erc721;
-
-  const res = await GetTxTotal(moment().subtract(14, 'days').format('YYYYMMDD'), moment().format('YYYYMMDD'));
-  res.data.data.forEach((element) => {
-    dataList.push(element.Date.slice(0, 10));
-    totalList.push(element.TxCount);
+  (props.dailyTransaction as DailyTransactionCount[]).forEach((element, index) => {
+    // console.log(element);
+    dataList.push(element.date.slice(0, 10));
+    totalList.push(parseInt(element.txCount, 16));
+    // totalList.push(35555 + index * 1000);
   });
-  // console.log('GetTxTotal', res.data.data);
+  const maxVal = Number(Math.max(...totalList));
+  const interval = 10 ** (maxVal.toString().length - 1);
   const charEle = document.getElementById('char') as HTMLElement;
   const charEch: ECharts = init(charEle);
   const option: EChartsOption = {
@@ -196,7 +184,7 @@ onMounted(async () => {
     },
     yAxis: {
       type: 'value',
-      interval: 100,
+      interval: interval,
       splitLine: {
         show: false,
       },
@@ -231,6 +219,14 @@ onMounted(async () => {
   // background-color: red;
 }
 .statistic {
+  display: flex;
+  align-items: center;
+  width: 50%;
+  height: 100%;
+  // background-color: blue;
+}
+
+.statistic-chart {
   display: flex;
   align-items: center;
   width: 50%;
@@ -298,5 +294,44 @@ onMounted(async () => {
   justify-content: center;
   font-size: 0.96562rem;
   // color: #77838f;
+}
+
+.char-canvas {
+  width: 700px;
+  height: 200px;
+  margin-top: -60px;
+}
+
+@media screen and (max-width: 500px) {
+  .statistic-chart {
+    // display: none;
+    margin-top: -60px;
+  }
+  .statistic {
+    width: 100%;
+    height: 50%;
+  }
+  .statistic-content {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 350px;
+    background-color: white;
+    border-radius: 0.35rem;
+    flex-wrap: wrap;
+    font-size: smaller;
+  }
+  .show-item-title {
+    font-size: 0.8rem;
+  }
+  .char-canvas {
+    width: 210%;
+    height: 200px;
+    margin-top: -70px;
+  }
+  .chart-title {
+    margin-left: 10px;
+    width: 140%;
+  }
 }
 </style>

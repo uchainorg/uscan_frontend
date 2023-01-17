@@ -26,7 +26,9 @@
             scope.row[scope.column.property].slice(0, 15) + '...'
           }}</router-link>
         </div>
-        <div v-else-if="scope.column.property == 'amount'">{{ parseInt(scope.row[scope.column.property]) }}</div>
+        <div v-else-if="scope.column.property == 'amount'">
+          {{ ethers.utils.formatUnits(scope.row[scope.column.property], 18) }}
+        </div>
       </template>
     </el-table-column>
   </el-table>
@@ -36,7 +38,7 @@ import { TransactionDetail } from '../../script/model/transaction';
 import { TableHeader } from '../../script/model/index';
 import { ref } from 'vue';
 import { getAge } from '../../script/utils';
-// import { ethers } from 'ethers';
+import { ethers } from 'ethers';
 // import { View } from '@element-plus/icons-vue';
 
 const emptyText = ref('loading...');

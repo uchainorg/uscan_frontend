@@ -14,8 +14,11 @@ export class AddressDetail {
   symbol: string;
   tokenTotalSupply: number;
   nftTotalSupply: number;
-  decimals: string;
+  decimals: number;
   createdTime: number;
+  erc20: boolean;
+  erc721: boolean;
+  erc1155: boolean;
   /**
    * Create a AddressDetail.
    * @param {number} id
@@ -29,8 +32,11 @@ export class AddressDetail {
    * @param {string} symbol
    * @param {number} tokenTotalSupply
    * @param {number} nftTotalSupply
-   * @param {string} decimals
+   * @param {number} decimals
    * @param {string} createdTime
+   * @param {boolean} erc20
+   * @param {boolean} erc721
+   * @param {boolean} erc1155
    */
   constructor(
     id: number,
@@ -44,8 +50,11 @@ export class AddressDetail {
     symbol: string,
     tokenTotalSupply: number,
     nftTotalSupply: number,
-    decimals: string,
-    createdTime: number
+    decimals: number,
+    createdTime: number,
+    erc20: boolean,
+    erc721: boolean,
+    erc1155: boolean
   ) {
     this.id = id;
     this.owner = owner;
@@ -60,5 +69,16 @@ export class AddressDetail {
     this.nftTotalSupply = nftTotalSupply;
     this.decimals = decimals;
     this.createdTime = createdTime;
+    this.erc20 = erc20;
+    this.erc721 = erc721;
+    this.erc1155 = erc1155;
   }
+}
+
+export interface AddressTxsTotal {
+  erc1155Total: string;
+  erc20Total: string;
+  erc721Total: string;
+  internalTotal: string;
+  txTotal: string;
 }

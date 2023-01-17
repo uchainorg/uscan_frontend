@@ -149,6 +149,10 @@ export class TransactionDetail {
   transactionHash: string;
   baseInfo: boolean = false;
   methodName: string;
+  logs: TransactionLog[];
+  fromContract: boolean;
+  toContract: boolean;
+
   /**
    * Create a Transaction.
    * @param {string} hash
@@ -195,6 +199,9 @@ export class TransactionDetail {
    * @param {string} transactionHash
    * @param {boolean} baseInfo
    * @param {string} methodName
+   * @param {TransactionLog} logs
+   * @param {boolean} fromContract
+   * @param {boolean} toContract
    */
   constructor(
     hash: string,
@@ -240,7 +247,10 @@ export class TransactionDetail {
     tokenID: number,
     transactionHash: string,
     baseInfo: boolean,
-    methodName: string
+    methodName: string,
+    logs: TransactionLog[],
+    fromContract: boolean,
+    toContract: boolean
   ) {
     this.hash = hash;
     this.method = method;
@@ -286,6 +296,9 @@ export class TransactionDetail {
     this.transactionHash = transactionHash;
     this.baseInfo = baseInfo;
     this.methodName = methodName;
+    this.logs = logs;
+    this.fromContract = fromContract;
+    this.toContract = toContract;
   }
 }
 
@@ -320,6 +333,11 @@ export interface TransactionCount {
   Date: string;
 }
 
+export interface DailyTransactionCount {
+  date: string;
+  txCount: string;
+}
+
 export interface TransactionOverview {
   address: number;
   avgBlockTime: number;
@@ -331,6 +349,7 @@ export interface TransactionOverview {
   tx: number;
   erc20: number;
   erc721: number;
+  erc1155: number;
 }
 
 export const getTxOverviews = function (tx: TransactionDetail): Overview[] {
@@ -355,7 +374,6 @@ export const getTxOverviews = function (tx: TransactionDetail): Overview[] {
     // eslint-disable-next-line max-len
     'The value being transacted in Ether and fiat value. Note: You can click the fiat value (if available) to see historical value at the time of transaction.',
   ]);
-  txParameterMap.set('gas', ['Transaction Fee', 'Amount paid to the miner for processing the transaction.']);
   txParameterMap.set('gasPrice', [
     'Gas Price',
     // eslint-disable-next-line max-len
@@ -366,7 +384,14 @@ export const getTxOverviews = function (tx: TransactionDetail): Overview[] {
     // eslint-disable-next-line max-len
     'Maximum amount of gas allocated for the transaction & the amount eventually used. Normal ETH transfers involve " + res.gasLimit + " gas units while contracts involve higher values.',
   ]);
-  txParameterMap.set('maxPriorityFeePerGas', ['Gas Fees', 'The amount eventually used.']);
+  if (parseInt(tx.baseFeePerGas) !== 0) {
+    txParameterMap.set('maxPriorityFeePerGas', ['Gas Fees', 'The amount eventually used.']);
+  }
+  txParameterMap.set('nonce', [
+    'Nonce',
+    // eslint-disable-next-line max-len
+    'Sequential running number for an address, beginning with 0 for the first transaction. For example, if the nonce of a transaction is 10, it would be the 11th transaction sent from the senders address.',
+  ]);
   txParameterMap.set('tokensTransferred', ['Tokens Transferred', 'List of tokens transferred in the transaction.']);
   txParameterMap.set('input', [
     'Input Data',
@@ -388,6 +413,7 @@ export const getTxOverviews = function (tx: TransactionDetail): Overview[] {
         fromCode: tx.fromCode,
         fromName: tx.fromName,
         fromSymbol: tx.fromSymbol,
+        fromContract: tx.fromContract,
       };
     } else if (key == 'to') {
       valueDisplay = {
@@ -398,12 +424,13 @@ export const getTxOverviews = function (tx: TransactionDetail): Overview[] {
         contractAddress: tx.contractAddress,
         contractAddressName: tx.contractAddressName,
         contractAddressSymbol: tx.contractAddressSymbol,
+        toContract: tx.toContract,
+        method: tx.method,
       };
     } else if (key == 'gas') {
       valueDisplay = {
-        gasLimit: formatNumber(BigInt(tx.gasLimit)),
+        gas: formatNumber(BigInt(tx.gas)),
         gasUsed: formatNumber(BigInt(tx.gasUsed)),
-        percent: Math.round((tx.gasUsed / tx.gasLimit) * 10000) / 100 + '%',
       };
     } else if (key == 'maxPriorityFeePerGas') {
       valueDisplay = {
@@ -424,6 +451,17 @@ export const getTxOverviews = function (tx: TransactionDetail): Overview[] {
     }
     resList.push(new Overview(key, value[0] + ':', valueDisplay, value[1]));
   }
+
+  resList.splice(
+    7,
+    0,
+    new Overview(
+      'transactionFee',
+      'Transaction Fee:',
+      (tx.gasPrice * tx.gasUsed) as unknown as string,
+      'Amount paid to the miner for processing the transaction'
+    )
+  );
   // console.log('tx', tx);
   // console.log('resList', resList);
   return resList;
@@ -447,7 +485,7 @@ export const Erc20TransactionsHeaderList: TableHeader[] = [
   new TableHeader('Age', 'createdTime'),
   new TableHeader('From', 'from'),
   new TableHeader('To', 'to'),
-  new TableHeader('Value(token)', 'value'),
+  new TableHeader('Value', 'value'),
   new TableHeader('Token', 'contract'),
 ];
 
@@ -459,6 +497,19 @@ export const Erc721TransactionsHeaderList: TableHeader[] = [
   new TableHeader('From', 'from'),
   new TableHeader('To', 'to'),
   new TableHeader('TokenID', 'tokenID'),
+  new TableHeader('Token', 'contract'),
+];
+
+export const Erc1155TransactionsHeaderList: TableHeader[] = [
+  new TableHeader('Txn Hash', 'transactionHash'),
+  new TableHeader('Method', 'method'),
+  new TableHeader('Block', 'blockNumber'),
+  new TableHeader('Age', 'createdTime'),
+  new TableHeader('From', 'from'),
+  new TableHeader('To', 'to'),
+  new TableHeader('TokenID', 'tokenID'),
+  new TableHeader('Quantity', 'value'),
+  new TableHeader('Token', 'contract'),
 ];
 
 export const InternalTransactionsHeaderList: TableHeader[] = [
@@ -491,8 +542,10 @@ export const TokenErcTransactionsHeaderList: TableHeader[] = [
 ];
 
 export const TokeHolderHeaderList: TableHeader[] = [
-  new TableHeader('Address', 'owner'),
-  new TableHeader('Quantity', 'quantity'),
+  new TableHeader('Rank', 'rank'),
+  new TableHeader('Address', 'Address'),
+  new TableHeader('Quantity', 'Quantity'),
+  new TableHeader('Percentage', 'percentage'),
 ];
 
 export const TokeErcHolderHeaderList: TableHeader[] = [

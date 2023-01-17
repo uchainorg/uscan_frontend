@@ -49,35 +49,23 @@
           }}</router-link>
         </div>
         <div v-else-if="scope.column.property == 'to'" style="width: 170px">
-          <div v-if="scope.row.method == '0x60806040'" style="display: flex; align-items: center">
-            <el-icon><Notebook /></el-icon>
-            <el-tooltip effect="dark" placement="top" content="New Contract">
-              <router-link style="margin-left: 1.5px" :to="'/address/' + scope.row[scope.column.property]"
-                >Contract Creation</router-link
-              >
-            </el-tooltip>
-          </div>
-          <div v-else-if="scope.row.toContract" style="display: flex; align-items: center">
-            <el-icon><Tickets /></el-icon>
-            <el-tooltip effect="dark" placement="top" content="Contract">
-              <router-link style="margin-left: 1.5px" :to="'/address/' + scope.row[scope.column.property]">{{
-                scope.row[scope.column.property].slice(0, 15) + '...'
-              }}</router-link>
-            </el-tooltip>
-          </div>
-          <router-link v-else :to="'/address/' + scope.row[scope.column.property]">{{
+          <router-link :to="'/address/' + scope.row[scope.column.property]">{{
             scope.row[scope.column.property].slice(0, 15) + '...'
           }}</router-link>
         </div>
         <div v-else-if="scope.column.property == 'value'">
           {{ ethers.utils.formatUnits(scope.row[scope.column.property], scope.row.contractDecimals) }}
-          {{ getUnitDisplay() }}
         </div>
         <div v-else-if="scope.column.property == 'tokenID'">
           {{ parseInt(scope.row[scope.column.property]) }}
         </div>
         <div v-else-if="scope.column.property == 'gas'" style="font-size: 11px">
-          {{ ethers.utils.formatEther(scope.row.gas * scope.row.gasPrice) }} {{ getUnitDisplay() }}
+          {{
+            ethers.utils.formatUnits(
+              (parseInt(scope.row[scope.column.property], 10) * parseInt(scope.row['gasPrice'], 10)).toString(),
+              18
+            )
+          }}
         </div>
         <div v-else-if="scope.column.property == 'contract'" style="width: 170px; font-size: 11px">
           <router-link :to="'/token/' + scope.row[scope.column.property]">{{
@@ -94,8 +82,7 @@ import { TableHeader } from '../../script/model/index';
 import { getAge } from '../../script/utils';
 import { ethers } from 'ethers';
 import { ref, watchEffect } from 'vue';
-import { View, Notebook, Tickets } from '@element-plus/icons-vue';
-import { getUnitDisplay } from '../../script/global';
+import { View } from '@element-plus/icons-vue';
 
 const emptyText = ref('loading...');
 const props = defineProps({

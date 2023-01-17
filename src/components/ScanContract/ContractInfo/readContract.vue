@@ -7,8 +7,12 @@
 
     <div v-for="(functionObject, index) in functionObjectList" :key="index">
       <el-collapse class="method-content" v-model="activeNames">
-        <el-collapse-item class="method-object" :title="index + 1 + '.' + functionObject.name" :name="index">
-          <div style="padding-right: 0.5rem; padding-left: 0.5rem">
+        <el-collapse-item
+          class="method-object"
+          :title="'&nbsp;&nbsp;&nbsp;&nbsp;' + (index + 1) + '.' + functionObject.name"
+          :name="index"
+        >
+          <div style="padding-right: 1rem; padding-left: 1rem">
             <div v-for="(input, inputIndex) in functionObject.inputsArg" :key="inputIndex">
               <div style="margin-top: 0.8rem">
                 <div style="font-size: 9px">{{ input.name + '(' + input.internalType + ')' }}</div>
@@ -27,6 +31,9 @@
                 </div>
               </div>
             </div>
+            <div v-if="functionObject.resMsg != ''">
+              <p style="color: red">{{ functionObject.resMsg }}</p>
+            </div>
           </div>
         </el-collapse-item>
       </el-collapse>
@@ -39,6 +46,7 @@ import { ContractContent } from '../../../script/model/contract';
 import { GetResByNode } from '../../../script/service/nodeService';
 import { Document } from '@element-plus/icons-vue';
 import { ethers } from 'ethers';
+import { getNodeUrl } from '../../../script/global';
 
 const props = defineProps({
   contractAddress: String,
@@ -52,6 +60,7 @@ const functionObjectList = reactive([] as any[]);
 // const functionObjectList = ref([] as any[]);
 
 const activeNames = ref([] as number[]);
+const nodeUrl = ref('');
 
 const resDisplayMap = reactive({
   map: new Map(),
@@ -81,6 +90,8 @@ watch(activeNames, (newVal, oldVal) => {
 });
 
 const initData = () => {
+  console.log('node url is', getNodeUrl());
+  nodeUrl.value = getNodeUrl();
   if (Object.keys(props.contractInfo as ContractContent).length !== 0) {
     activeNames.value = [];
     let index = 0;
@@ -114,6 +125,7 @@ const initData = () => {
           inputsArg: inputsArg,
           outputs: elementFunc.outputs,
           outputsRes: outputsRes,
+          resMsg: '',
         };
         functionObjectList.push(functionObject);
         functionResMap.set(index, functionObject);
@@ -145,12 +157,18 @@ const query = async (functionList: any[]) => {
         const typeList: any[] = [];
         const argList: any[] = [];
         element.inputs.forEach((element: any) => {
-          typeList.push(element.internalType);
+          typeList.push(element.type);
         });
         element.inputsArg.forEach((element: any) => {
           argList.push(element.arg);
         });
-        requestHash = abiCoder.encode(typeList, argList).slice(2);
+        try {
+          requestHash = abiCoder.encode(typeList, argList).slice(2);
+        } catch (err: any) {
+          console.log('err', err.reason);
+          element.resMsg = err.reason;
+        }
+        console.log('requestHash', requestHash);
         data = functionSelect + requestHash;
       }
       requests.push({
@@ -166,15 +184,14 @@ const query = async (functionList: any[]) => {
       });
     });
     // console.log('requests', requests);
-    const resMap = await GetResByNode(requests);
-    // console.log('resMap', resMap);
+    const resMap = await GetResByNode(requests, nodeUrl.value);
     resMap.forEach((value, key) => {
       const functionObject = functionList[key];
       // console.log('functionObject ooo', functionObject);
       const typeListResponse: any[] = [];
       let decodeRes: any[] = [];
       functionObject.outputs.forEach((element: any) => {
-        typeListResponse.push(element.internalType);
+        typeListResponse.push(element.type);
       });
       if (value != '') {
         decodeRes = abiCoder.decode(typeListResponse, value) as any[];

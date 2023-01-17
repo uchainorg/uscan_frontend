@@ -22,4 +22,12 @@
   html * {
     font-family: Arial;
   }
+  @media screen and (max-width: 500px) {
+    .el-table__header,
+    .el-table__body,
+    .el-table__footer {
+      width: 100% !important;
+      table-layout: fixed !important;
+    }
+  }
 </style>

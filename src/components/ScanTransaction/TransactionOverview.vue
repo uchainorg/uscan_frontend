@@ -1,6 +1,12 @@
 <template lang="">
   <div>
-    <el-table class="table-border" :data="overviews" empty-text="loading..." :row-style="{ height: '50px' }">
+    <el-table
+      class="table-border"
+      :data="props.txOverviews"
+      :show-header="false"
+      empty-text="loading..."
+      :row-style="{ height: '50px' }"
+    >
       <el-table-column width="240">
         <template v-slot:default="scope">
           <div class="center-row">
@@ -31,25 +37,35 @@
             <copy-icon :text="scope.row.parameterValue"></copy-icon>
           </div>
           <div class="center-row" v-else-if="scope.row.parameterName == 'from'">
-            <router-link :to="'/address/' + scope.row.parameterValue.from">
-              {{ scope.row.parameterValue.from }}
-            </router-link>
-            &nbsp;
-            <copy-icon :text="scope.row.parameterValue.from"></copy-icon>
+            <div class="center-row" v-if="scope.row.parameterValue.fromContract">
+              Contract &nbsp;
+              <router-link :to="'/address/' + scope.row.parameterValue.from">
+                {{ scope.row.parameterValue.from }} &nbsp; {{ scope.row.parameterValue.fromName }}
+              </router-link>
+              &nbsp;
+              <copy-icon :text="scope.row.parameterValue.from"></copy-icon>
+            </div>
+            <div class="center-row" v-else>
+              <router-link :to="'/address/' + scope.row.parameterValue.from">
+                {{ scope.row.parameterValue.from }}
+              </router-link>
+              &nbsp;
+              <copy-icon :text="scope.row.parameterValue.from"></copy-icon>
+            </div>
           </div>
           <div v-else-if="scope.row.parameterName == 'to'">
-            <div class="center-row" v-if="scope.row.parameterValue.to == ''">
+            <div class="center-row" v-if="scope.row.parameterValue.method == '0x60806040'">
               Contract &nbsp;
               <router-link :to="'/address/' + scope.row.parameterValue.contractAddress">{{
                 scope.row.parameterValue.contractAddress
               }}</router-link>
-              Created &nbsp;
+              &nbsp; Created &nbsp;
               <copy-icon :text="scope.row.parameterValue.contractAddress"></copy-icon>
             </div>
-            <div class="center-row" v-else-if="scope.row.parameterValue.toCode != ''">
+            <div class="center-row" v-else-if="scope.row.parameterValue.toContract">
               Contract &nbsp;
               <router-link :to="'/address/' + scope.row.parameterValue.to">
-                {{ scope.row.parameterValue.to }} &nbsp; {{ scope.row.parameterValue.toName }}
+                {{ scope.row.parameterValue.to }}
               </router-link>
               &nbsp;
               <copy-icon :text="scope.row.parameterValue.to"></copy-icon>
@@ -63,12 +79,16 @@
             </div>
           </div>
           <div v-else-if="scope.row.parameterName == 'value'">
-            {{ ethers.utils.formatEther(scope.row.parameterValue) }} Eth
+            {{ ethers.utils.formatEther(scope.row.parameterValue) }} {{ getUnitDisplay() }}
+          </div>
+          <div v-else-if="scope.row.parameterName == 'nonce'">
+            {{ parseInt(scope.row.parameterValue) }}
           </div>
           <div v-else-if="scope.row.parameterName == 'tokensTransferred'">
-            <div :class="scope.row.parameterValue.length >= 3 ? 'rolling' : ''">
+            <div :class="scope.row.parameterValue.length >= 6 ? 'rolling' : ''">
               <div v-for="(trans, index) in scope.row.parameterValue" :key="index">
-                <div class="center-row">
+                <div v-if="trans.contractType == 1" class="center-row">
+                  <el-icon><CaretRight /></el-icon>
                   <div style="font-weight: bold">From</div>
                   &nbsp;&nbsp;&nbsp;
                   <router-link :to="'/address/' + trans.from">{{ trans.from.slice(0, 18) + '...' }}</router-link>
@@ -77,28 +97,83 @@
                   &nbsp;&nbsp;&nbsp;
                   <router-link :to="'/address/' + trans.to">{{ trans.to.slice(0, 18) + '...' }}</router-link>
                   &nbsp;&nbsp;&nbsp;
-                  <router-link :to="'/address/' + trans.address">
-                    <div v-if="trans.addressName">{{ trans.addressName }}</div>
+                  <span>{{ thousandsFormat(ethers.utils.formatUnits(trans.value, trans.contractDecimals)) }}</span>
+                  &nbsp;&nbsp;&nbsp;
+                  <router-link :to="'/address/' + trans.contract">
+                    <div v-if="trans.contractName">{{ trans.contractName }} ({{ trans.contractSymbol }})</div>
                     <div v-else>
-                      {{ trans.address.slice(0, 18) + '...' }}
+                      {{ trans.contract.slice(0, 18) + '...' }}
                     </div>
                   </router-link>
+                </div>
+                <div v-else-if="trans.contractType == 2" class="center-row">
+                  <el-icon><CaretRight /></el-icon>
+                  <div style="font-weight: bold">From</div>
+                  &nbsp;&nbsp;&nbsp;
+                  <router-link :to="'/address/' + trans.from">{{ trans.from.slice(0, 18) + '...' }}</router-link>
+                  &nbsp;&nbsp;&nbsp;
+                  <div style="font-weight: bold">To</div>
+                  &nbsp;&nbsp;&nbsp;
+                  <router-link :to="'/address/' + trans.to">{{ trans.to.slice(0, 18) + '...' }}</router-link>
+                  &nbsp;&nbsp;&nbsp;
+                  <span style="font-weight: bold">For</span>
+                  &nbsp;&nbsp;&nbsp;
+                  <span>FRC721 TokenID[{{ parseInt(trans.tokenIDToNums[0].tokenID) }}]</span>
+                  &nbsp;&nbsp;&nbsp;
+                  <router-link :to="'/address/' + trans.contract">
+                    <div v-if="trans.contractName">{{ trans.contractName }} ({{ trans.contractSymbol }})</div>
+                    <div v-else>
+                      {{ trans.contract.slice(0, 18) + '...' }}
+                    </div>
+                  </router-link>
+                </div>
+                <div v-else-if="trans.contractType == 3" class="center-row-erc1155">
+                  <div class="center-row-item">
+                    <el-icon><CaretRight /></el-icon>
+                    <div style="font-weight: bold">From</div>
+                    &nbsp;&nbsp;&nbsp;
+                    <router-link :to="'/address/' + trans.from">{{ trans.from.slice(0, 18) + '...' }}</router-link>
+                    &nbsp;&nbsp;&nbsp;
+                    <div style="font-weight: bold">To</div>
+                    &nbsp;&nbsp;&nbsp;
+                    <router-link :to="'/address/' + trans.to">{{ trans.to.slice(0, 18) + '...' }}</router-link>
+                  </div>
+                  <div class="center-row-item" v-for="(tokenIDToNum, index) in trans.tokenIDToNums" :key="index">
+                    &nbsp;&nbsp;&nbsp;
+                    <span>ERC-1155</span>
+                    &nbsp;&nbsp;
+                    <span style="font-weight: bold">For</span>&nbsp;
+                    <span>{{ parseInt(tokenIDToNum.num) }} of Token ID [{{ parseInt(tokenIDToNum.tokenID) }}]</span>
+                    &nbsp;&nbsp;
+                    <router-link :to="'/address/' + trans.contract">
+                      <div v-if="trans.contractName.length != 0">
+                        {{ trans.contractName }} ({{ trans.contractSymbol }})
+                      </div>
+                      <div v-else>
+                        {{ trans.contract.slice(0, 18) + '...' }}
+                      </div>
+                    </router-link>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
           <div v-else-if="scope.row.parameterName == 'gas'">
-            {{ scope.row.parameterValue.gasUsed }} Gwei | {{ scope.row.parameterValue.gasLimit }} Gwei({{
+            {{ scope.row.parameterValue.gas }} | {{ scope.row.parameterValue.gasUsed }}
+            <!-- {{ scope.row.parameterValue.gas }} | {{ scope.row.parameterValue.gasUsed }} ({{
               scope.row.parameterValue.percent
-            }})
+            }}) -->
           </div>
           <div v-else-if="scope.row.parameterName == 'gasPrice'">
-            {{ ethers.utils.formatEther(scope.row.parameterValue) }} Eth
+            {{ ethers.utils.formatEther(scope.row.parameterValue) }} {{ getUnitDisplay() }}
+          </div>
+          <div v-else-if="scope.row.parameterName == 'transactionFee'">
+            {{ ethers.utils.formatEther(scope.row.parameterValue) }} {{ getUnitDisplay() }}
           </div>
           <div v-else-if="scope.row.parameterName == 'maxPriorityFeePerGas'">
-            Base: {{ ethers.utils.formatEther(scope.row.parameterValue.baseFeePerGas, 'gwei') }} Gwei | Max:
-            {{ ethers.utils.formatEther(scope.row.parameterValue.maxFeePerGas, 'gwei') }} Gwei | MaxPriority:
-            {{ ethers.utils.formatEther(scope.row.parameterValue.maxPriorityFeePerGas, 'gwei') }} Gwei
+            Base: {{ ethers.utils.formatEther(scope.row.parameterValue.baseFeePerGas, 'gwei') }} | Max:
+            {{ ethers.utils.formatEther(scope.row.parameterValue.maxFeePerGas, 'gwei') }} | MaxPriority:
+            {{ ethers.utils.formatEther(scope.row.parameterValue.maxPriorityFeePerGas, 'gwei') }}
           </div>
           <div v-else-if="scope.row.parameterName == 'input'">
             <!-- <textarea
@@ -139,50 +214,36 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { GetTxByHash } from '../../script/service/transactionService';
-import { getTxOverviews } from '../../script/model/transaction';
 import { QuestionFilled, Clock, SuccessFilled, Failed, VideoPause } from '@element-plus/icons-vue';
 import { getAge } from '../../script/utils';
-import { reactive, watch } from 'vue';
 import { ethers } from 'ethers';
-import { useRoute } from 'vue-router';
-import { getTitle } from '../../script/utils';
+import { getTitle } from '../../script/global';
+import { Overview } from '../../script/model';
+import { getUnitDisplay } from '../../script/global';
+import { thousandsFormat } from '../../script/utils';
+import { CaretRight } from '@element-plus/icons-vue';
 
-document.title = 'Transaction overview | The ' + getTitle + ' Explorer';
+document.title = 'Transaction overview | The ' + getTitle() + ' Explorer';
 
 const props = defineProps({
-  txHash: String,
+  txOverviews: {
+    type: Array as () => Array<Overview>,
+    require: true,
+  },
 });
-
-const route = useRoute();
-
-const overviews: any[] = reactive([]);
-
-const initData = async (txHash: String) => {
-  overviews.length = 0;
-
-  const res = await GetTxByHash(txHash as string);
-  getTxOverviews(res.data).forEach((element) => {
-    overviews.push(element);
-  });
-};
-
-initData(props.txHash as string);
-
-watch(
-  () => route.params,
-  async (val) => {
-    // console.log('watchsssssss', val.txHash);
-    if (val.txHash) {
-      initData(val.txHash as unknown as string);
-    }
-  }
-);
 </script>
 <style lang="less" scoped>
 @import '../../css/style.css';
 .rolling {
   height: 100px;
   overflow: auto;
+}
+.center-row-erc1155 {
+  display: flex;
+  flex-direction: column;
+}
+.center-row-item {
+  display: flex;
+  align-items: center;
 }
 </style>

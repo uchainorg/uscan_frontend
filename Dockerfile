@@ -1,7 +1,7 @@
 FROM node:16
 COPY ./ /chain-browser
 WORKDIR /chain-browser
-RUN echo -e "VITE_ENV=production \nVITE_BASE_URL=http://120.133.222.86:30080/chain-scan \nVITE_NODE_URL=https://testnet.ankr.com \nVITE_APP_TITLE=Coqs" >/chain-browser/.env.production
+run  echo -e "VITE_ENV=production \nVITE_BASE_URL=http://103.23.44.51:4322/uscan/v1 \nVITE_NODE_URL=https://testnet.ankr.com \nVITE_APP_TITLE=Coq" >/chain-browser/.env.production
 RUN yarn install && yarn build
 
 FROM nginx

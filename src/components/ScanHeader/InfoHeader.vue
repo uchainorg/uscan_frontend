@@ -3,7 +3,7 @@
     <div class="header-left-items" @click="moveToHome">
       <img src="../../assets/logo.png" width="33" height="33" />
       &nbsp;&nbsp;
-      <p style="font-size: 23px">{{ getTitle }} Chain Scan</p>
+      <p style="font-size: 23px">{{ getTitle() }} Chain Scan</p>
     </div>
     <div class="header-right-items">
       <div class="search-info">
@@ -60,7 +60,7 @@ import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { ArrowDown, Search } from '@element-plus/icons-vue';
 import { SearchByType } from '../../script/service/searchService';
-import { getTitle } from '../../script/utils';
+import { getTitle } from '../../script/global';
 
 const router = useRouter();
 
@@ -76,7 +76,7 @@ onMounted(async () => {
   screenWidth.value = document.body.clientWidth;
   window.onresize = () => {
     return (() => {
-      console.log('document.body.clientWidth', document.body.clientWidth);
+      // console.log('document.body.clientWidth', document.body.clientWidth);
       screenWidth.value = document.body.clientWidth;
     })();
   };

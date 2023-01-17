@@ -5,7 +5,9 @@
       <p style="color: #77838f !important; ont-size: 80%; font-weight: 400">
         GETH Trace for Txn Hash <router-link :to="'/tx/' + route.query.txhash">{{ route.query.txhash }}</router-link>
       </p>
+      <h4 class="tx-sub-title">(Showing the last {{ total }} records only)</h4>
     </div>
+
     <el-tabs style="width: 100%; margin-top: 30px">
       <el-tab-pane>
         <template #label>
@@ -22,7 +24,8 @@
           </el-table>
         </div>
         <div v-if="route.query.type == 'tracetx2'">
-          <textarea class="byte-codes-text" style="margin: 0px" rows="12" v-model="resTrace2"> </textarea>
+          <textarea class="byte-codes-text" style="margin: 0px" rows="12" v-model="resTrace2" readonly="readonly">
+          </textarea>
         </div>
       </el-tab-pane>
     </el-tabs>
@@ -37,13 +40,16 @@ import { GethDebugTrace } from '../../script/model/transaction';
 const route = useRoute();
 const resTraceList: GethDebugTrace[] = reactive([]);
 const resTrace2 = ref('');
+const total = ref(0);
 
 watchEffect(async () => {
   resTraceList.length = 0;
 
   if (route.query.txhash as string) {
     const getGethDebugTraceRes = await GetGethDebugTrace(route.query.txhash as string, route.query.type as string);
-    // console.log('getGethDebugTrace', getGethDebugTraceRes.data);
+    console.log('getGethDebugTrace', getGethDebugTraceRes.data.res);
+
+    total.value = getGethDebugTraceRes.data.logNum;
 
     if (route.query.type == 'tracetx') {
       const resList: GethDebugTrace[] = JSON.parse(getGethDebugTraceRes.data.res);
@@ -51,7 +57,7 @@ watchEffect(async () => {
         resTraceList.push(element);
       });
     } else {
-      resTrace2.value = JSON.stringify(getGethDebugTraceRes.data.res, null, 2);
+      resTrace2.value = JSON.stringify(JSON.parse(getGethDebugTraceRes.data.res), null, 4);
     }
   }
   // resTrace2.value = 'hahahahah';

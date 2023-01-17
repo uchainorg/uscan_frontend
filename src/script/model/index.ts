@@ -1,6 +1,6 @@
 import { BlockDetail } from './block';
 import { TransactionDetail, TransactionLog, InternalTransactionDetail, TransactionCount } from './transaction';
-import { TokenHolder, Token } from './token';
+import { TokenHolder, TokenInventoryHolder } from './token';
 import { ContractContent } from './contract';
 
 export interface ContractsResponse {
@@ -40,12 +40,13 @@ export interface TokenHoldersResponse {
 }
 
 export interface GethDebugTraceResponse {
+  logNum: number;
   transactionHash: string;
   res: string;
 }
 
 export interface TokenResponse {
-  items: Token[];
+  items: TokenInventoryHolder[];
   total: number;
 }
 
@@ -94,4 +95,18 @@ export class Overview {
     this.parameterValue = parameterValue;
     this.parameterExplain = parameterExplain;
   }
+}
+
+export interface ContractContentRes {
+  contract: ContractContent;
+  proxyContract: ContractContent;
+  proxyContractAddress: string;
+}
+
+export interface CustomParams {
+  appTitle: string;
+  nodeUrl: string;
+  unitDisplay: string;
+  chainID: number;
+  decimal: number;
 }

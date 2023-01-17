@@ -4,28 +4,31 @@
       <div class="header-left-items" @click="moveToHome">
         <img src="../../assets/logo.png" width="33" height="33" />
         &nbsp;&nbsp;
-        <p style="font-size: 23px">{{ getTitle }} Chain Scan</p>
+        <p style="font-size: 23px">{{ getTitle() }} Chain Scan</p>
       </div>
       <div class="header-link">
         <router-link :to="'/'" style="font-size: 15px; font-weight: bold" @click="moveToHome"> Home </router-link>
-        <div style="width: 10px"></div>
-        <el-dropdown>
-          <span style="font-size: 15px; font-weight: bold">
-            Token Transfers<el-icon><ArrowDown /></el-icon>
-          </span>
-          <template #dropdown>
-            <el-dropdown-menu>
-              <el-dropdown-item @click.native="moveToErc('erc20')">View ERC20 Transfers</el-dropdown-item>
-              <el-dropdown-item @click.native="moveToErc('erc721')">View ERC721 Transfers</el-dropdown-item>
-              <el-dropdown-item @click.native="moveToErc('erc1155')">View ERC1155 Transfers</el-dropdown-item>
-            </el-dropdown-menu>
-          </template>
-        </el-dropdown>
+        &nbsp; &nbsp;
+        <div style="width: 13px"></div>
+        <div style="margin-bottom: 1px">
+          <el-dropdown>
+            <span style="font-size: 15px; font-weight: bold">
+              Token Transfers &nbsp;<el-icon><ArrowDown /></el-icon>
+            </span>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item @click.native="moveToErc('erc20')">View ERC20 Transfers</el-dropdown-item>
+                <el-dropdown-item @click.native="moveToErc('erc721')">View ERC721 Transfers</el-dropdown-item>
+                <el-dropdown-item @click.native="moveToErc('erc1155')">View ERC1155 Transfers</el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
+        </div>
       </div>
     </div>
     <div class="home-header-search">
       <div class="home-header-search-content">
-        <p style="font-size: 20px; color: white">The {{ getTitle }} Chain Explorer</p>
+        <p style="font-size: 20px; color: white">The {{ getTitle() }} Chain Explorer</p>
         <div class="search">
           <el-autocomplete
             v-model="inputValue"
@@ -50,7 +53,8 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { ArrowDown, Search } from '@element-plus/icons-vue';
 import { SearchByType } from '../../script/service/searchService';
-import { getTitle } from '../../script/utils';
+// import { getTitle } from '../../script/global'
+import { getTitle } from '../../script/global';
 
 const router = useRouter();
 
@@ -58,6 +62,7 @@ interface LinkItem {
   value: string;
   link: string;
 }
+
 const inputValue = ref('');
 const searchRes = ref<LinkItem>();
 const querySearch = async (queryString: string, cb: (arg: any) => void) => {
@@ -108,6 +113,7 @@ const searchFilter = () => {
 };
 
 const moveToHome = () => {
+  router.go(0);
   router.push('/');
 };
 

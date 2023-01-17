@@ -21,9 +21,9 @@ import { useRoute } from 'vue-router';
 import { watch, ref } from 'vue';
 import HomeHeaderVue from './components/ScanHeader/HomeHeader.vue';
 import InfoHeaderVue from './components/ScanHeader/InfoHeader.vue';
-import { getTitle } from './script/utils';
+import { getTitle } from './script/global';
 
-document.title = 'The ' + getTitle + ' Explorer';
+document.title = 'The ' + getTitle() + ' Explorer';
 
 const route = useRoute();
 const isHome = ref(false);

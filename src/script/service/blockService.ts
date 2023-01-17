@@ -9,7 +9,7 @@ export const GetBlocks = function (
 ): Promise<ResponseType<BlocksResponse>> {
   const offset = pageNumber * pageSize;
   const limit = pageSize;
-  let url = '/v1/blocks?offset=' + offset + '&limit=' + limit;
+  let url = '/blocks?offset=' + offset + '&limit=' + limit;
   if (allView) {
     url = url + '&allView=true';
   }
@@ -21,7 +21,7 @@ export const GetBlocks = function (
 
 export const GetBlockByNumber = function (blockNumber: number): Promise<ResponseType<BlockDetail>> {
   return request<BlockDetail>({
-    url: '/v1/blocks/' + blockNumber,
+    url: '/blocks/' + blockNumber,
     method: 'get',
   });
 };

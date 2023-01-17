@@ -1,6 +1,12 @@
 <template lang="">
   <div>
-    <el-table class="table-border" :data="overviews" empty-text="loading..." :row-style="{ height: '50px' }">
+    <el-table
+      class="table-border"
+      :data="overviews"
+      :show-header="false"
+      empty-text="loading..."
+      :row-style="{ height: '50px' }"
+    >
       <el-table-column width="240">
         <template v-slot:default="scope">
           <div class="center-row">
@@ -40,7 +46,7 @@
               </el-button>
             </el-button-group>
           </div>
-          <div class="center-row" v-else-if="scope.row.parameterName == 'createdTime'">
+          <div class="center-row" v-else-if="scope.row.parameterName == 'timestamp'">
             <el-icon><Clock /></el-icon>&nbsp;{{ getAge(scope.row.parameterValue) }}
           </div>
           <div v-else-if="scope.row.parameterName == 'transactionsTotal'">

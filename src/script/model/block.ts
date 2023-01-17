@@ -115,7 +115,7 @@ export const getBlockOverviews = function (block: BlockDetail): Overview[] {
     // eslint-disable-next-line max-len
     'Also known as Block Number. The block height, which indicates the length of the blockchain, increases after the addition of the new block.',
   ]);
-  blockParameterMap.set('createdTime', ['Timestamp', 'The date and time at which a block is mined.']);
+  blockParameterMap.set('timestamp', ['Timestamp', 'The date and time at which a block is mined.']);
   blockParameterMap.set('transactionsTotal', [
     'Transactions',
     // eslint-disable-next-line max-len
@@ -171,7 +171,7 @@ export const getBlockOverviews = function (block: BlockDetail): Overview[] {
 
 export const BlocksHeaderList: TableHeader[] = [
   new TableHeader('Block', 'number'),
-  new TableHeader('Age', 'createdTime'),
+  new TableHeader('Age', 'timestamp'),
   new TableHeader('Txn', 'transactionsTotal'),
   new TableHeader('Miner', 'miner'),
   new TableHeader('Gas Used', 'gasUsed'),

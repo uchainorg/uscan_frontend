@@ -9,15 +9,16 @@
               <div class="text-secondary">
                 TokenID:
                 <span>
-                  <router-link :to="'/token/nfts/' + item.contract + '/' + item.tokenID + '/' + props.ercType">
-                    {{ item.tokenID }}
-                  </router-link>
+                  <!-- <router-link :to="'/token/nfts/' + props.address + '/' + item.TokenID + '/' + props.ercType">
+                    {{ parseInt(item.TokenID) }}
+                  </router-link> -->
+                  {{ parseInt(item.TokenID) }}
                 </span>
               </div>
               <div class="text-secondary">
                 Owner:
                 <span>
-                  <router-link :to="'/address/' + item.owner">{{ item.owner.slice(0, 18) + '...' }}</router-link>
+                  <router-link :to="'/address/' + item.Address">{{ item.Address.slice(0, 18) + '...' }}</router-link>
                 </span>
               </div>
             </el-card>
