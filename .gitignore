@@ -13,14 +13,17 @@ dist-ssr
 *.local
 
 # Editor directories and files
-vscode
-.idea
+.vscode/
+.idea/
 .DS_Store
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+
+package-lock.json
+yarn.lock
 
 .env.dev
 .env.production
