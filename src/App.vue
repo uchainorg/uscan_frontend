@@ -21,13 +21,13 @@
 
 <script lang="ts" setup>
 import { useRoute } from 'vue-router';
-import { watch, ref, Ref } from 'vue';
+import { watch, ref, Ref, computed } from 'vue';
 import HomeHeaderVue from '@/views/Header/HomeHeader.vue';
 import InfoHeaderVue from '@/views/Header/InfoHeader.vue';
 import { useCustomizationParametersStore } from '@/store/customizationParameters';
 
-const { appTitle } = useCustomizationParametersStore();
-document.title = 'The ' + appTitle + ' Explorer';
+const appTitle = computed(() => useCustomizationParametersStore().appTitle);
+document.title = 'The ' + appTitle.value + ' Explorer';
 const route = useRoute();
 const isHome: Ref<boolean> = ref(false);
 if (route.path === '/') {

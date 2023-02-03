@@ -13,6 +13,7 @@
   </div>
 </template>
 <script lang="ts" setup>
+import { computed } from 'vue';
 import { GetHome } from '@/apis/home';
 import HomeBlocks from '@/views/Home/HomeBlocks.vue';
 import HomeStatistic from '@/views/Home/HomeStatistic.vue';
@@ -20,9 +21,9 @@ import HomeTransactions from '@/views/Home/HomeTransactions.vue';
 import { useCustomizationParametersStore } from '@/store/customizationParameters';
 
 const res = await GetHome();
-const { appTitle } = useCustomizationParametersStore();
+const appTitle = computed(() => useCustomizationParametersStore().appTitle);
 
-document.title = 'Home | The ' + appTitle + ' Explorer';
+document.title = 'Home | The ' + appTitle.value + ' Explorer';
 </script>
 <style lang="less" scoped>
 .home-content {

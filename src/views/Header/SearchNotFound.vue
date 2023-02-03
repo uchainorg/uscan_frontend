@@ -8,10 +8,12 @@
 </template>
 <script lang="ts" setup>
 import { useRouter } from 'vue-router';
-import { getTitle } from '../../script/global';
-const router = useRouter();
+import { computed } from 'vue';
+import { useCustomizationParametersStore } from '@/store/customizationParameters';
 
-document.title = 'Not Found | The ' + getTitle() + ' Explorer';
+const appTitle = computed(() => useCustomizationParametersStore().appTitle);
+const router = useRouter();
+document.title = 'Not Found | The ' + appTitle.value + ' Explorer';
 const moveToHome = () => {
   router.push('/');
 };

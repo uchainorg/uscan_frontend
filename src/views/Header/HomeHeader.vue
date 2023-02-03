@@ -48,14 +48,15 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { ArrowDown, Search } from '@element-plus/icons-vue';
 import { SearchByType } from '@/apis/search';
 import { useCustomizationParametersStore } from '@/store/customizationParameters';
 import { LinkItem, typeMap } from '@/model/search';
 
-const { appTitle } = useCustomizationParametersStore();
+const appTitle = computed(() => useCustomizationParametersStore().appTitle);
+// console.log('appTitle', appTitle);
 const router = useRouter();
 const inputValue = ref('');
 const searchRes = ref<LinkItem>();

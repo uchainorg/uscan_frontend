@@ -56,14 +56,14 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { ArrowDown, Search } from '@element-plus/icons-vue';
 import { SearchByType } from '@/apis/search';
 import { useCustomizationParametersStore } from '@/store/customizationParameters';
 
 const router = useRouter();
-const { appTitle } = useCustomizationParametersStore();
+const appTitle = computed(() => useCustomizationParametersStore().appTitle);
 
 interface LinkItem {
   value: string;

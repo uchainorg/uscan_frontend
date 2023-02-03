@@ -2,7 +2,7 @@
   <div>Searching... {{ searchText }}</div>
 </template>
 <script lang="ts" setup>
-import { SearchByType } from '../../script/service/searchService';
+import { SearchByType } from '@/apis/search';
 import { useRouter } from 'vue-router';
 import { LinkItem } from '@/model/search';
 
