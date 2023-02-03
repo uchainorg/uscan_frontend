@@ -67,7 +67,8 @@ const moveToTxs = () => {
 };
 </script>
 <style lang="less" scoped>
-@import '../../css/style.css';
+@import '../../style/mixin.less';
+
 // @media screen {
 //   @media (max-width: 500px) {
 //     .list-icon-circle {

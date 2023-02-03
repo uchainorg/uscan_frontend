@@ -204,6 +204,7 @@ onMounted(async () => {
 </script>
 <style lang="less" scoped>
 @import '../../style/mixin.less';
+
 .statistic-content {
   display: flex;
   flex-direction: row;

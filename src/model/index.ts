@@ -1,3 +1,5 @@
+import { BlockDetail } from '@/script/model/block';
+
 export interface ResponseType<T = any> {
   code: number;
   msg: string;
@@ -14,4 +16,9 @@ export interface Overview {
   parameterDisplay: string;
   parameterValue: string;
   parameterExplain: string;
+}
+
+export interface BlocksResponse {
+  items: BlockDetail[];
+  total: number;
 }

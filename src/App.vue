@@ -13,7 +13,7 @@
         </Suspense>
       </el-main>
       <div class="footer">
-        <el-footer> <scan-tail></scan-tail> </el-footer>
+        <el-footer> <PageTail></PageTail> </el-footer>
       </div>
     </el-container>
   </div>
@@ -24,6 +24,7 @@ import { useRoute } from 'vue-router';
 import { watch, ref, Ref, computed } from 'vue';
 import HomeHeaderVue from '@/views/Header/HomeHeader.vue';
 import InfoHeaderVue from '@/views/Header/InfoHeader.vue';
+import PageTail from '@/views/Tail/PageTail.vue';
 import { useCustomizationParametersStore } from '@/store/customizationParameters';
 
 const appTitle = computed(() => useCustomizationParametersStore().appTitle);

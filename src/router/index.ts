@@ -4,7 +4,11 @@ import { App } from 'vue';
 import { useCustomizationParametersStore } from '@/store/customizationParameters';
 import { GetCustomParams } from '@/apis/customizationParameters';
 
-const routes: Array<RouteRecordRaw> = [{ path: '/', component: () => import('../views/Home/ScanHome.vue') }];
+const routes: Array<RouteRecordRaw> = [
+  { path: '/', component: () => import('../views/Home/ScanHome.vue') },
+  { path: '/block/:blockNumber', component: () => import('../views/Block/BlockIndex.vue'), props: true },
+  { path: '/blocks', component: () => import('../views/Block/BlocksList.vue') },
+];
 
 const router = createRouter({
   history: createWebHashHistory(),
