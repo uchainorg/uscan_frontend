@@ -4,7 +4,7 @@
       <div class="header-left-items" @click="moveToHome">
         <img src="../../assets/logo.png" width="33" height="33" />
         &nbsp;&nbsp;
-        <p class="header-title">{{ customizationParametersStore.appTitle }} Chain Scan</p>
+        <p class="header-title">{{ appTitle }} Chain Scan</p>
       </div>
       <div class="header-link">
         <router-link :to="'/'" class="header-click-text" @click="moveToHome"> Home </router-link>
@@ -27,7 +27,7 @@
     </div>
     <div class="home-header-search">
       <div class="home-header-search-content">
-        <p class="header-search-title">The {{ customizationParametersStore.appTitle }} Chain Explorer</p>
+        <p class="header-search-title">The {{ appTitle }} Chain Explorer</p>
         <div class="row-center">
           <el-autocomplete
             v-model="inputValue"
@@ -51,11 +51,11 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { ArrowDown, Search } from '@element-plus/icons-vue';
-import { SearchByType } from '../../script/service/searchService';
+import { SearchByType } from '@/apis/search';
 import { useCustomizationParametersStore } from '@/store/customizationParameters';
 import { LinkItem, typeMap } from '@/model/search';
 
-const customizationParametersStore = useCustomizationParametersStore();
+const { appTitle } = useCustomizationParametersStore();
 const router = useRouter();
 const inputValue = ref('');
 const searchRes = ref<LinkItem>();

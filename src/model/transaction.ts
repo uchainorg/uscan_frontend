@@ -2,6 +2,25 @@ import { formatNumber } from '@/utils/utils';
 import { TableHeader } from '@/model/index';
 import { Overview } from '@/model/index';
 
+export interface DailyTransactionCount {
+  date: string;
+  txCount: string;
+}
+
+export interface TransactionOverview {
+  address: number;
+  avgBlockTime: number;
+  block: number;
+  blockHeight: number;
+  dailyTx: number;
+  diff: number;
+  tps: number;
+  tx: number;
+  erc20: number;
+  erc721: number;
+  erc1155: number;
+}
+
 export interface TokensTransferred {
   from: string;
   fromHex: string;

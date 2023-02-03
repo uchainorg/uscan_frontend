@@ -20,9 +20,9 @@ import HomeTransactions from '@/views/Home/HomeTransactions.vue';
 import { useCustomizationParametersStore } from '@/store/customizationParameters';
 
 const res = await GetHome();
-const customizationParametersStore = useCustomizationParametersStore();
+const { appTitle } = useCustomizationParametersStore();
 
-document.title = 'Home | The ' + customizationParametersStore.appTitle + ' Explorer';
+document.title = 'Home | The ' + appTitle + ' Explorer';
 </script>
 <style lang="less" scoped>
 .home-content {
@@ -41,23 +41,28 @@ document.title = 'Home | The ' + customizationParametersStore.appTitle + ' Explo
   min-width: 665px;
 }
 
-@media screen and (max-width: 500px) {
-  .home-right {
-    min-width: 200px;
-  }
-  .home-left {
-    min-width: 200px;
-  }
-}
-
 .statistic {
   margin-bottom: 15px;
 }
 
 @media screen {
   @media (max-width: 500px) {
-    .statistic {
-      display: none;
+    .el-table__header,
+    .el-table__body,
+    .el-table__footer {
+      width: 100% !important;
+      table-layout: fixed !important;
+    }
+    .home-right {
+      justify-content: flex-end;
+      margin-left: auto;
+      width: 30% !important;
+
+      background-color: red;
+    }
+    .home-left {
+      width: 30% !important;
+      background-color: red;
     }
   }
 }

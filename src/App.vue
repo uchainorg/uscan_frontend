@@ -26,8 +26,8 @@ import HomeHeaderVue from '@/views/Header/HomeHeader.vue';
 import InfoHeaderVue from '@/views/Header/InfoHeader.vue';
 import { useCustomizationParametersStore } from '@/store/customizationParameters';
 
-const customizationParametersStore = useCustomizationParametersStore();
-document.title = 'The ' + customizationParametersStore.appTitle + ' Explorer';
+const { appTitle } = useCustomizationParametersStore();
+document.title = 'The ' + appTitle + ' Explorer';
 const route = useRoute();
 const isHome: Ref<boolean> = ref(false);
 if (route.path === '/') {

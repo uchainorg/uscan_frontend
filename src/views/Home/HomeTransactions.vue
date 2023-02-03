@@ -34,13 +34,8 @@
           <div>
             <el-tooltip effect="dark" content="gasPrice" placement="right">
               <div style="text-align: right">
-                <!-- <el-tag type="info">{{ this.$wei2gwei(scope.row.gas) }} Gwei</el-tag> -->
                 <el-tag type="info">
-                  {{
-                    ethers.utils.formatUnits((parseInt(scope.row.gas) * parseInt(scope.row.gasPrice)).toString(), 18)
-                  }}
-                  {{ getUnitDisplay() }}
-                  <!-- {{ scope.row.gas }} {{getUnitDisplay()}} -->
+                  {{ ethersFormatUnits((parseInt(scope.row.gas) * parseInt(scope.row.gasPrice)).toString()) }}
                 </el-tag>
               </div>
             </el-tooltip>
@@ -54,11 +49,10 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { getAge } from '../../script/utils';
-import { ethers } from 'ethers';
 import { useRouter } from 'vue-router';
-import { TransactionDetail } from '../../script/model/transaction';
-import { getUnitDisplay } from '../../script/global';
+import { getAge } from '@/utils/utils';
+import { ethersFormatUnits } from '@/utils/ethersUtils';
+import { TransactionDetail } from '@/model/transaction';
 
 const props = defineProps({
   txsData: {
@@ -74,4 +68,11 @@ const moveToTxs = () => {
 </script>
 <style lang="less" scoped>
 @import '../../css/style.css';
+// @media screen {
+//   @media (max-width: 500px) {
+//     .list-icon-circle {
+//       display: none;
+//     }
+//   }
+// }
 </style>
