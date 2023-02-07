@@ -8,6 +8,7 @@ const routes: Array<RouteRecordRaw> = [
   { path: '/', component: () => import('../views/Home/ScanHome.vue') },
   { path: '/block/:blockNumber', component: () => import('../views/Block/BlockIndex.vue'), props: true },
   { path: '/blocks', component: () => import('../views/Block/BlocksList.vue') },
+  { path: '/tx/:txHash', component: () => import('./components/ScanTransaction/TransactionIndex.vue'), props: true },
 ];
 
 const router = createRouter({
