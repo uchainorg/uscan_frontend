@@ -305,7 +305,7 @@ onMounted(async () => {
 @media screen and (max-width: 500px) {
   .statistic-chart {
     // display: none;
-    margin-top: -60px;
+    margin-top: -55px;
   }
   .statistic {
     width: 100%;
@@ -332,6 +332,11 @@ onMounted(async () => {
   .chart-title {
     margin-left: 10px;
     width: 140%;
+  }
+  .content-item-right {
+    width: 100%;
+    height: 80%;
+    border-left-style: none;
   }
 }
 </style>
