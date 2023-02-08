@@ -21,6 +21,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+yarn.lock
+components.d.ts
+package-lock.json
+
 
 .env.dev
 .env.production
