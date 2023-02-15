@@ -191,6 +191,7 @@ onMounted(async () => {
     },
     series: [
       {
+        symbol: 'none',
         data: totalList,
         type: 'line',
         smooth: true,
@@ -307,6 +308,12 @@ onMounted(async () => {
     // display: none;
     margin-top: -55px;
   }
+  .show-item {
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+    font-size: 0.5rem;
+  }
   .statistic {
     width: 100%;
     height: 50%;
@@ -314,7 +321,7 @@ onMounted(async () => {
   .statistic-content {
     display: flex;
     flex-direction: row;
-    width: 100%;
+    width: 100% !important;
     height: 350px;
     background-color: white;
     border-radius: 0.35rem;
